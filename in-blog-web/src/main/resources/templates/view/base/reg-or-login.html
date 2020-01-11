@@ -1,0 +1,119 @@
+<script src="${webCtx}/js/md5.js"></script>
+<script src="${webCtx}/js/login.js"></script>
+<!-- 注册窗口 -->
+<div id="register" class="modal fade" tabindex="-1">
+    <div class="modal-body wrapper-lg-m">
+        <div class="row">
+            <div class="col-sm-6 b-r">
+                <h3 class="m-t-none m-b font-thin">注册</h3>
+                <form role="form">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" class="form-control" id="regEname" name="regEname" placeholder="请输入用户名">
+                    </div>
+                    <div class="form-group">
+                        <label>昵称</label>
+                        <input type="text" class="form-control" id="regCname" name="regCname" placeholder="请输入昵称">
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" class="form-control" id="regEmail" name="regEmail" placeholder="请输入邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="regPassword" id="regPassword" class="form-control"
+                               placeholder="请输入密码">
+                    </div>
+                    <div class="form-group">
+                        <label>验证码</label>
+
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <input type="text" class="form-control" name="regVerCode" id="regVerCode"
+                                       placeholder="请输入验证码">
+                            </div>
+                            <div class="col-xs-4">
+                                <img class="pull-right pull-right-verification" id="regCaptcha"
+                                     onclick="this.src = '/user/rest/reg/image?m=' + Math.floor(Math.random() * 10000);"
+                                     src="/user/rest/reg/image?m=' + Math.floor(Math.random() * 10000);">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"
+                                onclick="reg()"><strong>注册</strong></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <h4>您已经注册了?</h4>
+                <p>如果已经注册,可以直接<a data-toggle="modal" data-target="#login" href="#" onclick="hideReg()"><i class="fa fa-sign-in"></i> 登录</a>
+                </p>
+                <p>OR</p>
+                <a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
+                <a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
+                <a disabled="true" href="#" class="btn btn-info  btn-block"><i class="fa fa-qq pull-left"></i>QQ登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 登录窗口 -->
+<div id="login" class="modal fade">
+    <div class="modal-body wrapper-lg-m">
+        <div class="row">
+            <div class="col-sm-6 b-r">
+                <h3 class="m-t-none m-b font-thin">登录</h3>
+                <form role="form" id="loginForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" class="form-control"
+                               name="ename" id="ename" placeholder="请输入用户名">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码">
+                    </div>
+                    <div class="checkbox m-t-lg">
+                        <button type="button" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"
+                                onclick="login()"><strong>登录</strong></button>
+                        <label class="i-checks">
+                            <input type="checkbox" id="remember" name="remember"><i></i> 记住我
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <h4>未注册?</h4>
+                <p>点击这里 <a data-toggle="modal" data-target="#register" href="#" onclick="hideLogin()"><i class="fa fa-sign-in"></i> 注册</a></p>
+                <p>OR</p>
+                <a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
+                <a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
+                <a disabled="true" href="#" class="btn btn-info  btn-block"><i class="fa fa-qq pull-left"></i>QQ登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="shangxia2"><span id="gotop1"><img src="${webCtx}/images/huojian.svg" alt="返回顶部小火箭"></span></div>
+
+
+<!-- 退出窗口 -->
+<div id="logout" class="modal fade">
+    <div class="modal-body wrapper-lg-m">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="m-t-none m-b font-thin">确定要退出当前系统吗?</h3>
+                <form role="form" id="logoutForm">
+                    <div class="checkbox m-t-lg">
+                        <button type="button" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"
+                                onclick="logout()"><strong>退出</strong></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

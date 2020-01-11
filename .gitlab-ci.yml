@@ -1,0 +1,4 @@
+build:
+    script:
+       - pwd
+       - mvn test -Dmaven.test.failure.ignore=true -Dsonar.core.codeCoveragePlugin=jacoco

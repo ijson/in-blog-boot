@@ -1,0 +1,40 @@
+<!-- 顶部菜单-->
+
+<nav class="navbar navbar-default navbar-fixed-top blog-nav-base">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">首页</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><strong style="color: #FFF;">INBLOG</strong></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="${indexActive!}"><a href="/">首页</a></li>
+                <li class="${tagActive!}"><a href="/tags/">标签墙</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <%
+                if(isEmpty(session.authContext)){%>
+                    <li><a data-toggle="modal"  data-target="#login" href="#"><i class="fa fa-sign-in"></i> 登录</a></li>
+                    <li><a data-toggle="modal"  data-target="#register" href="#"><i class="fa fa-sign-in"></i> 注册</a></li>
+                <%}else{%>
+                    <li><a data-toggle="modal"  data-target="#logout" href="#"><i class="fa fa-sign-out"></i> ${session.authContext.cname}</a></li>
+
+                    <%if(array.contain(session.authContext.permissionPath,"/admin/console/page")){%>
+                    <li><a href="/admin/console/page" target="_blank"><i class="fa fa-cog fa-spin"></i> 进入管理后台</a></li>
+                    <%}%>
+                <%}%>
+            </ul>
+
+            <form class="navbar-form navbar-right" id="search" action="/index">
+                <input type="text" id="keyWord" name="keyWord" class="form-control" placeholder="请输入文章名称" value="${keyWord!}">
+            </form>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>

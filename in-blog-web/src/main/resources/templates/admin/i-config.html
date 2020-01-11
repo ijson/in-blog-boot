@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include("base/meta.html"){} %>
+    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/iCheck/1.0.2/skins/all.css" rel="stylesheet">
+    <title> 作者后台管理 | 我的设置</title>
+</head>
+<body class="sidebar-mini skin-yellow-light">
+<div class="wrapper">
+
+    <% include("base/header.html"){} %>
+    <script src="${webCtx}/js/md5.js"></script>
+
+    <% include("base/menu.html"){} %>
+
+
+    <div class="content-wrapper" style="min-height: 1036px;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                我的设置
+                <!--<small>a set of beautiful icons</small>-->
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="#">我的设置</a></li>
+                <li class="active">基础设置</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#baseinfo" data-toggle="tab" aria-expanded="true">我的信息</a></li>
+                            <li class=""><a href="#updatePassword" data-toggle="tab" aria-expanded="false">修改密码</a></li>
+                            <li class=""><a href="#website" data-toggle="tab" aria-expanded="false">网站设置</a></li>
+                            <li class=""><a href="#contact" data-toggle="tab" aria-expanded="false">博主信息</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+
+                            <div class="tab-pane active" id="baseinfo">
+                                <section id="baseinfo_section">
+                                    <!--<h4 class="page-header">博主基础信息</h4>-->
+
+                                    <form class="form-horizontal" id="userInfoForm">
+                                        <input type="hidden" name="id" id="id" value="${user.id}">
+                                        <div class="box-body">
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">账户</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="name"
+                                                           value="${user.ename}"
+                                                           disabled="disabled">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="cname" class="col-sm-2 control-label">昵称</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="cname" id="cname"
+                                                           value="${user.cname!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="mobile" class="col-sm-2 control-label">手机号</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="mobile" id="mobile"
+                                                           value="${user.mobile!}">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email" class="col-sm-2 control-label">邮箱</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" name="email" id="email"
+                                                           placeholder="请输入邮箱地址" value="${user.email!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="universityName" class="col-sm-2 control-label">毕业学校</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="universityName"
+                                                           id="universityName" value="${user.universityName!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="universityLink" class="col-sm-2 control-label">学校链接</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="universityLink"
+                                                           id="universityLink" value="${user.universityLink!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="professional" class="col-sm-2 control-label">大学专业</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="professional"
+                                                           id="professional"
+                                                           value="${user.professional!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="startTime" class="col-sm-2 control-label">工作开始时间</label>
+                                                <div class="col-sm-8">
+
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input type="text" class="form-control pull-right"
+                                                               name="startTime"
+                                                               id="startTime" value="${user.workStartTime!}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="endTime" class="col-sm-2 control-label">工作结束时间</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input type="text" class="form-control pull-right"
+                                                               name="endTime"
+                                                               id="endTime" value="${user.workEndTime!}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="box-footer">
+                                            <button type="button" class="btn btn-info pull-right" onclick="saveUserInfo()">保存
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </section>
+
+                            </div>
+
+                            <div class="tab-pane" id="updatePassword">
+                                <section id="updatePassword_section">
+                                    <form class="form-horizontal" id="updatePasswordForm">
+                                        <input type="hidden" name="id" id="id" value="${user.id}">
+                                        <div class="box-body">
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">账户</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="name"
+                                                           value="${user.ename}"
+                                                           disabled="disabled">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="indexName" class="col-sm-2 control-label">原始密码</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" name="oldPwd"
+                                                           id="oldPwd">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="indexName" class="col-sm-2 control-label">新密码</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" name="newPwd"
+                                                           id="newPwd">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="indexName" class="col-sm-2 control-label">重新输入新密码</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" name="againPwd"
+                                                           id="againPwd">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="indexName" class="col-sm-2 control-label">验证码</label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="form-control" name="pwdVerCode"
+                                                           id="pwdVerCode">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <img id="pwdCaptcha"
+                                                         onclick="this.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);"
+                                                         src="/user/edit/image?m=' + Math.floor(Math.random() * 10000);">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="box-footer">
+                                            <button type="button" class="btn btn-info pull-right" onclick="updatePassword()">保存
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </section>
+
+                            </div>
+
+
+                            <div class="tab-pane" id="website">
+                                <section id="website_section">
+                                    <form class="form-horizontal" id="websetForm">
+                                        <input type="hidden" name="id" id="id" value="${user.id}">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label for="indexName" class="col-sm-2 control-label">网站名称</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="indexName"
+                                                           id="indexName"
+                                                           value="${user.indexName!}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <button type="button" class="btn btn-info pull-right" onclick="saveWebSet()">保存
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </section>
+
+                            </div>
+
+
+                            <div class="tab-pane" id="contact">
+
+                                <section id="new">
+                                    <!--<h4 class="page-header">博主联系方式</h4>-->
+
+                                    <form class="form-horizontal" id="contactForm">
+                                        <input type="hidden" name="id" id="id" value="${user.id}">
+                                        <div class="box-body">
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">账户</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="name"
+                                                           value="${user.ename}"
+                                                           disabled="disabled">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="wechat" class="col-sm-2 control-label">微信</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="wechat" id="wechat"
+                                                           value="${user.wechat!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="wechatLink" class="col-sm-2 control-label">微信二维码</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="wechatLink"
+                                                           id="wechatLink"
+                                                           value="${user.wechatLink!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="weibo" class="col-sm-2 control-label">微博</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="weibo" id="weibo"
+                                                           value="${user.weibo!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="weiboLink" class="col-sm-2 control-label">微博链接</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="weiboLink"
+                                                           id="weiboLink"
+                                                           value="${user.weiboLink!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="qq" class="col-sm-2 control-label">QQ账户</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="qq" id="qq"
+                                                           value="${user.qq!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="twitterName" class="col-sm-2 control-label">Twitter</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="twitterName"
+                                                           id="twitterName"
+                                                           value="${user.twitterName!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="twitterLink" class="col-sm-2 control-label">Twitter
+                                                    链接</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="twitterLink"
+                                                           id="twitterLink"
+                                                           value="${user.twitterLink!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="facebookName"
+                                                       class="col-sm-2 control-label">Facebook</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="facebookName"
+                                                           id="facebookName"
+                                                           value="${user.facebookName!}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="facebookLink" class="col-sm-2 control-label">Facebook
+                                                    链接</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="facebookLink"
+                                                           id="facebookLink"
+                                                           value="${user.facebookLink!}">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="box-footer">
+                                            <button type="button" class="btn btn-info pull-right" onclick="saveContact()">保存
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </section>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <% include("base/footer.html"){} %>
+
+</div>
+<% include("base/bottom.html"){} %>
+<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+<script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
+<script>
+    function saveWebSet() {
+
+        var userInfo = $("#websetForm").serializeJSON();
+
+        var jsonString = JSON.stringify(userInfo);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/user/edit/webset",
+            dataType: "json",
+            data: jsonString,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.error(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+    function saveUserInfo() {
+
+        var userInfo = $("#userInfoForm").serializeJSON();
+
+        var jsonString = JSON.stringify(userInfo);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/user/edit/base",
+            dataType: "json",
+            data: jsonString,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.error(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+    function saveContact() {
+
+        var userInfo = $("#contactForm").serializeJSON();
+
+        var jsonString = JSON.stringify(userInfo);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/user/edit/contact",
+            dataType: "json",
+            data: jsonString,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.error(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+
+    function updatePassword() {
+
+        var userInfo = $("#updatePasswordForm").serializeJSON();
+
+        if (userInfo.pwdVerCode === undefined || userInfo.pwdVerCode === '') {
+            toastr.error("请输入验证码");
+            return;
+        }
+
+
+        if (userInfo.oldPwd === undefined || userInfo.oldPwd === '') {
+            toastr.error("请输入旧密码");
+            return;
+        }
+        userInfo.oldPwd = hex_md5(userInfo.oldPwd);
+
+        if (userInfo.newPwd === undefined || userInfo.newPwd === '') {
+            toastr.error("请输入新密码");
+            return;
+        }
+
+        userInfo.newPwd = hex_md5(userInfo.newPwd);
+        if (userInfo.againPwd === undefined || userInfo.againPwd === '') {
+            toastr.error("请再次输入新密码");
+            return;
+        }
+        userInfo.againPwd = hex_md5(userInfo.againPwd);
+
+        if (userInfo.againPwd !== userInfo.newPwd) {
+            toastr.error("两次密码输入不一致");
+            return;
+        }
+
+        var jsonString = JSON.stringify(userInfo);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/user/edit/password",
+            dataType: "json",
+            data: jsonString,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.error(data.message);
+                    $("#pwdVerCode").val('');
+                    var pwdCaptcha = document.getElementById("pwdCaptcha");
+                    pwdCaptcha.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

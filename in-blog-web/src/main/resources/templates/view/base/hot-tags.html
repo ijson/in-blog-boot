@@ -1,0 +1,14 @@
+<%if(isNotEmpty(hotTags)){%>
+<div class="tags m-b-lg l-h-2x">
+    <h5 class="font-bold">热门标签</h5>
+
+
+    <%
+    for(data in hotTags){
+    %>
+    <a href="/tags/${data.ename}/tags/${data.shamId}.html" class="label bg-primary">${data.topicName}(${data.count})</a>
+    <%} %>
+
+</div>
+
+<%}%>

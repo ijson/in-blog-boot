@@ -1,0 +1,25 @@
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+<script src="${webCtx}/js/scrollToPlugin.min.js"></script>
+
+<script>
+    $(function () {
+        $("#gotop1").click(function (e) {
+            TweenMax.to(window, 1.5, {scrollTo: 0, ease: Expo.easeInOut});
+            var huojian = new TimelineLite();
+            huojian.to("#gotop1", 1, {rotationY: 720, scale: 0.6, y: "+=40", ease: Power4.easeOut})
+                .to("#gotop1", 1, {y: -1000, opacity: 0, ease: Power4.easeOut}, 0.6)
+                .to("#gotop1", 1, {
+                    y: 0,
+                    rotationY: 0,
+                    opacity: 1,
+                    scale: 1,
+                    ease: Expo.easeOut,
+                    clearProps: "all"
+                }, "1.4");
+        });
+    });
+</script>

@@ -1,0 +1,72 @@
+<div class="panel b-a">
+    <div class="panel-heading bg-orang dk no-border wrapper-lg">
+        <a href="${user.weiboLink}" target="_blank">
+            <button class="btn btn-sm btn-icon   pull-right m-r btn-rounded" title="点击跳转到微博"><i class="fa fa-weibo"></i></button>
+        </a>
+        <a href="#">
+            <button class="btn btn-sm btn-icon btn-rounded  m-l lsow-icon-list" tooltip-placement="left"><i class="fa fa-weixin"></i></button>
+        </a>
+    </div>
+
+
+    <script type="text/ng-template" id="myTooltipTemplate.html">
+        <div><img src="${user.wexinLink}"></div>
+    </script>
+
+
+    <div class="text-center m-b clearfix">
+        <div class="thumb-lg avatar m-t-n-xxl">
+            <img src="https://data.ijson.net/avatar.jpg" alt="..."
+                 class="b b-3x b-white">
+            <div class="h4 font-thin m-t-sm">${user.cname}</div>
+        </div>
+    </div>
+    <div class=" b-t b-light bg-light lter row text-left no-gutter">
+        <div class="col-sm-12 blog-right-data">
+
+            <% if(user.email!=null){%>
+                <a href="mailto:${user.email}" target="_blank" class="list-group-item">
+                    <i class="fa fa-envelope fa-fw m-r-xs"></i> ${user.email}
+                </a>
+            <%}%>
+
+
+            <% if(user.twitterLink!=null){%>
+                <a href="${user.twitterLink}" target="_blank" class="list-group-item">
+                    <i class="fa fa-twitter fa-fw m-r-xs"></i> ${user.twitterName}
+                </a>
+            <%}%>
+
+
+            <% if(user.facebookName!=null){%>
+                <a href="${user.facebookLink}" target="_blank" class="list-group-item">
+                    <i class="fa fa-facebook fa-fw m-r-xs"></i> ${user.facebookName}
+                </a>
+            <%}%>
+
+            <% if(user.universityName!=null){%>
+                <a href="${user.universityLink}" target="_blank" class="list-group-item">
+                    <i class="fa fa-graduation-cap fa-fw m-r-xs"></i> ${user.universityName}
+                </a>
+            <%}%>
+
+
+            <% if(user.professional!=null){%>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-book fa-fw m-r-xs"></i> ${user.professional}
+                </a>
+            <%}%>
+
+        </div>
+    </div>
+    <div class="hbox text-center b-t b-light">
+        <a href="" class="col padder-v text-muted b-r b-light">
+            <div class="h4">${total}</div>
+            <span>文章</span>
+        </a>
+        <a href="" class="col padder-v text-muted">
+            <div class="h4">${webSiteCount}</div>
+            <span>博客访问量</span>
+        </a>
+    </div>
+</div>

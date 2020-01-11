@@ -1,0 +1,31 @@
+<%if(isNotEmpty(lastPublish)){%>
+
+<h5 class="font-bold">最近发表</h5>
+<ul class="list-group">
+
+    <%
+    var publishArticleIndex=1;
+    for(data in lastPublish){
+    %>
+
+    <li class="list-group-item">
+        <a href="/article/${data.ename}/details/${data.shamId}.html">
+
+            <%if(publishArticleIndex<=3){ %>
+                <span class="badge bg-danger">${publishArticleIndex}</span>
+            <%}else{%>
+                <span class="badge bg-info">${publishArticleIndex}</span>
+            <%}%>
+
+            <span style="padding-left: 8px;">${data.title}</span>
+        </a>
+    </li>
+
+    <%
+    publishArticleIndex++;
+
+    } %>
+
+</ul>
+
+<%}%>

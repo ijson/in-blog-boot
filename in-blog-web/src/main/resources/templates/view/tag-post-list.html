@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <% include("base/meta.html"){} %>
+    <title>${user.indexName}-标签-${tagName}</title>
+
+    <style>
+        .page-header {
+            padding-bottom: 9px;
+            margin: 40px 0 20px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+
+</head>
+
+<body>
+<% include("base/top-nav.html"){} %>
+<% include("base/reg-or-login.html"){} %>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="blog-header"></div>
+
+
+        <div class="col-sm-9 blog-main">
+            <div class="list-group">
+                <%
+                for(data in tagPost){
+                %>
+                <a href="/article/${data.ename}/details/${data.shamId}.html" class="list-group-item">${data.title}</a>
+                <%} %>
+
+            </div>
+
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+
+                    <% for(var i=1;i<page.totalPage+1;i++){
+
+                    if(page.currentPage==i){
+                        print("<li class='active'><a>"+i+"</a></li>");
+                    }else{
+                        print("<li><a href='/tags/"+id+"?index="+i+"'>"+i+"</a></li>");
+                    }
+                    } %>
+                </ul>
+            </nav>
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3  blog-right">
+            <% include("base/my-info.html"){} %>
+            <% include("base/hot-article.html"){} %>
+            <% include("base/hot-tags.html"){} %>
+            <% include("base/recently-publish.html"){} %>
+        </div>
+
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+
+<% include("base/footer.html"){} %>
+
+<% include("base/bottom.html"){} %>
+
+
+</body>
+</html>

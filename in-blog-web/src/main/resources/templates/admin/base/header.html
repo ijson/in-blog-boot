@@ -1,0 +1,119 @@
+<script src="/js/login.js"></script>
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+        <span class="logo-lg"><strong>INBLOG</strong></span>
+    </a>
+    <nav class="navbar navbar-static-top">
+
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!--<li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="label label-success">2</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">您有 2 条消息</li>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="https://a0.fspage.com/FSC/EM/Avatar/GetAvatar?path=N_201608_10_d92bcb46cecd4c739cb2fba86aee2d9b2.jpg&ea=fs"
+                                                 class="img-circle">
+                                        </div>
+                                        <h4>支持团队
+                                            <small><i class="fa fa-clock-o"></i> 5 分钟前</small>
+                                        </h4>
+                                        <p>为什么不买一个新的很棒的主题呢?</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="https://a0.fspage.com/FSC/EM/Avatar/GetAvatar?path=N_201608_10_d92bcb46cecd4c739cb2fba86aee2d9b2.jpg&ea=fs"
+                                                 class="img-circle"
+                                                 alt="User Image">
+                                        </div>
+                                        <h4>
+                                            销售部门
+                                            <small><i class="fa fa-clock-o"></i> 3 天前</small>
+                                        </h4>
+                                        <p>为什么不买一个新的很棒的主题呢?</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="#">查看所有消息</a></li>
+                    </ul>
+                </li>-->
+
+                <!--<li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="label label-warning">10</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">您有 10 个通知</li>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-users text-aqua"></i> 今天有5名新成员加入
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-users text-red"></i> 5名新成员加入
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user text-red"></i> 你更改了用户名
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="#">查看全部通知</a></li>
+                    </ul>
+                </li>-->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="${user.avatar!}"
+                             class="user-image" alt="User Image">
+                        <span class="hidden-xs">${user.cname!}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img src="${user.avatar!}" class="img-circle" alt="User Image">
+                            <p>
+                                ${user.cname!}
+                                <small>2010年9月至今</small>
+                            </p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="/admin/i/config/page" class="btn btn-default btn-flat">我的信息</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="#" class="btn btn-default btn-flat" onclick="logout()">退出</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
+
+<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-8261751522036488">
+</amp-auto-ads>

@@ -1,0 +1,84 @@
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="请输入...">
+                <span class="input-group-btn">
+            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+            </div>
+        </form>
+        <ul class="sidebar-menu" data-widget="tree">
+            <%if(array.contain(session.authContext.permissionPath,"/admin/console/page")){%>
+                <li>
+                    <a href="/admin/console/page">
+                        <i class="fa fa-home"></i> <span>首页</span>
+                        <!--<span class="pull-right-container">
+                            <small class="label pull-right bg-green">new</small>
+                        </span>-->
+                    </a>
+                </li>
+            <%}%>
+
+
+
+            <%if(array.contain(session.authContext.permissionPath,"/admin/post/root")){%>
+                <li class="treeview ${post_active!}">
+                    <a href="#">
+                        <i class="fa fa-file-text"></i>
+                        <span>文章</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <%if(array.contain(session.authContext.permissionPath,"/admin/post/list/page")){%>
+                        <li class="${post_list_active!}">
+                            <a href="/admin/post/list/page"><i class="fa fa-list-ul"></i>文章列表
+                                <!--<span class="pull-right-container">-->
+                                <!--<small class="label pull-right bg-teal">edit</small>-->
+                                <!--</span>-->
+                            </a>
+                        </li>
+                        <%}%>
+
+                        <%if(array.contain(session.authContext.permissionPath,"/admin/post/add/page")){%>
+                        <li class="${post_create_active!}"><a href="/admin/post/add/page"><i class="fa fa-edit"></i>新建/编辑文章</a></li>
+                        <%}%>
+                        <!--<li><a href="#"><i class="fa fa-folder-open-o"></i>我的分类</a></li>-->
+
+
+                        <!--<li><a href="#"><i class="fa fa-tags"></i>我的标签</a></li>-->
+                    </ul>
+                </li>
+            <%}%>
+
+            <%if(array.contain(session.authContext.permissionPath,"/admin/system/root")){%>
+                <li class="treeview ${system_active!}">
+
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span>系统设置</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+
+                    <ul class="treeview-menu">
+
+                        <!--<li><a href="#"><i class="fa fa-envelope-o"></i>消息列表</a></li>-->
+
+                        <!--<li><a href="#"><i class="fa fa-bell-o"></i>通知列表</a></li>-->
+                        <%if(array.contain(session.authContext.permissionPath,"/admin/i/config/page")){%>
+                        <li class="${i_config_active!}"><a href="/admin/i/config/page"><i class="fa fa-wrench"></i>我的设置</a></li>
+                        <%}%>
+                    </ul>
+                </li>
+            <%}%>
+        </ul>
+    </section>
+</aside>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <% include("base/meta.html"){} %>
+    <title>${user.indexName}-标签墙</title>
+
+</head>
+
+<style>
+    .info-box {
+        display: block;
+        min-height: 90px;
+        background: #fff;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        border-radius: 2px;
+        margin-bottom: 15px;
+    }
+
+    .bg-yellow{
+        background-color: #f39c12 !important;
+        color: #fff !important;
+    }
+    .info-box-icon {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 2px;
+        display: block;
+        float: left;
+        height: 90px;
+        width: 90px;
+        text-align: center;
+        font-size: 45px;
+        line-height: 90px;
+        background: rgba(0,0,0,0.2);
+    }
+    .info-box-content {
+        padding: 5px 10px;
+        margin-left: 90px;
+    }
+    /*.info-box-text {*/
+        /*text-transform: uppercase;*/
+    /*}*/
+    .info-box-text {
+        display: block;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #fff !important;
+    }
+    .info-box-number {
+        display: block;
+        font-weight: bold;
+        font-size: 18px;
+        font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+    }
+</style>
+
+<body>
+<% include("base/top-nav.html"){} %>
+<% include("base/reg-or-login.html"){} %>
+<!--<link href="https://cdn.bootcss.com/admin-lte/2.4.15/css/AdminLTE.min.css" rel="stylesheet">-->
+
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="blog-header"></div>
+
+
+        <div class="col-sm-9 blog-main">
+
+            <% if(isEmpty(tags)){ %>
+
+            <div class="alert alert-info blog-not-find">未检索到标签条目,请后台录入</div>
+
+
+            <%}else{
+            for(data in tags){
+            %>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-bookmark-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><a href="/tags/${data.ename}/tags/${data.shamId}.html">${data.topicName}</a></span>
+                        <span class="info-box-number">${data.count} 篇文章</span>
+                    </div>
+                </div>
+            </div>
+
+            <%}} %>
+
+        </div>
+
+        <div class="col-sm-3  blog-right">
+            <% include("base/my-info.html"){} %>
+            <% include("base/hot-article.html"){} %>
+            <% include("base/hot-tags.html"){} %>
+            <% include("base/recently-publish.html"){} %>
+        </div>
+
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+
+<% include("base/footer.html"){} %>
+
+<% include("base/bottom.html"){} %>
+
+
+</body>
+</html>

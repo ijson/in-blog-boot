@@ -1,0 +1,9 @@
+#mongo.servers = mongodb://localhost
+#mongo.dbName = test
+
+mongo.mapPackage = com.ijson.blog.dao.entity
+mongo.connectTimeout = 5000
+mongo.socketTimeout = 10000
+encrypt.pwd=false
+
+process.server.id=1

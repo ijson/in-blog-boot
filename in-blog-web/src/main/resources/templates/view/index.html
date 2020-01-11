@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+    <% include("base/meta.html"){} %>
+    <title>${user.indexName}-首页</title>
+</head>
+
+<body>
+
+<% include("base/top-nav.html"){} %>
+
+<% include("base/reg-or-login.html"){} %>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="blog-header"></div>
+
+        <div class="col-sm-9 blog-main">
+
+            <% if(isEmpty(dataList)){ %>
+
+                <% if(isEmpty(keyWord)){ %>
+                    <div class="alert alert-info blog-not-find">未检索到博文条目,请后台录入</div>
+                <% }else{ %>
+                    <div class="alert alert-info blog-not-find">未搜索到与 "${keyWord!}" 相关的博文信息</div>
+                <% } %>
+
+            <% }else{
+            for(data in dataList){
+            %>
+                <div class="blog-post">
+
+                    <h4 class="blog-post-title"><a class="blog-a" href="/article/${data.ename}/details/${data.shamId}.html">${data.title}</a>
+                    </h4>
+                    <p class="blog-post-context">
+                        ${data.intro}
+
+                    </p>
+
+                    <div class="in-post-footer">
+                        <span class="pull-left">
+                            <a><i class="fa fa-calendar"></i> ${data.createTime,dateFormat="yyyy-MM-dd"}</a>
+                            <a href="/article/${data.ename}/details/${data.shamId}.html#comments"><i class="fa fa-commenting-o"></i> ${data.reply} 条评论</a>
+                        </span>
+                        <span class="visible-lg visible-md visible-sm pull-left">
+                            <a href="/article/${data.ename}/details/${data.shamId}.html"><i class="fa fa-eye"></i> ${data.views} 次阅读</a>
+                            <!--<a href="javascript:;" data-action="love" data-id="3666" class="Love"><i class="fa fa-thumbs-o-up"></i> 0人点赞</a>-->
+                            <a href="#"><i class="fa fa-user"></i> ${data.cname}</a>
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/article/${data.ename}/details/${data.shamId}.html" title="${data.title}">阅读全文 <i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </div>
+
+                </div>
+
+            <%}} %>
+
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+
+                    <% for(var i=1;i<page.totalPage+1;i++){
+
+                        if(page.currentPage==i){
+                            print("<li class='active'><a>"+i+"</a></li>");
+                        }else{
+                            print("<li><a href='/index?index="+i+"'>"+i+"</a></li>");
+                        }
+                    } %>
+                </ul>
+            </nav>
+
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 blog-right">
+            <% include("base/my-info.html"){} %>
+            <% include("base/hot-article.html"){} %>
+            <% include("base/hot-tags.html"){} %>
+            <% include("base/recently-publish.html"){} %>
+        </div>
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<% include("base/footer.html"){} %>
+
+<% include("base/bottom.html"){} %>
+
+</body>
+</html>

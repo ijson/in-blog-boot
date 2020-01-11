@@ -1,0 +1,30 @@
+<%if(isNotEmpty(hots)){%>
+
+<h5 class="font-bold">热门文章</h5>
+<ul class="list-group">
+
+
+    <%
+    var hotArticleIndex=1;
+    for(data in hots){
+    %>
+
+    <li class="list-group-item">
+        <a href="/article/${data.ename}/details/${data.shamId}.html">
+
+            <%if(hotArticleIndex<=3){ %>
+            <span class="badge bg-danger"> ${hotArticleIndex} </span>
+
+            <%}else{%>
+            <span class="badge bg-info"> ${hotArticleIndex} </span>
+            <%}%>
+
+            <span style="padding-left: 8px;">${data.title}</span>
+        </a>
+    </li>
+
+    <%
+    hotArticleIndex++;
+    } %>
+</ul>
+<%}%>

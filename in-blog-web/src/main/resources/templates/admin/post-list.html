@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include("base/meta.html"){} %>
+    <title> 作者后台管理 | 文章列表</title>
+    <link href="https://cdn.bootcss.com/datatables/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+
+</head>
+<body class="sidebar-mini skin-yellow-light">
+<div class="wrapper">
+
+    <% include("base/header.html"){} %>
+
+    <style type="text/css">
+        .post-list-disabled {color:red}
+        table{
+            table-layout:fixed;
+        }
+        th, td {
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -moz-text-overflow: ellipsis;
+        }
+    </style>
+
+    <% include("base/menu.html"){} %>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                文章列表
+                <small>Version 0.0.1</small>
+                <small> 文章停用后,前端页面将无法继续查看,且可在后端执行删除操作</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">文章列表</li>
+            </ol>
+        </section>
+
+
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">文章列表</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>标题</th>
+                                    <th>阅读数</th>
+                                    <th>点赞数</th>
+                                    <th>最后更新时间</th>
+                                    <th>创建人</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+
+
+    </div>
+    <% include("base/footer.html"){} %>
+
+</div>
+<% include("base/bottom.html"){} %>
+<script src="https://cdn.bootcss.com/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.bootcss.com/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+<script>
+    $(function () {
+        load()
+    });
+
+
+    function load() {
+        var table = $('#example1').DataTable({
+            "ajax": {
+                "url": "/post/list",
+                "method": "post"
+            },
+            "destroy": true,
+            "serverSide": true,
+            "bPaginate": true,//分页工具条显示
+            "pagingType": "full_numbers",
+            "flexibleWidth":false,
+            "responsive":true,
+            "bAutoWidth":false,
+            "lengthMenu": [15, 30, 45],
+            "columns": [
+                {"data": "title", width: 250},
+                {"data": "views", width: 45},
+                {"data": "pros", width: 45},
+                {
+                    "data": "lastModifiedTime", width: 130, "render": function (data, type, row) {
+                        return myFormatConversion.timeconv(data);
+                    }
+                },
+                {"data": "userCname", width: 50},
+                {
+                    "data": "enable", width: 30, "render": function (data, type, row) {
+                        if (true === row.enable) {
+                            return "启用"
+                        } else {
+                            return "<span class='post-list-disabled'>停用</span>"
+                        }
+                    }
+                },
+                {
+                    "data": null, width: 200, "render": function (data, type, row) {
+                        var str = "<div class=\"btn-group\">\n";
+                        str += "        <button type=\"button\" class=\"btn btn-info\"    onclick=\"edit('" + row.ename + "','" + row.shamId + "')\">编辑</button>\n";
+
+                        if(row.enable){
+                            str += "        <button type=\"button\" class=\"btn btn-warning\" onclick=\"enable('" + row.ename + "','" + row.shamId + "','" + row.enable + "', )\">停用</button>\n";
+                            str += "        <button type=\"button\" class=\"btn btn-danger\"  disabled='disabled'>删除</button>\n";
+                        }else{
+                            str += "        <button type=\"button\" class=\"btn btn-success\" onclick=\"enable('" + row.ename + "','" + row.shamId + "','" + row.enable + "', )\">启用</button>\n";
+                            str += "        <button type=\"button\" class=\"btn btn-danger\"  onclick=\"deleted('" + row.ename + "','" + row.shamId + "')\">删除</button>\n";
+
+                        }
+                        str += "  </div>\n";
+                        return str;
+                    }
+                }
+            ],
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Chinese.json"
+            }
+        });
+    }
+
+
+    function edit(ename, shamId) {
+        window.location.href = '/admin/edit/' + ename + "/" + shamId + '/page';
+    }
+
+    function enable(ename, shamId, enable) {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/post/enable/" + ename + "/" + shamId,
+            dataType: "json",
+            data: JSON.stringify({
+                "enable": enable
+            }),
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.error(data.message);
+                }
+                load()
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+    function deleted(ename, shamId) {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/post/delete/" + ename + "/" + shamId,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                    load()
+                } else {
+                    toastr.error(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+    //格式转换
+    var myFormatConversion;
+
+    myFormatConversion = {
+        formatterDateTime: function (date) {
+            return date.getFullYear()
+                + "-"// "年"
+                + ((date.getMonth() + 1) > 10 ? (date.getMonth() + 1) : "0"
+                    + (date.getMonth() + 1))
+                + "-"// "月"
+                + (date.getDate() < 10 ? "0" + date.getDate() : date
+                    .getDate())
+                + " "
+                + (date.getHours() < 10 ? "0" + date.getHours() : date
+                    .getHours())
+                + ":"
+                + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date
+                    .getMinutes())
+                + ":"
+                + (date.getSeconds() < 10 ? "0" + date.getSeconds() : date
+                    .getSeconds());
+        },
+        /**
+         * 毫秒转时间格式
+         */
+        longMsTimeConvertToDateTime: function (time) {
+            var myDate = new Date(time);
+            return this.formatterDateTime(myDate);
+        },
+
+        //时间格式转换函数
+        timeconv: function (data) {
+            return this.longMsTimeConvertToDateTime(data);
+        }
+
+    };
+
+</script>
+
+</body>
+</html>
