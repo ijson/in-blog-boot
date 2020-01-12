@@ -8,7 +8,15 @@ Demo site ：https://www.ijson.net
 > The development cycle of this blog is calculated on a monthly basis.After all, I usually go to work. I don't write code every day. I can only write this code on Saturday and Sunday and release it monthly.
 
 
-[中文](README_ZH.md)| [英文](README.md)
+
+
+[中文](README_ZH.md)| [English](README.md)
+
+
+# Installation documentation
+
+1. [Install MongoDB on Mac OSX platform](https://www.ijson.net/article/cuiyongxu/details/1578799878.html)
+2. [IBO Blog installation documentation](https://www.ijson.net/article/cuiyongxu/details/1578800710.html)
 
 
 # Use of technology

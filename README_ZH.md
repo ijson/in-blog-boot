@@ -10,6 +10,11 @@
 [中文](README_ZH.md)| [英文](README.md)
 
 
+# 安装文档
+
+1. [Mac OSX 平台安装 MongoDB](https://www.ijson.net/article/cuiyongxu/details/1578799878.html)
+2. [IBO博客安装文档](https://www.ijson.net/article/cuiyongxu/details/1578800710.html)
+
 
 # 使用技术
 
