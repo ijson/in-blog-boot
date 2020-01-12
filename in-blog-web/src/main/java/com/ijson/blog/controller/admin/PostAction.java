@@ -166,8 +166,6 @@ public class PostAction extends BaseController {
                 reduceId.add(id);
             }
         }
-        List<String> removeTopicId = postService.removeTopic(reduceId);
-
         //5.  并从post上删除 减少的name
 
         // 获取没删除的tag
@@ -184,34 +182,7 @@ public class PostAction extends BaseController {
 
         postService.createPost(context, newEntity);
 
-        /*
-        List<TopicEntity> topicEntitys = null;
-        //存在tag 先保存tag,然后保存文章
-        List<String> existIds = Lists.newArrayList();
-        if (!Strings.isNullOrEmpty(post.getTopicName())) {
-            List<TopicEntity> topicName = entity.getTopicName();
-            //需要判断新的是否在老的里面  如果在 则不需要创建或+1
-            Map<String, String> oldTopic = topicName.stream().collect(Collectors.toMap(k -> {
-                return k.getTopicName();
-            }, v -> {
-                return v.getId();
-            }));
-            List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
 
-            for (String oldName : oldTopic.keySet()) {
-                if(newTopic.contains(oldName)){
-                    existIds.add(oldTopic.get(oldName));
-                    newTopic.remove(oldName);
-                }
-            }
-            topicEntitys = topicService.findTopicByTopicNameAndIncCount(Joiner.on(",").join(newTopic));
-        }
-
-        //如果更新时 topic 删除了,则需要再库中的topic个数-1
-        //List<String> removeTopicId = postService.removeTopic(entity, post.getId(), post.getTopicName());
-        PostEntity newEntity = PostEntity.update(context, post.getId(), post.getTitle(), post.getContent(), topicEntitys,existIds);
-        postService.createPost(context, newEntity);
-        */
         return Result.ok("更新文章成功!");
     }
 
@@ -221,7 +192,6 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        PostEntity postEntity = postService.enable(ename, shamId, !post.isEnable(), context);
         String reason = !post.isEnable() ? "启用" : "禁用";
         return Result.ok(reason + "成功");
     }
