@@ -8,6 +8,9 @@ Demo site ：https://www.ijson.net
 > The development cycle of this blog is calculated on a monthly basis.After all, I usually go to work. I don't write code every day. I can only write this code on Saturday and Sunday and release it monthly.
 
 
+[中文](README_ZH.md)| [英文](README.md)
+
+
 # Use of technology
 
 1. SpringBoot 2.1.6
