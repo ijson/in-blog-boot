@@ -1,7 +1,7 @@
 # ibo blog system
 
 
-> ibo Describe the imprint: imprint blog. Presumably everyone wants their blog to record what they think, keep some thoughts, and leave a better imprint.
+> ibo Describe the imprint : imprint blog. Presumably everyone wants their blog to record what they think, keep some thoughts, and leave a better imprint.
 
 Demo site ：https://www.ijson.net
 
