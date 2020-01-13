@@ -7,7 +7,8 @@
 > 本博客开发周期按月计算,毕竟平时都上班,不会天天来编写代码,只能周六日去编写此代码,按月发布
 
 
-[中文](README_ZH.md)| [英文](README.md)
+
+[中文](README_ZH.md)| [英文](README.md)|[升级记录](https://github.com/ijson/in-blog-boot/wiki/upgrade)
 
 
 # 安装文档
