@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.ijson</groupId>
             <artifactId>in-blog-core</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
