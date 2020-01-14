@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -144,6 +145,8 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
     @RequestMapping("/i/config/page")
     public ModelAndView iconfig(HttpServletRequest request) {
@@ -156,7 +159,11 @@ public class ConsoleAction extends BaseController {
         }
         UserEntity userEntity = userService.findUserByEname(context.getEname(), null, null);
 
+        userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
+        userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
+
         addAdminModelAndView(view);
+
 
         view.addObject("user", userEntity);
 

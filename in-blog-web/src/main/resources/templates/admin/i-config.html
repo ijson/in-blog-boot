@@ -124,7 +124,7 @@
                                                         </div>
                                                         <input type="text" class="form-control pull-right"
                                                                name="startTime"
-                                                               id="startTime" value="${user.workStartTime!}">
+                                                               id="startTime" value="${user.startTime!}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,7 +138,7 @@
                                                         </div>
                                                         <input type="text" class="form-control pull-right"
                                                                name="endTime"
-                                                               id="endTime" value="${user.workEndTime!}">
+                                                               id="endTime" value="${user.endTime!}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -382,9 +382,31 @@
 </div>
 <% include("base/bottom.html"){} %>
 <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
 <script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
 <script>
+
+    $(function () {
+        $('#startTime').datepicker({
+            language: "zh-CN",
+            clearBtn: true,//清除
+            autoclose: true,
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            todayBtn: true
+        });
+
+        $('#endTime').datepicker({
+            language: "zh-CN",
+            clearBtn: true,//清除
+            autoclose: true,
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            todayBtn: true
+        });
+    });
+
     function saveWebSet() {
 
         var userInfo = $("#websetForm").serializeJSON();

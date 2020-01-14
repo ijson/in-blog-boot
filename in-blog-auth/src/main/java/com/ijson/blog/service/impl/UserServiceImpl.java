@@ -20,7 +20,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -192,11 +191,15 @@ public class UserServiceImpl implements UserService {
 
         String startTime = entity.getStartTime();
         if (!Strings.isNullOrEmpty(startTime)) {
-            entity.setWorkStartTime(DateUtils.getInstance().format("YYYY-MM-dd", startTime));
+            entity.setWorkStartTime(DateUtils.getInstance().format("yyyy-MM-dd", startTime));
+        } else {
+            entity.setWorkStartTime(0L);
         }
         String endTime = entity.getEndTime();
         if (!Strings.isNullOrEmpty(endTime)) {
-            entity.setWorkEndTime(DateUtils.getInstance().format("YYYY-MM-dd", endTime));
+            entity.setWorkEndTime(DateUtils.getInstance().format("yyyy-MM-dd", endTime));
+        } else {
+            entity.setWorkEndTime(0L);
         }
         return userDao.update(entity);
     }

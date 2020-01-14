@@ -94,6 +94,7 @@ public class DateUtils {
 
     public Long format(String pattern, String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        simpleDateFormat.setLenient(false);
         try {
             return simpleDateFormat.parse(time).getTime();
         } catch (ParseException e) {
