@@ -63,8 +63,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <version>2.1.6.RELEASE</version>
             <optional>true</optional>
-            <scope>true</scope><!---->
         </dependency>
 
         <dependency>
