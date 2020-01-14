@@ -88,38 +88,6 @@ public class UserServiceImpl implements UserService {
 
         return context;
     }
-
-    /*
-      ﻿﻿{
-        "_id" : "5d6b2c27973c84945f8f2df2",
-        "ename" : "cuiyongxu",
-        "cname" : "流浪猫",
-        "password" : "c4ca4238a0b923820dcc509a6f75849b",
-        "email" : "cuiyongxu@gmail.com",
-        "wechat" : "cuiyong_xu",
-        "weibo" : "@喜欢就告诉她",
-        "qq" : "333",
-        "mobile" : "333",
-        "lastModifiedTime" : NumberLong(1567781344803),
-        "deleted" : false,
-        "enable" : true,
-        "createTime" : NumberLong(1566141923291),
-        "twitterName" : "@cuiyongxu",
-        "twitterLink" : "https://twitter.com/cuiyongxu",
-        "facebookName" : "cuiyongxu",
-        "facebookLink" : "https://www.facebook.com/cuiyongxu",
-        "universityName" : "山东科技大学",
-        "universityLink" : "http://www.sdust.edu.cn/",
-        "professional" : "计算机应用技术",
-        "workStartTime" : NumberLong(1546099200000),
-        "workEndTime" : NumberLong(1546099200000),
-        "indexName" : "INBLOG",
-        "weiboLink" : "1111",
-        "wechatLink" : "https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/qrcode/zbios_x2_9d645d9.png",
-        "avatar" : "https://data.ijson.net/avatar/aratar_389.jpg"
-    }
-
-    */
     @Override
     public UserEntity reg(UserEntity entity) {
 
