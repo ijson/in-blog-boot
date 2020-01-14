@@ -5,6 +5,8 @@ cd $bash_path
 
 git pull
 
+mvn install -Dmaven.test.skip=true
+
 cd $bash_path/in-blog-common
 mvn clean install -Dmaven.test.skip=true
 
