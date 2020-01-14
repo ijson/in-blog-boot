@@ -192,6 +192,7 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
+        PostEntity postEntity = postService.enable(ename, shamId, !post.isEnable(), context);
         String reason = !post.isEnable() ? "启用" : "禁用";
         return Result.ok(reason + "成功");
     }
@@ -202,7 +203,7 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        PostEntity postEntity = postService.findByShamIdInternal(ename, shamId);
+        PostEntity postEntity = postService.findByShamIdInternal(ename, shamId,false);
         if (postEntity != null && postEntity.isEnable()) {
             return Result.error(-1, "禁用后才可删除该文章");
         }

@@ -260,7 +260,33 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostEntity findByShamIdInternal(String ename, String shamId) {
-        return postDao.findByShamIdInternal(ename,shamId );
+    public PostEntity findByShamIdInternal(String ename, String shamId,boolean includeTopicAncCount) {
+        PostEntity entity = postDao.findByShamIdInternal(ename, shamId);
+
+        if(includeTopicAncCount){
+            CountEntity countById = countDao.findCountById(entity.getId());
+            if (Objects.nonNull(countById)) {
+                entity.setViews(countById.getViews());
+            }
+
+            List<ReplyEntity> replyEntitys = replyDao.findCountById(entity.getId());
+            if (CollectionUtils.isNotEmpty(replyEntitys)) {
+                entity.setReply(replyEntitys.size());
+            } else {
+                entity.setReply(0);
+            }
+
+            List<TopicEntity> topicEntitys = topicDao.finds(entity.getTopicId());
+            if (CollectionUtils.isNotEmpty(topicEntitys)) {
+                entity.setTopicName(topicEntitys);
+            }
+
+            UserEntity userEntity = userDao.findById(entity.getUserId());
+            if (Objects.nonNull(userEntity)) {
+                entity.setCname(userEntity.getCname());
+            }
+        }
+
+        return entity;
     }
 }

@@ -131,7 +131,7 @@ public class ConsoleAction extends BaseController {
      */
     @RequestMapping("/edit/{ename}/{shamId}/page")
     public ModelAndView skipPostEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
-        PostEntity entity = postService.findByShamId(ename, shamId);
+        PostEntity entity = postService.findByShamIdInternal(ename, shamId,true);
 
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/post-add.html");
