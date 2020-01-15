@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.entity;
 
+import com.ijson.blog.model.AuthContext;
 import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,6 @@ import org.mongodb.morphia.annotations.*;
         @Index(name = "PD_TL",
                 fields = {
                         @Field(value = PostDraftEntity.Fields.title),
-                        @Field(value = PostDraftEntity.Fields.enable),
                         @Field(value = PostDraftEntity.Fields.createdBy),
 
                 }),
@@ -63,6 +63,32 @@ public class PostDraftEntity extends BaseEntity {
 
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
+
+    public static PostDraftEntity create(String id, String userId, String title, String content, String topicNames, String ename) {
+        PostDraftEntity entity = new PostDraftEntity();
+        entity.setEname(ename);
+        entity.setId(id);
+        entity.setUserId(userId);
+        entity.setTitle(title);
+        entity.setContent(content);
+        entity.setCreatedBy(userId);
+        entity.setCreateTime(System.currentTimeMillis());
+        entity.setLastModifiedBy(userId);
+        entity.setLastModifiedTime(System.currentTimeMillis());
+        entity.setTopicNames(topicNames);
+        return entity;
+    }
+
+    public static PostDraftEntity update(AuthContext context, String id, String title, String content, String topicNames) {
+        PostDraftEntity entity = new PostDraftEntity();
+        entity.setId(id);
+        entity.setTitle(title);
+        entity.setContent(content);
+        entity.setLastModifiedBy(context.getId());
+        entity.setLastModifiedTime(System.currentTimeMillis());
+        entity.setTopicNames(topicNames);
+        return entity;
+    }
 
 
     public interface Fields {

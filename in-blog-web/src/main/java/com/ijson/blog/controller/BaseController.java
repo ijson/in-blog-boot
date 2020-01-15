@@ -5,6 +5,7 @@ import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.model.*;
+import com.ijson.blog.service.PostDraftService;
 import com.ijson.blog.service.PostService;
 import com.ijson.blog.service.TopicService;
 import com.ijson.blog.service.UserService;
@@ -45,6 +46,9 @@ public class BaseController {
 
     @Autowired
     protected PostService postService;
+
+    @Autowired
+    protected PostDraftService postDraftService;
 
     @Autowired
     protected UserService userService;
