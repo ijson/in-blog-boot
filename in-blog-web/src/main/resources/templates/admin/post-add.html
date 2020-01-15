@@ -76,6 +76,7 @@
                                 </div>
 
                                 <button type="button" class="btn btn-info" onclick="save()">保存</button>
+                                <button type="button" class="btn btn-info" onclick="saveDraft()">保存为草稿</button>
 
                             </form>
                         </div>
@@ -96,6 +97,52 @@
 <script src="/js/bootstrap3-wysihtml5.all.min.js"></script>
 
 <script>
+
+
+    function saveDraft() {
+        var editor_data = CKEDITOR.instances.content.getData();
+        var title = $("#title").val();
+        var topicName = $("#topicName").val();
+
+        if (title === undefined || title === '') {
+            toastr.error("请填写文章标题");
+            return;
+        }
+
+
+        var params = JSON.stringify({
+            "id":$("#id").val(),
+            "title": title,
+            "content": editor_data,
+            "topicName":topicName
+        });
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/draft/create",
+            data: params,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                    $("#title").val('');
+                    $("#id").val('');
+                    $("#topicName").val('');
+                    CKEDITOR.instances.content.setData("");
+                } else {
+                    toastr.error(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+
+
     function save() {
         var editor_data = CKEDITOR.instances.content.getData();
         var title = $("#title").val();
