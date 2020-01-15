@@ -159,8 +159,13 @@ public class ConsoleAction extends BaseController {
         }
         UserEntity userEntity = userService.findUserByEname(context.getEname(), null, null);
 
-        userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
-        userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
+        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
+            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
+        }
+
+        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
+            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
+        }
 
         addAdminModelAndView(view);
 
