@@ -20,7 +20,12 @@ public class PostDraftDaoImpl extends AbstractDao<PostDraftEntity> implements Po
     @Override
     public PostDraftEntity createOrUpdate(PostDraftEntity entity) {
         if (!Strings.isNullOrEmpty(entity.getId())) {
-            entity = findAndModify(entity);
+            if (entity.isCreate()) {
+                datastore.save(entity);
+                return entity;
+            } else {
+                entity = findAndModify(entity);
+            }
         } else {
             ObjectId id = new ObjectId();
             entity.setId(id.toHexString());

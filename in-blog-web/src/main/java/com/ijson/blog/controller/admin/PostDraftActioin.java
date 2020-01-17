@@ -39,7 +39,10 @@ public class PostDraftActioin extends BaseController {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         if (!Strings.isNullOrEmpty(post.getId())) {
-            return updatePost(request, post);
+            PostDraftEntity postDraftEntity = postDraftService.find(post.getId());
+            if(Objects.nonNull(postDraftEntity)){
+                return updatePost(request, post);
+            }
         }
 
         if (Strings.isNullOrEmpty(post.getTitle())) {
@@ -47,7 +50,7 @@ public class PostDraftActioin extends BaseController {
         }
 
         PostDraftEntity entity = PostDraftEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), post.getTopicName(), context.getEname());
-
+        entity.setCreate(true);
         entity = postDraftService.createPostDraft(context, entity);
         log.info("草稿创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
         return Result.ok("创建草稿成功!");

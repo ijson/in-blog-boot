@@ -64,6 +64,11 @@ public class PostDraftEntity extends BaseEntity {
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
 
+    /**
+     * 是否为创建
+     */
+    private volatile boolean isCreate;
+
     public static PostDraftEntity create(String id, String userId, String title, String content, String topicNames, String ename) {
         PostDraftEntity entity = new PostDraftEntity();
         entity.setEname(ename);
