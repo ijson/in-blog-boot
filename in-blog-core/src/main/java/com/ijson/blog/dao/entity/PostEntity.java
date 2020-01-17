@@ -85,6 +85,9 @@ public class PostEntity extends BaseEntity {
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
 
+    @Property(Fields.draftId)
+    private String draftId;
+
     private long views;
 
     private long reply;
@@ -109,6 +112,7 @@ public class PostEntity extends BaseEntity {
         String lastModifiedTime = "lastModifiedTime";
         String ename = "ename";
         String shamId = "shamId";
+        String draftId = "draftId";
     }
 
 

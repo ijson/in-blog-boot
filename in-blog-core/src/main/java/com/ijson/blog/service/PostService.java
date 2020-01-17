@@ -51,4 +51,6 @@ public interface PostService {
     PostEntity enable(String ename, String shamId, boolean enable, AuthContext context);
 
     PostEntity findByShamIdInternal(String ename, String shamId,boolean includeTopicAncCount);
+
+    PostEntity findByDraftId(String id);
 }

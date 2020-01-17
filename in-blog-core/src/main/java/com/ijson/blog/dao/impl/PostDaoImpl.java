@@ -66,6 +66,10 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             operations.set(PostEntity.Fields.content, entity.getContent());
         }
 
+        if (!Strings.isNullOrEmpty(entity.getDraftId())) {
+            operations.set(PostEntity.Fields.draftId, entity.getDraftId());
+        }
+
         if (!Strings.isNullOrEmpty(entity.getTitle())) {
             operations.set(PostEntity.Fields.title, entity.getTitle());
         }
@@ -250,6 +254,13 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         Query<PostEntity> query = datastore.createQuery(PostEntity.class);
         query.field(PostEntity.Fields.shamId).equal(shamId);
         query.field(PostEntity.Fields.ename).equal(ename);
+        return query.get();
+    }
+
+    @Override
+    public PostEntity findByDraftId(String draftId) {
+        Query<PostEntity> query = datastore.createQuery(PostEntity.class);
+        query.field(PostEntity.Fields.draftId).equal(draftId);
         return query.get();
     }
 

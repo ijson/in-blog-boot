@@ -289,4 +289,9 @@ public class PostServiceImpl implements PostService {
 
         return entity;
     }
+
+    @Override
+    public PostEntity findByDraftId(String id) {
+        return postDao.findByDraftId(id);
+    }
 }

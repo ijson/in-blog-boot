@@ -1,6 +1,7 @@
 package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.PostDraftEntity;
+import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.model.AuthContext;
 
 /**
