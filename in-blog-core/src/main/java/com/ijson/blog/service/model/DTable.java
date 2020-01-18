@@ -1,9 +1,11 @@
 package com.ijson.blog.service.model;
 
+import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.util.Pageable;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.Data;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,20 +29,19 @@ public class DTable {
     private long recordsTotal;
     private long recordsFiltered;
 
-    public static DTable create(List<Post> posts, PageResult<PostEntity> result, int index) {
-        if (Objects.isNull(result)) {
-            return new DTable();
-        }
-        Pageable pageable = new Pageable(((Long) result.getTotal()).intValue(), index);
 
+    public static DTable create(List<Post> posts, Long total, int index) {
+        Pageable pageable = new Pageable(total.intValue(), index);
         DTable data = new DTable();
-        data.setITotalDisplayRecords(result.getTotal());
-        data.setITotalRecords(result.getTotal());
-        data.setRecordsFiltered(result.getTotal());
-        data.setRecordsTotal(result.getTotal());
+        data.setITotalDisplayRecords(total);
+        data.setITotalRecords(total);
+        data.setRecordsFiltered(total);
+        data.setRecordsTotal(total);
         data.setAaData(posts);
         data.setSEcho(pageable.getCurrentPage());
         return data;
     }
+
+
 }
 

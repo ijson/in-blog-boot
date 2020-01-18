@@ -35,6 +35,12 @@
                     </a>
 
                     <ul class="treeview-menu">
+
+                        <%if(array.contain(session.authContext.permissionEname,"admin_post_add_page")){%>
+                        <li class="${post_create_active!}"><a href="/admin/post/add/page"><i class="fa fa-edit"></i>新建/编辑文章</a></li>
+                        <%}%>
+
+
                         <%if(array.contain(session.authContext.permissionEname,"admin_post_list_page")){%>
                         <li class="${post_list_active!}">
                             <a href="/admin/post/list/page"><i class="fa fa-list-ol"></i>文章列表
@@ -55,9 +61,7 @@
                         </li>
                         <%}%>
 
-                        <%if(array.contain(session.authContext.permissionEname,"admin_post_add_page")){%>
-                        <li class="${post_create_active!}"><a href="/admin/post/add/page"><i class="fa fa-edit"></i>新建/编辑文章</a></li>
-                        <%}%>
+
                         <!--<li><a href="#"><i class="fa fa-folder-open-o"></i>我的分类</a></li>-->
 
 

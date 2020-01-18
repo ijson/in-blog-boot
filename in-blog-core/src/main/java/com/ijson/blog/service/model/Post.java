@@ -137,6 +137,7 @@ public class Post {
             post.setEname(key.getEname());
             post.setShamId(key.getShamId());
             post.setLastModifiedBy(key.getLastModifiedBy());
+            post.setDraftId(key.getDraftId());
             return post;
         }).collect(Collectors.toList());
     }
@@ -172,6 +173,7 @@ public class Post {
             post.setEname(key.getEname());
             post.setShamId(key.getShamId());
             post.setUserCname(key.getCname());
+            post.setCname(key.getCname());
             post.setLastModifiedBy(key.getLastModifiedBy());
             return post;
         }).collect(Collectors.toList());
@@ -225,6 +227,7 @@ public class Post {
         post.setImageUrl(entity.getContent());
         post.setEnable(entity.isEnable());
         post.setShamId(entity.getShamId());
+        post.setDraftId(entity.getDraftId());
         post.setLastModifiedBy(entity.getLastModifiedBy());
         if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
             post.setTopicName(getTpoicNames(entity.getTopicName()));
@@ -248,6 +251,7 @@ public class Post {
         post.setViews(entity.getViews());
         post.setShamId(entity.getShamId());
         post.setLastModifiedBy(entity.getLastModifiedBy());
+        post.setDraftId(entity.getDraftId());
         return post;
     }
 }

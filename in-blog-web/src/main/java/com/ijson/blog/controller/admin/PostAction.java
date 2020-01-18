@@ -13,7 +13,6 @@ import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
-import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.FileUploadService;
 import com.ijson.blog.service.PostService;
@@ -24,8 +23,6 @@ import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UploadResult;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.Md5Util;
-import com.ijson.blog.util.PassportHelper;
-import com.ijson.blog.util.sensitive.SensitiveFilter;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +33,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -45,7 +41,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -84,7 +79,10 @@ public class PostAction extends BaseController {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         if (!Strings.isNullOrEmpty(post.getId())) {
-            return updatePost(request, post);
+            PostEntity postEntity = postService.findInternalById(post.getId());
+            if (Objects.nonNull(postEntity)) {
+                return updatePost(request, post, postEntity);
+            }
         }
 
         if (Strings.isNullOrEmpty(post.getTitle())) {
@@ -111,13 +109,13 @@ public class PostAction extends BaseController {
 
         //topicEntitys有判空
         PostEntity entity = PostEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), topics, context.getEname());
-
+        entity.setCreate(true);
         entity = postService.createPost(context, entity);
         log.info("文章创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
         return Result.ok("创建文章成功!");
     }
 
-    private Result updatePost(HttpServletRequest request, @RequestBody Post post) {
+    private Result updatePost(HttpServletRequest request, Post post, PostEntity entity) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -132,8 +130,6 @@ public class PostAction extends BaseController {
         if (Strings.isNullOrEmpty(post.getContent())) {
             throw new BlogUpdateException(BlogBusinessExceptionCode.CONTEXT_NOT_SET);
         }
-
-        PostEntity entity = postService.findById(post.getId());
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
         List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
@@ -203,7 +199,7 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        PostEntity postEntity = postService.findByShamIdInternal(ename, shamId,false);
+        PostEntity postEntity = postService.findByShamIdInternal(ename, shamId, false);
         if (postEntity != null && postEntity.isEnable()) {
             return Result.error(-1, "禁用后才可删除该文章");
         }
@@ -282,7 +278,7 @@ public class PostAction extends BaseController {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
-            return DTable.create(Lists.newArrayList(), null, start);
+            return new DTable();
         }
 
 
@@ -305,13 +301,17 @@ public class PostAction extends BaseController {
 
         PageResult<PostEntity> result = postService.find(query, page);
 
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new DTable();
+        }
+
         List<PostEntity> dataList = result.getDataList();
         List<Post> posts = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(dataList)) {
             posts = Post.postList(result);
         }
 
-        return DTable.create(posts, result, start);
+        return DTable.create(posts, result.getTotal(), start);
     }
 
 }

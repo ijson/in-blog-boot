@@ -59,12 +59,20 @@ public class PostServiceImpl implements PostService {
     public PostEntity createPost(AuthContext context, PostEntity entity) {
         //调用此接口 要将草稿置空
         entity.setDraftId("");
-        PostEntity rst =  postDao.createOrUpdate(entity,true);
+        String draftId = entity.getId();
+        //如果是草稿转博文,需要将id删除
+        if (entity.isCreate()) {
+            entity.setId("");
+        }
+        PostEntity rst = postDao.createOrUpdate(entity, true);
         //创建博文,删除草稿
-        if(Objects.nonNull(rst)&& !Strings.isNullOrEmpty(rst.getDraftId())){
-            PostDraftEntity postDraft = draftDao.find(rst.getDraftId());
-            if(Objects.nonNull(postDraft)){
-                draftDao.removeDraft(rst.getDraftId());
+        if (Objects.nonNull(rst)) {
+            if (Strings.isNullOrEmpty(draftId)) {
+                draftId = rst.getDraftId();
+            }
+            PostDraftEntity postDraft = draftDao.find(draftId);
+            if (Objects.nonNull(postDraft)) {
+                draftDao.removeDraft(draftId);
             }
         }
 
@@ -98,7 +106,7 @@ public class PostServiceImpl implements PostService {
                         reply = 0L;
                     }
                     String cname = userIdOrCname.get(key.getUserId());
-                    key.setCname(Strings.isNullOrEmpty(cname)?Constant.UnknownUser:cname);
+                    key.setCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownUser : cname);
                     key.setReply(reply);
                 }).collect(Collectors.toList());
         postEntityPageResult.setDataList(lastEntity);
@@ -128,6 +136,33 @@ public class PostServiceImpl implements PostService {
         PostEntity entity = postDao.find(id);
         if (Objects.isNull(entity)) {
             throw new BlogNotFoundException(BlogBusinessExceptionCode.BLOG_NOT_FOUND);
+        }
+        CountEntity countById = countDao.findCountById(id);
+        if (Objects.nonNull(countById)) {
+            entity.setViews(countById.getViews());
+        }
+
+        List<ReplyEntity> replyEntitys = replyDao.findCountById(id);
+        if (CollectionUtils.isNotEmpty(replyEntitys)) {
+            entity.setReply(replyEntitys.size());
+        } else {
+            entity.setReply(0);
+        }
+
+        List<TopicEntity> topicEntitys = topicDao.finds(entity.getTopicId());
+        if (CollectionUtils.isNotEmpty(topicEntitys)) {
+            entity.setTopicName(topicEntitys);
+        }
+
+        return entity;
+    }
+
+
+    @Override
+    public PostEntity findInternalById(String id) {
+        PostEntity entity = postDao.find(id);
+        if (Objects.isNull(entity)) {
+            return null;
         }
         CountEntity countById = countDao.findCountById(id);
         if (Objects.nonNull(countById)) {
@@ -181,7 +216,6 @@ public class PostServiceImpl implements PostService {
 
         return entity;
     }
-
 
 
     @Cacheable(value = "postCount")
@@ -274,10 +308,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostEntity findByShamIdInternal(String ename, String shamId,boolean includeTopicAncCount) {
+    public PostEntity findByShamIdInternal(String ename, String shamId, boolean includeTopicAncCount) {
         PostEntity entity = postDao.findByShamIdInternal(ename, shamId);
 
-        if(includeTopicAncCount){
+        if (includeTopicAncCount) {
             CountEntity countById = countDao.findCountById(entity.getId());
             if (Objects.nonNull(countById)) {
                 entity.setViews(countById.getViews());

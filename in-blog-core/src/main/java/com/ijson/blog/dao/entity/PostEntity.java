@@ -96,6 +96,8 @@ public class PostEntity extends BaseEntity {
 
     private volatile String cname;
 
+    private volatile boolean isCreate;
+
     public interface Fields {
         String id = "_id";
         String topicId = "topicId";

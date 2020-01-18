@@ -24,7 +24,9 @@ public interface PostService {
 
     PostEntity findById(String id);
 
-    PostEntity findByShamId(String ename,String shamId);
+    PostEntity findInternalById(String id);
+
+    PostEntity findByShamId(String ename, String shamId);
 
     long count();
 

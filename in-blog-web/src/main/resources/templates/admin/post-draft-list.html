@@ -89,7 +89,7 @@
     function load() {
         var table = $('#example1').DataTable({
             "ajax": {
-                "url": "/draft/post/list",
+                "url": "/draft/list",
                 "method": "post"
             },
             "destroy": true,
@@ -102,7 +102,7 @@
             "lengthMenu": [15, 30, 45],
             "columns": [
                 {"data": "title", width: 250},
-                {"data": "lastModifiedBy", width: 130},
+                {"data": "cname", width: 130},
                 {
                     "data": "lastModifiedTime", width: 130, "render": function (data, type, row) {
                         return myFormatConversion.timeconv(data);
@@ -110,10 +110,10 @@
                 },
 
                 {
-                    "data": null, width: 200, "render": function (data, type, row) {
+                    "data": null, width: 90, "render": function (data, type, row) {
                         var str = "<div class=\"btn-group\">\n";
 
-                        str += "        <button type=\"button\" class=\"btn btn-primary\"    onclick=\"editDraft('" + row.ename + "','" + row.shamId + "')\">草稿</button>\n";
+                        str += "        <button type=\"button\" class=\"btn btn-primary\"    onclick=\"editDraft('" + row.ename + "','" + row.shamId + "')\">编辑草稿</button>\n";
                         str += "        <button type=\"button\" class=\"btn btn-danger\"  onclick=\"deletedDrift('" + row.ename + "','" + row.shamId + "')\">删除</button>\n";
                         str += "  </div>\n";
                         return str;
