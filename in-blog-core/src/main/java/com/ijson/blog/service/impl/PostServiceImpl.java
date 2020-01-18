@@ -266,6 +266,7 @@ public class PostServiceImpl implements PostService {
     public PostEntity delete(String id, AuthContext context) {
         //return postDao.delete(id, context.getId());
         postDao.delete(id);
+        draftDao.removeDraft(id);
         return null;
     }
 
