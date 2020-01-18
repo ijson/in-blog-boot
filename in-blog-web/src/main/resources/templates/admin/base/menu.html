@@ -91,13 +91,12 @@
 
 
                 <ul class="treeview-menu">
-
-                    <!--<li><a href="#"><i class="fa fa-envelope-o"></i>消息列表</a></li>-->
-
-                    <!--<li><a href="#"><i class="fa fa-bell-o"></i>通知列表</a></li>-->
                     <%if(array.contain(session.authContext.permissionEname,"admin_i_config_page")){%>
-                    <li class="${admin_i_config_page_active!}"><a href="/admin/i/config/page"><i class="fa fa-wrench"></i>我的设置</a>
-                    </li>
+                    <li class="${admin_i_config_page_active!}"><a href="/admin/i/config/page"><i class="fa fa-wrench"></i>我的设置</a></li>
+                    <%}%>
+
+                    <%if(array.contain(session.authContext.permissionEname,"admin_friendly_link_page")){%>
+                    <li class="${admin_friendly_link_page_active!}"><a href="/admin/friendly/link/page"><i class="fa fa-link"></i>友情链接</a></li>
                     <%}%>
                 </ul>
             </li>
