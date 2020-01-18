@@ -48,6 +48,8 @@
                         <div class="box-body pad">
                             <form id="postDetail" class="form-horizontal">
                                 <input type="hidden" name="id" id="id" value="${editData.id!}">
+                                <input type="hidden" name="shamId" id="shamId" value="${editData.shamId!}">
+                                <input type="hidden" name="ename" id="ename" value="${editData.ename!}">
                                 <div class="box-body">
 
                                     <div class="form-group">
@@ -103,6 +105,8 @@
         var editor_data = CKEDITOR.instances.content.getData();
         var title = $("#title").val();
         var topicName = $("#topicName").val();
+        var shamId = $("#shamId").val();
+        var ename = $("#ename").val();
 
         if (title === undefined || title === '') {
             toastr.error("请填写文章标题");
@@ -114,7 +118,9 @@
             "id":$("#id").val(),
             "title": title,
             "content": editor_data,
-            "topicName":topicName
+            "topicName":topicName,
+            "shamId":shamId,
+            "ename":ename
         });
 
         $.ajax({

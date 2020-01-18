@@ -33,7 +33,7 @@ public class PostDraftServiceImpl implements PostDraftService {
             PostEntity postEntity = postDao.find(orUpdate.getId());
             if(Objects.nonNull(postEntity)){
                 postEntity.setDraftId(orUpdate.getId());
-                postDao.createOrUpdate(postEntity);
+                postDao.createOrUpdate(postEntity,false);
             }
         }
         return orUpdate;

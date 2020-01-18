@@ -52,9 +52,23 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private ViewSyncManager viewSyncManager;
 
+    @Autowired
+    private PostDraftDao draftDao;
+
     @Override
     public PostEntity createPost(AuthContext context, PostEntity entity) {
-        return postDao.createOrUpdate(entity);
+        //调用此接口 要将草稿置空
+        entity.setDraftId("");
+        PostEntity rst =  postDao.createOrUpdate(entity,true);
+        //创建博文,删除草稿
+        if(Objects.nonNull(rst)&& !Strings.isNullOrEmpty(rst.getDraftId())){
+            PostDraftEntity postDraft = draftDao.find(rst.getDraftId());
+            if(Objects.nonNull(postDraft)){
+                draftDao.removeDraft(rst.getDraftId());
+            }
+        }
+
+        return rst;
     }
 
     @Override

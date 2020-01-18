@@ -3,6 +3,7 @@ package com.ijson.blog.service.model;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.mongo.support.model.PageResult;
@@ -44,6 +45,7 @@ public class Post {
 
     private String imageUrl;
     private String cname;
+    private String draftId;
 
 
     private void setIntro(String intro) {
@@ -147,6 +149,7 @@ public class Post {
         return result.getDataList().stream().map(key -> {
             Post post = Post.create(key);
             post.setContent(null);
+            post.setDraftId(key.getDraftId());
             post.setEname(key.getEname());
             post.setShamId(key.getShamId());
             post.setUserCname(userOrCname.get(key.getUserId()));
@@ -166,6 +169,22 @@ public class Post {
 
     public static String getTpoicNames(List<TopicEntity> topicName) {
         return Joiner.on(",").join(topicName.stream().map(TopicEntity::getTopicName).collect(Collectors.toSet()));
+    }
+
+    public static Post create(PostDraftEntity entity) {
+        Post post = new Post();
+        post.setId(entity.getId());
+        post.setTitle(entity.getTitle());
+        post.setContent(entity.getContent());
+        post.setCreateTime(entity.getCreateTime());
+        post.setUserId(entity.getUserId());
+        post.setLastModifiedTime(entity.getLastModifiedTime());
+        post.setEname(entity.getEname());
+        post.setIntro(entity.getContent());
+        post.setImageUrl(entity.getContent());
+        post.setShamId(entity.getShamId());
+        post.setTopicName(entity.getTopicNames());
+        return post;
     }
 
     public static Post create(PostEntity entity) {

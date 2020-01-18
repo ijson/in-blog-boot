@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostDao {
 
-    PostEntity createOrUpdate(PostEntity entity);
+    PostEntity createOrUpdate(PostEntity entity,boolean updateLastModifiedTime);
 
     PostEntity updateShamIdTest(PostEntity entity);
 

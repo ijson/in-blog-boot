@@ -3,11 +3,13 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.service.PostDraftService;
 import com.ijson.blog.service.PostService;
 import com.ijson.blog.service.UserService;
 import com.ijson.blog.service.model.ConsoleData;
@@ -48,6 +50,8 @@ public class ConsoleAction extends BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PostDraftService postDraftService;
     /**
      * 后台首页
      *
@@ -144,6 +148,25 @@ public class ConsoleAction extends BaseController {
         view.addObject("post_create_active", "active");
         return view;
     }
+
+    @RequestMapping("/draft/edit/{ename}/{shamId}/page")
+    public ModelAndView skipPostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+        PostDraftEntity entity = postDraftService.find(ename,shamId);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/post-add.html");
+        addAdminModelAndView(view);
+        if(Objects.nonNull(entity)){
+            view.addObject("editData", Post.create(entity));
+            view.addObject("topic", Post.create(entity).getTopicName());
+        }
+
+
+        view.addObject("post_active", "active");
+        view.addObject("post_create_active", "active");
+        return view;
+    }
+
+
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

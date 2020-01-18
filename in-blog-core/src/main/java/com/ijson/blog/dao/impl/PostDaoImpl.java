@@ -24,9 +24,9 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
 
 
     @Override
-    public PostEntity createOrUpdate(PostEntity entity) {
+    public PostEntity createOrUpdate(PostEntity entity, boolean updateLastModifiedTime) {
         if (!Strings.isNullOrEmpty(entity.getId())) {
-            entity = findAndModify(entity);
+            entity = findAndModify(entity, updateLastModifiedTime);
         } else {
             ObjectId id = new ObjectId();
             entity.setId(id.toHexString());
@@ -53,7 +53,7 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         return query.asList();
     }
 
-    private PostEntity findAndModify(PostEntity entity) {
+    private PostEntity findAndModify(PostEntity entity, boolean updateLastModifiedTime) {
         Query<PostEntity> query = createQuery();
         query.field(PostEntity.Fields.id).equal(entity.getId());
         UpdateOperations operations = createUpdateOperations();
@@ -66,14 +66,15 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             operations.set(PostEntity.Fields.content, entity.getContent());
         }
 
-        if (!Strings.isNullOrEmpty(entity.getDraftId())) {
-            operations.set(PostEntity.Fields.draftId, entity.getDraftId());
-        }
+        operations.set(PostEntity.Fields.draftId, entity.getDraftId());
 
         if (!Strings.isNullOrEmpty(entity.getTitle())) {
             operations.set(PostEntity.Fields.title, entity.getTitle());
         }
-        operations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+
+        if (updateLastModifiedTime) {
+            operations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+        }
         return datastore.findAndModify(query, operations);
     }
 

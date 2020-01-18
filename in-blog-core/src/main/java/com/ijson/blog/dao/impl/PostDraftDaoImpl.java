@@ -5,6 +5,7 @@ import com.ijson.blog.dao.PostDraftDao;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.AbstractDao;
+import com.mongodb.WriteConcern;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
@@ -69,5 +70,10 @@ public class PostDraftDaoImpl extends AbstractDao<PostDraftEntity> implements Po
         query.field(PostDraftEntity.Fields.shamId).equal(shamId);
         query.field(PostDraftEntity.Fields.ename).equal(ename);
         return query.get();
+    }
+
+    @Override
+    public void removeDraft(String draftId) {
+        datastore.delete(datastore.createQuery(PostDraftEntity.class).field(PostDraftEntity.Fields.id).equal(draftId), WriteConcern.UNACKNOWLEDGED);
     }
 }

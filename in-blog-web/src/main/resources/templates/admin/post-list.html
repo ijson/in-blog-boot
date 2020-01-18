@@ -126,7 +126,14 @@
                 {
                     "data": null, width: 200, "render": function (data, type, row) {
                         var str = "<div class=\"btn-group\">\n";
-                        str += "        <button type=\"button\" class=\"btn btn-info\"    onclick=\"edit('" + row.ename + "','" + row.shamId + "')\">编辑</button>\n";
+
+                        if(row.draftId){
+                            str += "        <button type=\"button\" class=\"btn btn-primary\"    onclick=\"editDraft('" + row.ename + "','" + row.shamId + "')\">草稿</button>\n";
+                        }else{
+                            str += "        <button type=\"button\" class=\"btn btn-info\"    onclick=\"edit('" + row.ename + "','" + row.shamId + "')\">编辑</button>\n";
+
+                        }
+
 
                         if(row.enable){
                             str += "        <button type=\"button\" class=\"btn btn-warning\" onclick=\"enable('" + row.ename + "','" + row.shamId + "','" + row.enable + "', )\">停用</button>\n";
@@ -150,6 +157,10 @@
 
     function edit(ename, shamId) {
         window.location.href = '/admin/edit/' + ename + "/" + shamId + '/page';
+    }
+
+    function editDraft(ename, shamId) {
+        window.location.href = '/admin/draft/edit/' + ename + "/" + shamId + '/page';
     }
 
     function enable(ename, shamId, enable) {

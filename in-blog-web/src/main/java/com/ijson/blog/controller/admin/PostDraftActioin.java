@@ -49,7 +49,7 @@ public class PostDraftActioin extends BaseController {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
         }
 
-        PostDraftEntity entity = PostDraftEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), post.getTopicName(), context.getEname());
+        PostDraftEntity entity = PostDraftEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), post.getTopicName(), post.getEname(),post.getShamId());
         entity.setCreate(true);
         entity = postDraftService.createPostDraft(context, entity);
         log.info("草稿创建成功,id:{},title:{}", entity.getId(), entity.getTitle());

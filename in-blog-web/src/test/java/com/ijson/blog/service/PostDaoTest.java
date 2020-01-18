@@ -24,7 +24,7 @@ public class PostDaoTest {
 
     @Test
     public void add() {
-        postDao.createOrUpdate(new PostEntity());
+        postDao.createOrUpdate(new PostEntity(),true);
     }
 
     @Test

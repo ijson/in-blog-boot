@@ -15,4 +15,5 @@ public interface PostDraftDao {
 
     PostDraftEntity findByShamIdInternal(String ename, String shamId);
 
+    void removeDraft(String draftId);
 }

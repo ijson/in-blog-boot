@@ -69,7 +69,7 @@ public class PostDraftEntity extends BaseEntity {
      */
     private volatile boolean isCreate;
 
-    public static PostDraftEntity create(String id, String userId, String title, String content, String topicNames, String ename) {
+    public static PostDraftEntity create(String id, String userId, String title, String content, String topicNames, String ename,String shamId) {
         PostDraftEntity entity = new PostDraftEntity();
         entity.setEname(ename);
         entity.setId(id);
@@ -81,6 +81,7 @@ public class PostDraftEntity extends BaseEntity {
         entity.setLastModifiedBy(userId);
         entity.setLastModifiedTime(System.currentTimeMillis());
         entity.setTopicNames(topicNames);
+        entity.setShamId(shamId);
         return entity;
     }
 
