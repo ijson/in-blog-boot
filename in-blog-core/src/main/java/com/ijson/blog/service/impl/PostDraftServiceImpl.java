@@ -44,9 +44,9 @@ public class PostDraftServiceImpl implements PostDraftService {
         //如果不为空,添加数据信息
         if (Objects.nonNull(orUpdate)) {
             PostEntity postEntity = postDao.find(orUpdate.getId());
-            if(Objects.nonNull(postEntity)){
+            if (Objects.nonNull(postEntity)) {
                 postEntity.setDraftId(orUpdate.getId());
-                postDao.createOrUpdate(postEntity,false);
+                postDao.createOrUpdate(postEntity, false);
             }
         }
         return orUpdate;
@@ -63,6 +63,18 @@ public class PostDraftServiceImpl implements PostDraftService {
     }
 
     @Override
+    public void delete(String id) {
+        //需要将文章上的草稿id删除掉
+        PostEntity postEntity = postDao.find(id);
+        if (Objects.nonNull(postEntity)) {
+            postEntity.setDraftId("");
+            postDao.createOrUpdate(postEntity, false);
+        }
+        postDraftDao.removeDraft(id);
+    }
+
+
+    @Override
     public PageResult<PostDraftEntity> find(PostQuery iquery, Page page) {
         PageResult<PostDraftEntity> postEntityPageResult = postDraftDao.find(iquery, page);
 
@@ -75,7 +87,7 @@ public class PostDraftServiceImpl implements PostDraftService {
         List<PostDraftEntity> lastEntity = dataList.stream()
                 .peek(key -> {
                     String cname = userIdOrCname.get(key.getUserId());
-                    key.setCname(Strings.isNullOrEmpty(cname)? Constant.UnknownUser:cname);
+                    key.setCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownUser : cname);
                 }).collect(Collectors.toList());
 
         postEntityPageResult.setDataList(lastEntity);

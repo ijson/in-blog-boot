@@ -1,5 +1,6 @@
 package com.ijson.blog.service.model;
 
+import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.util.Pageable;
@@ -24,7 +25,7 @@ public class DTable {
     //筛选后总数
     private long iTotalDisplayRecords;
     //返回的集合
-    private List<Post> aaData;
+    private List<Post> aaData = Lists.newArrayList();
 
     private long recordsTotal;
     private long recordsFiltered;

@@ -128,4 +128,19 @@ public class PostDraftActioin extends BaseController {
         return DTable.create(posts, result.getTotal(), start);
     }
 
+
+    @PostMapping("/delete/{ename}/{shamId}")
+    public Result delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, HttpServletRequest request) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        PostDraftEntity postEntity = postDraftService.find(ename, shamId);
+        if(Objects.nonNull(postEntity)){
+            postDraftService.delete(postEntity.getId());
+            return Result.ok("删除成功");
+        }
+        return Result.error("删除异常,草稿不存在或数据存储异常");
+
+    }
 }
