@@ -57,24 +57,24 @@
             </li>
             <%}%>
 
-            <%if(array.contain(session.authContext.permissionEname,"org_system_root")){%>
-            <li class="treeview ${org_system_root_active!}">
+            <%if(array.contain(session.authContext.permissionEname,"admin_org_root")){%>
+            <li class="treeview ${admin_org_root_active!}">
 
                 <a href="#">
-                    <i class="fa fa-cog"></i>
-                    <span>组织架构管理</span>
+                    <i class="fa fa-users"></i>
+                    <span>组织架构</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
 
 
                 <ul class="treeview-menu">
 
-                    <%if(array.contain(session.authContext.permissionEname,"role_config_page")){%>
-                    <li class="${role_config_page_active!}"><a href="/admin/role/page"><i class="fa fa-wrench"></i>角色管理</a></li>
+                    <%if(array.contain(session.authContext.permissionEname,"admin_role_page")){%>
+                    <li class="${admin_role_page_active!}"><a href="/admin/role/page"><i class="fa fa-vcard"></i>角色管理</a></li>
                     <%}%>
 
-                    <%if(array.contain(session.authContext.permissionEname,"user_config_page")){%>
-                    <li class="${user_config_page_active!}"><a href="/admin/user/page"><i class="fa fa-wrench"></i>用户管理</a></li>
+                    <%if(array.contain(session.authContext.permissionEname,"admin_user_page")){%>
+                    <li class="${admin_user_page_active!}"><a href="/admin/user/page"><i class="fa fa-user-plus"></i>用户管理</a></li>
                     <%}%>
                 </ul>
             </li>
