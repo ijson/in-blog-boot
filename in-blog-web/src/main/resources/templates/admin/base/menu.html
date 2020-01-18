@@ -11,7 +11,7 @@
             </div>
         </form>
         <ul class="sidebar-menu" data-widget="tree">
-            <%if(array.contain(session.authContext.permissionPath,"/admin/console/page")){%>
+            <%if(array.contain(session.authContext.permissionEname,"﻿admin_console_page")){%>
                 <li>
                     <a href="/admin/console/page">
                         <i class="fa fa-home"></i> <span>首页</span>
@@ -24,7 +24,7 @@
 
 
 
-            <%if(array.contain(session.authContext.permissionPath,"/admin/post/root")){%>
+            <%if(array.contain(session.authContext.permissionEname,"admin_post_root")){%>
                 <li class="treeview ${post_active!}">
                     <a href="#">
                         <i class="fa fa-file-text"></i>
@@ -35,9 +35,9 @@
                     </a>
 
                     <ul class="treeview-menu">
-                        <%if(array.contain(session.authContext.permissionPath,"/admin/post/list/page")){%>
+                        <%if(array.contain(session.authContext.permissionEname,"admin_post_list_page")){%>
                         <li class="${post_list_active!}">
-                            <a href="/admin/post/list/page"><i class="fa fa-list-ul"></i>文章列表
+                            <a href="/admin/post/list/page"><i class="fa fa-list-ol"></i>文章列表
                                 <!--<span class="pull-right-container">-->
                                 <!--<small class="label pull-right bg-teal">edit</small>-->
                                 <!--</span>-->
@@ -45,7 +45,7 @@
                         </li>
                         <%}%>
 
-                        <%if(array.contain(session.authContext.permissionPath,"/draft/list/page")){%>
+                        <%if(array.contain(session.authContext.permissionEname,"admin_draft_list_page")){%>
                         <li class="${post_draft_list_active!}">
                             <a href="/admin/draft/list/page"><i class="fa fa-list-ul"></i>草稿列表
                                 <span class="pull-right-container">
@@ -55,7 +55,7 @@
                         </li>
                         <%}%>
 
-                        <%if(array.contain(session.authContext.permissionPath,"/admin/post/add/page")){%>
+                        <%if(array.contain(session.authContext.permissionEname,"admin_post_add_page")){%>
                         <li class="${post_create_active!}"><a href="/admin/post/add/page"><i class="fa fa-edit"></i>新建/编辑文章</a></li>
                         <%}%>
                         <!--<li><a href="#"><i class="fa fa-folder-open-o"></i>我的分类</a></li>-->
@@ -66,7 +66,7 @@
                 </li>
             <%}%>
 
-            <%if(array.contain(session.authContext.permissionPath,"/admin/system/root")){%>
+            <%if(array.contain(session.authContext.permissionEname,"admin_system_root")){%>
                 <li class="treeview ${system_active!}">
 
                     <a href="#">
@@ -83,7 +83,7 @@
                         <!--<li><a href="#"><i class="fa fa-envelope-o"></i>消息列表</a></li>-->
 
                         <!--<li><a href="#"><i class="fa fa-bell-o"></i>通知列表</a></li>-->
-                        <%if(array.contain(session.authContext.permissionPath,"/admin/i/config/page")){%>
+                        <%if(array.contain(session.authContext.permissionEname,"admin_i_config_page")){%>
                         <li class="${i_config_active!}"><a href="/admin/i/config/page"><i class="fa fa-wrench"></i>我的设置</a></li>
                         <%}%>
                     </ul>

@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
 
             if (CollectionUtils.isNotEmpty(role.getPermission())) {
                 context.setPermissionPath(role.getPermission().stream().map(Permission::getPath).collect(Collectors.toList()));
+                context.setPermissionEname(role.getPermission().stream().map(Permission::getEname).collect(Collectors.toList()));
             }
         }
 

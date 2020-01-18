@@ -27,6 +27,7 @@ public class AuthContext {
     private String roleCname;
     private List<Permission> permission;
     private List<String> permissionPath;
+    private List<String> permissionEname;
 
     public AuthContext(String id,
                        String ename,
