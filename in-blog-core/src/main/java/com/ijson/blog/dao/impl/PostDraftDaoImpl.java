@@ -3,12 +3,19 @@ package com.ijson.blog.dao.impl;
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.PostDraftDao;
 import com.ijson.blog.dao.entity.PostDraftEntity;
+import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.AbstractDao;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import com.mongodb.WriteConcern;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * desc:
@@ -75,5 +82,38 @@ public class PostDraftDaoImpl extends AbstractDao<PostDraftEntity> implements Po
     @Override
     public void removeDraft(String draftId) {
         datastore.delete(datastore.createQuery(PostDraftEntity.class).field(PostDraftEntity.Fields.id).equal(draftId), WriteConcern.UNACKNOWLEDGED);
+    }
+
+    @Override
+    public PageResult<PostDraftEntity> find(PostQuery iquery, Page page) {
+        Query<PostDraftEntity> query = datastore.createQuery(PostDraftEntity.class);
+
+        if (!Strings.isNullOrEmpty(iquery.getId())) {
+            query.field(PostDraftEntity.Fields.id).equal(iquery.getId());
+        }
+
+        if (!Strings.isNullOrEmpty(iquery.getTitle())) {
+            if (iquery.isLikeTitle()) {
+                query.or(query.criteria(PostDraftEntity.Fields.title).containsIgnoreCase(iquery.getTitle()),
+                        query.criteria(PostDraftEntity.Fields.content).containsIgnoreCase(iquery.getTitle()));
+            } else {
+                query.field(PostDraftEntity.Fields.title).equal(iquery.getTitle());
+            }
+        }
+
+        if (page.getOrderBy() == null) {
+            query.order("-" + PostEntity.Fields.lastModifiedTime);//添加排序
+        }
+        if (page.getPageNumber() > 0) {
+            query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
+        }
+
+        long totalNum = query.countAll();
+        List<PostDraftEntity> entities = query.asList();
+
+        PageResult<PostDraftEntity> ret = new PageResult<>();
+        ret.setDataList(entities);
+        ret.setTotal(totalNum);
+        return ret;
     }
 }

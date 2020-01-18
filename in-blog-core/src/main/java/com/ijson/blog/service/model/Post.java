@@ -34,6 +34,7 @@ public class Post {
     private long views;
     private String userId;
     private long lastModifiedTime;
+    private String lastModifiedBy;
     private String topicName;
     private List<Topic> topics;
     private long pros;
@@ -135,12 +136,13 @@ public class Post {
             post.setReply(key.getReply());
             post.setEname(key.getEname());
             post.setShamId(key.getShamId());
+            post.setLastModifiedBy(key.getLastModifiedBy());
             return post;
         }).collect(Collectors.toList());
     }
 
 
-    public static List<Post> postList(PageResult<PostEntity> result, Map<String, String> userOrCname) {
+    public static List<Post> postList(PageResult<PostEntity> result) {
 
         if (result == null) {
             return Lists.newArrayList();
@@ -152,7 +154,25 @@ public class Post {
             post.setDraftId(key.getDraftId());
             post.setEname(key.getEname());
             post.setShamId(key.getShamId());
-            post.setUserCname(userOrCname.get(key.getUserId()));
+            post.setUserCname(key.getCname());
+            post.setLastModifiedBy(key.getLastModifiedBy());
+            return post;
+        }).collect(Collectors.toList());
+    }
+
+    public static List<Post> postDraftList(PageResult<PostDraftEntity> result) {
+
+        if (result == null) {
+            return Lists.newArrayList();
+        }
+
+        return result.getDataList().stream().map(key -> {
+            Post post = Post.create(key);
+            post.setContent(null);
+            post.setEname(key.getEname());
+            post.setShamId(key.getShamId());
+            post.setUserCname(key.getCname());
+            post.setLastModifiedBy(key.getLastModifiedBy());
             return post;
         }).collect(Collectors.toList());
     }
@@ -184,6 +204,7 @@ public class Post {
         post.setImageUrl(entity.getContent());
         post.setShamId(entity.getShamId());
         post.setTopicName(entity.getTopicNames());
+        post.setLastModifiedBy(entity.getLastModifiedBy());
         return post;
     }
 
@@ -204,6 +225,7 @@ public class Post {
         post.setImageUrl(entity.getContent());
         post.setEnable(entity.isEnable());
         post.setShamId(entity.getShamId());
+        post.setLastModifiedBy(entity.getLastModifiedBy());
         if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
             post.setTopicName(getTpoicNames(entity.getTopicName()));
             post.setTopics(entity.getTopicName().stream().map(key -> {
@@ -225,6 +247,7 @@ public class Post {
         post.setSimpleTitle(entity.getTitle());
         post.setViews(entity.getViews());
         post.setShamId(entity.getShamId());
+        post.setLastModifiedBy(entity.getLastModifiedBy());
         return post;
     }
 }

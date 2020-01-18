@@ -1,6 +1,9 @@
 package com.ijson.blog.dao;
 
 import com.ijson.blog.dao.entity.PostDraftEntity;
+import com.ijson.blog.dao.query.PostQuery;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 
 /**
  * desc:
@@ -16,4 +19,6 @@ public interface PostDraftDao {
     PostDraftEntity findByShamIdInternal(String ename, String shamId);
 
     void removeDraft(String draftId);
+
+    PageResult<PostDraftEntity> find(PostQuery iquery, Page page);
 }

@@ -68,6 +68,7 @@ public class PostDraftEntity extends BaseEntity {
      * 是否为创建
      */
     private volatile boolean isCreate;
+    private volatile String cname;
 
     public static PostDraftEntity create(String id, String userId, String title, String content, String topicNames, String ename,String shamId) {
         PostDraftEntity entity = new PostDraftEntity();
@@ -104,8 +105,6 @@ public class PostDraftEntity extends BaseEntity {
         String topicNames = "topicNames";
         String createdBy = "createdBy";
         String createTime = "createTime";
-        String enable = "enable";
-        String deleted = "deleted";
         String lastModifiedBy = "lastModifiedBy";
         String title = "title";
         String lastModifiedTime = "lastModifiedTime";

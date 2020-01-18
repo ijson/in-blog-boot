@@ -2,7 +2,10 @@ package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 
 /**
  * desc:
@@ -17,7 +20,7 @@ public interface PostDraftService {
 
     PostDraftEntity find(String ename, String shamId);
 
-
+    PageResult<PostDraftEntity> find(PostQuery query, Page page);
 }
 
 

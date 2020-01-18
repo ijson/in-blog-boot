@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include("base/meta.html"){} %>
+    <title> 作者后台管理 | 草稿</title>
+    <link href="https://cdn.bootcss.com/datatables/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+
+</head>
+<body class="sidebar-mini skin-yellow-light">
+<div class="wrapper">
+
+    <% include("base/header.html"){} %>
+
+    <style type="text/css">
+        .post-list-disabled {
+            color: red
+        }
+
+        table {
+            table-layout: fixed;
+        }
+
+        th, td {
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -moz-text-overflow: ellipsis;
+        }
+    </style>
+
+    <% include("base/menu.html"){} %>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                草稿列表
+                <small>Version 1.0.1</small>
+                <small> 草稿编辑/删除不影响文章正常使用,文章删除后,草稿将自动删除</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">草稿列表</li>
+            </ol>
+        </section>
+
+
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">草稿列表</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>标题</th>
+                                    <th>最后修改人</th>
+                                    <th>最后修改时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+    <% include("base/footer.html"){} %>
+
+</div>
+<% include("base/bottom.html"){} %>
+<script src="https://cdn.bootcss.com/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.bootcss.com/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+<script>
+    $(function () {
+        load()
+    });
+
+
+    function load() {
+        var table = $('#example1').DataTable({
+            "ajax": {
+                "url": "/draft/post/list",
+                "method": "post"
+            },
+            "destroy": true,
+            "serverSide": true,
+            "bPaginate": true,//分页工具条显示
+            "pagingType": "full_numbers",
+            "flexibleWidth": false,
+            "responsive": true,
+            "bAutoWidth": false,
+            "lengthMenu": [15, 30, 45],
+            "columns": [
+                {"data": "title", width: 250},
+                {"data": "lastModifiedBy", width: 130},
+                {
+                    "data": "lastModifiedTime", width: 130, "render": function (data, type, row) {
+                        return myFormatConversion.timeconv(data);
+                    }
+                },
+
+                {
+                    "data": null, width: 200, "render": function (data, type, row) {
+                        var str = "<div class=\"btn-group\">\n";
+
+                        str += "        <button type=\"button\" class=\"btn btn-primary\"    onclick=\"editDraft('" + row.ename + "','" + row.shamId + "')\">草稿</button>\n";
+                        str += "        <button type=\"button\" class=\"btn btn-danger\"  onclick=\"deletedDrift('" + row.ename + "','" + row.shamId + "')\">删除</button>\n";
+                        str += "  </div>\n";
+                        return str;
+                    }
+                }
+            ],
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Chinese.json"
+            }
+        });
+    }
+
+
+    function editDraft(ename, shamId) {
+        window.location.href = '/admin/draft/edit/' + ename + "/" + shamId + '/page';
+    }
+
+
+    function deletedDrift(ename, shamId) {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/post/delete/" + ename + "/" + shamId,
+            async: false,
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                    load()
+                } else {
+                    toastr.error(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
+    //格式转换
+    var myFormatConversion;
+
+    myFormatConversion = {
+        formatterDateTime: function (date) {
+            return date.getFullYear()
+                + "-"// "年"
+                + ((date.getMonth() + 1) > 10 ? (date.getMonth() + 1) : "0"
+                    + (date.getMonth() + 1))
+                + "-"// "月"
+                + (date.getDate() < 10 ? "0" + date.getDate() : date
+                    .getDate())
+                + " "
+                + (date.getHours() < 10 ? "0" + date.getHours() : date
+                    .getHours())
+                + ":"
+                + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date
+                    .getMinutes())
+                + ":"
+                + (date.getSeconds() < 10 ? "0" + date.getSeconds() : date
+                    .getSeconds());
+        },
+        /**
+         * 毫秒转时间格式
+         */
+        longMsTimeConvertToDateTime: function (time) {
+            var myDate = new Date(time);
+            return this.formatterDateTime(myDate);
+        },
+
+        //时间格式转换函数
+        timeconv: function (data) {
+            return this.longMsTimeConvertToDateTime(data);
+        }
+
+    };
+
+</script>
+
+</body>
+</html>

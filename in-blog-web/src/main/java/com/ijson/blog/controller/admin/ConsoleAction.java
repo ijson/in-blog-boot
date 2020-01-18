@@ -1,12 +1,9 @@
 package com.ijson.blog.controller.admin;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.UserEntity;
-import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.PostDraftService;
@@ -15,11 +12,8 @@ import com.ijson.blog.service.UserService;
 import com.ijson.blog.service.model.ConsoleData;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.util.EhcacheUtil;
-import com.ijson.blog.util.Pageable;
 import com.ijson.blog.util.PassportHelper;
 import com.ijson.mongo.support.model.Page;
-import com.ijson.mongo.support.model.PageResult;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * https://www.bootcdn.cn/
@@ -52,6 +43,7 @@ public class ConsoleAction extends BaseController {
 
     @Autowired
     private PostDraftService postDraftService;
+
     /**
      * 后台首页
      *
@@ -88,43 +80,38 @@ public class ConsoleAction extends BaseController {
      * 跳转到博客列表
      *
      * @param index
-     * @param keyWord
      * @return
      */
     @RequestMapping("/post/list/page")
-    public ModelAndView postList(Integer index, String keyWord) {
+    public ModelAndView postList(Integer index) {
+        Page page = new Page();
+        if (Objects.isNull(index)) {
+            index = 1;
+        }
+        page.setPageNumber(index);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/post-list.html");
+        addAdminModelAndView(view);
+        view.addObject("post_active", "active");
+        view.addObject("post_list_active", "active");
+        return view;
+    }
+
+
+    @RequestMapping("/draft/list/page")
+    public ModelAndView postDriftList(Integer index) {
         Page page = new Page();
         if (Objects.isNull(index)) {
             index = 1;
         }
         page.setPageNumber(index);
 
-        PostQuery query = new PostQuery();
-        if (!Strings.isNullOrEmpty(keyWord)) {
-            query.setLikeTitle(true);
-            query.setTitle(keyWord);
-        }
-
-        PageResult<PostEntity> result = postService.find(query, page);
         ModelAndView view = new ModelAndView();
-        view.setViewName("admin/post-list.html");
+        view.setViewName("admin/post-draft-list.html");
         addAdminModelAndView(view);
-        view.addObject("total", result.getTotal());
-        view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
 
-
-        List<PostEntity> dataList = result.getDataList();
-        List<Post> posts = Lists.newArrayList();
-        if (CollectionUtils.isNotEmpty(dataList)) {
-            Set<String> userIds = dataList.stream().map(PostEntity::getUserId).collect(Collectors.toSet());
-            posts = Post.postList(result, userService.findCnameByIds(userIds));
-        }
-
-
-        view.addObject("dataList", posts);
-        view.addObject("keyWord", keyWord);
         view.addObject("post_active", "active");
-        view.addObject("post_list_active", "active");
+        view.addObject("post_draft_list_active", "active");
         return view;
     }
 
@@ -136,7 +123,7 @@ public class ConsoleAction extends BaseController {
      */
     @RequestMapping("/edit/{ename}/{shamId}/page")
     public ModelAndView skipPostEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
-        PostEntity entity = postService.findByShamIdInternal(ename, shamId,true);
+        PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
 
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/post-add.html");
@@ -151,11 +138,11 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/draft/edit/{ename}/{shamId}/page")
     public ModelAndView skipPostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
-        PostDraftEntity entity = postDraftService.find(ename,shamId);
+        PostDraftEntity entity = postDraftService.find(ename, shamId);
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/post-add.html");
         addAdminModelAndView(view);
-        if(Objects.nonNull(entity)){
+        if (Objects.nonNull(entity)) {
             view.addObject("editData", Post.create(entity));
             view.addObject("topic", Post.create(entity).getTopicName());
         }
@@ -165,7 +152,6 @@ public class ConsoleAction extends BaseController {
         view.addObject("post_create_active", "active");
         return view;
     }
-
 
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

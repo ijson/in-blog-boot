@@ -1,15 +1,25 @@
 package com.ijson.blog.service.impl;
 
+import com.google.common.base.Strings;
 import com.ijson.blog.dao.PostDao;
 import com.ijson.blog.dao.PostDraftDao;
+import com.ijson.blog.dao.UserDao;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.PostDraftService;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -24,6 +34,9 @@ public class PostDraftServiceImpl implements PostDraftService {
 
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public PostDraftEntity createPostDraft(AuthContext context, PostDraftEntity entity) {
@@ -47,5 +60,25 @@ public class PostDraftServiceImpl implements PostDraftService {
     @Override
     public PostDraftEntity find(String ename, String shamId) {
         return postDraftDao.findByShamIdInternal(ename, shamId);
+    }
+
+    @Override
+    public PageResult<PostDraftEntity> find(PostQuery iquery, Page page) {
+        PageResult<PostDraftEntity> postEntityPageResult = postDraftDao.find(iquery, page);
+
+        List<PostDraftEntity> dataList = postEntityPageResult.getDataList();
+
+        Set<String> userIds = dataList.stream().map(PostDraftEntity::getUserId).collect(Collectors.toSet());
+
+        Map<String, String> userIdOrCname = userDao.batchCnameByIds(userIds);
+
+        List<PostDraftEntity> lastEntity = dataList.stream()
+                .peek(key -> {
+                    String cname = userIdOrCname.get(key.getUserId());
+                    key.setCname(Strings.isNullOrEmpty(cname)? Constant.UnknownUser:cname);
+                }).collect(Collectors.toList());
+
+        postEntityPageResult.setDataList(lastEntity);
+        return postEntityPageResult;
     }
 }

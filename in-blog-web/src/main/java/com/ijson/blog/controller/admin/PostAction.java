@@ -308,8 +308,7 @@ public class PostAction extends BaseController {
         List<PostEntity> dataList = result.getDataList();
         List<Post> posts = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(dataList)) {
-            Set<String> userIds = dataList.stream().map(PostEntity::getUserId).collect(Collectors.toSet());
-            posts = Post.postList(result, userService.findCnameByIds(userIds));
+            posts = Post.postList(result);
         }
 
         return DTable.create(posts, result, start);
