@@ -70,8 +70,8 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         addAdminModelAndView(view);
         view.setViewName("admin/post-add.html");
-        view.addObject("post_active", "active");
-        view.addObject("post_create_active", "active");
+        view.addObject("admin_post_root_active", "active");
+        view.addObject("admin_post_add_page_active", "active");
         return view;
     }
 
@@ -92,8 +92,8 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/post-list.html");
         addAdminModelAndView(view);
-        view.addObject("post_active", "active");
-        view.addObject("post_list_active", "active");
+        view.addObject("admin_post_root_active", "active");
+        view.addObject("admin_post_list_page_active", "active");
         return view;
     }
 
@@ -110,8 +110,8 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/post-draft-list.html");
         addAdminModelAndView(view);
 
-        view.addObject("post_active", "active");
-        view.addObject("post_draft_list_active", "active");
+        view.addObject("admin_post_root_active", "active");
+        view.addObject("admin_draft_list_page_active", "active");
         return view;
     }
 
@@ -131,8 +131,8 @@ public class ConsoleAction extends BaseController {
         view.addObject("editData", Post.create(entity));
         view.addObject("topic", Post.create(entity).getTopicName());
 
-        view.addObject("post_active", "active");
-        view.addObject("post_create_active", "active");
+        view.addObject("admin_post_root_active", "active");
+        view.addObject("admin_post_add_page_active", "active");
         return view;
     }
 
@@ -148,8 +148,8 @@ public class ConsoleAction extends BaseController {
         }
 
 
-        view.addObject("post_active", "active");
-        view.addObject("post_create_active", "active");
+        view.addObject("admin_post_root_active", "active");
+        view.addObject("admin_post_add_page_active", "active");
         return view;
     }
 
@@ -181,8 +181,8 @@ public class ConsoleAction extends BaseController {
 
         view.addObject("user", userEntity);
 
-        view.addObject("system_active", "active");
-        view.addObject("i_config_active", "active");
+        view.addObject("admin_system_root_active", "active");
+        view.addObject("admin_i_config_page_active", "active");
         return view;
     }
 }
