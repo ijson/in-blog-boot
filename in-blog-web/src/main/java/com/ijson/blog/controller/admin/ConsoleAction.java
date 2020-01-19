@@ -83,12 +83,7 @@ public class ConsoleAction extends BaseController {
      * @return
      */
     @RequestMapping("/post/list/page")
-    public ModelAndView postList(Integer index) {
-        Page page = new Page();
-        if (Objects.isNull(index)) {
-            index = 1;
-        }
-        page.setPageNumber(index);
+    public ModelAndView postList() {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/post-list.html");
         addAdminModelAndView(view);
@@ -99,19 +94,34 @@ public class ConsoleAction extends BaseController {
 
 
     @RequestMapping("/draft/list/page")
-    public ModelAndView postDriftList(Integer index) {
-        Page page = new Page();
-        if (Objects.isNull(index)) {
-            index = 1;
-        }
-        page.setPageNumber(index);
-
+    public ModelAndView postDriftList() {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/post-draft-list.html");
         addAdminModelAndView(view);
-
         view.addObject("admin_post_root_active", "active");
         view.addObject("admin_draft_list_page_active", "active");
+        return view;
+    }
+
+
+    @RequestMapping("role/page")
+    public ModelAndView rolePage() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/role-list.html");
+        addAdminModelAndView(view);
+        view.addObject("admin_org_root_active", "active");
+        view.addObject("admin_role_page_active", "active");
+        return view;
+    }
+
+
+    @RequestMapping("user/page")
+    public ModelAndView userPage() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/user-list.html");
+        addAdminModelAndView(view);
+        view.addObject("admin_org_root_active", "active");
+        view.addObject("admin_user_page_active", "active");
         return view;
     }
 
@@ -146,8 +156,6 @@ public class ConsoleAction extends BaseController {
             view.addObject("editData", Post.create(entity));
             view.addObject("topic", Post.create(entity).getTopicName());
         }
-
-
         view.addObject("admin_post_root_active", "active");
         view.addObject("admin_post_add_page_active", "active");
         return view;

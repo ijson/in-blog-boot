@@ -124,6 +124,7 @@ public class UserEntity extends BaseEntity {
 
     private volatile String startTime;
     private volatile String endTime;
+    private volatile String roleCname;
 
 
     public static UserEntity create(String ename, String cname, String email, String mobile, String password, String qq, String wechat, String weibo) {

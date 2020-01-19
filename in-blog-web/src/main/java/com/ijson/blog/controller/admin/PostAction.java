@@ -17,7 +17,7 @@ import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.FileUploadService;
 import com.ijson.blog.service.PostService;
 import com.ijson.blog.service.TopicService;
-import com.ijson.blog.service.model.DTable;
+import com.ijson.blog.service.model.dtable.PostDTable;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UploadResult;
@@ -274,11 +274,11 @@ public class PostAction extends BaseController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public DTable list(Integer start, Integer length, HttpServletRequest request) {
+    public PostDTable list(Integer start, Integer length, HttpServletRequest request) {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
-            return new DTable();
+            return new PostDTable();
         }
 
 
@@ -302,7 +302,7 @@ public class PostAction extends BaseController {
         PageResult<PostEntity> result = postService.find(query, page);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
-            return new DTable();
+            return new PostDTable();
         }
 
         List<PostEntity> dataList = result.getDataList();
@@ -311,7 +311,7 @@ public class PostAction extends BaseController {
             posts = Post.postList(result);
         }
 
-        return DTable.create(posts, result.getTotal(), start);
+        return PostDTable.create(posts, result.getTotal(), start);
     }
 
 }

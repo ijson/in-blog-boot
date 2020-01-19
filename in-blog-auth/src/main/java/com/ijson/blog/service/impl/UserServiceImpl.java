@@ -4,15 +4,19 @@ import com.google.common.base.Strings;
 import com.ijson.blog.dao.UserDao;
 import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogLoginException;
 import com.ijson.blog.manager.AvatarManager;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.Permission;
 import com.ijson.blog.service.RoleService;
 import com.ijson.blog.service.UserService;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.RegularUtil;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -89,6 +94,7 @@ public class UserServiceImpl implements UserService {
 
         return context;
     }
+
     @Override
     public UserEntity reg(UserEntity entity) {
 
@@ -176,6 +182,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, String> findCnameByIds(Set<String> userIds) {
         return userDao.batchCnameByIds(userIds);
+    }
+
+    @Override
+    public PageResult<UserEntity> find(UserQuery iquery, Page page) {
+        PageResult<UserEntity> postEntityPageResult = userDao.find(iquery, page);
+        Set<String> roleIds = postEntityPageResult.getDataList().stream().map(UserEntity::getRoleId).collect(Collectors.toSet());
+        List<RoleEntity> roles = roleService.findByIds(roleIds);
+
+        Map<String, String> roleIdOoCname = roles.stream().collect(Collectors.toMap(RoleEntity::getId, RoleEntity::getCname));
+
+
+        List<UserEntity> lastEntity = postEntityPageResult.getDataList().stream()
+                .peek(key -> {
+                    String cname = roleIdOoCname.get(key.getRoleId());
+                    key.setRoleCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownRole : cname);
+                }).collect(Collectors.toList());
+        postEntityPageResult.setDataList(lastEntity);
+        return postEntityPageResult;
     }
 
 }

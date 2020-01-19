@@ -10,6 +10,8 @@ public class UserQuery {
 
 	private String ename;
 
+	private String cname;
+
 	private String paasword;
 
 	private String email;

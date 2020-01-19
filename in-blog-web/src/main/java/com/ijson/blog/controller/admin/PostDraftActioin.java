@@ -10,7 +10,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.DTable;
+import com.ijson.blog.service.model.dtable.PostDTable;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
 import com.ijson.mongo.support.model.Page;
@@ -88,11 +88,11 @@ public class PostDraftActioin extends BaseController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public DTable list(Integer start, Integer length, HttpServletRequest request) {
+    public PostDTable list(Integer start, Integer length, HttpServletRequest request) {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
-            return DTable.create(Lists.newArrayList(), null, start);
+            return PostDTable.create(Lists.newArrayList(), null, start);
         }
 
 
@@ -116,7 +116,7 @@ public class PostDraftActioin extends BaseController {
         PageResult<PostDraftEntity> result = postDraftService.find(query, page);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
-            return new DTable();
+            return new PostDTable();
         }
 
         List<PostDraftEntity> dataList = result.getDataList();
@@ -125,7 +125,7 @@ public class PostDraftActioin extends BaseController {
             posts = Post.postDraftList(result);
         }
 
-        return DTable.create(posts, result.getTotal(), start);
+        return PostDTable.create(posts, result.getTotal(), start);
     }
 
 

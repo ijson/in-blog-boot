@@ -2,6 +2,9 @@ package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.RoleEntity;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * desc:
  * version: 6.7
@@ -12,4 +15,6 @@ public interface RoleService {
     RoleEntity create(RoleEntity roleEntity);
 
     RoleEntity findById(String roleId);
+
+    List<RoleEntity> findByIds(Set<String> roleIds);
 }

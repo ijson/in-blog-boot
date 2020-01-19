@@ -11,6 +11,10 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * desc:
  * version: 6.7
@@ -72,6 +76,13 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
         query.field(UserEntity.Fields.deleted).equal(false);
         query.field(UserEntity.Fields.enable).equal(true);
         return query.get();
+    }
+
+    @Override
+    public List<RoleEntity> findByRoleIds(Set<String> roleIds) {
+        Query<RoleEntity> query = datastore.createQuery(RoleEntity.class);
+        query.field(RoleEntity.Fields.id).hasAnyOf(new HashSet<>(roleIds));
+        return query.asList();
     }
 
 }

@@ -1,7 +1,10 @@
 package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +29,5 @@ public interface UserService {
 
     Map<String, String> findCnameByIds(Set<String> userIds);
 
+    PageResult<UserEntity> find(UserQuery query, Page page);
 }

@@ -2,6 +2,9 @@ package com.ijson.blog.dao;
 
 import com.ijson.blog.dao.entity.RoleEntity;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * desc:
  * version: 6.7
@@ -13,4 +16,6 @@ public interface RoleDao {
     RoleEntity update(RoleEntity entity);
 
     RoleEntity find(String roleId);
+
+    List<RoleEntity> findByRoleIds(Set<String> roleIds);
 }

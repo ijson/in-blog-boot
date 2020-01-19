@@ -1,12 +1,9 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.dtable;
 
 import com.google.common.collect.Lists;
-import com.ijson.blog.dao.entity.PostDraftEntity;
-import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.service.model.Post;
 import com.ijson.blog.util.Pageable;
-import com.ijson.mongo.support.model.PageResult;
 import lombok.Data;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +14,7 @@ import java.util.Objects;
  * Created by cuiyongxu on 2019/9/6 11:16 PM
  */
 @Data
-public class DTable {
+public class PostDTable {
     //当前页
     private int sEcho;
     //总数
@@ -31,9 +28,12 @@ public class DTable {
     private long recordsFiltered;
 
 
-    public static DTable create(List<Post> posts, Long total, int index) {
+    public static PostDTable create(List<Post> posts, Long total, int index) {
+        if (Objects.isNull(total)) {
+            total = 0L;
+        }
         Pageable pageable = new Pageable(total.intValue(), index);
-        DTable data = new DTable();
+        PostDTable data = new PostDTable();
         data.setITotalDisplayRecords(total);
         data.setITotalRecords(total);
         data.setRecordsFiltered(total);

@@ -1,24 +1,32 @@
 package com.ijson.blog.controller.admin;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.controller.admin.model.BaseUserInfo;
 import com.ijson.blog.controller.admin.model.Contact;
 import com.ijson.blog.controller.admin.model.UpdPassword;
 import com.ijson.blog.controller.admin.model.WebSet;
 import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.UserInfo;
+import com.ijson.blog.service.model.dtable.UserDTable;
 import com.ijson.blog.util.VerifyCodeUtils;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -139,4 +147,44 @@ public class UserAction extends BaseController {
     }
 
 
+    @RequestMapping("/list")
+    @ResponseBody
+    public UserDTable list(Integer start, Integer length, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return UserDTable.create(Lists.newArrayList(), null, start);
+        }
+
+
+        String keyWord = request.getParameter("search[value]");
+
+        Page page = new Page();
+        if (Objects.nonNull(start)) {
+            page.setPageNumber((start / length) + 1);
+        }
+        if (Objects.nonNull(length)) {
+            page.setPageSize(length);
+        }
+
+
+        UserQuery query = new UserQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setCname(keyWord);
+        }
+
+        PageResult<UserEntity> result = userService.find(query, page);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new UserDTable();
+        }
+
+        List<UserEntity> dataList = result.getDataList();
+        List<UserInfo> userInfos = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            userInfos = UserInfo.creaetUserList(dataList);
+        }
+
+        return UserDTable.create(userInfos, result.getTotal(), start);
+    }
 }

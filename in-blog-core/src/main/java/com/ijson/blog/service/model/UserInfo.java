@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -20,6 +22,7 @@ import java.util.Objects;
 public class UserInfo {
     private String userId;
     private String cname;
+    private String ename;
     private String email;
     private String twitterName;
     private String twitterLink;
@@ -33,6 +36,16 @@ public class UserInfo {
     private String wexinLink;
     private String indexName;
     private String avatar;
+    private String roleCname;
+    private boolean enable;
+    private Long createTime;
+
+    public static List<UserInfo> creaetUserList(List<UserEntity> userEntityList){
+
+        return userEntityList.stream().map(k->{
+            return create(k);
+        }).collect(Collectors.toList());
+    }
 
 
     public static UserInfo create(UserEntity userEntity) {
@@ -51,6 +64,10 @@ public class UserInfo {
         userInfo.setWexinLink(userEntity.getWechatLink());
         userInfo.setIndexName(userEntity.getIndexName());
         userInfo.setAvatar(userEntity.getAvatar());
+        userInfo.setEname(userEntity.getEname());
+        userInfo.setRoleCname(userEntity.getRoleCname());
+        userInfo.setEnable(userEntity.isEnable());
+        userInfo.setCreateTime(userEntity.getCreateTime());
         Long workStartTime = userEntity.getWorkStartTime();
         Long workEndTime = userEntity.getWorkEndTime();
 
