@@ -27,7 +27,7 @@
                     <li><a data-toggle="modal"  data-target="#logout" href="#"><i class="fa fa-sign-out"></i> ${session.authContext.cname}</a></li>
 
                     <%if(array.contain(session.authContext.permissionPath,"/admin/console/page")){%>
-                    <li><a href="/admin/console/page" target="_blank"><i class="fa fa-cog fa-spin"></i> 进入管理后台</a></li>
+                    <li><a href="/admin/v2/console/page" target="_blank"><i class="fa fa-cog fa-spin"></i> 进入管理后台</a></li>
                     <%}%>
                 <%}%>
             </ul>

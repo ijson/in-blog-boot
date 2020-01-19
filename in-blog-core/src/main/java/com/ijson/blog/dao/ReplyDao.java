@@ -30,5 +30,7 @@ public interface ReplyDao {
     List<ReplyEntity> findAllTest();
 
     void updateShamIdTest(ReplyEntity entity);
+
+    Long count();
 }
 

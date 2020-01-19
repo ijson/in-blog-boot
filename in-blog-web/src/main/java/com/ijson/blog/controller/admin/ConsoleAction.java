@@ -6,6 +6,7 @@ import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.model.SystemInfo;
 import com.ijson.blog.service.PostDraftService;
 import com.ijson.blog.service.PostService;
 import com.ijson.blog.service.UserService;
@@ -13,7 +14,6 @@ import com.ijson.blog.service.model.ConsoleData;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
-import com.ijson.mongo.support.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +54,26 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/console.html");
         addAdminModelAndView(view);
+        ConsoleData consoleData = postService.getConsoleData();
+        view.addObject("consoleData", consoleData);
+        return view;
+    }
+
+
+    @RequestMapping("/v2/console/page")
+    public ModelAndView indexv2() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/index.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
+    @RequestMapping("/welcome/page")
+    public ModelAndView welcome() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/welcome.html");
+        addAdminModelAndView(view);
+        view.addObject("systemInfo", SystemInfo.getSystemInfo());
         ConsoleData consoleData = postService.getConsoleData();
         view.addObject("consoleData", consoleData);
         return view;

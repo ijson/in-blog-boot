@@ -251,10 +251,10 @@ public class PostServiceImpl implements PostService {
     public ConsoleData getConsoleData() {
         Long publishTotal = postDao.findPublishTotal();
         Long readTotal = getWebSiteCount();
-        Long commentTotal = 0L;
+        Long commentTotal = replyDao.count();
         Long todayPublishTotal = postDao.findTodayPublishTotal();
-
-        return ConsoleData.create(publishTotal, readTotal, commentTotal, todayPublishTotal);
+        Long userCount = userDao.count();
+        return ConsoleData.create(publishTotal, readTotal, commentTotal, todayPublishTotal, userCount);
     }
 
     @Override

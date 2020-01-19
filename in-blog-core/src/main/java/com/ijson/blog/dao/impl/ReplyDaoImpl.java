@@ -170,4 +170,10 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
         operations.set(PostEntity.Fields.ename, "cuiyongxu");
         datastore.findAndModify(query, operations);
     }
+
+    @Override
+    public Long count() {
+        Query<ReplyEntity> query = createQuery();
+        return query.countAll();
+    }
 }

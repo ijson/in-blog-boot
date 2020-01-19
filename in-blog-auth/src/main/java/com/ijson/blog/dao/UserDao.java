@@ -29,5 +29,7 @@ public interface UserDao {
 
     UserEntity delete(String id, String userId);
 
+    Long count();
+
 }
 

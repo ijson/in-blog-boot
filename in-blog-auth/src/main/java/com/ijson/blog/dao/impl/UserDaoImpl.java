@@ -15,7 +15,10 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -150,7 +153,7 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
 
         query.field(UserEntity.Fields.deleted).equal(false);
 
-        if(!Strings.isNullOrEmpty(iquery.getCname())){
+        if (!Strings.isNullOrEmpty(iquery.getCname())) {
             query.field(UserEntity.Fields.cname).containsIgnoreCase(iquery.getCname());
         }
 
@@ -208,5 +211,11 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         updateOperations.set(UserEntity.Fields.lastModifiedBy, userId);
         updateOperations.set(UserEntity.Fields.deleted, true);
         return datastore.findAndModify(query, updateOperations);
+    }
+
+    @Override
+    public Long count() {
+        Query<UserEntity> query = createQuery();
+        return query.countAll();
     }
 }

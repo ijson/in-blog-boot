@@ -13,13 +13,15 @@ public class ConsoleData {
     private Long readTotal;
     private Long commentTotal;
     private Long todayPublishTotal;
+    private Long userCount;
 
-    public static ConsoleData create(Long publishTotal, Long readTotal, Long commentTotal, Long todayPublishTotal) {
+    public static ConsoleData create(Long publishTotal, Long readTotal, Long commentTotal, Long todayPublishTotal,Long userCount) {
         ConsoleData consoleData = new ConsoleData();
         consoleData.setCommentTotal(commentTotal);
         consoleData.setPublishTotal(publishTotal);
         consoleData.setReadTotal(readTotal);
         consoleData.setTodayPublishTotal(todayPublishTotal);
+        consoleData.setUserCount(userCount);
         return consoleData;
     }
 }
