@@ -150,6 +150,10 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
 
         query.field(UserEntity.Fields.deleted).equal(false);
 
+        if(!Strings.isNullOrEmpty(iquery.getCname())){
+            query.field(UserEntity.Fields.cname).containsIgnoreCase(iquery.getCname());
+        }
+
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
         }
