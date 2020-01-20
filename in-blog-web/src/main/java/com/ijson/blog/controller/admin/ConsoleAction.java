@@ -181,6 +181,24 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    /**
+     * 跳转到编辑博客页面
+     *
+     * @return
+     */
+    @RequestMapping("/edit/v2/{ename}/{shamId}/page")
+    public ModelAndView skipV2Edit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+        PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-article.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", Post.create(entity));
+        view.addObject("topic", Post.create(entity).getTopicName());
+        return view;
+    }
+
+
     @RequestMapping("/draft/edit/{ename}/{shamId}/page")
     public ModelAndView skipPostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         PostDraftEntity entity = postDraftService.find(ename, shamId);

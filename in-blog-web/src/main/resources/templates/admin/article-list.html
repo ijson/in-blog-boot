@@ -100,13 +100,20 @@
 
             switch (data.event) {
                 case 'edit':
-                    layer.msg('编辑');
+                    layer.open({
+                        title: '编辑',
+                        type: 2,
+                        shadeClose: true,
+                        maxmin: true,
+                        area: ['900px', '500px'],
+                        content: '/admin/edit/v2/' + ename + '/' + shamId + '/page'
+                    });
                     return;
                 case 'delete':
 
                     if (item.enable) {
-                        layer.msg("禁用后才可删除该文章",function () {
-                            
+                        layer.msg("禁用后才可删除该文章", function () {
+
                         });
                         return;
                     }
