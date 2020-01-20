@@ -152,14 +152,52 @@
         });
 
         form.on('submit(drift)', function (data) {
-            console.log(data);
-            // //发异步，把数据提交给php
-            // layer.alert("增加成功", {icon: 6}, function () {
-            //     // 获得frame索引
-            //     var index = parent.layer.getFrameIndex(window.name);
-            //     //关闭当前frame
-            //     parent.layer.close(index);
-            // });
+            var editor_data = CKEDITOR.instances.content.getData();
+
+            if (editor_data === undefined || editor_data === '') {
+                layer.msg("请填写文章内容", function () {
+                });
+                return;
+            }
+
+            data.field.content = editor_data;
+
+            var lastData = data.field;
+
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/draft/create",
+                data: JSON.stringify(lastData),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+
+                        $("#editPostForm")[0].reset();
+                        layui.form.render();
+                        $("#title").val('');
+                        $("#id").val('');
+                        $("#topicName_tagsinput span").remove();
+
+                        CKEDITOR.instances.content.setData("");
+
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    } else {
+                        layer.msg(data.message);
+
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+
             return false;
         });
 
