@@ -34,11 +34,17 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <table class="layui-table"
+                    <table id="postList" lay-filter="postList"></table>
+
+
+                    <!--<table class="layui-table"
                            lay-data="{url:'/post/v2/list',page:true,toolbar: '#toolbarDemo',id:'test'}"
                            lay-filter="test">
                         <thead>
                         <tr>
+                            <th lay-data="{field:'id', width:80, sort: true,hide:true}">ID</th>
+                            <th lay-data="{field:'ename', width:80, sort: true,hide:true}">ename</th>
+                            <th lay-data="{field:'shamId', width:80, sort: true,hide:true}">ID</th>
                             <th lay-data="{field:'title', width:280, sort: true}">标题</th>
                             <th lay-data="{field:'views', width:90,sort: true}">阅读数</th>
                             <th lay-data="{field:'pros', width:90,sort: true}">点赞数</th>
@@ -47,7 +53,7 @@
                             <th lay-data="{field:'enable', width:100,templet: '#switchTpl'}">状态</th>
                             <th lay-data="{field:'',templet: '#operation'}">操作</th>
                         </thead>
-                    </table>
+                    </table>-->
                 </div>
             </div>
         </div>
@@ -71,54 +77,93 @@
 </script>
 
 <script type="text/html" id="switchTpl">
-    <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用" lay-filter="sexDemo" {{
-           d.enable ? 'checked': ''}}>
+    <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
+           lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
 </script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
-    layui.use('table',
-        function () {
-            var table = layui.table;
+    layui.use('table', function () {
+        var table = layui.table;
 
-            //监听单元格编辑
-            table.on('edit(test)',
-                function (obj) {
-                    var value = obj.value //得到修改后的值
-                        ,
-                        data = obj.data //得到所在行所有键值
-                        ,
-                        field = obj.field; //得到字段
-                    layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-                });
+        table.render({
+            toolbar: '#toolbarDemo',
+            elem: '#postList',
+            url: '/post/v2/list',
+            page: true,
+            cols: [[
+                {field: 'id', hide: true},
+                {field: 'ename', width: 80, hide: true},
+                {field: 'shamId', width: 80, hide: true},
+                {field: 'title', width: 280, title: "标题", sort: true},
+                {field: 'views', width: 90, title: "阅读数", sort: true},
+                {field: 'pros', width: 90, title: "点赞数", sort: true},
+                {
+                    field: 'lastModifiedTime',
+                    width: 170,
+                    title: '最后更新时间',
+                    templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
+                },
+                {field: 'userCname', width: 100, title: "创建人", sort: true},
+                {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
+                {field: '', title: "操作", templet: '#operation'}
 
-            //头工具栏事件
-            table.on('toolbar(test)',
-                function (obj) {
-                    var checkStatus = table.checkStatus(obj.config.id);
-                    switch (obj.event) {
-                        case 'getCheckData':
-                            var data = checkStatus.data;
-                            layer.alert(JSON.stringify(data));
-                            break;
-                        case 'getCheckLength':
-                            var data = checkStatus.data;
-                            layer.msg('选中了：' + data.length + ' 个');
-                            break;
-                        case 'isAll':
-                            layer.msg(checkStatus.isAll ? '全选' : '未全选');
-                            break;
+            ]]
+        });
+
+        //监听单元格编辑
+        table.on('edit(postList)',
+            function (obj) {
+                var value = obj.value //得到修改后的值
+                    ,
+                    data = obj.data //得到所在行所有键值
+                    ,
+                    field = obj.field; //得到字段
+                layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+            });
+
+    });
+
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('switch(selectEnable)', function (data) {
+            //开关是否开启，true或者false
+            var item = $(data.elem).parents('tr').first().find('td');
+            var ename = item.eq(1).text();
+            var shamId = item.eq(2).text();
+            var checked = data.elem.checked;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/post/v2/enable/" + ename + "/" + shamId,
+                dataType: "json",
+                data: JSON.stringify({
+                    "enable": checked
+                }),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg((checked ? "启用" : "停用") + "成功");
+                    } else {
+                        layer.msg(data.message);
                     }
-                    ;
-                });
-        });</script>
+                },
+                error: function (data) {
+                    toastr.error(data.message);
+                }
+            });
+        });
+    });
+</script>
 
 <script type="text/javascript">
 
     function searchTitle() {
         debugger;
         var title = $("#title").val();
-        layui.table.reload('test', {
+        layui.table.reload('postList', {
             page: {
                 curr: 1
             }
@@ -126,8 +171,6 @@
                 title: title
             }
         });
-
-
     }
 
 </script>

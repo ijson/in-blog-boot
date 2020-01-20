@@ -194,6 +194,17 @@ public class PostAction extends BaseController {
         return Result.ok(reason + "成功");
     }
 
+    @PostMapping("/v2/enable/{ename}/{shamId}")
+    public Result v2Enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody Post post, HttpServletRequest request) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        PostEntity postEntity = postService.enable(ename, shamId, post.isEnable(), context);
+        String reason = !post.isEnable() ? "启用" : "禁用";
+        return Result.ok(reason + "成功");
+    }
+
     @PostMapping("/delete/{ename}/{shamId}")
     public Result delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, HttpServletRequest request) {
         AuthContext context = getContext(request);

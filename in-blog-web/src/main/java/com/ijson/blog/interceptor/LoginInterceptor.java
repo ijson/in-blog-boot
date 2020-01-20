@@ -48,6 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
         if (Objects.isNull(context)) {
             if (Strings.isNullOrEmpty(remCurrCookie)) {
+                request.getSession().removeAttribute(cookieValue);
                 response.sendRedirect("/");
                 return false;
             }
