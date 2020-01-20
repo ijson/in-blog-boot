@@ -87,6 +87,14 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/v2/post/list/page")
+    public ModelAndView postV2List() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/article-list.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
     /**
      * 跳转到添加博客页面
      *

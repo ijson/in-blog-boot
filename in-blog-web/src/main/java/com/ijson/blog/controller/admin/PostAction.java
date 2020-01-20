@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.annotation.DocDocument;
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.controller.admin.model.V2Result;
 import com.ijson.blog.dao.entity.FileUploadEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
@@ -17,10 +18,10 @@ import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.FileUploadService;
 import com.ijson.blog.service.PostService;
 import com.ijson.blog.service.TopicService;
-import com.ijson.blog.service.model.dtable.PostDTable;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UploadResult;
+import com.ijson.blog.service.model.dtable.PostDTable;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.Md5Util;
 import com.ijson.mongo.support.model.Page;
@@ -312,6 +313,54 @@ public class PostAction extends BaseController {
         }
 
         return PostDTable.create(posts, result.getTotal(), start);
+    }
+
+
+    @RequestMapping("/v2/list")
+    @ResponseBody
+    public V2Result<Post> listV2(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setLikeTitle(true);
+            query.setTitle(keyWord);
+        }
+
+        PageResult<PostEntity> result = postService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<PostEntity> dataList = result.getDataList();
+        List<Post> posts = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            posts = Post.postList(result);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(posts);
+        v2Result.setMsg("");
+        return v2Result;
     }
 
 }
