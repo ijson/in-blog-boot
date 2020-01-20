@@ -71,8 +71,8 @@
 
 <script type="text/html" id="operation">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData"> 编辑</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="edit"> 编辑</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
     </div>
 </script>
 
@@ -111,17 +111,53 @@
             ]]
         });
 
-        //监听单元格编辑
-        table.on('edit(postList)',
-            function (obj) {
-                var value = obj.value //得到修改后的值
-                    ,
-                    data = obj.data //得到所在行所有键值
-                    ,
-                    field = obj.field; //得到字段
-                layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-            });
+        table.on('tool(postList)', function (data) {
 
+            var item = data.data;
+            var ename = item.ename;
+            var shamId = item.shamId;
+
+            switch (data.event) {
+                case 'edit':
+                    layer.msg('编辑');
+                    return;
+                case 'delete':
+
+                    if (item.enable) {
+                        layer.msg("禁用后才可删除该文章",function () {
+                            
+                        });
+                        return;
+                    }
+                    layer.confirm('您确定要删除 ' + item.title + " 吗?", {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            contentType: 'application/json',
+                            url: "/post/delete/" + ename + "/" + shamId,
+                            async: false,
+                            success: function (data) {
+                                if (data.code === 0) {
+                                    layer.msg(data.message);
+                                    layui.table.reload('postList');
+                                } else {
+                                    layer.msg(data.message, function () {
+                                    });
+                                }
+                            },
+                            error: function (data) {
+                                layer.msg(data.message);
+                            }
+                        });
+
+                    }, function () {
+
+                    });
+                    return;
+            }
+        });
     });
 
 
@@ -146,12 +182,14 @@
                 success: function (data) {
                     if (data.code === 0) {
                         layer.msg((checked ? "启用" : "停用") + "成功");
+                        layui.table.reload('postList');
+
                     } else {
                         layer.msg(data.message);
                     }
                 },
                 error: function (data) {
-                    toastr.error(data.message);
+                    layer.msg(data.message);
                 }
             });
         });

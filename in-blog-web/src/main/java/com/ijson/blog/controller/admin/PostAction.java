@@ -212,6 +212,10 @@ public class PostAction extends BaseController {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         PostEntity postEntity = postService.findByShamIdInternal(ename, shamId, false);
+        if(Objects.isNull(postEntity)){
+            return Result.error(-1, "文章不存在,请检查");
+        }
+
         if (postEntity != null && postEntity.isEnable()) {
             return Result.error(-1, "禁用后才可删除该文章");
         }
