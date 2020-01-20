@@ -17,6 +17,8 @@ public interface CountDao {
 
     CountEntity findCountById(String id);
 
+    CountEntity findCountByWebType(String type);
+
     Map<String, Long> findCountByIds(Set<String> ids);
 
     CountEntity createOrUpdate (CountEntity entity);

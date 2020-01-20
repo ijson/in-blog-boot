@@ -4,12 +4,11 @@ import com.ijson.blog.dao.CountDao;
 import com.ijson.blog.dao.entity.CountEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.model.AccessType;
-import com.ijson.blog.model.Constant;
+import com.ijson.mongo.generator.util.ObjectId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
@@ -40,14 +39,15 @@ public class ViewSyncManager {
 
     @Async
     public void syncWebSite() {
-        CountEntity countEntity = new CountEntity();
-        countEntity.setAccessType(AccessType.webSite);
-        countEntity.setId(Constant.WEB_SITE_COUNT);
-        CountEntity countById = countDao.findCountById(Constant.WEB_SITE_COUNT);
-        if (countById == null) {
+
+        CountEntity countByType = countDao.findCountByWebType(AccessType.webSite.name());
+        if (countByType == null) {
+            CountEntity countEntity = new CountEntity();
+            countEntity.setAccessType(AccessType.webSite.name());
+            countEntity.setId(ObjectId.getId());
             countDao.create(countEntity);
         } else {
-            countDao.inc(countEntity);
+            countDao.inc(countByType);
         }
     }
 

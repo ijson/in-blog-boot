@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.ijson.blog.dao.CountDao;
 import com.ijson.blog.dao.entity.CountEntity;
 import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.dao.model.AccessType;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.AbstractDao;
 import org.apache.commons.collections.CollectionUtils;
@@ -78,6 +79,14 @@ public class CountDaoImpl extends AbstractDao<CountEntity> implements CountDao {
     public CountEntity findCountById(String refId) {
         Query<CountEntity> query = createQuery();
         query.field(CountEntity.Fields.id).equal(refId);
+        return query.get();
+    }
+
+
+    @Override
+    public CountEntity findCountByWebType(String type) {
+        Query<CountEntity> query = createQuery();
+        query.field(CountEntity.Fields.accessType).equal(AccessType.webSite.name());
         return query.get();
     }
 

@@ -29,12 +29,12 @@ public class CountEntity extends BaseEntity {
     private long views;
 
     @Property(Fields.accessType)
-    private AccessType accessType;
+    private String accessType;
 
     public static CountEntity create(PostEntity entity) {
         CountEntity countEntity = new CountEntity();
         countEntity.setId(entity.getId());
-        countEntity.setAccessType(AccessType.blog);
+        countEntity.setAccessType(AccessType.blog.name());
         return countEntity;
     }
 

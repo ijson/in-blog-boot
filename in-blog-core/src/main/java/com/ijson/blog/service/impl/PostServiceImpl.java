@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.*;
 import com.ijson.blog.dao.entity.*;
+import com.ijson.blog.dao.model.AccessType;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogNotFoundException;
@@ -242,7 +243,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public long getWebSiteCount() {
-        CountEntity countById = countDao.findCountById(Constant.WEB_SITE_COUNT);
+        CountEntity countById = countDao.findCountByWebType(AccessType.webSite.name());
         return countById.getViews();
     }
 
