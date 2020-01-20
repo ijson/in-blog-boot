@@ -25,6 +25,7 @@
     <script src="https://cdn.bootcss.com/ckeditor/4.12.1/ckeditor.js"></script>
     <script src="https://cdn.bootcss.com/ckeditor/4.12.1/plugins/codesnippet/dialogs/codesnippet.js"></script>
     <script src="https://cdn.bootcss.com/ckeditor/4.12.1/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+    <script src="/js/bootstrap3-wysihtml5.all.min.js"></script>
 
 
 </head>
@@ -39,7 +40,7 @@
                     </fieldset>
                 </div>
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-form-pane" action="">
+                    <form class="layui-form layui-form-pane" action="" id="editPostForm">
                         <input type="hidden" name="id" id="id" value="${editData.id!}">
                         <input type="hidden" name="shamId" id="shamId" value="${editData.shamId!}">
                         <input type="hidden" name="ename" id="ename" value="${editData.ename!}">
@@ -51,21 +52,23 @@
 
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">博文内容</label>
-                            <div class="layui-input-block">
-            <textarea id="content" name="content" rows="10" cols="80" required="required"
-                      placeholder="请填写文章内容">${editData.content!}</textarea>
-                            </div>
+                            <textarea id="content" name="content" rows="10" cols="80"
+                                      required="required"
+                                      placeholder="请填写文章内容">${editData.content!}</textarea>
                         </div>
 
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">标签</label>
-                            <input type="text" class="form-control tags" id="topicName" name="topicName" value="${editData.topicName!}" required="required" placeholder="请填写或选择标签,目前只支持单标签">
+                            <input type="text" class="form-control tags" lay-verify="topicName" id="topicName"
+                                   name="topicName"
+                                   value="${editData.topicName!}" required="required" placeholder="请填写或选择标签,目前只支持单标签">
                         </div>
 
                         <div class="layui-form-item">
-                            <button class="layui-btn" >确认保存</button>
-                            <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</button>
-                            <button type="submit" class="layui-btn layui-btn-warm" lay-submit lay-filter="drift">保存草稿</button>
+                            <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存
+                            </button>
+                            <button type="submit" class="layui-btn layui-btn-warm" lay-submit lay-filter="drift">保存草稿
+                            </button>
                         </div>
 
                     </form>
@@ -75,6 +78,100 @@
     </div>
 </div>
 
+<script>
+
+
+    layui.use(['form', 'layer', 'layedit'], function () {
+        $ = layui.jquery;
+        var form = layui.form;
+
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value === undefined || value === '' || value.length === 0) {
+                    return '标题不能为空';
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(save)', function (data) {
+            var editor_data = CKEDITOR.instances.content.getData();
+
+            if (editor_data === undefined || editor_data === '') {
+                layer.msg("请填写文章内容", function () {
+                });
+                return;
+            }
+
+            data.field.content = editor_data;
+
+            var lastData = data.field;
+
+            if (lastData.topicName === undefined || lastData.topicName === '') {
+                layer.msg("请填写文章标签", function () {
+                });
+                return;
+            }
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/post/create",
+                data: JSON.stringify(lastData),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+
+                        $("#editPostForm")[0].reset();
+                        layui.form.render();
+
+                        $("#topicName_tagsinput span").remove();
+
+                        CKEDITOR.instances.content.setData("");
+                    } else {
+                        layer.msg(data.message);
+
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+
+            return false;
+        });
+
+        form.on('submit(drift)', function (data) {
+            console.log(data);
+            // //发异步，把数据提交给php
+            // layer.alert("增加成功", {icon: 6}, function () {
+            //     // 获得frame索引
+            //     var index = parent.layer.getFrameIndex(window.name);
+            //     //关闭当前frame
+            //     parent.layer.close(index);
+            // });
+            return false;
+        });
+
+
+        form.on('checkbox(father)', function (data) {
+
+            if (data.elem.checked) {
+                $(data.elem).parent().siblings('td').find('input').prop("checked", true);
+                form.render();
+            } else {
+                $(data.elem).parent().siblings('td').find('input').prop("checked", false);
+                form.render();
+            }
+        });
+
+
+    });
+</script>
 
 <script>
     $(function () {
@@ -92,11 +189,13 @@
             filebrowserImageBrowseUrl: '/post/file/browse?type=images',
             rememberLastFolder: false
         });
+        $('.textarea').wysihtml5()
+
 
         $('#topicName').tagsInput({
-            width:'auto',
-            inputPadding:100,
-            defaultText:'回车确认'
+            width: 'auto',
+            inputPadding: 100,
+            defaultText: '回车确认'
         });
     })
 </script>
