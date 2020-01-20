@@ -26,32 +26,42 @@
 
 </head>
 <body>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>新建/编辑 文章</legend>
+                    </fieldset>
+                </div>
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                                   class="layui-input">
+                        </div>
 
-
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>新建/编辑 文章</legend>
-</fieldset>
-
-<form class="layui-form layui-form-pane" action="">
-    <div class="layui-form-item">
-        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
-               class="layui-input">
-    </div>
-
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">文本域</label>
-        <div class="layui-input-block">
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">文本域</label>
+                            <div class="layui-input-block">
             <textarea id="content" name="content" rows="10" cols="80" required="required"
                       placeholder="请填写文章内容">${editData.content!}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">保存</button>
+                            <button type="submit" class="layui-btn layui-btn-warm" lay-submit="" lay-filter="demo1">保存草稿</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="layui-form-item">
-        <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">保存</button>
-        <button type="submit" class="layui-btn layui-btn-warm" lay-submit="" lay-filter="demo1">保存草稿</button>
-    </div>
-
-</form>
 
 <script>
     $(function () {

@@ -20,10 +20,10 @@
 
 <body>
 <div class="x-nav">
-            <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a><cite>文章列表</cite></a>
-            </span>
+    <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a><cite>文章列表</cite></a>
+    </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="location.reload()" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
@@ -34,28 +34,18 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-col-space5" method="post" action="/post/v2/list">
-                        <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="title" id="title" placeholder="文章名称" autocomplete="off"
-                                   class="layui-input"></div>
-                        <div class="layui-inline layui-show-xs-block">
-                            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-                        </div>
-                    </form>
-                </div>
-                <div class="layui-card-body ">
                     <table class="layui-table"
                            lay-data="{url:'/post/v2/list',page:true,toolbar: '#toolbarDemo',id:'test'}"
                            lay-filter="test">
                         <thead>
                         <tr>
-                            <th lay-data="{field:'title', width:120, sort: true, edit: 'text'}">标题</th>
-                            <th lay-data="{field:'views', sort: true, edit: 'text'}">阅读数</th>
-                            <th lay-data="{field:'pros', sort: true, edit: 'text'}">点赞数</th>
-                            <th lay-data="{field:'lastModifiedTime', sort: true, edit: 'text'}">最后更新时间</th>
-                            <th lay-data="{field:'userCname', sort: true, edit: 'text'}">创建人</th>
-                            <th lay-data="{field:'enable', width:80,templet: '#switchTpl'}">状态</th>
-                            <th>操作</th>
+                            <th lay-data="{field:'title', width:280, sort: true}">标题</th>
+                            <th lay-data="{field:'views', width:90,sort: true}">阅读数</th>
+                            <th lay-data="{field:'pros', width:90,sort: true}">点赞数</th>
+                            <th lay-data="{field:'lastModifiedTime',width:140, sort: true}">最后更新时间</th>
+                            <th lay-data="{field:'userCname',width:100, sort: true}">创建人</th>
+                            <th lay-data="{field:'enable', width:100,templet: '#switchTpl'}">状态</th>
+                            <th lay-data="{field:'',templet: '#operation'}">操作</th>
                         </thead>
                     </table>
                 </div>
@@ -64,65 +54,81 @@
     </div>
 </div>
 </body>
+
+
 <script type="text/html" id="toolbarDemo">
+    <input class="text" style="height:30px;width:157px;" name="title" id="title" placeholder="请输入标题">
+    <a href="#" lay-filter="" style="position: absolute;left: 144px;" onclick="searchTitle()">
+        <i class="layui-icon layui-icon-search" style="background:#fff;padding:5px;"></i>
+    </a>
+</script>
+
+<script type="text/html" id="operation">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData"> 查看文章</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll"> 验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData"> 编辑</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">删除</button>
     </div>
 </script>
+
 <script type="text/html" id="switchTpl">
-    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|停用" >
+    <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用" lay-filter="sexDemo" {{
+           d.enable ? 'checked': ''}}>
 </script>
-<script>layui.use('laydate',
-    function () {
-        var laydate = layui.laydate;
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#start' //指定元素
+<script>
+    layui.use('table',
+        function () {
+            var table = layui.table;
+
+            //监听单元格编辑
+            table.on('edit(test)',
+                function (obj) {
+                    var value = obj.value //得到修改后的值
+                        ,
+                        data = obj.data //得到所在行所有键值
+                        ,
+                        field = obj.field; //得到字段
+                    layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+                });
+
+            //头工具栏事件
+            table.on('toolbar(test)',
+                function (obj) {
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    switch (obj.event) {
+                        case 'getCheckData':
+                            var data = checkStatus.data;
+                            layer.alert(JSON.stringify(data));
+                            break;
+                        case 'getCheckLength':
+                            var data = checkStatus.data;
+                            layer.msg('选中了：' + data.length + ' 个');
+                            break;
+                        case 'isAll':
+                            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                            break;
+                    }
+                    ;
+                });
+        });</script>
+
+<script type="text/javascript">
+
+    function searchTitle() {
+        debugger;
+        var title = $("#title").val();
+        layui.table.reload('test', {
+            page: {
+                curr: 1
+            }
+            , where: {
+                title: title
+            }
         });
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#end' //指定元素
-        });
 
-    });</script>
-<script>layui.use('table',
-    function () {
-        var table = layui.table;
+    }
 
-        //监听单元格编辑
-        table.on('edit(test)',
-            function (obj) {
-                var value = obj.value //得到修改后的值
-                    ,
-                    data = obj.data //得到所在行所有键值
-                    ,
-                    field = obj.field; //得到字段
-                layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-            });
-
-        //头工具栏事件
-        table.on('toolbar(test)',
-            function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id);
-                switch (obj.event) {
-                    case 'getCheckData':
-                        var data = checkStatus.data;
-                        layer.alert(JSON.stringify(data));
-                        break;
-                    case 'getCheckLength':
-                        var data = checkStatus.data;
-                        layer.msg('选中了：' + data.length + ' 个');
-                        break;
-                    case 'isAll':
-                        layer.msg(checkStatus.isAll ? '全选' : '未全选');
-                        break;
-                }
-                ;
-            });
-    });</script>
-
+</script>
 </html>
