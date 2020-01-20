@@ -124,14 +124,20 @@
                 async: false,
                 success: function (data) {
                     if (data.code === 0) {
-                        layer.msg(data.message);
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
 
                         $("#editPostForm")[0].reset();
                         layui.form.render();
-
+                        $("#title").val('');
+                        $("#id").val('');
                         $("#topicName_tagsinput span").remove();
 
                         CKEDITOR.instances.content.setData("");
+
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
                     } else {
                         layer.msg(data.message);
 
