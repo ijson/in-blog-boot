@@ -37,12 +37,12 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('创建文章','http://www.baidu.com','','',true)">
+                    <a onclick="xadmin.open('创建文章','/admin/v2/article/add/page','','',true)">
                         <i class="iconfont">&#xe6a2;</i>创建文章</a>
                 </dd>
                 <dd>
                     <a onclick="xadmin.open('创建用户','http://www.baidu.com','','',true)">
-                        <i class="iconfont">&#xe6a2;</i>创建文章</a>
+                        <i class="iconfont">&#xe6a2;</i>创建用户</a>
                 </dd>
                 <dd>
                     <a onclick="xadmin.open('创建友链','http://www.baidu.com','','',true)">
@@ -167,6 +167,11 @@
                     <cite>管理员管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('网站设置','/admin/site/settings')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>网站设置</cite></a>
+                    </li>
                     <li>
                         <a onclick="xadmin.add_tab('管理员列表','admin-list.html')">
                             <i class="iconfont">&#xe6a7;</i>
