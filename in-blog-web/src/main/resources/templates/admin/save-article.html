@@ -135,7 +135,7 @@
                         $("#topicName_tagsinput span").remove();
 
                         CKEDITOR.instances.content.setData("");
-
+                        parent.layui.table.reload('postList');
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     } else {
@@ -185,7 +185,7 @@
                         $("#topicName_tagsinput span").remove();
 
                         CKEDITOR.instances.content.setData("");
-
+                        parent.layui.table.reload('postList');
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     } else {

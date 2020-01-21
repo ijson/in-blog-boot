@@ -95,6 +95,15 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    @RequestMapping("/v2/draft/list/page")
+    public ModelAndView postDriftV2List() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/article-draft-list.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
     /**
      * 跳转到添加博客页面
      *
@@ -195,6 +204,20 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         view.addObject("editData", Post.create(entity));
         view.addObject("topic", Post.create(entity).getTopicName());
+        return view;
+    }
+
+
+    @RequestMapping("/draft/v2/edit/{ename}/{shamId}/page")
+    public ModelAndView skipV2PostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+        PostDraftEntity entity = postDraftService.find(ename, shamId);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-article.html");
+        addAdminModelAndView(view);
+        if (Objects.nonNull(entity)) {
+            view.addObject("editData", Post.create(entity));
+            view.addObject("topic", Post.create(entity).getTopicName());
+        }
         return view;
     }
 

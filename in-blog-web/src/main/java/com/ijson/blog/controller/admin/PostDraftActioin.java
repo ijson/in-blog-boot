@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.annotation.DocDocument;
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.controller.admin.model.V2Result;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -142,5 +143,53 @@ public class PostDraftActioin extends BaseController {
         }
         return Result.error("删除异常,草稿不存在或数据存储异常");
 
+    }
+
+
+    @RequestMapping("/v2/list")
+    @ResponseBody
+    public V2Result listV2(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setLikeTitle(true);
+            query.setTitle(keyWord);
+        }
+
+        PageResult<PostDraftEntity> result = postDraftService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<PostDraftEntity> dataList = result.getDataList();
+        List<Post> posts = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            posts = Post.postDraftList(result);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(posts);
+        v2Result.setMsg("");
+        return v2Result;
     }
 }
