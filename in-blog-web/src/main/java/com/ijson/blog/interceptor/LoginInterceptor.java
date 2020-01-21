@@ -48,6 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
         if (Objects.isNull(context)) {
             if (Strings.isNullOrEmpty(remCurrCookie)) {
+                PassportHelper.getInstance().removeCookie(request,response );
                 request.getSession().removeAttribute(cookieValue);
                 response.sendRedirect("/");
                 return false;
@@ -55,6 +56,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             rememberCookieValue = DesUtil.decrypt(remCurrCookie);
             context = (AuthContext) EhcacheUtil.getInstance().get(Constant.remember, rememberCookieValue);
             if (Objects.isNull(context)) {
+                PassportHelper.getInstance().removeCookie(request,response );
+                request.getSession().removeAttribute(cookieValue);
                 response.sendRedirect("/");
                 return false;
             }

@@ -1,8 +1,11 @@
 package com.ijson.blog.util;
 
 
+import com.google.common.base.Strings;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -391,5 +394,28 @@ public class PassportHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void removeCookie(HttpServletRequest request, HttpServletResponse response) {
+        removeCookie(request, response, null);
+    }
+
+    public void removeCookie(HttpServletRequest request, HttpServletResponse response, String cookieName) {
+        //获取cookie
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (Strings.isNullOrEmpty(cookieName)) {
+                cookie.setMaxAge(0);
+                cookie.setPath("/");  //路径一定要写上，不然销毁不了
+                response.addCookie(cookie);
+            } else {
+                if (cookie.getName().equals(cookieName)) {
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");  //路径一定要写上，不然销毁不了
+                    response.addCookie(cookie);
+                }
+            }
+
+        }
     }
 }
