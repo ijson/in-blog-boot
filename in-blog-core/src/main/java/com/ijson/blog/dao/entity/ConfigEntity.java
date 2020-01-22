@@ -19,6 +19,5 @@ public class ConfigEntity {
     @Id
     private String id;
 
-    private
 
 }

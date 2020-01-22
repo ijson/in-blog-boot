@@ -267,6 +267,32 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/user/settings")
+    public ModelAndView userSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/user-settings.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        UserEntity userEntity = userService.findUserByEname(context.getEname(), null, null);
+
+        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
+            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
+        }
+
+        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
+            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
+        }
+
+        addAdminModelAndView(view);
+
+
+        view.addObject("user", userEntity);
+        return view;
+    }
+
     @RequestMapping("/i/config/page")
     public ModelAndView iconfig(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/i-config.html");
