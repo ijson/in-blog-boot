@@ -37,6 +37,7 @@
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
                         <li class="layui-this">网站设置</li>
+                        <li>开关设置</li>
                         <li>博主信息字段显示</li>
                         <li>修改密码</li>
                         <li>博主信息</li>
@@ -45,6 +46,9 @@
                         <li>腾讯设置</li>
                     </ul>
                     <div class="layui-tab-content" style="height: 100px;">
+
+
+
                         <div class="layui-tab-item layui-show">
 
                             <div class="layui-card-body ">
@@ -53,22 +57,42 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">网站名称</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="siteName" lay-verify="siteName" autocomplete="off" placeholder="请输入网站名称" class="layui-input">
+                                            <input type="text" name="siteName" id="siteName" autocomplete="off"
+                                                   placeholder="请输入网站名称" class="layui-input">
                                         </div>
                                     </div>
+
+                                    <div class="layui-form-item">
+                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit
+                                                lay-filter="saveWebSet">保存
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+
+                        </div>
+
+                        <div class="layui-tab-item">
+
+                            <div class="layui-card-body ">
+                                <form class="layui-form layui-form-pane" action="" id="switchForm">
 
 
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
                                             <label class="layui-form-label">开启注册</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="regSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" checked="" name="open" lay-skin="switch"
+                                                       lay-filter="regSwitch" lay-text="ON|OFF">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">允许评论</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="commentSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" checked="" name="open" lay-skin="switch"
+                                                       lay-filter="commentSwitch" lay-text="ON|OFF">
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +100,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label" about="显示博主信息">显示博主信息</label>
                                         <div class="layui-input-block">
-                                            <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="showBloggerSwitch" lay-text="ON|OFF">
+                                            <input type="checkbox" checked="" name="open" lay-skin="switch"
+                                                   lay-filter="showBloggerSwitch" lay-text="ON|OFF">
                                         </div>
                                     </div>
 
@@ -85,28 +110,25 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">微信登录</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" disabled name="open" lay-skin="switch" lay-filter="wechatLoginSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" disabled name="open" lay-skin="switch"
+                                                       lay-filter="wechatLoginSwitch" lay-text="ON|OFF">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">微博登录</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" disabled name="open" lay-skin="switch" lay-filter="weboLoginSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" disabled name="open" lay-skin="switch"
+                                                       lay-filter="weboLoginSwitch" lay-text="ON|OFF">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">QQ登录</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" disabled name="open" lay-skin="switch" lay-filter="qqLoginSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" disabled name="open" lay-skin="switch"
+                                                       lay-filter="qqLoginSwitch" lay-text="ON|OFF">
                                             </div>
                                         </div>
-                                    </div>
-
-
-
-                                    <div class="layui-form-item">
-                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveWebSet">保存</button>
                                     </div>
 
                                 </form>
@@ -124,30 +146,22 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">字段显示</label>
                                         <div class="layui-input-block">
-                                            <input type="checkbox" name="like[mobile]" title="手机号">
-                                            <input type="checkbox" name="like[email]" title="邮箱" checked="">
-                                            <input type="checkbox" name="like[school]" title="毕业学校">
-                                            <input type="checkbox" name="like[professional]" title="专业">
-                                            <input type="checkbox" name="like[jobStart]" title="开始工作时间">
-                                            <input type="checkbox" name="like[jobEnd]" title="结束工作时间">
-                                            <input type="checkbox" name="like[wechat]" title="微信">
-                                            <input type="checkbox" name="like[weibo]" title="微博">
-                                            <input type="checkbox" name="like[qq]" title="QQ">
-                                            <input type="checkbox" name="like[twitter]" title="Twitter">
-                                            <input type="checkbox" name="like[facebook]" title="Facebook">
+                                            <input type="checkbox" name="like[mobile]" title="手机号" lay-filter="like">
+                                            <input type="checkbox" name="like[email]" title="邮箱" lay-filter="like">
+                                            <input type="checkbox" name="like[school]" title="毕业学校" lay-filter="like">
+                                            <input type="checkbox" name="like[professional]" title="专业" lay-filter="like">
+                                            <input type="checkbox" name="like[jobStart]" title="开始工作时间" lay-filter="like">
+                                            <input type="checkbox" name="like[jobEnd]" title="结束工作时间" lay-filter="like">
+                                            <input type="checkbox" name="like[wechat]" title="微信" lay-filter="like">
+                                            <input type="checkbox" name="like[weibo]" title="微博" lay-filter="like">
+                                            <input type="checkbox" name="like[qq]" title="QQ" lay-filter="like">
+                                            <input type="checkbox" name="like[twitter]" title="Twitter" lay-filter="like">
+                                            <input type="checkbox" name="like[facebook]" title="Facebook" lay-filter="like">
                                         </div>
-                                    </div>
-
-                                    <div class="layui-form-item">
-                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveFieldShow">保存</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-
-
-
-
 
 
                         <div class="layui-tab-item">
@@ -159,7 +173,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">账户</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" disabled name="ename" id="ename" value="admin"  class="layui-input">
+                                            <input type="text" disabled name="ename" id="ename" value="admin"
+                                                   class="layui-input">
                                         </div>
                                     </div>
 
@@ -167,7 +182,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">原密码</label>
                                         <div class="layui-input-inline">
-                                            <input type="password" name="oldPassword" id="oldPassword" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                            <input type="password" name="oldPassword" id="oldPassword"
+                                                   placeholder="请输入原密码" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
 
@@ -176,13 +192,15 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">新密码</label>
                                             <div class="layui-input-inline">
-                                                <input type="password" name="newPassword" id="newPassword" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                                <input type="password" name="newPassword" id="newPassword"
+                                                       placeholder="请输入新密码" autocomplete="off" class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">重新输入</label>
                                             <div class="layui-input-inline">
-                                                <input type="password" name="againPassword" name="againPassword" placeholder="请重新输入新密码" autocomplete="off" class="layui-input">
+                                                <input type="password" name="againPassword" name="againPassword"
+                                                       placeholder="请重新输入新密码" autocomplete="off" class="layui-input">
                                             </div>
                                         </div>
                                     </div>
@@ -190,13 +208,16 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">验证码</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="text" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                            <input type="text" name="text" placeholder="请输入验证码" autocomplete="off"
+                                                   class="layui-input">
                                         </div>
                                     </div>
 
 
                                     <div class="layui-form-item">
-                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveFieldShow">保存</button>
+                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit
+                                                lay-filter="saveFieldShow">保存
+                                        </button>
                                     </div>
 
                                 </form>
@@ -214,7 +235,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">账户</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" disabled name="ename" id="ename" value="admin"  class="layui-input">
+                                            <input type="text" disabled name="ename" id="ename" value="admin"
+                                                   class="layui-input">
                                         </div>
                                     </div>
 
@@ -223,55 +245,63 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">昵称</label>
                                             <div class="layui-input-inline">
-                                                <input type="text"  placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入昵称" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">手机号</label>
                                             <div class="layui-input-inline">
-                                                <input type="text"  placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入手机号" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">邮箱</label>
                                             <div class="layui-input-inline">
-                                                <input type="email"  placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                                                <input type="email" placeholder="请输入邮箱" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">毕业学校</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入毕业学校" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入毕业学校" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">学校链接</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入学校链接" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入学校链接" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">专业</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入专业" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入专业" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">开始工作时间</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入开始工作时间" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入开始工作时间" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-inline">
                                             <label class="layui-form-label">结束工作时间</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入结束工作时间" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入结束工作时间" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
@@ -279,7 +309,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">微信</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入微信" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入微信" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
@@ -287,7 +318,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">微博</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入微博" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入微博" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
@@ -295,7 +327,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">QQ</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入QQ" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入QQ" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
@@ -303,7 +336,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">Twitter</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入Twitter" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入Twitter" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
@@ -311,14 +345,17 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">Facebook</label>
                                             <div class="layui-input-inline">
-                                                <input type="text"  placeholder="请输入Facebook" autocomplete="off" class="layui-input">
+                                                <input type="text" placeholder="请输入Facebook" autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
 
 
                                     </div>
                                     <div class="layui-form-item">
-                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</button>
+                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit
+                                                lay-filter="saveUserInfo">保存
+                                        </button>
                                     </div>
 
                                 </form>
@@ -355,13 +392,79 @@
             , laydate = layui.laydate;
 
 
-        //监听指定开关
-        form.on('switch(switchTest)', function (data) {
-            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        //网站设置监听提交
+        form.on('submit(siteForm)', function (data) {
+            return false;
         });
+
+
+        //注册监听
+        form.on('switch(regSwitch)', function (data) {
+            layer.msg("注册监听" + data.elem.checked);
+            return false;
+        });
+
+        //评论监听
+        form.on('switch(commentSwitch)', function (data) {
+            layer.msg("评论监听" + data.elem.checked);
+            return false;
+        });
+
+        //显示博主信息监听
+        form.on('switch(showBloggerSwitch)', function (data) {
+            layer.msg("显示博主信息监听" + data.elem.checked);
+            return false;
+        });
+
+        //显示博主信息监听
+        form.on('switch(showBloggerSwitch)', function (data) {
+            layer.msg("显示博主信息监听" + data.elem.checked);
+            return false;
+        });
+
+
+        //网站设置保存
+        form.on('submit(saveWebSet)', function (data) {
+            console.log(data)
+            layer.msg("网站设置保存");
+            return false;
+        });
+
+
+        //开关设置
+        form.on('submit(saveSwitch)', function (data) {
+            console.log(data)
+            layer.msg("开关设置");
+            return false;
+        });
+
+
+        // 显示字段监听
+        form.on('checkbox(like)', function (data) {
+
+            console.log("like:"+data)
+            layer.msg("显示字段监听");
+
+        });
+
+
+
+        //修改密码监听
+        form.on('submit(saveFieldShow)', function (data) {
+            console.log(data)
+            layer.msg("修改密码监听");
+            return false;
+        });
+
+
+
+        //博主信息监听
+        form.on('submit(saveUserInfo)', function (data) {
+            console.log(data)
+            layer.msg("博主信息监听");
+            return false;
+        });
+
 
 
     });
