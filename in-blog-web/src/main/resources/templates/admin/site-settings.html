@@ -147,21 +147,28 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">字段显示</label>
                                         <div class="layui-input-block">
-                                            <input type="checkbox" name="like[mobile]" title="手机号" lay-filter="like">
-                                            <input type="checkbox" name="like[email]" title="邮箱" lay-filter="like">
-                                            <input type="checkbox" name="like[school]" title="毕业学校" lay-filter="like">
-                                            <input type="checkbox" name="like[professional]" title="专业"
-                                                   lay-filter="like">
-                                            <input type="checkbox" name="like[jobStart]" title="开始工作时间"
-                                                   lay-filter="like">
-                                            <input type="checkbox" name="like[jobEnd]" title="结束工作时间" lay-filter="like">
-                                            <input type="checkbox" name="like[wechat]" title="微信" lay-filter="like">
-                                            <input type="checkbox" name="like[weibo]" title="微博" lay-filter="like">
-                                            <input type="checkbox" name="like[qq]" title="QQ" lay-filter="like">
-                                            <input type="checkbox" name="like[twitter]" title="Twitter"
-                                                   lay-filter="like">
-                                            <input type="checkbox" name="like[facebook]" title="Facebook"
-                                                   lay-filter="like">
+                                            <input type="checkbox" name="mobile" title="手机号" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"mobile")){%> checked<%}%> >
+                                            <input type="checkbox" name="email" title="邮箱" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"email")){%> checked<%}%>>
+                                            <input type="checkbox" name="school" title="毕业学校" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"school")){%> checked<%}%>>
+                                            <input type="checkbox" name="professional" title="专业" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"professional")){%> checked<%}%>>
+                                            <input type="checkbox" name="jobStart" title="开始工作时间" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"jobStart")){%> checked<%}%>>
+                                            <input type="checkbox" name="jobEnd" title="结束工作时间" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"jobEnd")){%> checked<%}%>>
+                                            <input type="checkbox" name="wechat" title="微信" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"wechat")){%> checked<%}%>>
+                                            <input type="checkbox" name="weibo" title="微博" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"weibo")){%> checked<%}%>>
+                                            <input type="checkbox" name="qq" title="QQ" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"qq")){%> checked<%}%>>
+                                            <input type="checkbox" name="twitter" title="Twitter" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"twitter")){%> checked<%}%>>
+                                            <input type="checkbox" name="facebook" title="Facebook" lay-filter="like"
+                                            <%if(array.contain(site.showAdminFields,"facebook")){%> checked<%}%>>
                                         </div>
                                     </div>
                                 </form>
@@ -266,10 +273,28 @@
 
         // 显示字段监听
         form.on('checkbox(like)', function (data) {
+            var key = data.elem.name
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/site/field/show/" + key,
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
 
-            console.log("like:" + data)
-            layer.msg("显示字段监听");
-
+            return false;
         });
     });
 </script>

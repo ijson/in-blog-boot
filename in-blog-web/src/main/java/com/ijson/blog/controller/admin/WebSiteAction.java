@@ -51,7 +51,7 @@ public class WebSiteAction extends BaseController {
     }
 
 
-    @PostMapping("/filed/show/{name}")
+    @PostMapping("/field/show/{name}")
     public Result showField(HttpServletRequest request, HttpSession session, @PathVariable("name") String name) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
