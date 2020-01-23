@@ -163,19 +163,6 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "userInfo", key = "#entity.ename")
     @Override
     public UserEntity edit(UserEntity entity) {
-
-        String startTime = entity.getStartTime();
-        if (!Strings.isNullOrEmpty(startTime)) {
-            entity.setWorkStartTime(DateUtils.getInstance().format("yyyy-MM-dd", startTime));
-        } else {
-            entity.setWorkStartTime(0L);
-        }
-        String endTime = entity.getEndTime();
-        if (!Strings.isNullOrEmpty(endTime)) {
-            entity.setWorkEndTime(DateUtils.getInstance().format("yyyy-MM-dd", endTime));
-        } else {
-            entity.setWorkEndTime(0L);
-        }
         return userDao.update(entity);
     }
 

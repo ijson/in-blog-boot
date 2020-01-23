@@ -49,6 +49,35 @@ public class ConfigEntity {
     @Property(Fields.showAdminFields)
     private List<String> showAdminFields;
 
+//    @Property(Fields.ename)
+//    private String ename;
+//    @Property(Fields.cname)
+//    private String cname;
+//    @Property(Fields.mobile)
+//    private String mobile;
+//    @Property(Fields.email)
+//    private String email;
+//    @Property(Fields.school)
+//    private String school;
+//    @Property(Fields.schoolUrl)
+//    private String schoolUrl;
+//    @Property(Fields.profession)
+//    private String profession;
+//    @Property(Fields.beginJobTime)
+//    private String beginJobTime;
+//    @Property(Fields.endJobTime)
+//    private String endJobTime;
+//    @Property(Fields.wechat)
+//    private String wechat;
+//    @Property(Fields.webo)
+//    private String webo;
+//    @Property(Fields.qq)
+//    private String qq;
+//    @Property(Fields.twitter)
+//    private String twitter;
+//    @Property(Fields.facebook)
+//    private String facebook;
+
 
     public interface Fields {
         String id = "_id";
@@ -64,5 +93,21 @@ public class ConfigEntity {
 
 
         String showAdminFields = "showAdminFields";
+
+
+//        String ename = "ename";
+//        String cname = "cname";
+//        String mobile = "mobile";
+//        String email = "email";
+//        String school = "school";
+//        String schoolUrl = "schoolUrl";
+//        String profession = "profession";
+//        String beginJobTime = "beginJobTime";
+//        String endJobTime = "endJobTime";
+//        String wechat = "wechat";
+//        String webo = "webo";
+//        String qq = "qq";
+//        String twitter = "twitter";
+//        String facebook = "facebook";
     }
 }

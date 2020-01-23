@@ -1,6 +1,6 @@
 <div class="panel b-a">
     <div class="panel-heading bg-orang dk no-border wrapper-lg">
-        <a href="${user.weiboLink}" target="_blank">
+        <a href="${user.weibo}" target="_blank">
             <button class="btn btn-sm btn-icon   pull-right m-r btn-rounded" title="点击跳转到微博"><i class="fa fa-weibo"></i></button>
         </a>
         <a href="#">
@@ -10,7 +10,7 @@
 
 
     <script type="text/ng-template" id="myTooltipTemplate.html">
-        <div><img src="${user.wexinLink}"></div>
+        <div><img src="#"></div>
     </script>
 
 
@@ -31,29 +31,29 @@
             <%}%>
 
 
-            <% if(user.twitterLink!=null){%>
-                <a href="${user.twitterLink}" target="_blank" class="list-group-item">
-                    <i class="fa fa-twitter fa-fw m-r-xs"></i> ${user.twitterName}
+            <% if(user.twitter!=null){%>
+                <a href="https://twitter.com/${user.twitter}" target="_blank" class="list-group-item">
+                    <i class="fa fa-twitter fa-fw m-r-xs"></i> ${user.twitter}
                 </a>
             <%}%>
 
 
-            <% if(user.facebookName!=null){%>
-                <a href="${user.facebookLink}" target="_blank" class="list-group-item">
-                    <i class="fa fa-facebook fa-fw m-r-xs"></i> ${user.facebookName}
+            <% if(user.facebook!=null){%>
+                <a href="https://www.facebook.com/${user.facebook}" target="_blank" class="list-group-item">
+                    <i class="fa fa-facebook fa-fw m-r-xs"></i> ${user.facebook}
                 </a>
             <%}%>
 
-            <% if(user.universityName!=null){%>
-                <a href="${user.universityLink}" target="_blank" class="list-group-item">
-                    <i class="fa fa-graduation-cap fa-fw m-r-xs"></i> ${user.universityName}
+            <% if(user.school!=null){%>
+                <a href="${user.schoolLink}" target="_blank" class="list-group-item">
+                    <i class="fa fa-graduation-cap fa-fw m-r-xs"></i> ${user.school}
                 </a>
             <%}%>
 
 
-            <% if(user.professional!=null){%>
+            <% if(user.profession!=null){%>
                 <a href="#" class="list-group-item">
-                    <i class="fa fa-book fa-fw m-r-xs"></i> ${user.professional}
+                    <i class="fa fa-book fa-fw m-r-xs"></i> ${user.profession}
                 </a>
             <%}%>
 

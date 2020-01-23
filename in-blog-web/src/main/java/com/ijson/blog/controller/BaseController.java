@@ -1,15 +1,13 @@
 package com.ijson.blog.controller;
 
 import com.google.common.base.Strings;
+import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.*;
-import com.ijson.blog.service.PostDraftService;
-import com.ijson.blog.service.PostService;
-import com.ijson.blog.service.TopicService;
-import com.ijson.blog.service.UserService;
+import com.ijson.blog.service.*;
 import com.ijson.blog.service.model.HotTopic;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
@@ -55,6 +53,10 @@ public class BaseController {
     @Autowired
     protected UserService userService;
 
+    @Autowired
+    protected WebSiteService webSiteService;
+
+
     @Value("${web.ctx}")
     protected String webCtx;
 
@@ -77,6 +79,7 @@ public class BaseController {
         view.addObject("webSiteCount", postService.getWebSiteCount());
         view.addObject("webCtx", webCtx);
         view.addObject("webEname", webEname);
+        view.addObject("site", getConfig());
     }
 
     /**
@@ -110,6 +113,10 @@ public class BaseController {
         return HotTopic.getHotTopic(topicEntities);
     }
 
+
+    protected ConfigEntity getConfig(){
+        return webSiteService.findAllConfig();
+    }
 
     /**
      * 获取博客管理信息

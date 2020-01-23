@@ -127,7 +127,6 @@ public class ConsoleAction extends BaseController {
     /**
      * 跳转到博客列表
      *
-     * @param index
      * @return
      */
     @RequestMapping("/post/list/page")
@@ -255,7 +254,7 @@ public class ConsoleAction extends BaseController {
             return new ModelAndView(new RedirectView(webCtx));
         }
 
-        view.addObject("site", webSiteService.findAllConfig());
+        view.addObject("site", getConfig());
         addAdminModelAndView(view);
         return view;
     }
@@ -271,13 +270,13 @@ public class ConsoleAction extends BaseController {
         }
         UserEntity userEntity = userService.findUserByEname(context.getEname(), null, null);
 
-        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
-            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
-        }
-
-        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
-            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
-        }
+//        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
+//            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
+//        }
+//
+//        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
+//            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
+//        }
 
         addAdminModelAndView(view);
 
@@ -297,13 +296,13 @@ public class ConsoleAction extends BaseController {
         }
         UserEntity userEntity = userService.findUserByEname(context.getEname(), null, null);
 
-        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
-            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
-        }
-
-        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
-            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
-        }
+//        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
+//            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
+//        }
+//
+//        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
+//            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
+//        }
 
         addAdminModelAndView(view);
 

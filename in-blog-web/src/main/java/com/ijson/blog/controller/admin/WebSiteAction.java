@@ -5,11 +5,9 @@ import com.ijson.blog.controller.admin.model.UpdPassword;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.WebSiteService;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.WebSite;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +24,6 @@ import java.util.Objects;
 @RequestMapping("/site")
 public class WebSiteAction extends BaseController {
 
-    @Autowired
-    private WebSiteService webSiteService;
 
     @PostMapping("/website")
     public Result siteForm(HttpServletRequest request, HttpSession session, @RequestBody WebSite post) {
@@ -69,12 +65,5 @@ public class WebSiteAction extends BaseController {
         return Result.ok("保存网站信息成功!");
     }
 
-
-    @PostMapping("/update/user")
-    public Result updateUser(HttpServletRequest request, HttpSession session, @RequestBody UpdPassword updPassword) {
-        AuthContext context = getContext(request);
-
-        return Result.ok("保存网站信息成功!");
-    }
 
 }

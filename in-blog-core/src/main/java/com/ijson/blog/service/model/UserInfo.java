@@ -1,13 +1,10 @@
 package com.ijson.blog.service.model;
 
 import com.ijson.blog.dao.entity.UserEntity;
-import com.ijson.blog.util.DateUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -24,25 +21,23 @@ public class UserInfo {
     private String cname;
     private String ename;
     private String email;
-    private String twitterName;
-    private String twitterLink;
-    private String facebookName;
-    private String facebookLink;
-    private String universityName;
-    private String universityLink;
-    private String professional;
-    private String yearsOfWorking;
-    private String weiboLink;
-    private String wexinLink;
-    private String indexName;
+    private String twitter;
+    private String facebook;
+    private String school;
+    private String schoolLink;
+    private String profession;
+    private String beginJobTime;
+    private String endJobTime;
+    private String weibo;
+    private String wechat;
     private String avatar;
     private String roleCname;
     private boolean enable;
     private Long createTime;
 
-    public static List<UserInfo> creaetUserList(List<UserEntity> userEntityList){
+    public static List<UserInfo> creaetUserList(List<UserEntity> userEntityList) {
 
-        return userEntityList.stream().map(k->{
+        return userEntityList.stream().map(k -> {
             return create(k);
         }).collect(Collectors.toList());
     }
@@ -53,40 +48,20 @@ public class UserInfo {
         userInfo.setUserId(userEntity.getId());
         userInfo.setCname(userEntity.getCname());
         userInfo.setEmail(userEntity.getEmail());
-        userInfo.setTwitterName(userEntity.getTwitterName());
-        userInfo.setTwitterLink(userEntity.getTwitterLink());
-        userInfo.setFacebookName(userEntity.getFacebookName());
-        userInfo.setFacebookLink(userEntity.getFacebookLink());
-        userInfo.setUniversityName(userEntity.getUniversityName());
-        userInfo.setUniversityLink(userEntity.getUniversityLink());
-        userInfo.setProfessional(userEntity.getProfessional());
-        userInfo.setWeiboLink(userEntity.getWeiboLink());
-        userInfo.setWexinLink(userEntity.getWechatLink());
-        userInfo.setIndexName(userEntity.getIndexName());
+        userInfo.setTwitter(userEntity.getTwitter());
+        userInfo.setFacebook(userEntity.getFacebook());
+        userInfo.setSchool(userEntity.getSchool());
+        userInfo.setSchoolLink(userEntity.getSchoolLink());
+        userInfo.setProfession(userEntity.getProfession());
+        userInfo.setWechat(userEntity.getWechat());
+        userInfo.setWeibo(userEntity.getWeibo());
         userInfo.setAvatar(userEntity.getAvatar());
         userInfo.setEname(userEntity.getEname());
         userInfo.setRoleCname(userEntity.getRoleCname());
         userInfo.setEnable(userEntity.isEnable());
         userInfo.setCreateTime(userEntity.getCreateTime());
-        Long workStartTime = userEntity.getWorkStartTime();
-        Long workEndTime = userEntity.getWorkEndTime();
-
-        String workStart = "未知";
-        String workEnd = "未知";
-
-        if (Objects.nonNull(workStartTime)) {
-            workStart = DateUtils.getInstance().format(new Date(workStartTime));
-        }
-
-        if (Objects.nonNull(workEndTime)) {
-            if(workEndTime==-1){
-                workEnd = "至今";
-            }else {
-                workEnd = DateUtils.getInstance().format(new Date(workEndTime));
-            }
-        }
-
-        userInfo.setYearsOfWorking(workStart + "-" + workEnd);
+        userInfo.setBeginJobTime(userEntity.getBeginJobTime());
+        userInfo.setEndJobTime(userEntity.getEndJobTime());
         return userInfo;
     }
 }

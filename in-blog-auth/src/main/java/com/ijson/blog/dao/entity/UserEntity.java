@@ -46,14 +46,8 @@ public class UserEntity extends BaseEntity {
     @Property(Fields.wechat)
     private String wechat;
 
-    @Property(Fields.wechatLink)
-    private String wechatLink;
-
     @Property(Fields.weibo)
     private String weibo;
-
-    @Property(Fields.weiboLink)
-    private String weiboLink;
 
     @Property(Fields.qq)
     private String qq;
@@ -85,45 +79,33 @@ public class UserEntity extends BaseEntity {
     private long createTime;
 
 
-    @Property(Fields.twitterName)
-    private String twitterName;
-
-    @Property(Fields.twitterLink)
-    private String twitterLink;
+    @Property(Fields.twitter)
+    private String twitter;
 
 
-    @Property(Fields.facebookName)
-    private String facebookName;
+    @Property(Fields.facebook)
+    private String facebook;
 
 
-    @Property(Fields.facebookLink)
-    private String facebookLink;
+    @Property(Fields.school)
+    private String school;
 
 
-    @Property(Fields.universityName)
-    private String universityName;
+    @Property(Fields.schoolLink)
+    private String schoolLink;
 
 
-    @Property(Fields.universityLink)
-    private String universityLink;
+    @Property(Fields.profession)
+    private String profession;
 
 
-    @Property(Fields.professional)
-    private String professional;
+    @Property(Fields.beginJobTime)
+    private String beginJobTime;
 
 
-    @Property(Fields.workStartTime)
-    private Long workStartTime;
+    @Property(Fields.endJobTime)
+    private String endJobTime;//-1 表示至今
 
-
-    @Property(Fields.workEndTime)
-    private Long workEndTime;//-1 表示至今
-
-    @Property(Fields.indexName)
-    private String indexName;
-
-    private volatile String startTime;
-    private volatile String endTime;
     private volatile String roleCname;
 
 
@@ -162,20 +144,15 @@ public class UserEntity extends BaseEntity {
         String deleted = "deleted";
         String lastModifiedBy = "lastModifiedBy";
         String lastModifiedTime = "lastModifiedTime";
-        String twitterName = "twitterName";
-        String twitterLink = "twitterLink";
-        String facebookName = "facebookName";
-        String facebookLink = "facebookLink";
-        String universityName = "universityName";
-        String universityLink = "universityLink";
-        String professional = "professional";
-        String workStartTime = "workStartTime";
-        String workEndTime = "workEndTime";//-1 表示至今
-        String indexName = "indexName";
-        String wechatLink = "wechatLink";
-        String weiboLink = "weiboLink";
         String avatar = "avatar";
         String roleId = "roleId";
+        String twitter = "twitter";
+        String facebook = "facebook";
+        String school = "school";
+        String schoolLink = "schoolLink";
+        String profession = "profession";
+        String beginJobTime = "beginJobTime";
+        String endJobTime = "endJobTime";
     }
 
     public static UserEntity unknownUser() {

@@ -62,17 +62,10 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
             operations.set(UserEntity.Fields.wechat, entity.getWechat());
         }
 
-        if (!Strings.isNullOrEmpty(entity.getWechatLink())) {
-            operations.set(UserEntity.Fields.wechatLink, entity.getWechatLink());
-        }
-
         if (!Strings.isNullOrEmpty(entity.getWeibo())) {
             operations.set(UserEntity.Fields.weibo, entity.getWeibo());
         }
 
-        if (!Strings.isNullOrEmpty(entity.getWeiboLink())) {
-            operations.set(UserEntity.Fields.weiboLink, entity.getWeiboLink());
-        }
 
         if (!Strings.isNullOrEmpty(entity.getQq())) {
             operations.set(UserEntity.Fields.qq, entity.getQq());
@@ -83,46 +76,33 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         }
 
 
-        if (!Strings.isNullOrEmpty(entity.getTwitterName())) {
-            operations.set(UserEntity.Fields.twitterName, entity.getTwitterName());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getTwitterLink())) {
-            operations.set(UserEntity.Fields.twitterLink, entity.getTwitterLink());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getFacebookName())) {
-            operations.set(UserEntity.Fields.facebookName, entity.getFacebookName());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getFacebookLink())) {
-            operations.set(UserEntity.Fields.facebookLink, entity.getFacebookLink());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getUniversityName())) {
-            operations.set(UserEntity.Fields.universityName, entity.getUniversityName());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getUniversityLink())) {
-            operations.set(UserEntity.Fields.universityLink, entity.getUniversityLink());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getProfessional())) {
-            operations.set(UserEntity.Fields.professional, entity.getProfessional());
+        if (!Strings.isNullOrEmpty(entity.getTwitter())) {
+            operations.set(UserEntity.Fields.twitter, entity.getTwitter());
         }
 
 
-        if (!Strings.isNullOrEmpty(entity.getIndexName())) {
-            operations.set(UserEntity.Fields.indexName, entity.getIndexName());
+        if (!Strings.isNullOrEmpty(entity.getFacebook())) {
+            operations.set(UserEntity.Fields.facebook, entity.getFacebook());
         }
 
-
-        if (Objects.nonNull(entity.getWorkStartTime())) {
-            operations.set(UserEntity.Fields.workStartTime, entity.getWorkStartTime());
+        if (!Strings.isNullOrEmpty(entity.getSchool())) {
+            operations.set(UserEntity.Fields.school, entity.getSchool());
         }
 
-        if (Objects.nonNull(entity.getWorkEndTime())) {
-            operations.set(UserEntity.Fields.workEndTime, entity.getWorkEndTime());
+        if (!Strings.isNullOrEmpty(entity.getSchoolLink())) {
+            operations.set(UserEntity.Fields.schoolLink, entity.getSchoolLink());
+        }
+
+        if (!Strings.isNullOrEmpty(entity.getProfession())) {
+            operations.set(UserEntity.Fields.profession, entity.getProfession());
+        }
+
+        if (Objects.nonNull(entity.getBeginJobTime())) {
+            operations.set(UserEntity.Fields.beginJobTime, entity.getBeginJobTime());
+        }
+
+        if (Objects.nonNull(entity.getEndJobTime())) {
+            operations.set(UserEntity.Fields.endJobTime, entity.getEndJobTime());
         }
 
         operations.set(UserEntity.Fields.lastModifiedTime, System.currentTimeMillis());

@@ -3,10 +3,7 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.controller.admin.model.BaseUserInfo;
-import com.ijson.blog.controller.admin.model.Contact;
 import com.ijson.blog.controller.admin.model.UpdPassword;
-import com.ijson.blog.controller.admin.model.WebSet;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -43,66 +40,96 @@ public class UserAction extends BaseController {
     private String updPwdCodeTime = "updPwdCodeTime";
 
 
-    @PostMapping(value = "/edit/webset")
-    public Result editWebset(HttpServletRequest request, @RequestBody WebSet webSet) {
+//    @PostMapping(value = "/edit/webset")
+//    public Result editWebset(HttpServletRequest request, @RequestBody WebSet webSet) {
+//        AuthContext context = getContext(request);
+//        if (Objects.isNull(context)) {
+//            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
+//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+//        }
+//        UserEntity entity = userService.findUserById(webSet.getId());
+//        entity.setIndexName(webSet.getIndexName());
+//        userService.edit(entity);
+//        return Result.ok("更新成功!");
+//    }
+
+//    @PostMapping(value = "/edit/base")
+//    public Result editBase(HttpServletRequest request, @RequestBody BaseUserInfo baseUserInfo) {
+//        AuthContext context = getContext(request);
+//        if (Objects.isNull(context)) {
+//            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
+//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+//        }
+//        UserEntity entity = userService.findUserById(baseUserInfo.getId());
+//
+//
+//        entity.setCname(baseUserInfo.getCname());
+//        entity.setMobile(baseUserInfo.getMobile());
+//        entity.setEmail(baseUserInfo.getEmail());
+//        entity.setUniversityName(baseUserInfo.getUniversityName());
+//        entity.setUniversityLink(baseUserInfo.getUniversityLink());
+//        entity.setProfessional(baseUserInfo.getProfessional());
+//        entity.setStartTime(baseUserInfo.getStartTime());
+//        entity.setEndTime(baseUserInfo.getEndTime());
+//
+//        userService.edit(entity);
+//        return Result.ok("更新成功!");
+//    }
+
+    @PostMapping(value = "/edit/user")
+    public Result editBase(HttpServletRequest request, @RequestBody UserEntity myUser) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        UserEntity entity = userService.findUserById(webSet.getId());
-        entity.setIndexName(webSet.getIndexName());
-        userService.edit(entity);
-        return Result.ok("更新成功!");
-    }
+        UserEntity entity = userService.findUserById(myUser.getId());
 
-    @PostMapping(value = "/edit/base")
-    public Result editBase(HttpServletRequest request, @RequestBody BaseUserInfo baseUserInfo) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-        UserEntity entity = userService.findUserById(baseUserInfo.getId());
-
-
-        entity.setCname(baseUserInfo.getCname());
-        entity.setMobile(baseUserInfo.getMobile());
-        entity.setEmail(baseUserInfo.getEmail());
-        entity.setUniversityName(baseUserInfo.getUniversityName());
-        entity.setUniversityLink(baseUserInfo.getUniversityLink());
-        entity.setProfessional(baseUserInfo.getProfessional());
-        entity.setStartTime(baseUserInfo.getStartTime());
-        entity.setEndTime(baseUserInfo.getEndTime());
-
+        entity.setCname(myUser.getCname());
+        entity.setMobile(myUser.getMobile());
+        entity.setEmail(myUser.getEmail());
+        entity.setSchool(myUser.getSchool());
+        entity.setSchoolLink(myUser.getSchoolLink());
+        entity.setProfession(myUser.getProfession());
+        entity.setBeginJobTime(myUser.getBeginJobTime());
+        entity.setEndJobTime(myUser.getEndJobTime());
+        entity.setWechat(myUser.getWechat());
+        //entity.setWechatLink(myUser.getWechatLink());
+        entity.setWeibo(myUser.getWeibo());
+        //entity.setWeiboLink(contact.getWeiboLink());
+        entity.setQq(myUser.getQq());
+        entity.setTwitter(myUser.getTwitter());
+        //entity.setTwitterLink(myUser.getTwitterLink());
+        entity.setFacebook(myUser.getFacebook());
+        //entity.setFacebookLink(myUser.getFacebookLink());
         userService.edit(entity);
         return Result.ok("更新成功!");
     }
 
 
-    @PostMapping(value = "/edit/contact")
-    public Result editContact(HttpServletRequest request, @RequestBody Contact contact) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-        UserEntity entity = userService.findUserById(contact.getId());
-
-
-        entity.setWechat(contact.getWechat());
-        entity.setWechatLink(contact.getWechatLink());
-        entity.setWeibo(contact.getWeibo());
-        entity.setWeiboLink(contact.getWeiboLink());
-        entity.setQq(contact.getQq());
-        entity.setTwitterName(contact.getTwitterName());
-        entity.setTwitterLink(contact.getTwitterLink());
-        entity.setFacebookName(contact.getFacebookName());
-        entity.setFacebookLink(contact.getFacebookLink());
-
-        userService.edit(entity);
-        return Result.ok("更新成功!");
-    }
+//    @PostMapping(value = "/edit/contact")
+//    public Result editContact(HttpServletRequest request, @RequestBody Contact contact) {
+//        AuthContext context = getContext(request);
+//        if (Objects.isNull(context)) {
+//            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
+//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+//        }
+//        UserEntity entity = userService.findUserById(contact.getId());
+//
+//
+//        entity.setWechat(contact.getWechat());
+//        entity.setWechatLink(contact.getWechatLink());
+//        entity.setWeibo(contact.getWeibo());
+//        entity.setWeiboLink(contact.getWeiboLink());
+//        entity.setQq(contact.getQq());
+//        entity.setTwitterName(contact.getTwitterName());
+//        entity.setTwitterLink(contact.getTwitterLink());
+//        entity.setFacebookName(contact.getFacebookName());
+//        entity.setFacebookLink(contact.getFacebookLink());
+//
+//        userService.edit(entity);
+//        return Result.ok("更新成功!");
+//    }
 
 
     @PostMapping(value = "/edit/password")
