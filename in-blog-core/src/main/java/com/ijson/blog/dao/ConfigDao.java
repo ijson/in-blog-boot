@@ -16,4 +16,6 @@ public interface ConfigDao {
 
 
     ConfigEntity updateShowField(ConfigEntity entity);
+
+    ConfigEntity findType(String type);
 }

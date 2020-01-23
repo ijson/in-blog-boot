@@ -2,14 +2,19 @@ package com.ijson.blog.controller.admin;
 
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.controller.admin.model.UpdPassword;
+import com.ijson.blog.dao.entity.ConfigEntity;
+import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.WebSiteService;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.WebSite;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 /**
  * desc:
@@ -21,11 +26,16 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/website")
 public class WebSiteAction extends BaseController {
 
+    @Autowired
+    private WebSiteService webSiteService;
 
     @PostMapping("/site")
     public Result siteForm(HttpServletRequest request, HttpSession session, @RequestBody WebSite post) {
         AuthContext context = getContext(request);
-
+        if (Objects.isNull(context)) {
+            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        ConfigEntity entity = webSiteService.updateWebSite(post);
         return Result.ok("保存网站信息成功!");
     }
 
@@ -33,6 +43,12 @@ public class WebSiteAction extends BaseController {
     @PostMapping("/switch/{type}")
     public Result webSwitch(HttpServletRequest request, HttpSession session, @PathVariable("type") String type) {
         AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+
+        ConfigEntity entity = webSiteService.updateSwitch(type);
+
 
         return Result.ok("保存网站信息成功!");
     }

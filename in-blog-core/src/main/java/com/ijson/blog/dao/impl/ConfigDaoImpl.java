@@ -47,4 +47,11 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
         operations.set(ConfigEntity.Fields.showAdminFields, entity.getShowAdminFields());
         return datastore.findAndModify(query, operations, false, true);
     }
+
+    @Override
+    public ConfigEntity findType(String type) {
+        Query<ConfigEntity> query = datastore.createQuery(ConfigEntity.class);
+        query.field(ConfigEntity.Fields.type).equal(type);
+        return query.get();
+    }
 }
