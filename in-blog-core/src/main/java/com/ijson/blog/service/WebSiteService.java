@@ -10,4 +10,9 @@ public interface WebSiteService {
     ConfigEntity updateWebSite(WebSite post);
 
     ConfigEntity updateSwitch(String type);
+
+    ConfigEntity updateShowField(String name);
+
+    ConfigEntity findAllConfig();
+
 }

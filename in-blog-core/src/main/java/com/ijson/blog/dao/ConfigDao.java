@@ -1,6 +1,9 @@
 package com.ijson.blog.dao;
 
 import com.ijson.blog.dao.entity.ConfigEntity;
+import com.ijson.blog.model.Constant;
+
+import java.util.List;
 
 /**
  * desc:
@@ -17,5 +20,7 @@ public interface ConfigDao {
 
     ConfigEntity updateShowField(ConfigEntity entity);
 
-    ConfigEntity findType(String type);
+    ConfigEntity findType(Constant.ConfigType type);
+
+    List<ConfigEntity> findAllType();
 }

@@ -10,5 +10,5 @@ import lombok.Data;
 @Data
 public class WebSite {
 
-    private String webSiteName;
+    private String siteName;
 }

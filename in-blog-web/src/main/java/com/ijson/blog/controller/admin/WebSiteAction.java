@@ -23,13 +23,13 @@ import java.util.Objects;
  */
 @Slf4j
 @RestController
-@RequestMapping("/website")
+@RequestMapping("/site")
 public class WebSiteAction extends BaseController {
 
     @Autowired
     private WebSiteService webSiteService;
 
-    @PostMapping("/site")
+    @PostMapping("/website")
     public Result siteForm(HttpServletRequest request, HttpSession session, @RequestBody WebSite post) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
@@ -46,19 +46,19 @@ public class WebSiteAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-
         ConfigEntity entity = webSiteService.updateSwitch(type);
-
-
-        return Result.ok("保存网站信息成功!");
+        return Result.ok("更新成功!");
     }
 
 
     @PostMapping("/filed/show/{name}")
     public Result showField(HttpServletRequest request, HttpSession session, @PathVariable("name") String name) {
         AuthContext context = getContext(request);
-
-        return Result.ok("保存网站信息成功!");
+        if (Objects.isNull(context)) {
+            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        webSiteService.updateShowField(name);
+        return Result.ok("更新成功!");
     }
 
 

@@ -8,6 +8,9 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * desc:
  * version: 7.0.0
@@ -49,9 +52,16 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
     }
 
     @Override
-    public ConfigEntity findType(String type) {
+    public ConfigEntity findType(Constant.ConfigType type) {
         Query<ConfigEntity> query = datastore.createQuery(ConfigEntity.class);
-        query.field(ConfigEntity.Fields.type).equal(type);
+        query.field(ConfigEntity.Fields.type).equal(type.name());
         return query.get();
+    }
+
+    @Override
+    public List<ConfigEntity> findAllType() {
+        Query<ConfigEntity> query = datastore.createQuery(ConfigEntity.class);
+        query.field(ConfigEntity.Fields.type).hasAnyOf(Arrays.asList(Constant.ConfigType.values()));
+        return query.asList();
     }
 }

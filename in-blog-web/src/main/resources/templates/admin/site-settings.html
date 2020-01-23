@@ -54,7 +54,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">网站名称</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="siteName" id="siteName" autocomplete="off"
+                                            <input type="text" name="siteName" id="siteName" autocomplete="off" value="${site.siteName}"
                                                    placeholder="请输入网站名称" class="layui-input">
                                         </div>
                                     </div>
@@ -192,12 +192,6 @@
             , laydate = layui.laydate;
 
 
-        //网站设置监听提交
-        form.on('submit(siteForm)', function (data) {
-            console.log(data.field)
-            return false;
-        });
-
 
         //注册监听
         form.on('switch(regSwitch)', function (data) {
@@ -220,8 +214,28 @@
 
         //网站设置保存
         form.on('submit(saveWebSet)', function (data) {
-            console.log(data)
-            layer.msg("网站设置保存");
+            console.log(data.field);
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/site/website",
+                data: JSON.stringify(data.field),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
             return false;
         });
 

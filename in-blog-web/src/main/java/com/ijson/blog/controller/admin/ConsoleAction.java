@@ -10,6 +10,7 @@ import com.ijson.blog.model.SystemInfo;
 import com.ijson.blog.service.PostDraftService;
 import com.ijson.blog.service.PostService;
 import com.ijson.blog.service.UserService;
+import com.ijson.blog.service.WebSiteService;
 import com.ijson.blog.service.model.ConsoleData;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.util.EhcacheUtil;
@@ -43,6 +44,9 @@ public class ConsoleAction extends BaseController {
 
     @Autowired
     private PostDraftService postDraftService;
+
+    @Autowired
+    private WebSiteService webSiteService;
 
     /**
      * 后台首页
@@ -250,20 +254,9 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        UserEntity userEntity = userService.findUserByEname(context.getEname(), null, null);
 
-        if (Objects.nonNull(userEntity.getWorkStartTime()) && userEntity.getWorkStartTime() != 0) {
-            userEntity.setStartTime(simpleDateFormat.format(userEntity.getWorkStartTime()));
-        }
-
-        if (Objects.nonNull(userEntity.getWorkEndTime()) && userEntity.getWorkEndTime() != 0) {
-            userEntity.setEndTime(simpleDateFormat.format(userEntity.getWorkEndTime()));
-        }
-
+        view.addObject("site", webSiteService.findAllConfig());
         addAdminModelAndView(view);
-
-
-        view.addObject("user", userEntity);
         return view;
     }
 
