@@ -18,7 +18,7 @@ public interface Constant {
     enum ConfigType {
         site("网站设置"),
         switchType("开关设置"),
-        filedShow("博主字段信息显示");
+        fieldShow("博主字段信息显示");
 
         ConfigType(String desc) {
         }
