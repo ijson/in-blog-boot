@@ -36,72 +36,12 @@
 
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
+                        <li class="layui-this">博主信息</li>
                         <li>修改密码</li>
-                        <li>博主信息</li>
                     </ul>
                     <div class="layui-tab-content" style="height: 100px;">
-                        <div class="layui-tab-item layui-show">
 
-                            <div class="layui-card-body ">
-                                <form class="layui-form layui-form-pane" action="" id="updPwdForm">
-
-
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">账户</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" disabled name="ename" id="ename" value="admin"
-                                                   class="layui-input">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">原密码</label>
-                                        <div class="layui-input-inline">
-                                            <input type="password" name="oldPassword" id="oldPassword"
-                                                   placeholder="请输入原密码" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">新密码</label>
-                                            <div class="layui-input-inline">
-                                                <input type="password" name="newPassword" id="newPassword"
-                                                       placeholder="请输入新密码" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">重新输入</label>
-                                            <div class="layui-input-inline">
-                                                <input type="password" name="againPassword" name="againPassword"
-                                                       placeholder="请重新输入新密码" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">验证码</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="text" placeholder="请输入验证码" autocomplete="off"
-                                                   class="layui-input">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="layui-form-item">
-                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit
-                                                lay-filter="saveFieldShow">保存
-                                        </button>
-                                    </div>
-
-                                </form>
-                            </div>
-
-
-                        </div>
-                        <div class="layui-tab-item">
+                        <div class="layui-tab-item  layui-show">
 
 
                             <div class="layui-card-body ">
@@ -237,6 +177,69 @@
                                 </form>
                             </div>
 
+
+
+                            <div class="layui-tab-item">
+
+                                <div class="layui-card-body ">
+                                    <form class="layui-form layui-form-pane" action="" id="updPwdForm">
+
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">账户</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" disabled name="ename" id="ename" value="admin"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">原密码</label>
+                                            <div class="layui-input-inline">
+                                                <input type="password" name="oldPassword" id="oldPassword"
+                                                       placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">新密码</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="password" name="newPassword" id="newPassword"
+                                                           placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">重新输入</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="password" name="againPassword" name="againPassword"
+                                                           placeholder="请重新输入新密码" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">验证码</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="text" placeholder="请输入验证码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="layui-form-item">
+                                            <button type="button" class="layui-btn layui-btn-normal" lay-submit
+                                                    lay-filter="saveFieldShow">保存
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+
+                            </div>
 
                         </div>
                     </div>
