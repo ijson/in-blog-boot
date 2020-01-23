@@ -54,7 +54,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">网站名称</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="siteName" id="siteName" autocomplete="off" value="${site.siteName}"
+                                            <input type="text" name="siteName" id="siteName" autocomplete="off"
+                                                   value="${site.siteName}"
                                                    placeholder="请输入网站名称" class="layui-input">
                                         </div>
                                     </div>
@@ -81,15 +82,17 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">开启注册</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" checked="" name="open" lay-skin="switch"
-                                                       lay-filter="regSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" name="open" lay-skin="switch"
+                                                       lay-filter="openReg" lay-text="ON|OFF"
+                                                <%if(site.openReg==true){%> checked <% }%> >
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">允许评论</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" checked="" name="open" lay-skin="switch"
-                                                       lay-filter="commentSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" name="open" lay-skin="switch"
+                                                       lay-filter="openCmt" lay-text="ON|OFF"
+                                                <%if(site.openCmt==true){%> checked <% }%> >
                                             </div>
                                         </div>
                                     </div>
@@ -97,8 +100,9 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label" about="显示博主信息">显示博主信息</label>
                                         <div class="layui-input-block">
-                                            <input type="checkbox" checked="" name="open" lay-skin="switch"
-                                                   lay-filter="showBloggerSwitch" lay-text="ON|OFF">
+                                            <input type="checkbox" name="open" lay-skin="switch"
+                                                   lay-filter="showAdminInfo" lay-text="ON|OFF"
+                                            <%if(site.showAdminInfo==true){%> checked <%}%> }>
                                         </div>
                                     </div>
 
@@ -192,24 +196,45 @@
             , laydate = layui.laydate;
 
 
-
         //注册监听
-        form.on('switch(regSwitch)', function (data) {
-            layer.msg("注册监听" + data.elem.checked);
+        form.on('switch(openReg)', function (data) {
+            switchConfig("openReg");
             return false;
         });
 
         //评论监听
-        form.on('switch(commentSwitch)', function (data) {
-            layer.msg("评论监听" + data.elem.checked);
+        form.on('switch(openCmt)', function (data) {
+            switchConfig("openCmt");
             return false;
         });
 
         //显示博主信息监听
-        form.on('switch(showBloggerSwitch)', function (data) {
-            layer.msg("显示博主信息监听" + data.elem.checked);
+        form.on('switch(showAdminInfo)', function (data) {
+            switchConfig("showAdminInfo");
             return false;
         });
+
+        function switchConfig(key) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/site/switch/" + key,
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+        }
 
 
         //网站设置保存
@@ -238,15 +263,6 @@
             });
             return false;
         });
-
-
-        //开关设置
-        form.on('submit(saveSwitch)', function (data) {
-            console.log(data)
-            layer.msg("开关设置");
-            return false;
-        });
-
 
         // 显示字段监听
         form.on('checkbox(like)', function (data) {
