@@ -11,8 +11,9 @@ import lombok.Data;
 public class UpdPassword {
 
     private String id;
-    private String oldPwd;
-    private String newPwd;
-    private String againPwd;
+    private String ename;
+    private String oldPassword;
+    private String newPassword;
+    private String againPassword;
     private String pwdVerCode;
 }

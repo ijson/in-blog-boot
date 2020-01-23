@@ -145,24 +145,24 @@ public class UserAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.CAPTCHA_ERROR_OR_NOT_PRESENT, result.getMessage());
         }
 
-        if (Strings.isNullOrEmpty(updPassword.getOldPwd())) {
+        if (Strings.isNullOrEmpty(updPassword.getOldPassword())) {
             return Result.error("旧密码不能为空!");
         }
-        if (Strings.isNullOrEmpty(updPassword.getNewPwd())) {
+        if (Strings.isNullOrEmpty(updPassword.getNewPassword())) {
             return Result.error("新密码不能为空!");
         }
 
-        if (!updPassword.getNewPwd().equals(updPassword.getAgainPwd())) {
+        if (!updPassword.getNewPassword().equals(updPassword.getAgainPassword())) {
             return Result.error("新密码输入不一致!");
         }
 
         UserEntity entity = userService.findUserById(updPassword.getId());
 
-        if (!entity.getPassword().equals(updPassword.getOldPwd())) {
+        if (!entity.getPassword().equals(updPassword.getOldPassword())) {
             return Result.error("原始密码不正确!");
         }
 
-        entity.setPassword(updPassword.getNewPwd());
+        entity.setPassword(updPassword.getNewPassword());
         userService.edit(entity);
         return Result.ok("更新密码成功!");
     }

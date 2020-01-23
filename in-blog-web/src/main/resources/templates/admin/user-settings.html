@@ -20,6 +20,8 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="/js/md5.js"></script>
+
 </head>
 <body style="background-color: #fff">
 
@@ -60,7 +62,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">昵称</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入昵称" autocomplete="off" name="cname" value="${user.cname}"
+                                                <input type="text" placeholder="请输入昵称" autocomplete="off" name="cname"
+                                                       value="${user.cname}"
                                                        id="cname"
                                                        class="layui-input">
                                             </div>
@@ -69,14 +72,16 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">手机号</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入手机号" autocomplete="off" id="mobile" name="mobile" value="${user.mobile}"
+                                                <input type="text" placeholder="请输入手机号" autocomplete="off" id="mobile"
+                                                       name="mobile" value="${user.mobile}"
                                                        class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">邮箱</label>
                                             <div class="layui-input-inline">
-                                                <input type="email" placeholder="请输入邮箱" autocomplete="off" name="email" id="email" value="${user.email}"
+                                                <input type="email" placeholder="请输入邮箱" autocomplete="off" name="email"
+                                                       id="email" value="${user.email}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -84,7 +89,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">毕业学校</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入毕业学校" autocomplete="off" id="school" name="school" value="${user.school}"
+                                                <input type="text" placeholder="请输入毕业学校" autocomplete="off" id="school"
+                                                       name="school" value="${user.school}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -92,7 +98,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">学校链接</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入学校链接" autocomplete="off" id="schoolLink" name="schoolLink" value="${user.schoolLink}"
+                                                <input type="text" placeholder="请输入学校链接" autocomplete="off"
+                                                       id="schoolLink" name="schoolLink" value="${user.schoolLink}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -100,7 +107,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">专业</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入专业" autocomplete="off" id="profession" name="profession" value="${user.profession}"
+                                                <input type="text" placeholder="请输入专业" autocomplete="off"
+                                                       id="profession" name="profession" value="${user.profession}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -108,7 +116,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">开始工作时间</label>
                                             <div class="layui-input-inline">
-                                                <input name="beginJobTime" id="beginJobTime" placeholder="请输入开始工作时间" value="${user.beginJobTime}"
+                                                <input name="beginJobTime" id="beginJobTime" placeholder="请输入开始工作时间"
+                                                       value="${user.beginJobTime}"
                                                        autocomplete="off" class="layui-input">
                                             </div>
                                         </div>
@@ -116,7 +125,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">结束工作时间</label>
                                             <div class="layui-input-inline">
-                                                <input name="endJobTime" id="endJobTime" placeholder="请输入结束工作时间" autocomplete="off" value="${user.endJobTime}"
+                                                <input name="endJobTime" id="endJobTime" placeholder="请输入结束工作时间"
+                                                       autocomplete="off" value="${user.endJobTime}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -125,7 +135,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">微信</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入微信" autocomplete="off" id="wechat" name="wechat" value="${user.wechat}"
+                                                <input type="text" placeholder="请输入微信" autocomplete="off" id="wechat"
+                                                       name="wechat" value="${user.wechat}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -134,7 +145,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">微博</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入微博" autocomplete="off" id="webo" name="webo" value="${user.weibo}"
+                                                <input type="text" placeholder="请输入微博" autocomplete="off" id="webo"
+                                                       name="webo" value="${user.weibo}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -143,7 +155,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">QQ</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入QQ" autocomplete="off" id="qq" name="qq" value="${user.qq}"
+                                                <input type="text" placeholder="请输入QQ" autocomplete="off" id="qq"
+                                                       name="qq" value="${user.qq}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -152,7 +165,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">Twitter</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入Twitter" autocomplete="off" id="twitter" name="twitter" value="${user.twitter}"
+                                                <input type="text" placeholder="请输入Twitter" autocomplete="off"
+                                                       id="twitter" name="twitter" value="${user.twitter}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -161,7 +175,8 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">Facebook</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入Facebook" autocomplete="off" id="facebook" name="facebook" value="${user.facebook}"
+                                                <input type="text" placeholder="请输入Facebook" autocomplete="off"
+                                                       id="facebook" name="facebook" value="${user.facebook}"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -183,12 +198,12 @@
 
                             <div class="layui-card-body ">
                                 <form class="layui-form layui-form-pane" action="" id="updPwdForm">
-
-
+                                    <input type="hidden" name="id" id="id" value="${user.id}">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">账户</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" disabled name="ename" id="ename" value="admin"
+                                            <input type="text" disabled name="ename" id="ename"
+                                                   value="${user.ename}"
                                                    class="layui-input">
                                         </div>
                                     </div>
@@ -222,11 +237,23 @@
                                     </div>
 
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">验证码</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="text" placeholder="请输入验证码" autocomplete="off"
-                                                   class="layui-input">
+
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">验证码</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" placeholder="请输入验证码" autocomplete="off"
+                                                       name="pwdVerCode" id="pwdVerCode"
+                                                       class="layui-input">
+                                            </div>
                                         </div>
+
+                                        <div class="layui-inline">
+                                            <img id="pwdCaptcha"
+                                                 onclick="this.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);"
+                                                 src="/user/edit/image?m=' + Math.floor(Math.random() * 10000);">
+                                        </div>
+
+
                                     </div>
 
 
@@ -266,14 +293,37 @@
 
         //修改密码监听
         form.on('submit(saveFieldShow)', function (data) {
-            console.log(data)
-            layer.msg("修改密码监听");
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/user/edit/password",
+                data: JSON.stringify(data.field),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
             return false;
         });
 
 
         //博主信息监听
         form.on('submit(saveUserInfo)', function (data) {
+
+            console.log(hex_md5(data.field.oldPassword))
+            data.field.oldPassword = hex_md5(data.field.oldPassword);
+            data.field.newPassword = hex_md5(data.field.newPassword);
+            data.field.againPassword = hex_md5(data.field.againPassword);
             $.ajax({
                 cache: false,
                 type: "POST",
