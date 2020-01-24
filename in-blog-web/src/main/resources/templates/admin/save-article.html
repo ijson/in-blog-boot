@@ -128,16 +128,23 @@
                             time: 2000
                         });
 
-                        $("#editPostForm")[0].reset();
-                        layui.form.render();
-                        $("#title").val('');
-                        $("#id").val('');
-                        $("#topicName_tagsinput span").remove();
+                        self.setInterval(function () {
+                            $("#editPostForm")[0].reset();
+                            layui.form.render();
+                            $("#title").val('');
+                            $("#id").val('');
+                            $("#topicName_tagsinput span").remove();
 
-                        CKEDITOR.instances.content.setData("");
-                        parent.layui.table.reload('postList');
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
+                            CKEDITOR.instances.content.setData("");
+                            try {
+                                parent.layui.table.reload('postList');
+                            } catch (err) {
+                            }
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        }, 2000);
+
+
                     } else {
                         layer.msg(data.message);
 
@@ -178,16 +185,23 @@
                             time: 2000
                         });
 
-                        $("#editPostForm")[0].reset();
-                        layui.form.render();
-                        $("#title").val('');
-                        $("#id").val('');
-                        $("#topicName_tagsinput span").remove();
+                        self.setInterval(function () {
+                            $("#editPostForm")[0].reset();
+                            layui.form.render();
+                            $("#title").val('');
+                            $("#id").val('');
+                            $("#topicName_tagsinput span").remove();
 
-                        CKEDITOR.instances.content.setData("");
-                        parent.layui.table.reload('postList');
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
+                            CKEDITOR.instances.content.setData("");
+                            try {
+                                parent.layui.table.reload('postList');
+                            } catch (err) {
+                            }
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        }, 2000);
+
+
                     } else {
                         layer.msg(data.message);
 
