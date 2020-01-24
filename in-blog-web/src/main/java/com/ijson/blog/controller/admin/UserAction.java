@@ -94,6 +94,7 @@ public class UserAction extends BaseController {
         entity.setBeginJobTime(myUser.getBeginJobTime());
         entity.setEndJobTime(myUser.getEndJobTime());
         entity.setWechat(myUser.getWechat());
+        entity.setWeibo(myUser.getWeibo());
         //entity.setWechatLink(myUser.getWechatLink());
         entity.setWeibo(myUser.getWeibo());
         //entity.setWeiboLink(contact.getWeiboLink());
