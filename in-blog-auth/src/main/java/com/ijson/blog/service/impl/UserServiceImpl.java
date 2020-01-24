@@ -206,4 +206,9 @@ public class UserServiceImpl implements UserService {
         return userDao.delete(id, deleted, userId);
     }
 
+    @Override
+    public void delete(String id) {
+        userDao.delete(id);
+    }
+
 }

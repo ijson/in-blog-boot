@@ -138,10 +138,15 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     public PageResult<UserEntity> find(UserQuery iquery, Page page) {
         Query<UserEntity> query = datastore.createQuery(UserEntity.class);
 
-        query.field(UserEntity.Fields.deleted).equal(false);
 
         if (!Strings.isNullOrEmpty(iquery.getCname())) {
             query.field(UserEntity.Fields.cname).containsIgnoreCase(iquery.getCname());
+        }
+
+        if (Objects.nonNull(iquery.getDeleted())) {
+            query.field(UserEntity.Fields.deleted).equal(iquery.getDeleted());
+        }else{
+            query.field(UserEntity.Fields.deleted).equal(false);
         }
 
         if (page.getOrderBy() != null) {

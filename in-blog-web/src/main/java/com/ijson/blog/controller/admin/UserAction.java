@@ -51,7 +51,7 @@ public class UserAction extends BaseController {
             return createUser(myUser);
         }
 
-        UserEntity entity = userService.findUserById(myUser.getId());
+        UserEntity entity = userService.findInternalById(myUser.getId());
 
         entity.setPassword(myUser.getPassword());
         entity.setCname(myUser.getCname());
@@ -142,7 +142,35 @@ public class UserAction extends BaseController {
         }
 
         userService.delete(id, !entity.isDeleted(), context.getId());
-        return Result.ok(entity.isEnable() ? "恢复成功!" : "删除成功!");
+        return Result.ok(entity.isDeleted() ? "恢复成功!" : "删除成功!");
+    }
+
+
+    @PostMapping(value = "/tdelete/{id}")
+    public Result tDelete(HttpServletRequest request, @PathVariable("id") String id) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        UserEntity entity = userService.findInternalById(id);
+
+        if (Objects.isNull(entity)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
+        }
+
+        if (webEname.equals(entity.getEname())) {
+            log.info("系统管理员不允许删除");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ADMINISTRATOR_ACCOUNTS_ARE_NOT_ALLOWED_TO_BE_DISABLED_OR_DELETED);
+        }
+
+        if (entity.isEnable()) {
+            log.info("账号启用状态无法删除");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ENABLED_STATE_CANNOT_BE_DELETED);
+        }
+
+        userService.delete(entity.getId() );
+        return Result.ok("删除成功!");
     }
 
 
@@ -212,6 +240,54 @@ public class UserAction extends BaseController {
         if (!Strings.isNullOrEmpty(keyWord)) {
             query.setCname(keyWord);
         }
+
+        PageResult<UserEntity> result = userService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<UserEntity> dataList = result.getDataList();
+        List<UserInfo> userInfos = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            userInfos = UserInfo.creaetUserList(dataList);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(userInfos);
+        v2Result.setMsg("");
+        return v2Result;
+    }
+
+
+    @RequestMapping("/del/list")
+    @ResponseBody
+    public V2Result<UserInfo> delList(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        UserQuery query = new UserQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setCname(keyWord);
+        }
+
+        query.setDeleted(true);
 
         PageResult<UserEntity> result = userService.find(query, pageEntity);
 

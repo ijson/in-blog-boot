@@ -24,5 +24,7 @@ public class UserQuery {
 
 	private String editorType;
 
+	private Boolean deleted;
+
 }
 
