@@ -21,7 +21,6 @@ import com.ijson.blog.service.TopicService;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UploadResult;
-import com.ijson.blog.service.model.dtable.PostDTable;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.Md5Util;
 import com.ijson.mongo.support.model.Page;
@@ -36,7 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -74,7 +72,7 @@ public class PostAction extends BaseController {
 
     @DocDocument(name = "博客添加", desc = "控制台执行添加,需要添加topic")
     @PostMapping("/create")
-    public Result createPost(HttpServletRequest request, HttpSession session, @RequestBody Post post) {
+    public Result createPost(HttpServletRequest request, @RequestBody Post post) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -183,17 +181,6 @@ public class PostAction extends BaseController {
         return Result.ok("更新文章成功!");
     }
 
-    @PostMapping("/enable/{ename}/{shamId}")
-    public Result enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody Post post, HttpServletRequest request) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-        PostEntity postEntity = postService.enable(ename, shamId, !post.isEnable(), context);
-        String reason = !post.isEnable() ? "启用" : "禁用";
-        return Result.ok(reason + "成功");
-    }
-
     @PostMapping("/v2/enable/{ename}/{shamId}")
     public Result v2Enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody Post post, HttpServletRequest request) {
         AuthContext context = getContext(request);
@@ -212,7 +199,7 @@ public class PostAction extends BaseController {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         PostEntity postEntity = postService.findByShamIdInternal(ename, shamId, false);
-        if(Objects.isNull(postEntity)){
+        if (Objects.isNull(postEntity)) {
             return Result.error(-1, "文章不存在,请检查");
         }
 
@@ -288,49 +275,6 @@ public class PostAction extends BaseController {
     }
 
 
-    @RequestMapping("/list")
-    @ResponseBody
-    public PostDTable list(Integer start, Integer length, HttpServletRequest request) {
-
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return new PostDTable();
-        }
-
-
-        String keyWord = request.getParameter("search[value]");
-
-        Page page = new Page();
-        if (Objects.nonNull(start)) {
-            page.setPageNumber((start / length) + 1);
-        }
-        if (Objects.nonNull(length)) {
-            page.setPageSize(length);
-        }
-
-
-        PostQuery query = new PostQuery();
-        if (!Strings.isNullOrEmpty(keyWord)) {
-            query.setLikeTitle(true);
-            query.setTitle(keyWord);
-        }
-
-        PageResult<PostEntity> result = postService.find(query, page);
-
-        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
-            return new PostDTable();
-        }
-
-        List<PostEntity> dataList = result.getDataList();
-        List<Post> posts = Lists.newArrayList();
-        if (CollectionUtils.isNotEmpty(dataList)) {
-            posts = Post.postList(result);
-        }
-
-        return PostDTable.create(posts, result.getTotal(), start);
-    }
-
-
     @RequestMapping("/v2/list")
     @ResponseBody
     public V2Result<Post> listV2(Integer page, Integer limit, HttpServletRequest request) {
@@ -339,7 +283,6 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }
-
 
         String keyWord = request.getParameter("title");
 

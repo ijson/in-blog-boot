@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.controller.admin.model.UpdPassword;
+import com.ijson.blog.controller.admin.model.V2Result;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -11,7 +12,6 @@ import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UserInfo;
-import com.ijson.blog.service.model.dtable.UserDTable;
 import com.ijson.blog.util.VerifyCodeUtils;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -39,43 +39,6 @@ public class UserAction extends BaseController {
     private String updPwdCodeKey = "updPwdCodeKey";
     private String updPwdCodeTime = "updPwdCodeTime";
 
-
-//    @PostMapping(value = "/edit/webset")
-//    public Result editWebset(HttpServletRequest request, @RequestBody WebSet webSet) {
-//        AuthContext context = getContext(request);
-//        if (Objects.isNull(context)) {
-//            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-//        }
-//        UserEntity entity = userService.findUserById(webSet.getId());
-//        entity.setIndexName(webSet.getIndexName());
-//        userService.edit(entity);
-//        return Result.ok("更新成功!");
-//    }
-
-//    @PostMapping(value = "/edit/base")
-//    public Result editBase(HttpServletRequest request, @RequestBody BaseUserInfo baseUserInfo) {
-//        AuthContext context = getContext(request);
-//        if (Objects.isNull(context)) {
-//            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-//        }
-//        UserEntity entity = userService.findUserById(baseUserInfo.getId());
-//
-//
-//        entity.setCname(baseUserInfo.getCname());
-//        entity.setMobile(baseUserInfo.getMobile());
-//        entity.setEmail(baseUserInfo.getEmail());
-//        entity.setUniversityName(baseUserInfo.getUniversityName());
-//        entity.setUniversityLink(baseUserInfo.getUniversityLink());
-//        entity.setProfessional(baseUserInfo.getProfessional());
-//        entity.setStartTime(baseUserInfo.getStartTime());
-//        entity.setEndTime(baseUserInfo.getEndTime());
-//
-//        userService.edit(entity);
-//        return Result.ok("更新成功!");
-//    }
-
     @PostMapping(value = "/edit/user")
     public Result editBase(HttpServletRequest request, @RequestBody UserEntity myUser) {
         AuthContext context = getContext(request);
@@ -95,42 +58,13 @@ public class UserAction extends BaseController {
         entity.setEndJobTime(myUser.getEndJobTime());
         entity.setWechat(myUser.getWechat());
         entity.setWeibo(myUser.getWeibo());
-        //entity.setWechatLink(myUser.getWechatLink());
         entity.setWeibo(myUser.getWeibo());
-        //entity.setWeiboLink(contact.getWeiboLink());
         entity.setQq(myUser.getQq());
         entity.setTwitter(myUser.getTwitter());
-        //entity.setTwitterLink(myUser.getTwitterLink());
         entity.setFacebook(myUser.getFacebook());
-        //entity.setFacebookLink(myUser.getFacebookLink());
         userService.edit(entity);
         return Result.ok("更新成功!");
     }
-
-
-//    @PostMapping(value = "/edit/contact")
-//    public Result editContact(HttpServletRequest request, @RequestBody Contact contact) {
-//        AuthContext context = getContext(request);
-//        if (Objects.isNull(context)) {
-//            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-//        }
-//        UserEntity entity = userService.findUserById(contact.getId());
-//
-//
-//        entity.setWechat(contact.getWechat());
-//        entity.setWechatLink(contact.getWechatLink());
-//        entity.setWeibo(contact.getWeibo());
-//        entity.setWeiboLink(contact.getWeiboLink());
-//        entity.setQq(contact.getQq());
-//        entity.setTwitterName(contact.getTwitterName());
-//        entity.setTwitterLink(contact.getTwitterLink());
-//        entity.setFacebookName(contact.getFacebookName());
-//        entity.setFacebookLink(contact.getFacebookLink());
-//
-//        userService.edit(entity);
-//        return Result.ok("更新成功!");
-//    }
 
 
     @PostMapping(value = "/edit/password")
@@ -177,22 +111,21 @@ public class UserAction extends BaseController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public UserDTable list(Integer start, Integer length, HttpServletRequest request) {
+    public V2Result<UserInfo> list(Integer page, Integer limit, HttpServletRequest request) {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
-            return UserDTable.create(Lists.newArrayList(), null, start);
+            return new V2Result<>();
         }
 
+        String keyWord = request.getParameter("title");
 
-        String keyWord = request.getParameter("search[value]");
-
-        Page page = new Page();
-        if (Objects.nonNull(start)) {
-            page.setPageNumber((start / length) + 1);
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
         }
-        if (Objects.nonNull(length)) {
-            page.setPageSize(length);
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
         }
 
 
@@ -201,10 +134,10 @@ public class UserAction extends BaseController {
             query.setCname(keyWord);
         }
 
-        PageResult<UserEntity> result = userService.find(query, page);
+        PageResult<UserEntity> result = userService.find(query, pageEntity);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
-            return new UserDTable();
+            return new V2Result<>();
         }
 
         List<UserEntity> dataList = result.getDataList();
@@ -213,6 +146,11 @@ public class UserAction extends BaseController {
             userInfos = UserInfo.creaetUserList(dataList);
         }
 
-        return UserDTable.create(userInfos, result.getTotal(), start);
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(userInfos);
+        v2Result.setMsg("");
+        return v2Result;
     }
 }

@@ -11,7 +11,6 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.dtable.PostDTable;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
 import com.ijson.mongo.support.model.Page;
@@ -87,49 +86,6 @@ public class PostDraftActioin extends BaseController {
     }
 
 
-    @RequestMapping("/list")
-    @ResponseBody
-    public PostDTable list(Integer start, Integer length, HttpServletRequest request) {
-
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return PostDTable.create(Lists.newArrayList(), null, start);
-        }
-
-
-        String keyWord = request.getParameter("search[value]");
-
-        Page page = new Page();
-        if (Objects.nonNull(start)) {
-            page.setPageNumber((start / length) + 1);
-        }
-        if (Objects.nonNull(length)) {
-            page.setPageSize(length);
-        }
-
-
-        PostQuery query = new PostQuery();
-        if (!Strings.isNullOrEmpty(keyWord)) {
-            query.setLikeTitle(true);
-            query.setTitle(keyWord);
-        }
-
-        PageResult<PostDraftEntity> result = postDraftService.find(query, page);
-
-        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
-            return new PostDTable();
-        }
-
-        List<PostDraftEntity> dataList = result.getDataList();
-        List<Post> posts = Lists.newArrayList();
-        if (CollectionUtils.isNotEmpty(dataList)) {
-            posts = Post.postDraftList(result);
-        }
-
-        return PostDTable.create(posts, result.getTotal(), start);
-    }
-
-
     @PostMapping("/delete/{ename}/{shamId}")
     public Result delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, HttpServletRequest request) {
         AuthContext context = getContext(request);
@@ -137,7 +93,7 @@ public class PostDraftActioin extends BaseController {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         PostDraftEntity postEntity = postDraftService.find(ename, shamId);
-        if(Objects.nonNull(postEntity)){
+        if (Objects.nonNull(postEntity)) {
             postDraftService.delete(postEntity.getId());
             return Result.ok("删除成功");
         }
