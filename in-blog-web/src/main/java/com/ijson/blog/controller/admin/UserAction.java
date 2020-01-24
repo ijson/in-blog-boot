@@ -46,8 +46,14 @@ public class UserAction extends BaseController {
             log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
+
+        if (Strings.isNullOrEmpty(myUser.getId())) {
+            return createUser(myUser);
+        }
+
         UserEntity entity = userService.findUserById(myUser.getId());
 
+        entity.setPassword(myUser.getPassword());
         entity.setCname(myUser.getCname());
         entity.setMobile(myUser.getMobile());
         entity.setEmail(myUser.getEmail());
@@ -64,6 +70,28 @@ public class UserAction extends BaseController {
         entity.setFacebook(myUser.getFacebook());
         userService.edit(entity);
         return Result.ok("更新成功!");
+    }
+
+    private Result createUser(UserEntity myUser) {
+        UserEntity entity = new UserEntity();
+        entity.setPassword(myUser.getPassword());
+        entity.setEname(myUser.getEname());
+        entity.setCname(myUser.getCname());
+        entity.setMobile(myUser.getMobile());
+        entity.setEmail(myUser.getEmail());
+        entity.setSchool(myUser.getSchool());
+        entity.setSchoolLink(myUser.getSchoolLink());
+        entity.setProfession(myUser.getProfession());
+        entity.setBeginJobTime(myUser.getBeginJobTime());
+        entity.setEndJobTime(myUser.getEndJobTime());
+        entity.setWechat(myUser.getWechat());
+        entity.setWeibo(myUser.getWeibo());
+        entity.setWeibo(myUser.getWeibo());
+        entity.setQq(myUser.getQq());
+        entity.setTwitter(myUser.getTwitter());
+        entity.setFacebook(myUser.getFacebook());
+        userService.reg(entity);
+        return Result.ok("注册成功!");
     }
 
 

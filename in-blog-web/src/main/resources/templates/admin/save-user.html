@@ -26,6 +26,8 @@
     <script src="https://cdn.bootcss.com/ckeditor/4.12.1/plugins/codesnippet/dialogs/codesnippet.js"></script>
     <script src="https://cdn.bootcss.com/ckeditor/4.12.1/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <script src="/js/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="/js/md5.js"></script>
+
 
 
 </head>
@@ -104,6 +106,14 @@
                                    class="layui-input" value="${editData.qq!}">
                         </div>
 
+                        <%if(editData==null){%>
+                        <div class="layui-form-item">
+                            <input type="password" name="password" lay-verify="password" autocomplete="off"
+                                   placeholder="请输入密码"
+                                   class="layui-input">
+                        </div>
+                        <%}%>
+
 
                         <div class="layui-form-item">
                             <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存
@@ -128,6 +138,10 @@
         //监听提交
         form.on('submit(save)', function (data) {
             var lastData = data.field;
+
+            if(lastData.password){
+                lastData.password = hex_md5(lastData.password);
+            }
 
             $.ajax({
                 cache: false,

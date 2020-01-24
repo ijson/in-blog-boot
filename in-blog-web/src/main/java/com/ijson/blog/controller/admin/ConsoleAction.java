@@ -121,6 +121,14 @@ public class ConsoleAction extends BaseController {
     }
 
 
+    @RequestMapping("/add/user")
+    public ModelAndView skipUserAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-user.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
     @RequestMapping("/draft/v2/edit/{ename}/{shamId}/page")
     public ModelAndView skipV2PostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         PostDraftEntity entity = postDraftService.find(ename, shamId);
