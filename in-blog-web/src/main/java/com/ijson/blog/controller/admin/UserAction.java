@@ -113,8 +113,8 @@ public class UserAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.ENABLED_STATE_CANNOT_BE_DELETED);
         }
 
-        userService.delete(id, entity.getDeleted(), context.getId());
-        return Result.ok(entity.isEnable() ? "删除成功!" : "回复成功!");
+        userService.delete(id, !entity.isDeleted(), context.getId());
+        return Result.ok(entity.isEnable() ? "恢复成功!" : "删除成功!");
     }
 
 

@@ -39,7 +39,8 @@ public enum BlogBusinessExceptionCode {
     NICKNAME_MUST_NOT_EXCEED_20_DIGITS(200_000_026, "昵称长度不能超过20位"),
     USER_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_027, "用户不存在或已删除"),
     ADMINISTRATOR_ACCOUNTS_ARE_NOT_ALLOWED_TO_BE_DISABLED_OR_DELETED(200_000_028, "管理员账号不允许禁用或删除"),
-    ENABLED_STATE_CANNOT_BE_DELETED(200_000_029, "启用状态无法删除");
+    ENABLED_STATE_CANNOT_BE_DELETED(200_000_029, "启用状态无法删除"),
+    ACCOUNT_DEACTIVATED_OR_DELETED(200_000_030, "账号已停用或已删除");
 
     private int code;
     private String message;

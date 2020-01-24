@@ -67,7 +67,7 @@ public class UserEntity extends BaseEntity {
     private long lastModifiedTime;
 
     @Property(Fields.deleted)
-    private Boolean deleted;
+    private boolean deleted;
 
     @Property(Fields.enable)
     private boolean enable;

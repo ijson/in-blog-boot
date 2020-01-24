@@ -93,7 +93,7 @@
         table.on('tool(userList)', function (data) {
 
             var item = data.data;
-            var id = item.id;
+            var id = item.userId;
             var cname = item.cname;
 
             switch (data.event) {
@@ -122,16 +122,16 @@
                             cache: false,
                             type: "POST",
                             contentType: 'application/json',
-                            url: "/post/delete/" + ename + "/" + shamId,
+                            url: "/user/delete/" + id,
                             async: false,
                             success: function (data) {
                                 if (data.code === 0) {
                                     layer.msg(data.message);
-                                    layui.table.reload('userList');
                                 } else {
                                     layer.msg(data.message, function () {
                                     });
                                 }
+                                layui.table.reload('userList');
                             },
                             error: function (data) {
                                 layer.msg(data.message);
