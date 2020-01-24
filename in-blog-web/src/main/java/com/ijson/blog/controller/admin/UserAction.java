@@ -68,7 +68,7 @@ public class UserAction extends BaseController {
 
 
     @PostMapping(value = "/enable/{id}")
-    public Result editBase(HttpServletRequest request, @PathVariable("id") String id) {
+    public Result enable(HttpServletRequest request, @PathVariable("id") String id) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
@@ -87,6 +87,34 @@ public class UserAction extends BaseController {
 
         userService.enable(id, !entity.isEnable(), context.getId());
         return Result.ok(entity.isEnable() ? "禁用成功!" : "启用成功!");
+    }
+
+
+    @PostMapping(value = "/delete/{id}")
+    public Result delete(HttpServletRequest request, @PathVariable("id") String id) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        UserEntity entity = userService.findInternalById(id);
+
+        if (Objects.isNull(entity)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
+        }
+
+        if (webEname.equals(entity.getEname())) {
+            log.info("系统管理员不允许删除");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ADMINISTRATOR_ACCOUNTS_ARE_NOT_ALLOWED_TO_BE_DISABLED_OR_DELETED);
+        }
+
+        if (entity.isEnable()) {
+            log.info("账号启用状态无法删除");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ENABLED_STATE_CANNOT_BE_DELETED);
+        }
+
+        userService.delete(id, entity.getDeleted(), context.getId());
+        return Result.ok(entity.isEnable() ? "删除成功!" : "回复成功!");
     }
 
 

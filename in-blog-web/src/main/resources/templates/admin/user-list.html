@@ -93,8 +93,8 @@
         table.on('tool(userList)', function (data) {
 
             var item = data.data;
-            var ename = item.ename;
-            var shamId = item.shamId;
+            var id = item.id;
+            var cname = item.cname;
 
             switch (data.event) {
                 case 'edit':
@@ -115,7 +115,7 @@
                         });
                         return;
                     }
-                    layer.confirm('您确定要删除 ' + item.title + " 吗?", {
+                    layer.confirm('您确定要删除 ' + cname + " 吗?", {
                         btn: ['确定', '取消'] //按钮
                     }, function () {
                         $.ajax({

@@ -34,4 +34,6 @@ public interface UserService {
     UserEntity enable(String id, boolean enable, String userId);
 
     UserEntity findInternalById(String id);
+
+    UserEntity delete(String id, Boolean deleted, String userId);
 }

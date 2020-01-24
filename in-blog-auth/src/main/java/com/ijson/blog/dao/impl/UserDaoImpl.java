@@ -205,4 +205,14 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         Query<UserEntity> query = createQuery();
         return query.countAll();
     }
+
+    @Override
+    public UserEntity delete(String id, Boolean deleted, String userId) {
+        Query<UserEntity> query = datastore.createQuery(UserEntity.class);
+        query.field(UserEntity.Fields.id).equal(id);
+        UpdateOperations<UserEntity> updateOperations = datastore.createUpdateOperations(UserEntity.class);
+        updateOperations.set(UserEntity.Fields.deleted, deleted);
+        updateOperations.set(UserEntity.Fields.lastModifiedBy, userId);
+        return datastore.findAndModify(query, updateOperations);
+    }
 }

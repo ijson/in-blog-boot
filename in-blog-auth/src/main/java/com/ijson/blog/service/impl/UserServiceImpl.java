@@ -14,6 +14,7 @@ import com.ijson.blog.model.Permission;
 import com.ijson.blog.service.RoleService;
 import com.ijson.blog.service.UserService;
 import com.ijson.blog.util.RegularUtil;
+import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -196,6 +197,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findInternalById(String id) {
         return userDao.findInternalById(id);
+    }
+
+    @Override
+    public UserEntity delete(String id, Boolean deleted, String userId) {
+        if(Objects.isNull(deleted)){
+            deleted = false;
+        }
+        return userDao.delete(id, deleted, userId);
     }
 
 }
