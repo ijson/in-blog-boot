@@ -88,8 +88,10 @@
             </div>
             <div class="col-sm-6">
                 <h4>未注册?</h4>
+                <%if(site.openReg){%>
                 <p>点击这里 <a data-toggle="modal" data-target="#register" href="#" onclick="hideLogin()"><i class="fa fa-sign-in"></i> 注册</a></p>
                 <p>OR</p>
+                <%}%>
                 <a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
                 <a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
                 <a disabled="true" href="#" class="btn btn-info  btn-block"><i class="fa fa-qq pull-left"></i>QQ登录</a>
