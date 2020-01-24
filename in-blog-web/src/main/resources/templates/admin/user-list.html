@@ -99,12 +99,12 @@
             switch (data.event) {
                 case 'edit':
                     layer.open({
-                        title: '编辑文章',
+                        title: '编辑用户',
                         type: 2,
                         shadeClose: true,
                         maxmin: true,
                         area: ['900px', '500px'],
-                        content: '/admin/edit/v2/' + ename + '/' + shamId + '/page'
+                        content: '/admin/edit/user/' + id + '/page'
                     });
                     return;
                 case 'delete':

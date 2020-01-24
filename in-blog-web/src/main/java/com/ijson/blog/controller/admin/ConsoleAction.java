@@ -3,6 +3,7 @@ package com.ijson.blog.controller.admin;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
@@ -12,6 +13,7 @@ import com.ijson.blog.service.UserService;
 import com.ijson.blog.service.WebSiteService;
 import com.ijson.blog.service.model.ConsoleData;
 import com.ijson.blog.service.model.Post;
+import com.ijson.blog.service.model.UserInfo;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +107,16 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         view.addObject("editData", Post.create(entity));
         view.addObject("topic", Post.create(entity).getTopicName());
+        return view;
+    }
+
+    @RequestMapping("/edit/user/{id}/page")
+    public ModelAndView skipUserEdit(@PathVariable("id") String id) {
+        UserEntity internalById = userService.findInternalById(id);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-user.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", UserInfo.create(internalById));
         return view;
     }
 
