@@ -91,6 +91,9 @@
             </div>
 
 
+
+            <%if(site.openCmt){%>
+
             <div class="comments" id="comments">
                 <div class="comm-main">
                     <% if(isEmpty(session.authContext)){%>
@@ -113,6 +116,7 @@
                 </div>
             </div>
 
+            <%}%>
 
         </div><!-- /.blog-main -->
 
@@ -216,7 +220,7 @@
             replyBody: []
         }
          */
-
+        <%if(site.openCmt){%>
         $("#comment").click(function () {
 
             var contentValue = $("#content").val();
@@ -265,6 +269,7 @@
                 }
             });
 
+            <%}%>
 
             //$(".comment-list").addCommentList({data: [], add: obj});
         });
