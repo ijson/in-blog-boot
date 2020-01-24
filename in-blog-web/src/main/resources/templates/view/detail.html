@@ -91,7 +91,6 @@
             </div>
 
 
-
             <%if(site.openCmt){%>
 
             <div class="comments" id="comments">
@@ -143,10 +142,9 @@
 <script>
     hljs.initHighlightingOnLoad();
 
-
     function praise(ek, id) {
-        var kprais= getCookie(ek+"_"+id+"_praise");
-        if(kprais){
+        var kprais = getCookie(ek + "_" + id + "_praise");
+        if (kprais) {
             toastr.warning('您已经支持过了');
             return;
         }
@@ -169,8 +167,8 @@
         });
     }
 
-    function getCookie(name){
-        var arr,reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
         if (arr = document.cookie.match(reg)) {
             return unescape(arr[2]);
         } else {
@@ -181,6 +179,10 @@
     $(document).on("click", ".Share", function () {
         $(".share-wrap").fadeToggle("slow");
     });
+</script>
+
+<%if(site.openCmt){%>
+<script>
 
 
     var im = 'https://data.ijson.net/avatar.jpg';
@@ -220,7 +222,7 @@
             replyBody: []
         }
          */
-        <%if(site.openCmt){%>
+
         $("#comment").click(function () {
 
             var contentValue = $("#content").val();
@@ -269,13 +271,12 @@
                 }
             });
 
-            <%}%>
 
             //$(".comment-list").addCommentList({data: [], add: obj});
         });
     })
 </script>
-
+<%}%>
 
 </body>
 </html>
