@@ -293,7 +293,26 @@
 
         //修改密码监听
         form.on('submit(saveFieldShow)', function (data) {
+            if (!data.field.oldPassword) {
+                layer.msg("旧密码不能为空", {
+                    time: 2000
+                });
+                return;
+            }
 
+            if (!data.field.newPassword) {
+                layer.msg("新密码不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!data.field.againPassword) {
+                layer.msg("请重新输入新密码", {
+                    time: 2000
+                });
+                return;
+            }
             data.field.oldPassword = hex_md5(data.field.oldPassword);
             data.field.newPassword = hex_md5(data.field.newPassword);
             data.field.againPassword = hex_md5(data.field.againPassword);
@@ -314,9 +333,16 @@
                             time: 2000
                         });
                     }
+
+                    $("#pwdVerCode").val('');
+                    var pwdCaptcha = document.getElementById("pwdCaptcha");
+                    pwdCaptcha.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);
                 },
                 error: function (data) {
                     layer.msg(data.message);
+                    $("#pwdVerCode").val('');
+                    var pwdCaptcha = document.getElementById("pwdCaptcha");
+                    pwdCaptcha.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);
                 }
             });
             return false;
