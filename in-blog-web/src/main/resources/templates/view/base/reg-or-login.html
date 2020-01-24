@@ -1,5 +1,8 @@
 <script src="${webCtx}/js/md5.js"></script>
 <script src="${webCtx}/js/login.js"></script>
+
+
+<%if(site.openReg){%>
 <!-- 注册窗口 -->
 <div id="register" class="modal fade" tabindex="-1">
     <div class="modal-body wrapper-lg-m">
@@ -59,7 +62,7 @@
         </div>
     </div>
 </div>
-
+<%}%>
 
 <!-- 登录窗口 -->
 <div id="login" class="modal fade">
