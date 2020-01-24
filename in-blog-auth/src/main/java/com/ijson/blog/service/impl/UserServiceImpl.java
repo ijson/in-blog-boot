@@ -13,7 +13,6 @@ import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.Permission;
 import com.ijson.blog.service.RoleService;
 import com.ijson.blog.service.UserService;
-import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.RegularUtil;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -187,6 +186,16 @@ public class UserServiceImpl implements UserService {
                 }).collect(Collectors.toList());
         postEntityPageResult.setDataList(lastEntity);
         return postEntityPageResult;
+    }
+
+    @Override
+    public UserEntity enable(String id, boolean enable, String userId) {
+        return userDao.enable(id, enable, userId);
+    }
+
+    @Override
+    public UserEntity findInternalById(String id) {
+        return userDao.findInternalById(id);
     }
 
 }

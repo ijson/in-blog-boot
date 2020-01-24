@@ -67,6 +67,29 @@ public class UserAction extends BaseController {
     }
 
 
+    @PostMapping(value = "/enable/{id}")
+    public Result editBase(HttpServletRequest request, @PathVariable("id") String id) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        UserEntity entity = userService.findInternalById(id);
+
+        if (Objects.isNull(entity)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
+        }
+
+        if (webEname.equals(entity.getEname())) {
+            log.info("系统管理员不允许禁用");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ADMINISTRATOR_ACCOUNTS_ARE_NOT_ALLOWED_TO_BE_DISABLED_OR_DELETED);
+        }
+
+        userService.enable(id, !entity.isEnable(), context.getId());
+        return Result.ok(entity.isEnable() ? "禁用成功!" : "启用成功!");
+    }
+
+
     @PostMapping(value = "/edit/password")
     public Result editPassword(HttpServletRequest request, HttpSession session, @RequestBody UpdPassword updPassword) {
         AuthContext context = getContext(request);

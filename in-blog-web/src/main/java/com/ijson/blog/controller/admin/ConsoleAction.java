@@ -152,4 +152,30 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    @RequestMapping("/user/list/page")
+    public ModelAndView userList(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/user-list.html");
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
+
+    @RequestMapping("/user/delete/list/page")
+    public ModelAndView userDelList(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/user-del-list.html");
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
 }

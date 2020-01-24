@@ -36,7 +36,9 @@ public enum BlogBusinessExceptionCode {
     NICKNAME_FORMAT_INCORRECT(200_000_023, "昵称格式不正确,允许中文,英文,数字"),
     INCORRECT_MAILBOX_FORMAT(200_000_024, "邮箱格式不正确"),
     USER_NAMES_MUST_NOT_EXCEED_30_DIGITS(200_000_025, "用户名长度不能超过30位"),
-    NICKNAME_MUST_NOT_EXCEED_20_DIGITS(200_000_026, "昵称长度不能超过20位");
+    NICKNAME_MUST_NOT_EXCEED_20_DIGITS(200_000_026, "昵称长度不能超过20位"),
+    USER_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_027, "用户不存在或已删除"),
+    ADMINISTRATOR_ACCOUNTS_ARE_NOT_ALLOWED_TO_BE_DISABLED_OR_DELETED(200_000_028, "管理员账号不允许禁用或删除");
 
     private int code;
     private String message;

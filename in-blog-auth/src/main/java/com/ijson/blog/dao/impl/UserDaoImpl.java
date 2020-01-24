@@ -119,6 +119,13 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     }
 
     @Override
+    public UserEntity findInternalById(String id) {
+        Query<UserEntity> query = datastore.createQuery(UserEntity.class);
+        query.field(UserEntity.Fields.id).equal(id);
+        return query.get();
+    }
+
+    @Override
     public UserEntity findByEname(String ename) {
         Query<UserEntity> query = datastore.createQuery(UserEntity.class);
         query.field(UserEntity.Fields.ename).equal(ename);

@@ -30,4 +30,8 @@ public interface UserService {
     Map<String, String> findCnameByIds(Set<String> userIds);
 
     PageResult<UserEntity> find(UserQuery query, Page page);
+
+    UserEntity enable(String id, boolean enable, String userId);
+
+    UserEntity findInternalById(String id);
 }

@@ -17,6 +17,8 @@ public interface UserDao {
 
     UserEntity findById(String id);
 
+    UserEntity findInternalById(String id);
+
     UserEntity findByEname(String ename);
 
     PageResult<UserEntity> find(UserQuery query, Page page);

@@ -61,7 +61,7 @@ public class BaseController {
     protected String webCtx;
 
     @Value("${web.ename}")
-    private String webEname;
+    protected String webEname;
 
     protected void addAdminModelAndView(ModelAndView view) {
         view.addObject("user", getBlogAdministratorInformation());
