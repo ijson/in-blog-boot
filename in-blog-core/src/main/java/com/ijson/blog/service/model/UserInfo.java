@@ -34,6 +34,8 @@ public class UserInfo {
     private String roleCname;
     private boolean enable;
     private Long createTime;
+    private String mobile;
+    private String qq;
 
     public static List<UserInfo> creaetUserList(List<UserEntity> userEntityList) {
 
@@ -62,6 +64,8 @@ public class UserInfo {
         userInfo.setCreateTime(userEntity.getCreateTime());
         userInfo.setBeginJobTime(userEntity.getBeginJobTime());
         userInfo.setEndJobTime(userEntity.getEndJobTime());
+        userInfo.setMobile(userEntity.getMobile());
+        userInfo.setQq(userEntity.getQq());
         return userInfo;
     }
 }
