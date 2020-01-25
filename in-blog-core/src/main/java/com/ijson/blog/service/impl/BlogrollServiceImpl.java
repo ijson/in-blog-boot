@@ -11,6 +11,8 @@ import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * desc:
  * version: 7.0.0
@@ -58,5 +60,10 @@ public class BlogrollServiceImpl implements BlogrollService {
     @Override
     public PageResult<BlogrollEntity> find(BlogrollQuery query, Page pageEntity) {
         return blogrollDao.find(query, pageEntity);
+    }
+
+    @Override
+    public List<BlogrollEntity> findAll() {
+        return blogrollDao.findUseAll();
     }
 }

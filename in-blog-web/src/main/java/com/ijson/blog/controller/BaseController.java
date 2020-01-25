@@ -1,13 +1,11 @@
 package com.ijson.blog.controller;
 
 import com.google.common.base.Strings;
-import com.ijson.blog.dao.entity.ConfigEntity;
-import com.ijson.blog.dao.entity.PostEntity;
-import com.ijson.blog.dao.entity.TopicEntity;
-import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.*;
+import com.ijson.blog.service.model.BlogrollInfo;
 import com.ijson.blog.service.model.HotTopic;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.UserInfo;
@@ -86,12 +84,18 @@ public class BaseController {
         view.addObject("hots", getHotPosts());
         view.addObject("user", getBlogAdministratorInformation());
         view.addObject("hotTags", getHotTags());
+        view.addObject("blogrolls", getBlogrolls());
         view.addObject("lastPublish", getMostRecentlyPublishedPosts());
         view.addObject("total", postService.count());
         view.addObject("webSiteCount", postService.getWebSiteCount());
         view.addObject("webCtx", webCtx);
         view.addObject("webEname", webEname);
         view.addObject("site", getConfig());
+    }
+
+    private List<BlogrollInfo> getBlogrolls() {
+        List<BlogrollEntity> all = blogrollService.findAll();
+        return BlogrollInfo.creaetBlogrollList(all);
     }
 
     /**

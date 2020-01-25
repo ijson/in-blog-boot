@@ -1,0 +1,14 @@
+<%if(isNotEmpty(blogrolls)){%>
+<div class="tags m-b-lg l-h-2x">
+    <h5 class="font-bold">友情链接</h5>
+
+
+    <%
+    for(data in blogrolls){
+    %>
+    <a href="${data.link}" target="_blank" class="label bg-danger">${data.cname}</a>
+    <%} %>
+
+</div>
+
+<%}%>

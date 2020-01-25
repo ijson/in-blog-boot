@@ -3,8 +3,11 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.BlogrollEntity;
 import com.ijson.blog.dao.query.BlogrollQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.model.BlogrollInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
+
+import java.util.List;
 
 /**
  * desc:
@@ -24,4 +27,6 @@ public interface BlogrollService {
     void delete(String id);
 
     PageResult<BlogrollEntity> find(BlogrollQuery query, Page pageEntity);
+
+    List<BlogrollEntity> findAll();
 }

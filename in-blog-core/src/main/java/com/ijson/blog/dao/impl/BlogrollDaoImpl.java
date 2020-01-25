@@ -122,4 +122,11 @@ public class BlogrollDaoImpl extends AbstractDao<BlogrollEntity> implements Blog
         ret.setTotal(totalNum);
         return ret;
     }
+
+    @Override
+    public List<BlogrollEntity> findUseAll() {
+        Query<BlogrollEntity> query = datastore.createQuery(BlogrollEntity.class);
+        query.field(BlogrollEntity.Fields.enable).equal(true);
+        return query.asList();
+    }
 }

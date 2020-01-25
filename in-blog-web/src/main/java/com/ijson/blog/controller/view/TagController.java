@@ -58,7 +58,7 @@ public class TagController extends BaseController {
 
             PageResult<PostEntity> result = postService.findPostByTagId(id, page);
 
-            //view.addObject("tags", HotTopic.getHotTopic(topicService.findAll()));
+            //view.addObject("tags", HotTopic.getHotTopic(topicService.findUseAll()));
             view.addObject("tagActive", "active");
             view.addObject("tagPostCount", result.getTotal());
             view.addObject("tagPost", Post.indexPost(result));
@@ -98,7 +98,7 @@ public class TagController extends BaseController {
 
             PageResult<PostEntity> result = postService.findPostByTagId(id, page);
 
-            //view.addObject("tags", HotTopic.getHotTopic(topicService.findAll()));
+            //view.addObject("tags", HotTopic.getHotTopic(topicService.findUseAll()));
             view.addObject("tagActive", "active");
             view.addObject("tagPostCount", result.getTotal());
             view.addObject("tagPost", Post.indexPost(result));
