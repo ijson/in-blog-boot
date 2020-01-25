@@ -7,16 +7,11 @@ import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
-import com.ijson.blog.service.PostDraftService;
-import com.ijson.blog.service.PostService;
-import com.ijson.blog.service.UserService;
-import com.ijson.blog.service.WebSiteService;
 import com.ijson.blog.service.model.ConsoleData;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.UserInfo;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,19 +30,6 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/admin")
 public class ConsoleAction extends BaseController {
-
-    @Autowired
-    private PostService postService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private PostDraftService postDraftService;
-
-    @Autowired
-    private WebSiteService webSiteService;
-
 
     @RequestMapping("/v2/console/page")
     public ModelAndView indexv2() {
@@ -129,6 +111,7 @@ public class ConsoleAction extends BaseController {
         view.addObject("editData", null);
         return view;
     }
+
     @RequestMapping("/draft/v2/edit/{ename}/{shamId}/page")
     public ModelAndView skipV2PostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         PostDraftEntity entity = postDraftService.find(ename, shamId);
@@ -157,6 +140,20 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         return view;
     }
+
+    @RequestMapping("/blogroll/settings")
+    public ModelAndView blogrollSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/blogroll-settings.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
 
     @RequestMapping("/user/settings")
     public ModelAndView userSettings(HttpServletRequest request) {

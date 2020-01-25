@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
  */
 @Data
 public class AuthContext {
+    //userId
     private String id;
     private String ename;
     private String cname;

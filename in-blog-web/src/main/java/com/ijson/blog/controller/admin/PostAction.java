@@ -15,9 +15,6 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.FileUploadService;
-import com.ijson.blog.service.PostService;
-import com.ijson.blog.service.TopicService;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UploadResult;
@@ -28,8 +25,6 @@ import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,24 +46,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/post")
 public class PostAction extends BaseController {
-
-    @Autowired
-    private PostService postService;
-
-    @Autowired
-    private TopicService topicService;
-
-    @Autowired
-    private FileUploadService fileUploadService;
-
-    @Value("${web.ctx}")
-    private String webCtx;
-
-    @Value("${cdn.server}")
-    private String cdnServer;
-
-    @Value("${cdn.upload.path}")
-    private String cdnUploadPath;
 
     @DocDocument(name = "博客添加", desc = "控制台执行添加,需要添加topic")
     @PostMapping("/create")

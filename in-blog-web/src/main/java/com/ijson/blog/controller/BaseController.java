@@ -5,12 +5,11 @@ import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.dao.entity.UserEntity;
-import com.ijson.blog.exception.BlogBusinessExceptionCode;
-import com.ijson.blog.model.*;
+import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.*;
 import com.ijson.blog.service.model.HotTopic;
 import com.ijson.blog.service.model.Post;
-import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.UserInfo;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
@@ -56,12 +55,25 @@ public class BaseController {
     @Autowired
     protected WebSiteService webSiteService;
 
+    @Autowired
+    protected FileUploadService fileUploadService;
+
+    @Autowired
+    protected BlogrollService blogrollService;
+
 
     @Value("${web.ctx}")
     protected String webCtx;
 
     @Value("${web.ename}")
     protected String webEname;
+
+
+    @Value("${cdn.server}")
+    protected String cdnServer;
+
+    @Value("${cdn.upload.path}")
+    protected String cdnUploadPath;
 
     protected void addAdminModelAndView(ModelAndView view) {
         view.addObject("user", getBlogAdministratorInformation());
@@ -114,7 +126,7 @@ public class BaseController {
     }
 
 
-    protected ConfigEntity getConfig(){
+    protected ConfigEntity getConfig() {
         return webSiteService.findAllConfig();
     }
 
