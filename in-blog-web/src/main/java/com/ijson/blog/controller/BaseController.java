@@ -59,6 +59,9 @@ public class BaseController {
     @Autowired
     protected BlogrollService blogrollService;
 
+    @Autowired
+    protected AuthService authService;
+
 
     @Value("${web.ctx}")
     protected String webCtx;
@@ -95,7 +98,7 @@ public class BaseController {
 
     private List<BlogrollInfo> getBlogrolls() {
         List<BlogrollEntity> all = blogrollService.findAll();
-        return BlogrollInfo.creaetBlogrollList(all);
+        return BlogrollInfo.createBlogrollList(all);
     }
 
     /**

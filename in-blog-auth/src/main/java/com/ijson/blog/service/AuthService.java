@@ -1,6 +1,12 @@
 package com.ijson.blog.service;
 
-import com.ijson.blog.service.model.LoginUser;
+import com.ijson.blog.dao.entity.AuthEntity;
+import com.ijson.blog.dao.query.AuthQuery;
+import com.ijson.blog.model.AuthContext;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
+
+import java.util.List;
 
 /**
  * desc:
@@ -9,5 +15,17 @@ import com.ijson.blog.service.model.LoginUser;
  */
 public interface AuthService {
 
-    LoginUser getAuthByUserId(String ename);
+    AuthEntity findInternalById(String id);
+
+    AuthEntity edit(AuthContext context, AuthEntity entity);
+
+    AuthEntity create(AuthContext context, AuthEntity entity);
+
+    void enable(String id, boolean enable, AuthContext context);
+
+    void delete(String id);
+
+    PageResult<AuthEntity> find(AuthQuery query, Page pageEntity);
+
+    List<AuthEntity> findByIds(List<String> ids);
 }

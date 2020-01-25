@@ -1,17 +1,11 @@
 package com.ijson.blog.controller.admin;
 
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.dao.entity.BlogrollEntity;
-import com.ijson.blog.dao.entity.PostDraftEntity;
-import com.ijson.blog.dao.entity.PostEntity;
-import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
-import com.ijson.blog.service.model.BlogrollInfo;
-import com.ijson.blog.service.model.ConsoleData;
-import com.ijson.blog.service.model.Post;
-import com.ijson.blog.service.model.UserInfo;
+import com.ijson.blog.service.model.*;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
 import org.springframework.stereotype.Controller;
@@ -123,6 +117,16 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    @RequestMapping("/add/auth")
+    public ModelAndView skipAuthAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-auth.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
     @RequestMapping("/edit/blogroll/{id}/page")
     public ModelAndView skipBlogrollEdit(@PathVariable("id") String id) {
         ModelAndView view = new ModelAndView();
@@ -130,6 +134,16 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         BlogrollEntity internalById = blogrollService.findInternalById(id);
         view.addObject("editData", BlogrollInfo.create(internalById));
+        return view;
+    }
+
+    @RequestMapping("/edit/auth/{id}/page")
+    public ModelAndView skipAuthEdit(@PathVariable("id") String id) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-auth.html");
+        addAdminModelAndView(view);
+        AuthEntity internalById = authService.findInternalById(id);
+        view.addObject("editData", AuthInfo.create(internalById));
         return view;
     }
 
@@ -165,6 +179,19 @@ public class ConsoleAction extends BaseController {
     @RequestMapping("/blogroll/settings")
     public ModelAndView blogrollSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/blogroll-settings.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
+    @RequestMapping("/auth/settings")
+    public ModelAndView authSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/auth-settings.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);

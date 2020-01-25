@@ -25,7 +25,7 @@ public class BlogrollInfo {
 
     private Boolean enable;
 
-    public static List<BlogrollInfo> creaetBlogrollList(List<BlogrollEntity> dataList) {
+    public static List<BlogrollInfo> createBlogrollList(List<BlogrollEntity> dataList) {
         if(CollectionUtils.isEmpty(dataList)){
             return Lists.newArrayList();
         }
