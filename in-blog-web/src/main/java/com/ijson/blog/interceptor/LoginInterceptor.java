@@ -6,6 +6,7 @@ import com.ijson.blog.model.Constant;
 import com.ijson.blog.util.DesUtil;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
+import com.ijson.blog.util.StopWatch;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -35,20 +36,24 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        StopWatch stopWatch = StopWatch.create("LoginInterceptor.preHandle");
         String uri = request.getRequestURI();
         log.info("登录拦截器:{}", uri);
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        stopWatch.lap("cookieValue");
         String remCurrCookie = PassportHelper.getInstance().getRemCurrCookie(request);
         if (Strings.isNullOrEmpty(cookieValue) && Strings.isNullOrEmpty(remCurrCookie)) {
             response.sendRedirect("/");
             return false;
         }
+        stopWatch.lap("remCurrCookie");
         String rememberCookieValue = null;
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        stopWatch.lap("getLoginUserCacheKey");
         if (Objects.isNull(context)) {
             if (Strings.isNullOrEmpty(remCurrCookie)) {
-                PassportHelper.getInstance().removeCookie(request,response );
+                PassportHelper.getInstance().removeCookie(request, response);
                 request.getSession().removeAttribute(cookieValue);
                 response.sendRedirect("/");
                 return false;
@@ -56,7 +61,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             rememberCookieValue = DesUtil.decrypt(remCurrCookie);
             context = (AuthContext) EhcacheUtil.getInstance().get(Constant.remember, rememberCookieValue);
             if (Objects.isNull(context)) {
-                PassportHelper.getInstance().removeCookie(request,response );
+                PassportHelper.getInstance().removeCookie(request, response);
                 request.getSession().removeAttribute(cookieValue);
                 response.sendRedirect("/");
                 return false;
@@ -75,9 +80,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             cookie.setMaxAge(60 * 30);
             response.addCookie(cookie);
         }
-
+        stopWatch.lap("checkContext");
         request.getSession().setAttribute("authContext", context);
         //业务代码
+        stopWatch.logSlow(10);
         return true;
     }
 

@@ -5,6 +5,7 @@ import com.ijson.blog.model.Constant;
 import com.ijson.blog.util.DesUtil;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
+import com.ijson.blog.util.StopWatch;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -28,12 +29,15 @@ public class RememberLoginCacheInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        StopWatch stopWatch = StopWatch.create("RememberLoginCacheInterceptor.preHandle");
         log.info("缓存策略拦截器:{}", request.getRequestURI());
 
         String remCurrCookie = PassportHelper.getInstance().getRemCurrCookie(request);
-
+        stopWatch.lap("remCurrCookie");
         String cookieValue = DesUtil.decrypt(remCurrCookie);
+        stopWatch.lap("des decrypt");
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.remember, cookieValue);
+        stopWatch.lap("get remember cookie");
         if (Objects.nonNull(context)) {
             Cookie cookie = new Cookie(PassportHelper.getInstance().getCookieName(), cookieValue);
             cookie.setPath("/");
@@ -41,6 +45,7 @@ public class RememberLoginCacheInterceptor implements HandlerInterceptor {
             response.addCookie(cookie);
             request.getSession().setAttribute("authContext",context);
         }
+        stopWatch.logSlow(10);
         //业务代码
         return true;
     }
