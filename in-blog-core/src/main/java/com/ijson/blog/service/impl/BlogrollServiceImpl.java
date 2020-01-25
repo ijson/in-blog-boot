@@ -2,9 +2,12 @@ package com.ijson.blog.service.impl;
 
 import com.ijson.blog.dao.BlogrollDao;
 import com.ijson.blog.dao.entity.BlogrollEntity;
+import com.ijson.blog.dao.query.BlogrollQuery;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.BlogrollService;
 import com.ijson.mongo.generator.util.ObjectId;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +53,10 @@ public class BlogrollServiceImpl implements BlogrollService {
     @Override
     public void delete(String id) {
         blogrollDao.delete(id);
+    }
+
+    @Override
+    public PageResult<BlogrollEntity> find(BlogrollQuery query, Page pageEntity) {
+        return blogrollDao.find(query, pageEntity);
     }
 }

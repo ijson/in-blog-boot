@@ -1,12 +1,14 @@
 package com.ijson.blog.controller.admin;
 
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.dao.entity.BlogrollEntity;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
+import com.ijson.blog.service.model.BlogrollInfo;
 import com.ijson.blog.service.model.ConsoleData;
 import com.ijson.blog.service.model.Post;
 import com.ijson.blog.service.model.UserInfo;
@@ -109,6 +111,25 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/save-user.html");
         addAdminModelAndView(view);
         view.addObject("editData", null);
+        return view;
+    }
+
+    @RequestMapping("/add/blogroll")
+    public ModelAndView skipBlogrollAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-blogroll.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
+    @RequestMapping("/edit/blogroll/{id}/page")
+    public ModelAndView skipBlogrollEdit(@PathVariable("id") String id) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-blogroll.html");
+        addAdminModelAndView(view);
+        BlogrollEntity internalById = blogrollService.findInternalById(id);
+        view.addObject("editData", BlogrollInfo.create(internalById));
         return view;
     }
 

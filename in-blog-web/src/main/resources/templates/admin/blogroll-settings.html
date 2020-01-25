@@ -34,7 +34,7 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <table id="userList" lay-filter="userList"></table>
+                    <table id="blogrollList" lay-filter="blogrollList"></table>
                 </div>
             </div>
         </div>
@@ -69,48 +69,40 @@
 
         table.render({
             toolbar: '#toolbarDemo',
-            elem: '#userList',
-            url: '/user/list',
+            elem: '#blogrollList',
+            url: '/blogroll/list',
             page: true,
             cols: [[
-                {field: 'userId', hide: true},
-                {field: 'ename', width: 100, title: "账号"},
-                {field: 'cname', width: 120, title: "昵称"},
-                {field: 'mobile', width: 120, title: "手机号"},
-                {field: 'email', width: 200, title: "邮箱", sort: true},
-                {
-                    field: 'createTime',
-                    width: 170,
-                    title: '注册时间',
-                    templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
-                },
+                {field: 'id', hide: true},
+                {field: 'cname', width: 700, title: "中文描述"},
+                {field: 'link', hide: true},
+                {field: 'imgLink', hide: true},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
                 {field: '', title: "操作", templet: '#operation'}
-
             ]]
         });
 
-        table.on('tool(userList)', function (data) {
+        table.on('tool(blogrollList)', function (data) {
 
             var item = data.data;
-            var id = item.userId;
+            var id = item.id;
             var cname = item.cname;
 
             switch (data.event) {
                 case 'edit':
                     layer.open({
-                        title: '编辑用户',
+                        title: '编辑友情链接',
                         type: 2,
                         shadeClose: true,
                         maxmin: true,
                         area: ['900px', '500px'],
-                        content: '/admin/edit/user/' + id + '/page'
+                        content: '/admin/edit/blogroll/' + id + '/page'
                     });
                     return;
                 case 'delete':
 
                     if (item.enable) {
-                        layer.msg("禁用后才可删除该文章", function () {
+                        layer.msg("禁用后才可删除友链", function () {
 
                         });
                         return;
@@ -122,7 +114,7 @@
                             cache: false,
                             type: "POST",
                             contentType: 'application/json',
-                            url: "/user/delete/" + id,
+                            url: "/blogroll/delete/" + id,
                             async: false,
                             success: function (data) {
                                 if (data.code === 0) {
@@ -131,7 +123,7 @@
                                     layer.msg(data.message, function () {
                                     });
                                 }
-                                layui.table.reload('userList');
+                                layui.table.reload('blogrollList');
                             },
                             error: function (data) {
                                 layer.msg(data.message);
@@ -156,7 +148,7 @@
                 cache: false,
                 type: "POST",
                 contentType: 'application/json',
-                url: "/user/enable/" + id,
+                url: "/blogroll/enable/" + id,
                 dataType: "json",
                 async: false,
                 success: function (data) {
@@ -165,7 +157,7 @@
                     } else {
                         layer.msg(data.message);
                     }
-                    layui.table.reload('userList');
+                    layui.table.reload('blogrollList');
                 },
                 error: function (data) {
                     layer.msg(data.message);
@@ -180,7 +172,7 @@
     function searchTitle() {
         debugger;
         var title = $("#title").val();
-        layui.table.reload('userList', {
+        layui.table.reload('blogrollList', {
             page: {
                 curr: 1
             }

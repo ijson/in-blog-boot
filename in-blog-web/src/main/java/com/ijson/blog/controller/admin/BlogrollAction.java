@@ -1,20 +1,24 @@
 package com.ijson.blog.controller.admin;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.controller.admin.model.V2Result;
 import com.ijson.blog.dao.entity.BlogrollEntity;
+import com.ijson.blog.dao.query.BlogrollQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.model.BlogrollInfo;
 import com.ijson.blog.service.model.Result;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,7 +27,7 @@ import java.util.Objects;
  * Created by cuiyongxu on 2020/1/25 4:32 PM
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/blogroll")
 public class BlogrollAction extends BaseController {
 
@@ -99,4 +103,49 @@ public class BlogrollAction extends BaseController {
         return Result.ok("删除成功!");
     }
 
+
+    @RequestMapping("/list")
+    @ResponseBody
+    public V2Result<BlogrollInfo> list(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        BlogrollQuery query = new BlogrollQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setCname(keyWord);
+        }
+
+        PageResult<BlogrollEntity> result = blogrollService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<BlogrollEntity> dataList = result.getDataList();
+        List<BlogrollInfo> blogrollInfos = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            blogrollInfos = BlogrollInfo.creaetBlogrollList(dataList);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(blogrollInfos);
+        v2Result.setMsg("");
+        return v2Result;
+    }
 }

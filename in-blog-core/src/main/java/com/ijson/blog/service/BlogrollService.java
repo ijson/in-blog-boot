@@ -1,7 +1,10 @@
 package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.BlogrollEntity;
+import com.ijson.blog.dao.query.BlogrollQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 
 /**
  * desc:
@@ -19,4 +22,6 @@ public interface BlogrollService {
     void enable(String id, boolean enable, AuthContext context);
 
     void delete(String id);
+
+    PageResult<BlogrollEntity> find(BlogrollQuery query, Page pageEntity);
 }
