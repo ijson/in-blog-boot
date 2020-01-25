@@ -22,6 +22,8 @@
         // 是否开启刷新记忆tab功能
         // var is_remember = false;
     </script>
+    <script src="/js/login.js"></script>
+
 </head>
 <body class="index">
 <!-- 顶部开始 -->
@@ -57,11 +59,9 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a></dd>
+                    <a onclick="xadmin.open('个人信息','/admin/user/settings')">个人信息</a></dd>
                 <dd>
-                    <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
-                <dd>
-                    <a href="#" onclick="logout()">退出</a></dd>
+                    <a href="javascript:void(0)" onclick="logout()">退出</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item to-index">

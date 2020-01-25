@@ -56,12 +56,12 @@ function logout() {
         async: false,
         success: function (data) {
             if (data.code === 0) {
-                toastr.success(data.message);
+                //toastr.success(data.message);
                 //window.location.href = "/";
                 window.location.reload()
 
             } else {
-                toastr.error(data.message);
+                //toastr.error(data.message);
                 setTimeout(function () {
                     window.location.href = "/";
                 }, 3000);
@@ -69,7 +69,7 @@ function logout() {
             }
         },
         error: function (data) {
-            toastr.error(data.message);
+            //toastr.error(data.message);
         }
     });
 }
