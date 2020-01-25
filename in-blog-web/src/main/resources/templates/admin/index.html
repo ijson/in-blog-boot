@@ -9,6 +9,7 @@
           content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="stylesheet" href="/css/font.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/xadmin.css">
     <!-- <link rel="stylesheet" href="/css/theme5.css"> -->
     <script src="/lib/layui/layui.js" charset="utf-8"></script>
@@ -126,6 +127,19 @@
             </li>
             <li>
                 <a href="javascript:;">
+                    <i class="fa fa-user-o left-nav-li" lay-tips="用户设置"></i>
+                    <cite>用户设置</cite>
+                    <i class="iconfont nav_right">&#xe642;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('用户信息设置','/admin/user/settings',true)">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>用户信息设置</cite></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>
                     <cite>管理员管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
@@ -135,12 +149,6 @@
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>网站设置</cite></a>
                     </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('用户信息设置','/admin/user/settings',true)">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>用户信息设置</cite></a>
-                    </li>
-
                     <li>
                         <a onclick="xadmin.add_tab('友情链接','/admin/blogroll/settings',true)">
                             <i class="iconfont">&#xe6a7;</i>
