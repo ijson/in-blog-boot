@@ -42,7 +42,8 @@ public enum BlogBusinessExceptionCode {
     ENABLED_STATE_CANNOT_BE_DELETED(200_000_029, "启用状态无法删除"),
     ACCOUNT_DEACTIVATED_OR_DELETED(200_000_030, "账号已停用或已删除"),
     FRIENDSHIP_LINK_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_031, "友情链接不存在或已删除"),
-    PERMISSIONS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_032, "权限不存在或者已删除");
+    PERMISSIONS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_032, "权限不存在或者已删除"),
+    ROLE_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_033, "角色不存在或者已删除");
 
     private int code;
     private String message;

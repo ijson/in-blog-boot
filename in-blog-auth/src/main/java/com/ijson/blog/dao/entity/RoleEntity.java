@@ -6,7 +6,9 @@ import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.mongodb.morphia.annotations.*;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Property;
 
 import java.util.List;
 
@@ -19,14 +21,6 @@ import java.util.List;
 @Data
 @Entity(value = "Role", noClassnameStored = true)
 @ToString(callSuper = true)
-@Indexes({
-        @Index(name = "N_T_P_S",
-                fields = {
-                        @Field(value = RoleEntity.Fields.ename),
-                        @Field(value = RoleEntity.Fields.parentRoleId),
-                        @Field(value = RoleEntity.Fields.status)
-                })
-})
 public class RoleEntity extends BaseEntity {
 
     @Id
@@ -35,32 +29,14 @@ public class RoleEntity extends BaseEntity {
     @Property(Fields.ename)
     private String ename;
 
-    @Property(Fields.userIds)
-    private List<String> userIds;
-
     @Property(Fields.cname)
     private String cname;
 
-    @Property(Fields.parentRoleId)
-    private String parentRoleId;
+    @Property(Fields.authIds)
+    private List<String> authIds;
 
-    @Property(Fields.status)
-    private String status;
-
-    @Embedded
-    private List<Permission> permission;
-
-    @Property(Fields.remark)
-    private String remark;
-
-    @Property(Fields.lastModifiedBy)
-    private String lastModifiedBy;
-
-    @Property(Fields.lastModifiedTime)
-    private long lastModifiedTime;
-
-    @Property(Fields.deleted)
-    private Boolean deleted;
+    @Property(Fields.userIds)
+    private List<String> userIds;
 
     @Property(Fields.enable)
     private boolean enable;
@@ -72,22 +48,26 @@ public class RoleEntity extends BaseEntity {
     private long createTime;
 
 
+    @Property(Fields.lastModifiedBy)
+    private String lastModifiedBy;
+
+    @Property(Fields.lastModifiedTime)
+    private long lastModifiedTime;
+
+
     public interface Fields {
         String id = "_id";
         String cname = "cname";
         String ename = "ename";
-        String parentRoleId = "parentRoleId";
-        String status = "status";
-        String remark = "remark";
         String userIds = "userIds";
+        String authIds = "authIds";
 
-        String lastModifiedBy = "lastModifiedBy";
-        String lastModifiedTime = "lastModifiedTime";
-        String deleted = "deleted";
         String enable = "enable";
         String createdBy = "createdBy";
         String createTime = "createTime";
-        String permission = "permission";
+        String lastModifiedBy = "lastModifiedBy";
+        String lastModifiedTime = "lastModifiedTime";
+
     }
 
 
@@ -103,14 +83,9 @@ public class RoleEntity extends BaseEntity {
         entity.setEname(ename);
         entity.setCreatedBy(authContext.getId());
         entity.setCreateTime(System.currentTimeMillis());
-        entity.setDeleted(false);
         entity.setEnable(true);
         entity.setLastModifiedBy(authContext.getId());
         entity.setLastModifiedTime(System.currentTimeMillis());
-        entity.setParentRoleId("0");
-        entity.setRemark(remark);
-        entity.setStatus(status);
-        entity.setPermission(permission);
         entity.setUserIds(userIds);
         return entity;
     }

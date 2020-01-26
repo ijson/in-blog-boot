@@ -77,19 +77,19 @@ public class UserServiceImpl implements UserService {
                 entity.getEmail(),
                 entity.getMobile(),
                 entity.getAvatar());
-
-        RoleEntity role = roleService.findById(entity.getRoleId());
-        if (Objects.nonNull(role)) {
-            context.setRoleId(role.getId());
-            context.setRoleEname(role.getEname());
-            context.setRoleCname(role.getCname());
-            context.setPermission(role.getPermission());
-
-            if (CollectionUtils.isNotEmpty(role.getPermission())) {
-                context.setPermissionPath(role.getPermission().stream().map(Permission::getPath).collect(Collectors.toList()));
-                context.setPermissionEname(role.getPermission().stream().map(Permission::getEname).collect(Collectors.toList()));
-            }
-        }
+        //TODO rule
+//        RoleEntity role = roleService.findById(entity.getRoleId());
+//        if (Objects.nonNull(role)) {
+//            context.setRoleId(role.getId());
+//            context.setRoleEname(role.getEname());
+//            context.setRoleCname(role.getCname());
+//            context.setPermission(role.getPermission());
+//
+//            if (CollectionUtils.isNotEmpty(role.getPermission())) {
+//                context.setPermissionPath(role.getPermission().stream().map(Permission::getPath).collect(Collectors.toList()));
+//                context.setPermissionEname(role.getPermission().stream().map(Permission::getEname).collect(Collectors.toList()));
+//            }
+//        }
 
         return context;
     }
@@ -174,15 +174,16 @@ public class UserServiceImpl implements UserService {
     public PageResult<UserEntity> find(UserQuery iquery, Page page) {
         PageResult<UserEntity> postEntityPageResult = userDao.find(iquery, page);
         Set<String> roleIds = postEntityPageResult.getDataList().stream().map(UserEntity::getRoleId).collect(Collectors.toSet());
-        List<RoleEntity> roles = roleService.findByIds(roleIds);
+//        List<RoleEntity> roles = roleService.findByIds(roleIds);
+//
+//        Map<String, String> roleIdOoCname = roles.stream().collect(Collectors.toMap(RoleEntity::getId, RoleEntity::getCname));
 
-        Map<String, String> roleIdOoCname = roles.stream().collect(Collectors.toMap(RoleEntity::getId, RoleEntity::getCname));
 
-
+        //TODO rule
         List<UserEntity> lastEntity = postEntityPageResult.getDataList().stream()
                 .peek(key -> {
-                    String cname = roleIdOoCname.get(key.getRoleId());
-                    key.setRoleCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownRole : cname);
+//                    String cname = roleIdOoCname.get(key.getRoleId());
+//                    key.setRoleCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownRole : cname);
                 }).collect(Collectors.toList());
         postEntityPageResult.setDataList(lastEntity);
         return postEntityPageResult;

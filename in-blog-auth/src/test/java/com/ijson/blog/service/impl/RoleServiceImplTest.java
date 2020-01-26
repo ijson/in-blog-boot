@@ -84,6 +84,6 @@ public class RoleServiceImplTest {
                 "0",
                 permission,
                 Lists.newArrayList());
-        roleService.create(roleEntity);
+        //roleService.create(roleEntity);
     }
 }
