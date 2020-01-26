@@ -43,7 +43,8 @@ public enum BlogBusinessExceptionCode {
     ACCOUNT_DEACTIVATED_OR_DELETED(200_000_030, "账号已停用或已删除"),
     FRIENDSHIP_LINK_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_031, "友情链接不存在或已删除"),
     PERMISSIONS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_032, "权限不存在或者已删除"),
-    ROLE_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_033, "角色不存在或者已删除");
+    ROLE_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_033, "角色不存在或者已删除"),
+    PLEASE_MODIFY_THE_WEBSITE_USER_REGISTRATION_ROLE_TO_DISABLE_OR_REMOVE(200_000_034, "请修改网站设置中注册用户角色后禁用或删除");
 
     private int code;
     private String message;

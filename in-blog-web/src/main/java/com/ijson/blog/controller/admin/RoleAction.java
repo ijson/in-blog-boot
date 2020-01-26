@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.controller.admin.model.V2Result;
+import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.query.RoleQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -87,6 +88,11 @@ public class RoleAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.PERMISSIONS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
         }
 
+        ConfigEntity configEntity = webSiteService.findAllConfig();
+        if (id.equals(configEntity.getRegRoleId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.PLEASE_MODIFY_THE_WEBSITE_USER_REGISTRATION_ROLE_TO_DISABLE_OR_REMOVE);
+        }
+
         roleService.enable(id, !entity.isEnable(), context);
         return Result.ok(entity.isEnable() ? "禁用成功!" : "启用成功!");
     }
@@ -102,6 +108,11 @@ public class RoleAction extends BaseController {
 
         if (Objects.isNull(entity)) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
+        }
+
+        ConfigEntity configEntity = webSiteService.findAllConfig();
+        if (id.equals(configEntity.getRegRoleId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.PLEASE_MODIFY_THE_WEBSITE_USER_REGISTRATION_ROLE_TO_DISABLE_OR_REMOVE);
         }
 
         if (entity.isEnable()) {
