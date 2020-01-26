@@ -143,4 +143,11 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
         query.field(AuthEntity.Fields.fatherId).equal(fatherId);
         return query.asList();
     }
+
+    @Override
+    public List<AuthEntity> findAll() {
+        Query<AuthEntity> query = datastore.createQuery(AuthEntity.class);
+        query.field(AuthEntity.Fields.enable).equal(true);
+        return query.asList();
+    }
 }

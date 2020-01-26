@@ -1,6 +1,8 @@
 package com.ijson.blog.controller.admin;
 
+import com.google.common.collect.Maps;
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.controller.admin.model.AuthKey;
 import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
@@ -8,6 +10,7 @@ import com.ijson.blog.model.SystemInfo;
 import com.ijson.blog.service.model.*;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -137,6 +141,24 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-role.html");
         addAdminModelAndView(view);
+        List<AuthEntity> allAuth = authService.findAll();
+        if (CollectionUtils.isEmpty(allAuth)) {
+            view.addObject("auths", Maps.newHashMap());
+        } else {
+
+            List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
+                return k.getFatherId().equals("0");
+            }).collect(Collectors.toList());
+
+            Map<AuthKey, List<AuthEntity>> auths = fatherEntity.stream().collect(Collectors.toMap(key -> {
+                return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath());
+            }, value -> {
+                return allAuth.stream().filter(vs -> {
+                    return vs.getFatherId().equals(value.getId());
+                }).collect(Collectors.toList());
+            }));
+            view.addObject("auths", auths);
+        }
         view.addObject("editData", null);
         return view;
     }
@@ -158,7 +180,7 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         AuthEntity internalById = authService.findInternalById(id);
         List<AuthEntity> fathers = authService.findFathers("0");
-        fathers = fathers.stream().filter(k-> !k.getId().equals(id)).collect(Collectors.toList());
+        fathers = fathers.stream().filter(k -> !k.getId().equals(id)).collect(Collectors.toList());
         view.addObject("editData", AuthInfo.create(internalById));
         view.addObject("fathers", AuthInfo.createAuthList(fathers));
         return view;

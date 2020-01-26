@@ -29,4 +29,7 @@ public interface AuthDao {
     List<AuthEntity> findByIds(List<String> ids);
 
     List<AuthEntity> findFathers(String fatherId);
+
+    List<AuthEntity> findAll();
+
 }
