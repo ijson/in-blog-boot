@@ -33,4 +33,13 @@ public interface Constant {
 
         }
     }
+
+    enum UserStatus {
+        active("激活"),
+        inactive("未激活");
+
+        UserStatus(String desc) {
+
+        }
+    }
 }

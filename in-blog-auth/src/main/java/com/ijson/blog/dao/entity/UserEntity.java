@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.entity;
 
+import com.ijson.blog.model.Constant;
 import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -109,6 +110,9 @@ public class UserEntity extends BaseEntity {
     @Property(Fields.roleCname)
     private String roleCname;
 
+    @Property(Fields.status)
+    private Constant.UserStatus status;
+
     public static UserEntity create(String ename,
                                     String cname,
                                     String email,
@@ -163,6 +167,7 @@ public class UserEntity extends BaseEntity {
         String beginJobTime = "beginJobTime";
         String endJobTime = "endJobTime";
         String roleCname = "roleCname";
+        String status = "status";
     }
 
 }
