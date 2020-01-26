@@ -1,6 +1,7 @@
 package com.ijson.blog.service.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.ijson.blog.dao.AuthDao;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.query.AuthQuery;
@@ -9,6 +10,7 @@ import com.ijson.blog.service.AuthService;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +70,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public List<AuthEntity> findByIds(List<String> ids) {
+        if(CollectionUtils.isEmpty(ids)){
+            return Lists.newArrayList();
+        }
         return authDao.findByIds(ids);
     }
 
