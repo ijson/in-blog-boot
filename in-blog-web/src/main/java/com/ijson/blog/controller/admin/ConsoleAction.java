@@ -150,12 +150,12 @@ public class ConsoleAction extends BaseController {
                 return k.getFatherId().equals("0");
             }).collect(Collectors.toList());
 
-            Map<AuthKey, List<AuthEntity>> auths = fatherEntity.stream().collect(Collectors.toMap(key -> {
+            Map<AuthKey, List<AuthInfo>> auths = fatherEntity.stream().collect(Collectors.toMap(key -> {
                 return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath());
             }, value -> {
                 return allAuth.stream().filter(vs -> {
                     return vs.getFatherId().equals(value.getId());
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toList()).stream().map(AuthInfo::create).collect(Collectors.toList());
             }));
             view.addObject("auths", auths);
         }
