@@ -59,7 +59,7 @@ public class AuthAction extends BaseController {
         }
 
         if (Strings.isNullOrEmpty(myEntity.getId())) {
-            return createAuth(request, myEntity);
+            return createAuth(context, myEntity);
         }
 
         AuthEntity entity = authService.findInternalById(myEntity.getId());
@@ -74,12 +74,13 @@ public class AuthAction extends BaseController {
         return Result.ok("更新成功!");
     }
 
-    private Result createAuth(HttpServletRequest request, AuthEntity myEntity) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("添加权限异常,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+    private Result createAuth(AuthContext context, AuthEntity myEntity) {
+
+        AuthEntity byEname = authService.findByEname(myEntity.getEname());
+        if (Objects.nonNull(byEname)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_ENAME_ALREADY_EXIST);
         }
+
         AuthEntity newAuth = authService.create(context, myEntity);
         RoleEntity systemRole = roleService.findByEname(Constant.SYSTEM);
         systemRole.getAuthIds().add(newAuth.getId());

@@ -54,7 +54,8 @@ public enum BlogBusinessExceptionCode {
     AUTH_ORDER_CANNOT_BE_EMPTY(200_000_041, "权限排列顺序不能为空"),
     AUTH_ENAME_CANNOT_BE_EMPTY(200_000_042, "权限英文标识不能为空"),
     AUTH_CNAME_CANNOT_BE_EMPTY(200_000_043, "权限中文标识不能为空"),
-    AUTH_LINK_CANNOT_BE_EMPTY(200_000_044, "权限地址不能为空");
+    AUTH_LINK_CANNOT_BE_EMPTY(200_000_044, "权限地址不能为空"),
+    AUTH_ENAME_ALREADY_EXIST(200_000_045, "权限英文标识已存在");
 
     private int code;
     private String message;

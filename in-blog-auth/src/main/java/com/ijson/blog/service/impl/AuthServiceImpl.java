@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         entity.setCreatedBy(context.getId());
         entity.setCreateTime(System.currentTimeMillis());
         entity.setLastModifiedBy(context.getId());
-        if(Strings.isNullOrEmpty(entity.getFatherId())){
+        if (Strings.isNullOrEmpty(entity.getFatherId())) {
             entity.setFatherId("0");
         }
         return authDao.create(entity);
@@ -79,5 +79,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<AuthEntity> findAll() {
         return authDao.findAll();
+    }
+
+    @Override
+    public AuthEntity findByEname(String ename) {
+        return authDao.findByEname(ename);
     }
 }
