@@ -34,6 +34,8 @@ public class AuthInfo {
 
     private boolean checked;
 
+    private boolean disabled;
+
     public static List<AuthInfo> createAuthList(List<AuthEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();
@@ -43,10 +45,10 @@ public class AuthInfo {
 
 
     public static AuthInfo create(AuthEntity entity) {
-        return create(entity, false);
+        return create(entity, false,false);
     }
 
-    public static AuthInfo create(AuthEntity entity, boolean checked) {
+    public static AuthInfo create(AuthEntity entity, boolean checked,boolean disabled) {
         AuthInfo info = new AuthInfo();
         info.setCname(entity.getCname());
         info.setEnable(entity.isEnable());
@@ -57,6 +59,7 @@ public class AuthInfo {
         info.setMenuType(entity.getMenuType());
         info.setOrder(entity.getOrder());
         info.setChecked(checked);
+        info.setDisabled(disabled);
         return info;
     }
 }

@@ -69,14 +69,14 @@
                                 %>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" name="${key.authId}" lay-skin="primary"
+                                        <input type="checkbox" name="${key.authId}" lay-skin="primary" <%if(key.disabled){%>disabled <%}%>
                                                lay-filter="authKey" title="${key.authCname}"  <%if(key.checked){%>checked <%}%>  >
                                     </td>
                                     <td>
                                         <div class="layui-input-block">
 
                                             <% for(data in value){ %>
-                                            <input type="checkbox" name="${data.id}" lay-skin="primary"
+                                            <input type="checkbox" name="${data.id}" lay-skin="primary" <%if(key.disabled){%>disabled <%}%>
                                                    lay-filter="authKey" title="${data.cname}(${data.menuType})" <%if(data.checked){%>checked <%}%>>
                                             <%}%>
                                         </div>

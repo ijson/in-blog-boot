@@ -146,24 +146,24 @@ public class ConsoleAction extends BaseController {
         if (CollectionUtils.isEmpty(allAuth)) {
             view.addObject("auths", Maps.newHashMap());
         } else {
-            view.addObject("auths", getAuthMap(allAuth, Lists.newArrayList()));
+            view.addObject("auths", getAuthMap(allAuth, Lists.newArrayList(), false));
         }
         view.addObject("editData", null);
         return view;
     }
 
-    public Map<AuthKey, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds) {
+    public Map<AuthKey, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
         List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
             return k.getFatherId().equals("0");
         }).collect(Collectors.toList());
 
         return fatherEntity.stream().collect(Collectors.toMap(key -> {
-            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()));
+            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()),disabled);
         }, value -> {
             return allAuth.stream().filter(vs -> {
                 return vs.getFatherId().equals(value.getId());
             }).collect(Collectors.toList()).stream().map(k -> {
-                return AuthInfo.create(k, authIds.contains(k.getId()));
+                return AuthInfo.create(k, authIds.contains(k.getId()),disabled);
             }).collect(Collectors.toList());
         }));
     }
@@ -198,10 +198,14 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         RoleEntity internalById = roleService.findInternalById(id);
         List<String> authIds = internalById.getAuthIds();
+        boolean disabled = false;
+        if ("system".equals(internalById.getEname())) {
+            disabled = true;
+        }
         if (CollectionUtils.isEmpty(authIds)) {
-            view.addObject("auths", getAuthMap(authService.findAll(), Lists.newArrayList()));
+            view.addObject("auths", getAuthMap(authService.findAll(), Lists.newArrayList(), disabled));
         } else {
-            view.addObject("auths", getAuthMap(authService.findAll(), authIds));
+            view.addObject("auths", getAuthMap(authService.findAll(), authIds, disabled));
         }
         view.addObject("editData", RoleInfo.create(internalById));
         return view;
