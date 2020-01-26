@@ -1,5 +1,6 @@
 package com.ijson.blog.controller.admin;
 
+import com.google.common.base.Strings;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -31,6 +32,14 @@ public class WebSiteAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
+        if (Strings.isNullOrEmpty(post.getSiteName())) {
+            return Result.error(BlogBusinessExceptionCode.WEBSITE_NAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(post.getRegRoleId())) {
+            return Result.error(BlogBusinessExceptionCode.REG_ROLE_CANNOT_BE_EMPTY);
+        }
+
         ConfigEntity entity = webSiteService.updateWebSite(post);
         return Result.ok("保存网站信息成功!");
     }

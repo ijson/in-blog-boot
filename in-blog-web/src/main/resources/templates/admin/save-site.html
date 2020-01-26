@@ -61,22 +61,23 @@
                                     </div>
 
                                     <div class="layui-form-item">
-                                        <label for="regRoleId" class="layui-form-label" style="width:140px;">注册用户角色</label>
+                                        <label for="regRoleId" class="layui-form-label"
+                                               style="width:140px;">注册用户角色</label>
                                         <div class="layui-input-inline">
 
 
                                             <%if(isNotEmpty(roles)){%>
-                                                <select name="regRoleId">
-                                                    <% for(data in roles){ %>
+                                            <select name="regRoleId">
+                                                <% for(data in roles){ %>
 
-                                                        <%if(data.id==site.regRoleId){%>
-                                                            <option value="${data.id}" selected>${data.cname}</option>
-                                                        <%}else{%>
-                                                            <option value="${data.id}">${data.cname}</option>
-                                                        <%}%>
+                                                <%if(data.id==site.regRoleId){%>
+                                                <option value="${data.id}" selected>${data.cname}</option>
+                                                <%}else{%>
+                                                <option value="${data.id}">${data.cname}</option>
+                                                <%}%>
 
-                                                    <%} %>
-                                                </select>
+                                                <%} %>
+                                            </select>
                                             <%}%>
 
                                         </div>
@@ -120,7 +121,8 @@
                                     </div>
 
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label" about="显示博主信息" style="width: 140px;">显示博主信息</label>
+                                        <label class="layui-form-label" about="显示博主信息"
+                                               style="width: 140px;">显示博主信息</label>
                                         <div class="layui-input-block">
                                             <input type="checkbox" name="open" lay-skin="switch"
                                                    lay-filter="showAdminInfo" lay-text="ON|OFF"
@@ -268,6 +270,20 @@
 
         //网站设置保存
         form.on('submit(saveWebSet)', function (data) {
+
+            if (!data.field.siteName) {
+                layer.msg("网站名称不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!data.field.regRoleId) {
+                layer.msg("注册角色不能为空", {
+                    time: 2000
+                });
+                return;
+            }
 
             $.ajax({
                 cache: false,
