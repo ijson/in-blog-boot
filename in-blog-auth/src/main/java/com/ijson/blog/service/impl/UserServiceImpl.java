@@ -2,6 +2,7 @@ package com.ijson.blog.service.impl;
 
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.UserDao;
+import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
@@ -10,23 +11,19 @@ import com.ijson.blog.exception.BlogLoginException;
 import com.ijson.blog.manager.AvatarManager;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
-import com.ijson.blog.model.Permission;
+import com.ijson.blog.service.AuthService;
 import com.ijson.blog.service.RoleService;
 import com.ijson.blog.service.UserService;
 import com.ijson.blog.util.RegularUtil;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -46,6 +43,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private AuthService authService;
 
     @Override
     public AuthContext login(String ename, String password) {
@@ -77,19 +77,15 @@ public class UserServiceImpl implements UserService {
                 entity.getEmail(),
                 entity.getMobile(),
                 entity.getAvatar());
-        //TODO rule
-//        RoleEntity role = roleService.findById(entity.getRoleId());
-//        if (Objects.nonNull(role)) {
-//            context.setRoleId(role.getId());
-//            context.setRoleEname(role.getEname());
-//            context.setRoleCname(role.getCname());
-//            context.setPermission(role.getPermission());
-//
-//            if (CollectionUtils.isNotEmpty(role.getPermission())) {
-//                context.setPermissionPath(role.getPermission().stream().map(Permission::getPath).collect(Collectors.toList()));
-//                context.setPermissionEname(role.getPermission().stream().map(Permission::getEname).collect(Collectors.toList()));
-//            }
-//        }
+        if (!Strings.isNullOrEmpty(entity.getRoleId())) {
+            RoleEntity role = roleService.findById(entity.getRoleId());
+            List<String> authIds = role.getAuthIds();
+            List<AuthEntity> auths = authService.findByIds(authIds);
+
+            context.setPermissionPath(auths.stream().filter(k-> !"#".equals(k.getPath())).map(AuthEntity::getPath).collect(Collectors.toList()));
+            context.setPermissionEname(auths.stream().map(AuthEntity::getEname).collect(Collectors.toList()));
+
+        }
 
         return context;
     }
@@ -165,7 +161,7 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "userInfo", key = "#entity.ename")
     @Override
     public UserEntity edit(UserEntity entity) {
-        if(!Strings.isNullOrEmpty(entity.getRoleId())){
+        if (!Strings.isNullOrEmpty(entity.getRoleId())) {
             RoleEntity byId = roleService.findById(entity.getRoleId());
             entity.setRoleCname(byId.getCname());
         }
@@ -181,16 +177,14 @@ public class UserServiceImpl implements UserService {
     public PageResult<UserEntity> find(UserQuery iquery, Page page) {
         PageResult<UserEntity> postEntityPageResult = userDao.find(iquery, page);
         Set<String> roleIds = postEntityPageResult.getDataList().stream().map(UserEntity::getRoleId).collect(Collectors.toSet());
-//        List<RoleEntity> roles = roleService.findByIds(roleIds);
-//
-//        Map<String, String> roleIdOoCname = roles.stream().collect(Collectors.toMap(RoleEntity::getId, RoleEntity::getCname));
+        List<RoleEntity> roles = roleService.findByIds(new ArrayList<>(roleIds));
+        Map<String, String> roleIdOoCname = roles.stream().collect(Collectors.toMap(RoleEntity::getId, RoleEntity::getCname));
 
 
-        //TODO rule
         List<UserEntity> lastEntity = postEntityPageResult.getDataList().stream()
                 .peek(key -> {
-//                    String cname = roleIdOoCname.get(key.getRoleId());
-//                    key.setRoleCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownRole : cname);
+                    String cname = roleIdOoCname.get(key.getRoleId());
+                    key.setRoleCname(Strings.isNullOrEmpty(cname) ? Constant.UnknownRole : cname);
                 }).collect(Collectors.toList());
         postEntityPageResult.setDataList(lastEntity);
         return postEntityPageResult;

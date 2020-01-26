@@ -31,4 +31,6 @@ public interface RoleDao {
     List<RoleEntity> findByIds(List<String> ids);
 
     List<RoleEntity> findAll();
+
+    RoleEntity findByEname(String ename);
 }

@@ -3,14 +3,16 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.AuthEntity;
+import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.info.AuthInfo;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.V2Result;
+import com.ijson.blog.service.model.info.AuthInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +64,10 @@ public class AuthAction extends BaseController {
             log.info("添加权限异常,未获取到当前登入人用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        authService.create(context, myEntity);
+        AuthEntity newAuth = authService.create(context, myEntity);
+        RoleEntity systemRole = roleService.findByEname(Constant.SYSTEM);
+        systemRole.getAuthIds().add(newAuth.getId());
+        roleService.edit(context, systemRole);
         return Result.ok("创建成功!");
     }
 

@@ -12,6 +12,8 @@ public interface Constant {
     String loginUserCacheKey = "loginUser";
     String remember = "remember";
     String UnknownUser = "未知用户";
+    String UnknownRole = "未知角色";
+    String SYSTEM = "system";
 
     enum ConfigType {
         site("网站设置"),
