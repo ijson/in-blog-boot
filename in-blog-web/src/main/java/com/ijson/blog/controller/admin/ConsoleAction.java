@@ -192,6 +192,7 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/save-role.html");
         addAdminModelAndView(view);
         RoleEntity internalById = roleService.findInternalById(id);
+        view.addObject("auths", Maps.newHashMap());
         view.addObject("editData", RoleInfo.create(internalById));
         return view;
     }
