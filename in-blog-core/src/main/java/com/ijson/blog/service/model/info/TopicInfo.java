@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by cuiyongxu on 2019/8/20 11:57 AM
  */
 @Data
-public class Topic {
+public class TopicInfo {
     private String id;
     private String name;
     private String ename;

@@ -7,7 +7,7 @@ import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
-import com.ijson.blog.service.model.*;
+import com.ijson.blog.service.model.info.*;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
 import org.apache.commons.collections.CollectionUtils;
@@ -47,7 +47,7 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/welcome.html");
         addAdminModelAndView(view);
         view.addObject("systemInfo", SystemInfo.getSystemInfo());
-        ConsoleData consoleData = postService.getConsoleData();
+        WelcomeInfo consoleData = postService.getConsoleData();
         view.addObject("consoleData", consoleData);
         return view;
     }
@@ -145,8 +145,8 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-article.html");
         addAdminModelAndView(view);
-        view.addObject("editData", Post.create(entity));
-        view.addObject("topic", Post.create(entity).getTopicName());
+        view.addObject("editData", PostInfo.create(entity));
+        view.addObject("topic", PostInfo.create(entity).getTopicName());
         return view;
     }
 
@@ -217,8 +217,8 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/save-article.html");
         addAdminModelAndView(view);
         if (Objects.nonNull(entity)) {
-            view.addObject("editData", Post.create(entity));
-            view.addObject("topic", Post.create(entity).getTopicName());
+            view.addObject("editData", PostInfo.create(entity));
+            view.addObject("topic", PostInfo.create(entity).getTopicName());
         }
         return view;
     }

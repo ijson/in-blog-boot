@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
@@ -14,7 +14,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
  * Created by cuiyongxu on 2019/8/7 6:25 PM
  */
 @Data
-public class Post {
+public class PostInfo {
     private String id;
     private String title;
     private String content;
@@ -36,7 +35,7 @@ public class Post {
     private long lastModifiedTime;
     private String lastModifiedBy;
     private String topicName;
-    private List<Topic> topics;
+    private List<TopicInfo> topics;
     private long pros;
     private boolean enable;
     private String userCname;
@@ -109,18 +108,18 @@ public class Post {
         return list.get(0);
     }
 
-    public static List<Post> indexPost(PageResult<PostEntity> result) {
+    public static List<PostInfo> indexPost(PageResult<PostEntity> result) {
         return indexPost(result, null);
     }
 
-    public static List<Post> indexPost(PageResult<PostEntity> result, String keyWord) {
+    public static List<PostInfo> indexPost(PageResult<PostEntity> result, String keyWord) {
 
         if (result == null) {
             return Lists.newArrayList();
         }
 
         return result.getDataList().stream().map(key -> {
-            Post post = new Post();
+            PostInfo post = new PostInfo();
             post.setId(key.getId());
             //post.setContent(key.getContent());
             post.setIntro(key.getContent(), keyWord);
@@ -143,14 +142,14 @@ public class Post {
     }
 
 
-    public static List<Post> postList(PageResult<PostEntity> result) {
+    public static List<PostInfo> postList(PageResult<PostEntity> result) {
 
         if (result == null) {
             return Lists.newArrayList();
         }
 
         return result.getDataList().stream().map(key -> {
-            Post post = Post.create(key);
+            PostInfo post = PostInfo.create(key);
             post.setContent(null);
             post.setDraftId(key.getDraftId());
             post.setEname(key.getEname());
@@ -161,14 +160,14 @@ public class Post {
         }).collect(Collectors.toList());
     }
 
-    public static List<Post> postDraftList(PageResult<PostDraftEntity> result) {
+    public static List<PostInfo> postDraftList(PageResult<PostDraftEntity> result) {
 
         if (result == null) {
             return Lists.newArrayList();
         }
 
         return result.getDataList().stream().map(key -> {
-            Post post = Post.create(key);
+            PostInfo post = PostInfo.create(key);
             post.setContent(null);
             post.setEname(key.getEname());
             post.setShamId(key.getShamId());
@@ -193,8 +192,8 @@ public class Post {
         return Joiner.on(",").join(topicName.stream().map(TopicEntity::getTopicName).collect(Collectors.toSet()));
     }
 
-    public static Post create(PostDraftEntity entity) {
-        Post post = new Post();
+    public static PostInfo create(PostDraftEntity entity) {
+        PostInfo post = new PostInfo();
         post.setId(entity.getId());
         post.setTitle(entity.getTitle());
         post.setContent(entity.getContent());
@@ -210,8 +209,8 @@ public class Post {
         return post;
     }
 
-    public static Post create(PostEntity entity) {
-        Post post = new Post();
+    public static PostInfo create(PostEntity entity) {
+        PostInfo post = new PostInfo();
         post.setId(entity.getId());
         post.setTitle(entity.getTitle());
         post.setUserCname(entity.getCname());
@@ -232,7 +231,7 @@ public class Post {
         if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
             post.setTopicName(getTpoicNames(entity.getTopicName()));
             post.setTopics(entity.getTopicName().stream().map(key -> {
-                Topic topic = new Topic();
+                TopicInfo topic = new TopicInfo();
                 topic.setId(key.getId());
                 topic.setEname(key.getEname());
                 topic.setShamId(key.getShamId());
@@ -243,8 +242,8 @@ public class Post {
         return post;
     }
 
-    public static Post createSimple(PostEntity entity) {
-        Post post = new Post();
+    public static PostInfo createSimple(PostEntity entity) {
+        PostInfo post = new PostInfo();
         post.setId(entity.getId());
         post.setEname(entity.getEname());
         post.setSimpleTitle(entity.getTitle());

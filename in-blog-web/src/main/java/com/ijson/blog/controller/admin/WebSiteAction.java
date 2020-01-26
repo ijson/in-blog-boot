@@ -6,7 +6,7 @@ import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
-import com.ijson.blog.service.model.WebSite;
+import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,7 @@ public class WebSiteAction extends BaseController {
 
 
     @PostMapping("/website")
-    public Result siteForm(HttpServletRequest request, HttpSession session, @RequestBody WebSite post) {
+    public Result siteForm(HttpServletRequest request, HttpSession session, @RequestBody WebSiteInfo post) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);

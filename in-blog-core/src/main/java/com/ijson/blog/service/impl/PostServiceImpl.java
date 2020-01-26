@@ -13,7 +13,7 @@ import com.ijson.blog.manager.ViewSyncManager;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.PostService;
-import com.ijson.blog.service.model.ConsoleData;
+import com.ijson.blog.service.model.info.WelcomeInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import org.apache.commons.collections.CollectionUtils;
@@ -249,13 +249,13 @@ public class PostServiceImpl implements PostService {
 
     @Cacheable(value = "consoleData")
     @Override
-    public ConsoleData getConsoleData() {
+    public WelcomeInfo getConsoleData() {
         Long publishTotal = postDao.findPublishTotal();
         Long readTotal = getWebSiteCount();
         Long commentTotal = replyDao.count();
         Long todayPublishTotal = postDao.findTodayPublishTotal();
         Long userCount = userDao.count();
-        return ConsoleData.create(publishTotal, readTotal, commentTotal, todayPublishTotal, userCount);
+        return WelcomeInfo.create(publishTotal, readTotal, commentTotal, todayPublishTotal, userCount);
     }
 
     @Override

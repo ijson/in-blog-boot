@@ -3,7 +3,7 @@ package com.ijson.blog.controller.view;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.exception.BlogNotFoundException;
-import com.ijson.blog.service.model.Post;
+import com.ijson.blog.service.model.info.PostInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +32,7 @@ public class ArticleController extends BaseController {
         ModelAndView view = new ModelAndView("view/detail.html");
         try {
             PostEntity entity = postService.findByShamId(ename, shamId);
-            view.addObject("data", Post.create(entity));
+            view.addObject("data", PostInfo.create(entity));
             addViewModelAndView(view);
             return view;
         } catch (BlogNotFoundException e) {

@@ -4,8 +4,8 @@ import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.exception.BlogNotFoundException;
-import com.ijson.blog.service.model.HotTopic;
-import com.ijson.blog.service.model.Post;
+import com.ijson.blog.service.model.info.HotTopicInfo;
+import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.util.Pageable;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -33,7 +33,7 @@ public class TagController extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("view/tags.html");
         try {
-            view.addObject("tags", HotTopic.getHotTopic(topicService.findAll()));
+            view.addObject("tags", HotTopicInfo.getHotTopic(topicService.findAll()));
             view.addObject("tagActive", "active");
             addViewModelAndView(view);
             return view;
@@ -61,7 +61,7 @@ public class TagController extends BaseController {
             //view.addObject("tags", HotTopic.getHotTopic(topicService.findUseAll()));
             view.addObject("tagActive", "active");
             view.addObject("tagPostCount", result.getTotal());
-            view.addObject("tagPost", Post.indexPost(result));
+            view.addObject("tagPost", PostInfo.indexPost(result));
             view.addObject("id", id);
             TopicEntity topicEntity = topicService.find(id);
             if (Objects.nonNull(topicEntity)) {
@@ -101,7 +101,7 @@ public class TagController extends BaseController {
             //view.addObject("tags", HotTopic.getHotTopic(topicService.findUseAll()));
             view.addObject("tagActive", "active");
             view.addObject("tagPostCount", result.getTotal());
-            view.addObject("tagPost", Post.indexPost(result));
+            view.addObject("tagPost", PostInfo.indexPost(result));
             view.addObject("id", id);
             view.addObject("tagName", topicEntity.getTopicName());
             view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));

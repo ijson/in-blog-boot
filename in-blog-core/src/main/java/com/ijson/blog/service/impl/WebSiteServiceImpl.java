@@ -6,7 +6,7 @@ import com.ijson.blog.dao.ConfigDao;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.WebSiteService;
-import com.ijson.blog.service.model.WebSite;
+import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class WebSiteServiceImpl implements WebSiteService {
     private ConfigDao configDao;
 
     @Override
-    public ConfigEntity updateWebSite(WebSite post) {
+    public ConfigEntity updateWebSite(WebSiteInfo post) {
         ConfigEntity entity = configDao.findType(Constant.ConfigType.site);
         if (Objects.isNull(entity)) {
             entity = new ConfigEntity();

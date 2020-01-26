@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.ReplyEntity;
@@ -19,7 +19,7 @@ import java.util.List;
  * Created by cuiyongxu on 2019/8/25 2:10 AM
  */
 @Data
-public class Reply {
+public class ReplyInfo {
 
     private String topicId;
     private String postId;
@@ -83,7 +83,7 @@ public class Reply {
         }
 
      */
-    public static ReplyEntity formReplyEntity(Reply reply, HttpServletRequest request,AuthContext context) {
+    public static ReplyEntity formReplyEntity(ReplyInfo reply, HttpServletRequest request, AuthContext context) {
         ReplyEntity entity = new ReplyEntity();
         entity.setTopicId(reply.getTopicId());
         entity.setUserId(context.getId());
@@ -115,8 +115,8 @@ public class Reply {
     }
 
 
-    public static Reply formReply(ReplyEntity entity) {
-        Reply reply = new Reply();
+    public static ReplyInfo formReply(ReplyEntity entity) {
+        ReplyInfo reply = new ReplyInfo();
         reply.setContent(entity.getContent());
         reply.setBrowse(entity.getBrowse());
         reply.setReplyName(entity.getReplyName());

@@ -1,5 +1,6 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.result;
 
+import com.ijson.blog.service.model.info.ReplyInfo;
 import com.ijson.blog.util.Pageable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReplyResult {
-    private List<Reply> reply;
+    private List<ReplyInfo> reply;
     private Pageable pageable;
 }

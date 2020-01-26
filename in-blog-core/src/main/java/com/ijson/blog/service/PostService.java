@@ -3,7 +3,7 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.ConsoleData;
+import com.ijson.blog.service.model.info.WelcomeInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -38,7 +38,7 @@ public interface PostService {
 
     long getWebSiteCount();
 
-    ConsoleData getConsoleData();
+    WelcomeInfo getConsoleData();
 
     PostEntity enable(String id,boolean enable,AuthContext context);
 

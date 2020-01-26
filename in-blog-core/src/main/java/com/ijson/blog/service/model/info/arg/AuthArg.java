@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info.arg;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by cuiyongxu on 2020/1/26 4:39 PM
  */
 @Data
-public class AuthKey {
+public class AuthArg {
     private String authId;
     private String authEname;
     private String authCname;
@@ -16,10 +16,10 @@ public class AuthKey {
     private boolean checked;
     private boolean disabled;
 
-    public AuthKey() {
+    public AuthArg() {
     }
 
-    public AuthKey(String authId, String authEname, String authCname, String path,boolean checked,boolean disabled) {
+    public AuthArg(String authId, String authEname, String authCname, String path, boolean checked, boolean disabled) {
         this.authId = authId;
         this.authEname = authEname;
         this.authCname = authCname;

@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by cuiyongxu on 2020/1/22 11:23 PM
  */
 @Data
-public class WebSite {
+public class WebSiteInfo {
 
     private String siteName;
 

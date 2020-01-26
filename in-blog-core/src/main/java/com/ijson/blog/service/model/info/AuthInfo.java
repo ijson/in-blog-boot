@@ -1,8 +1,9 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.service.model.info.arg.AuthArg;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -65,13 +66,13 @@ public class AuthInfo {
     }
 
 
-    public static Map<AuthKey, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
+    public static Map<AuthArg, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
         List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
             return k.getFatherId().equals("0");
         }).collect(Collectors.toList());
 
         return fatherEntity.stream().collect(Collectors.toMap(key -> {
-            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
+            return new AuthArg(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
         }, value -> {
             return allAuth.stream().filter(vs -> {
                 return vs.getFatherId().equals(value.getId());

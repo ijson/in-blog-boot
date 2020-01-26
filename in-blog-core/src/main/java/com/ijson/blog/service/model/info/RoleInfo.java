@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.RoleEntity;

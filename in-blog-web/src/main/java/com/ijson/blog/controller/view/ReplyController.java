@@ -6,8 +6,8 @@ import com.ijson.blog.dao.query.ReplyQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.Reply;
-import com.ijson.blog.service.model.ReplyResult;
+import com.ijson.blog.service.model.info.ReplyInfo;
+import com.ijson.blog.service.model.result.ReplyResult;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.ReplyService;
 import com.ijson.blog.util.Pageable;
@@ -60,7 +60,7 @@ public class ReplyController extends BaseController {
         replyQuery.setShamId(shamId);
 
         PageResult<ReplyEntity> result = replyService.find(replyQuery, page);
-        List<Reply> replies = result.getDataList().stream().map(Reply::formReply).collect(Collectors.toList());
+        List<ReplyInfo> replies = result.getDataList().stream().map(ReplyInfo::formReply).collect(Collectors.toList());
 
         return new ReplyResult(replies, new Pageable(((Long) result.getTotal()).intValue(), index));
     }
@@ -68,7 +68,7 @@ public class ReplyController extends BaseController {
 
     @RequestMapping("/{ename}/{shamId}/save")
     @ResponseBody
-    public Reply getReplyList(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody Reply reply, HttpSession session, HttpServletRequest request) throws Exception {
+    public ReplyInfo getReplyList(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody ReplyInfo reply, HttpSession session, HttpServletRequest request) throws Exception {
 
         String verCode = (String) session.getAttribute(replyCodeKey);
         Result result = VerifyCodeUtils.validImage(reply.getReplyCode(), verCode, request, session, replyCodeKey, replyCodeTime);
@@ -81,7 +81,7 @@ public class ReplyController extends BaseController {
             log.info("创建评论时,未获取到用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        return Reply.formReply(replyService.save(reply.getContent(), shamId, ename, Reply.formReplyEntity(reply, request, context)));
+        return ReplyInfo.formReply(replyService.save(reply.getContent(), shamId, ename, ReplyInfo.formReplyEntity(reply, request, context)));
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)

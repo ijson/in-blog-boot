@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
-import com.ijson.blog.service.model.Post;
+import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.util.Pageable;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -61,7 +61,7 @@ public class HomeController extends BaseController {
 
         view.addObject("total", result.getTotal());
         view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
-        view.addObject("dataList", Post.indexPost(result,keyWord));
+        view.addObject("dataList", PostInfo.indexPost(result,keyWord));
         view.addObject("indexActive", "active");
         view.addObject("keyWord", keyWord);
         addViewModelAndView(view);

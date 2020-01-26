@@ -6,10 +6,10 @@ import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.*;
-import com.ijson.blog.service.model.BlogrollInfo;
-import com.ijson.blog.service.model.HotTopic;
-import com.ijson.blog.service.model.Post;
-import com.ijson.blog.service.model.UserInfo;
+import com.ijson.blog.service.model.info.BlogrollInfo;
+import com.ijson.blog.service.model.info.HotTopicInfo;
+import com.ijson.blog.service.model.info.PostInfo;
+import com.ijson.blog.service.model.info.UserInfo;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
 import com.ijson.blog.util.VerifyCodeUtils;
@@ -111,9 +111,9 @@ public class BaseController {
      *
      * @return
      */
-    private List<Post> getHotPosts() {
+    private List<PostInfo> getHotPosts() {
         List<PostEntity> serviceHotPost = postService.findHotPostBeforeTen();
-        return serviceHotPost.stream().map(Post::createSimple).sorted((o1, o2) -> o1.getViews() > o2.getViews() ? -1 : 1).collect(Collectors.toList());
+        return serviceHotPost.stream().map(PostInfo::createSimple).sorted((o1, o2) -> o1.getViews() > o2.getViews() ? -1 : 1).collect(Collectors.toList());
     }
 
     /**
@@ -121,9 +121,9 @@ public class BaseController {
      *
      * @return
      */
-    private List<Post> getMostRecentlyPublishedPosts() {
+    private List<PostInfo> getMostRecentlyPublishedPosts() {
         List<PostEntity> recentlyPublished = postService.findRecentlyPublishedBeforeTen();
-        return recentlyPublished.stream().map(Post::createSimple).collect(Collectors.toList());
+        return recentlyPublished.stream().map(PostInfo::createSimple).collect(Collectors.toList());
     }
 
 
@@ -132,9 +132,9 @@ public class BaseController {
      *
      * @return
      */
-    private List<HotTopic> getHotTags() {
+    private List<HotTopicInfo> getHotTags() {
         List<TopicEntity> topicEntities = topicService.findHotTag();
-        return HotTopic.getHotTopic(topicEntities);
+        return HotTopicInfo.getHotTopic(topicEntities);
     }
 
 

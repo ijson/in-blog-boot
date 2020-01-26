@@ -11,7 +11,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.Post;
+import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.service.model.Result;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -37,7 +37,7 @@ public class PostDraftActioin extends BaseController {
 
     @DocDocument(name = "博客草稿添加", desc = "控制台执行添加,需要添加topic")
     @PostMapping("/create")
-    public Result createPost(HttpServletRequest request, HttpSession session, @RequestBody Post post) {
+    public Result createPost(HttpServletRequest request, HttpSession session, @RequestBody PostInfo post) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -65,7 +65,7 @@ public class PostDraftActioin extends BaseController {
         return Result.ok("创建草稿成功!");
     }
 
-    private Result updatePost(HttpServletRequest request, @RequestBody Post post) {
+    private Result updatePost(HttpServletRequest request, @RequestBody PostInfo post) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -136,9 +136,9 @@ public class PostDraftActioin extends BaseController {
         }
 
         List<PostDraftEntity> dataList = result.getDataList();
-        List<Post> posts = Lists.newArrayList();
+        List<PostInfo> posts = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(dataList)) {
-            posts = Post.postDraftList(result);
+            posts = PostInfo.postDraftList(result);
         }
 
         V2Result v2Result = new V2Result();

@@ -11,7 +11,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
-import com.ijson.blog.service.model.RoleInfo;
+import com.ijson.blog.service.model.info.RoleInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;

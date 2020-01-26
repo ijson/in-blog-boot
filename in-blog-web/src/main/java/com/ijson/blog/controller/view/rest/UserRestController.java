@@ -7,7 +7,7 @@ import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.UserService;
-import com.ijson.blog.service.model.RegModel;
+import com.ijson.blog.service.model.info.RegInfo;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.util.DesUtil;
 import com.ijson.blog.util.EhcacheUtil;
@@ -90,7 +90,7 @@ public class UserRestController extends BaseController {
 
 
     @PostMapping(value = "/reg")
-    public Result reg(HttpServletRequest request, HttpSession session, @RequestBody RegModel entity) {
+    public Result reg(HttpServletRequest request, HttpSession session, @RequestBody RegInfo entity) {
 
         String verCode = (String) session.getAttribute(varCodeKey);
         Result result = VerifyCodeUtils.validImage(entity.getRegVerCode(), verCode, request, session, varCodeKey, varCodeTime);

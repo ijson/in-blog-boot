@@ -9,7 +9,7 @@ import com.ijson.blog.dao.query.BlogrollQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.BlogrollInfo;
+import com.ijson.blog.service.model.info.BlogrollInfo;
 import com.ijson.blog.service.model.Result;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;

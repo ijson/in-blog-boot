@@ -165,11 +165,5 @@ public class UserEntity extends BaseEntity {
         String roleCname = "roleCname";
     }
 
-    public static UserEntity unknownUser() {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setCname("未知用户");
-        return userEntity;
-    }
-
 }
 

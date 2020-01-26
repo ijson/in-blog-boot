@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  * Created by cuiyongxu on 2019/12/1 1:20 PM
  */
 @Data
-public class RegModel {
+public class RegInfo {
 
     private String id;
     private String ename;

@@ -15,9 +15,9 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.Post;
+import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.service.model.Result;
-import com.ijson.blog.service.model.UploadResult;
+import com.ijson.blog.service.model.result.UploadResult;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.Md5Util;
 import com.ijson.mongo.support.model.Page;
@@ -49,7 +49,7 @@ public class PostAction extends BaseController {
 
     @DocDocument(name = "博客添加", desc = "控制台执行添加,需要添加topic")
     @PostMapping("/create")
-    public Result createPost(HttpServletRequest request, @RequestBody Post post) {
+    public Result createPost(HttpServletRequest request, @RequestBody PostInfo post) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -91,7 +91,7 @@ public class PostAction extends BaseController {
         return Result.ok("创建文章成功!");
     }
 
-    private Result updatePost(HttpServletRequest request, Post post, PostEntity entity) {
+    private Result updatePost(HttpServletRequest request, PostInfo post, PostEntity entity) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -159,7 +159,7 @@ public class PostAction extends BaseController {
     }
 
     @PostMapping("/v2/enable/{ename}/{shamId}")
-    public Result v2Enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody Post post, HttpServletRequest request) {
+    public Result v2Enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
@@ -254,7 +254,7 @@ public class PostAction extends BaseController {
 
     @RequestMapping("/v2/list")
     @ResponseBody
-    public V2Result<Post> listV2(Integer page, Integer limit, HttpServletRequest request) {
+    public V2Result<PostInfo> listV2(Integer page, Integer limit, HttpServletRequest request) {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
@@ -285,9 +285,9 @@ public class PostAction extends BaseController {
         }
 
         List<PostEntity> dataList = result.getDataList();
-        List<Post> posts = Lists.newArrayList();
+        List<PostInfo> posts = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(dataList)) {
-            posts = Post.postList(result);
+            posts = PostInfo.postList(result);
         }
 
         V2Result v2Result = new V2Result();

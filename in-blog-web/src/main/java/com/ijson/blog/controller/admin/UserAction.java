@@ -12,7 +12,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
-import com.ijson.blog.service.model.UserInfo;
+import com.ijson.blog.service.model.info.UserInfo;
 import com.ijson.blog.util.VerifyCodeUtils;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;

@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import lombok.Data;
 
@@ -8,15 +8,15 @@ import lombok.Data;
  * Created by cuiyongxu on 2019/9/1 5:24 PM
  */
 @Data
-public class ConsoleData {
+public class WelcomeInfo {
     private Long publishTotal;
     private Long readTotal;
     private Long commentTotal;
     private Long todayPublishTotal;
     private Long userCount;
 
-    public static ConsoleData create(Long publishTotal, Long readTotal, Long commentTotal, Long todayPublishTotal,Long userCount) {
-        ConsoleData consoleData = new ConsoleData();
+    public static WelcomeInfo create(Long publishTotal, Long readTotal, Long commentTotal, Long todayPublishTotal, Long userCount) {
+        WelcomeInfo consoleData = new WelcomeInfo();
         consoleData.setCommentTotal(commentTotal);
         consoleData.setPublishTotal(publishTotal);
         consoleData.setReadTotal(readTotal);

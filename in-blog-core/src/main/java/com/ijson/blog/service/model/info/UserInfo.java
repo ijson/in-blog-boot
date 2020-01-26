@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import com.ijson.blog.dao.entity.UserEntity;
 import lombok.Getter;

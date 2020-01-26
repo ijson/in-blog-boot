@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model;
+package com.ijson.blog.service.model.info;
 
 import com.ijson.blog.dao.entity.TopicEntity;
 import lombok.Data;
@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
  * Created by cuiyongxu on 2019/8/17 2:39 PM
  */
 @Data
-public class HotTopic {
+public class HotTopicInfo {
     private String id;
     private String topicName;
     private long count;
     private String ename;
     private String shamId;
 
-    public static List<HotTopic> getHotTopic(List<TopicEntity> topicEntities ){
+    public static List<HotTopicInfo> getHotTopic(List<TopicEntity> topicEntities ){
         return topicEntities.stream().map(key -> {
-            HotTopic hotTopic = new HotTopic();
+            HotTopicInfo hotTopic = new HotTopicInfo();
             hotTopic.setId(key.getId());
             hotTopic.setEname(key.getEname());
             hotTopic.setShamId(key.getShamId());
