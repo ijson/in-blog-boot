@@ -35,6 +35,11 @@
                     <form class="layui-form layui-form-pane" action="" id="editAuthForm">
                         <input type="hidden" name="id" id="id" value="${editData.id!}">
 
+                        <div class="layui-form-item">
+                            <input type="number" name="order" id="order" lay-verify="order" autocomplete="off"
+                                   placeholder="请输入排列顺序"
+                                   class="layui-input" value="${editData.order!}">
+                        </div>
 
                         <div class="layui-form-item">
                             <input type="text" name="ename" id="ename" lay-verify="ename" autocomplete="off"
@@ -99,6 +104,11 @@
 
         //自定义验证规则
         form.verify({
+            order: function (value) {
+                if (value === undefined || value === '' || value.length === 0) {
+                    return '排列顺序不能为空';
+                }
+            },
             ename: function (value) {
                 if (value === undefined || value === '' || value.length === 0) {
                     return '英文标识不能为空';

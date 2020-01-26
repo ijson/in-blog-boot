@@ -52,6 +52,7 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
             operations.set(AuthEntity.Fields.menuType, entity.getMenuType());
         }
 
+        operations.set(AuthEntity.Fields.order, entity.getOrder());
         operations.set(AuthEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, operations);
     }

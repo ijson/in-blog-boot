@@ -38,6 +38,9 @@ public class AuthEntity extends BaseEntity {
     @Property(Fields.menuType)
     private Constant.MenuType menuType;
 
+    @Property(Fields.order)
+    private int order;
+
     @Property(Fields.enable)
     private boolean enable;
 
@@ -59,6 +62,7 @@ public class AuthEntity extends BaseEntity {
         String ename = "ename";
         String path = "path";
         String menuType = "menuType";
+        String order = "order";
         String enable = "enable";
         String fatherId = "fatherId";
         String createdBy = "createdBy";

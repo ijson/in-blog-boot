@@ -28,6 +28,8 @@ public class AuthInfo {
 
     private String fatherId;
 
+    private int order;
+
     private Constant.MenuType menuType;
 
     public static List<AuthInfo> createAuthList(List<AuthEntity> dataList) {
@@ -47,6 +49,7 @@ public class AuthInfo {
         info.setPath(entity.getPath());
         info.setFatherId(entity.getFatherId());
         info.setMenuType(entity.getMenuType());
+        info.setOrder(entity.getOrder());
         return info;
     }
 }
