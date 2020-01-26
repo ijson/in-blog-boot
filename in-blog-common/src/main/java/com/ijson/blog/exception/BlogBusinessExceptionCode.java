@@ -50,7 +50,11 @@ public enum BlogBusinessExceptionCode {
     WEBSITE_NAME_CANNOT_BE_EMPTY(200_000_037, "网站名称不能为空"),
     REG_ROLE_CANNOT_BE_EMPTY(200_000_038, "注册角色不能为空"),
     BLOGROLL_DESC_CANNOT_BE_EMPTY(200_000_039, "友情链接描述不能为空"),
-    BLOGROLL_LINK_CANNOT_BE_EMPTY(200_000_040, "友情链接地址不能为空");
+    BLOGROLL_LINK_CANNOT_BE_EMPTY(200_000_040, "友情链接地址不能为空"),
+    AUTH_ORDER_CANNOT_BE_EMPTY(200_000_041, "权限排列顺序不能为空"),
+    AUTH_ENAME_CANNOT_BE_EMPTY(200_000_042, "权限英文标识不能为空"),
+    AUTH_CNAME_CANNOT_BE_EMPTY(200_000_043, "权限中文标识不能为空"),
+    AUTH_LINK_CANNOT_BE_EMPTY(200_000_044, "权限地址不能为空");
 
     private int code;
     private String message;

@@ -42,6 +42,22 @@ public class AuthAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
 
+        if (Objects.isNull(myEntity.getOrder())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_ORDER_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getEname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_ENAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getCname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_CNAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getPath())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_LINK_CANNOT_BE_EMPTY);
+        }
+
         if (Strings.isNullOrEmpty(myEntity.getId())) {
             return createAuth(request, myEntity);
         }

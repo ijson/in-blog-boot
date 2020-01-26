@@ -39,7 +39,7 @@ public class AuthEntity extends BaseEntity {
     private Constant.MenuType menuType;
 
     @Property(Fields.order)
-    private int order;
+    private Integer order;
 
     @Property(Fields.enable)
     private boolean enable;
