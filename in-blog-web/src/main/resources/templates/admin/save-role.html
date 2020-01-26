@@ -53,7 +53,7 @@
                             <label class="layui-form-label">
                                 拥有权限
                             </label>
-                            <table  class="layui-table layui-input-block">
+                            <table class="layui-table layui-input-block">
                                 <tbody>
 
                                 <!--
@@ -64,30 +64,30 @@
                                 -->
 
                                 <%for(entry in auths){
-                                    var key = entry.key;
-                                    var value = entry.value;
+                                var key = entry.key;
+                                var value = entry.value;
                                 %>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="${key.authId}"  lay-skin="primary" lay-filter="authKey" title="${key.authCname}">
-                                        </td>
-                                        <td>
-                                            <div class="layui-input-block">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="${key.authId}" lay-skin="primary"
+                                               lay-filter="authKey" title="${key.authCname}">
+                                    </td>
+                                    <td>
+                                        <div class="layui-input-block">
 
-                                                <% for(data in value){ %>
-                                                    <input  type="checkbox" name="${data.id}" lay-skin="primary" lay-filter="authKey" title="${data.cname}(${data.menuType})">
-                                                <%}%>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            <% for(data in value){ %>
+                                            <input type="checkbox" name="${data.id}" lay-skin="primary"
+                                                   lay-filter="authKey" title="${data.cname}(${data.menuType})">
+                                            <%}%>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 <%}%>
 
                                 </tbody>
                             </table>
                         </div>
-
-                        
 
 
                         <div class="layui-form-item">
@@ -124,8 +124,10 @@
 
         });
 
+
         //监听提交
         form.on('submit(save)', function (data) {
+            data.field.keys= Object.keys(data.field);
             $.ajax({
                 cache: false,
                 type: "POST",

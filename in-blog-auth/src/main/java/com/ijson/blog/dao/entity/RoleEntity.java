@@ -55,6 +55,9 @@ public class RoleEntity extends BaseEntity {
     private long lastModifiedTime;
 
 
+    private volatile List<String> keys;
+
+
     public interface Fields {
         String id = "_id";
         String cname = "cname";

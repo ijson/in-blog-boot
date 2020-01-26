@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -38,6 +39,14 @@ public class RoleAction extends BaseController {
         if (Objects.isNull(context)) {
             log.info("未获取到当前登入人用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+
+        List<String> keys = myEntity.getKeys();
+        List<String> authKeys;
+        if (CollectionUtils.isNotEmpty(keys)) {
+            authKeys = keys.stream().filter(k -> k.length() > 20).collect(Collectors.toList());
+            myEntity.setAuthIds(authKeys);
+            myEntity.setKeys(null);
         }
 
         if (Strings.isNullOrEmpty(myEntity.getId())) {
