@@ -3,7 +3,6 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.query.RoleQuery;
@@ -11,6 +10,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.RoleInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -42,16 +42,28 @@ public class RoleAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
 
+        if (Strings.isNullOrEmpty(myEntity.getEname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_ENAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getCname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_CNAME_CANNOT_BE_EMPTY);
+        }
+
+
         List<String> keys = myEntity.getKeys();
         List<String> authKeys;
         if (CollectionUtils.isNotEmpty(keys)) {
             authKeys = keys.stream().filter(k -> k.length() > 20).collect(Collectors.toList());
+            if (CollectionUtils.isEmpty(authKeys)) {
+                throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_AUTH_CANNOT_BE_EMPTY);
+            }
             myEntity.setAuthIds(authKeys);
             myEntity.setKeys(null);
         }
 
         if (Strings.isNullOrEmpty(myEntity.getId())) {
-            return create(request, myEntity);
+            return create(context, myEntity);
         }
 
         RoleEntity entity = roleService.findInternalById(myEntity.getId());
@@ -65,11 +77,10 @@ public class RoleAction extends BaseController {
         return Result.ok("更新成功!");
     }
 
-    private Result create(HttpServletRequest request, RoleEntity myEntity) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+    private Result create(AuthContext context, RoleEntity myEntity) {
+        RoleEntity byEname = roleService.findByEname(myEntity.getEname());
+        if (Objects.nonNull(byEname)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_ENAME_ALREADY_EXIST);
         }
         roleService.create(context, myEntity);
         return Result.ok("创建成功!");
