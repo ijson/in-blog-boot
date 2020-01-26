@@ -72,24 +72,4 @@ public class RoleEntity extends BaseEntity {
         String lastModifiedTime = "lastModifiedTime";
 
     }
-
-
-    public static RoleEntity create(AuthContext authContext,
-                                    String cname,
-                                    String ename,
-                                    String remark,
-                                    String status,
-                                    List<Permission> permission,
-                                    List<String> userIds) {
-        RoleEntity entity = new RoleEntity();
-        entity.setCname(cname);
-        entity.setEname(ename);
-        entity.setCreatedBy(authContext.getId());
-        entity.setCreateTime(System.currentTimeMillis());
-        entity.setEnable(true);
-        entity.setLastModifiedBy(authContext.getId());
-        entity.setLastModifiedTime(System.currentTimeMillis());
-        entity.setUserIds(userIds);
-        return entity;
-    }
 }

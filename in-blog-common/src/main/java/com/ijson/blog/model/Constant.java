@@ -11,9 +11,7 @@ public interface Constant {
     String defaultTopicId = "defaultTopicId";
     String loginUserCacheKey = "loginUser";
     String remember = "remember";
-    String WEB_SITE_COUNT = "web_site_count";
     String UnknownUser = "未知用户";
-    String UnknownRole = "未知角色";
 
     enum ConfigType {
         site("网站设置"),
