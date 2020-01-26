@@ -224,9 +224,9 @@ public class ConsoleAction extends BaseController {
     }
 
 
-    @RequestMapping("/settings/user")
+    @RequestMapping("/settings/personal")
     public ModelAndView userSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/settings-user.html");
+        ModelAndView view = new ModelAndView("admin/settings-personal.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
