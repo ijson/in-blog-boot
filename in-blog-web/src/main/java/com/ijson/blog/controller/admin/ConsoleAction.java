@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin")
 public class ConsoleAction extends BaseController {
 
-    @RequestMapping("/v2/console/page")
+    @RequestMapping("/console/page")
     public ModelAndView indexv2() {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/index.html");
