@@ -27,6 +27,8 @@ public class RoleInfo {
 
     private Boolean enable;
 
+    private Boolean verify;
+
     public static List<RoleInfo> createList(List<RoleEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();
@@ -43,6 +45,7 @@ public class RoleInfo {
         info.setEname(entity.getEname());
         info.setAuthIds(entity.getAuthIds());
         info.setUserIds(entity.getUserIds());
+        info.setVerify(entity.getVerify());
         return info;
     }
 }

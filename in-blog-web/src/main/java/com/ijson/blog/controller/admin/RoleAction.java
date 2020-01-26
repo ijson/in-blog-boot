@@ -72,7 +72,7 @@ public class RoleAction extends BaseController {
         entity.setEname(myEntity.getEname());
         entity.setUserIds(myEntity.getUserIds());
         entity.setAuthIds(myEntity.getAuthIds());
-
+        entity.setVerify(myEntity.getVerify());
         roleService.edit(context, entity);
         return Result.ok("更新成功!");
     }

@@ -49,6 +49,18 @@
                                    class="layui-input" value="${editData.cname!}">
                         </div>
 
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-left: 0;">
+                                <label class="layui-form-label" style="width: 130px;">发表文章需审核</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="verify" id="verify" lay-skin="switch"
+                                           lay-filter="verify" lay-text="ON|OFF"
+                                    <%if(editData!=null && editData.verify==true){%> checked <% }%> >
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">
                                 拥有权限
@@ -69,15 +81,19 @@
                                 %>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" name="${key.authId}" lay-skin="primary" <%if(key.disabled){%>disabled <%}%>
-                                               lay-filter="authKey" title="${key.authCname}"  <%if(key.checked){%>checked <%}%>  >
+                                        <input type="checkbox" name="${key.authId}" lay-skin="primary"
+                                        <%if(key.disabled){%>disabled <%}%>
+                                        lay-filter="authKey" title="${key.authCname}" <%if(key.checked){%>checked <%}%>
+                                        >
                                     </td>
                                     <td>
                                         <div class="layui-input-block">
 
                                             <% for(data in value){ %>
-                                            <input type="checkbox" name="${data.id}" lay-skin="primary" <%if(key.disabled){%>disabled <%}%>
-                                                   lay-filter="authKey" title="${data.cname}(${data.menuType})" <%if(data.checked){%>checked <%}%>>
+                                            <input type="checkbox" name="${data.id}" lay-skin="primary"
+                                            <%if(key.disabled){%>disabled <%}%>
+                                            lay-filter="authKey" title="${data.cname}(${data.menuType})"
+                                            <%if(data.checked){%>checked <%}%>>
                                             <%}%>
                                         </div>
                                     </td>
@@ -127,7 +143,14 @@
 
         //监听提交
         form.on('submit(save)', function (data) {
-            data.field.keys= Object.keys(data.field);
+            data.field.keys = Object.keys(data.field);
+
+            if (data.field.verify === 'on') {
+                data.field.verify = true;
+            } else {
+                data.field.verify = false;
+            }
+
             $.ajax({
                 cache: false,
                 type: "POST",

@@ -1,7 +1,5 @@
 package com.ijson.blog.dao.entity;
 
-import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.model.Permission;
 import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -54,6 +52,9 @@ public class RoleEntity extends BaseEntity {
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
 
+    @Property(Fields.verify)
+    private Boolean verify;
+
 
     private volatile List<String> keys;
 
@@ -64,6 +65,7 @@ public class RoleEntity extends BaseEntity {
         String ename = "ename";
         String userIds = "userIds";
         String authIds = "authIds";
+        String verify = "verify";
 
         String enable = "enable";
         String createdBy = "createdBy";
