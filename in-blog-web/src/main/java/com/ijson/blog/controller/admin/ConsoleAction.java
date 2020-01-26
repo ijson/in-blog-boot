@@ -139,7 +139,7 @@ public class ConsoleAction extends BaseController {
      *
      * @return
      */
-    @RequestMapping("/edit/v2/{ename}/{shamId}/page")
+    @RequestMapping("/edit/article/{ename}/{shamId}")
     public ModelAndView skipV2Edit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
         ModelAndView view = new ModelAndView();
@@ -150,7 +150,7 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-    @RequestMapping("/edit/user/{id}/page")
+    @RequestMapping("/edit/user/{id}")
     public ModelAndView skipUserEdit(@PathVariable("id") String id) {
         UserEntity internalById = userService.findInternalById(id);
         ModelAndView view = new ModelAndView();
@@ -167,7 +167,7 @@ public class ConsoleAction extends BaseController {
     }
 
 
-    @RequestMapping("/edit/blogroll/{id}/page")
+    @RequestMapping("/edit/blogroll/{id}")
     public ModelAndView skipBlogrollEdit(@PathVariable("id") String id) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-blogroll.html");
@@ -177,7 +177,7 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-    @RequestMapping("/edit/auth/{id}/page")
+    @RequestMapping("/edit/auth/{id}")
     public ModelAndView skipAuthEdit(@PathVariable("id") String id) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-auth.html");
@@ -190,7 +190,7 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-    @RequestMapping("/edit/role/{id}/page")
+    @RequestMapping("/edit/role/{id}")
     public ModelAndView skipRoleEdit(@PathVariable("id") String id) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-role.html");
@@ -210,7 +210,7 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-    @RequestMapping("/draft/v2/edit/{ename}/{shamId}/page")
+    @RequestMapping("/edit/draft/{ename}/{shamId}")
     public ModelAndView skipV2PostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         PostDraftEntity entity = postDraftService.find(ename, shamId);
         ModelAndView view = new ModelAndView();
