@@ -127,6 +127,15 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/add/role")
+    public ModelAndView skipRoleAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-role.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
     @RequestMapping("/edit/blogroll/{id}/page")
     public ModelAndView skipBlogrollEdit(@PathVariable("id") String id) {
         ModelAndView view = new ModelAndView();
@@ -144,6 +153,16 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         AuthEntity internalById = authService.findInternalById(id);
         view.addObject("editData", AuthInfo.create(internalById));
+        return view;
+    }
+
+    @RequestMapping("/edit/role/{id}/page")
+    public ModelAndView skipRoleEdit(@PathVariable("id") String id) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-role.html");
+        addAdminModelAndView(view);
+        RoleEntity internalById = roleService.findInternalById(id);
+        view.addObject("editData", RoleInfo.create(internalById));
         return view;
     }
 

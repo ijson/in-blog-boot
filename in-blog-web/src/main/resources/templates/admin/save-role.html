@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Layui</title>
+    <title>添加角色</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -20,14 +20,6 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
-    <script src="https://cdn.bootcss.com/ckeditor/4.12.1/ckeditor.js"></script>
-    <script src="https://cdn.bootcss.com/ckeditor/4.12.1/plugins/codesnippet/dialogs/codesnippet.js"></script>
-    <script src="https://cdn.bootcss.com/ckeditor/4.12.1/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
-    <script src="/js/bootstrap3-wysihtml5.all.min.js"></script>
-
-
 </head>
 <body>
 <div class="layui-fluid">
@@ -36,41 +28,34 @@
             <div class="layui-card">
                 <div class="layui-card-body ">
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                        <legend>新建/编辑 角色</legend>
+                        <legend>添加角色</legend>
                     </fieldset>
                 </div>
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-form-pane" action="" id="editPostForm">
+                    <form class="layui-form layui-form-pane" action="" id="editForm">
                         <input type="hidden" name="id" id="id" value="${editData.id!}">
-                        <input type="hidden" name="shamId" id="shamId" value="${editData.shamId!}">
-                        <input type="hidden" name="ename" id="ename" value="${editData.ename!}">
+
 
                         <div class="layui-form-item">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题"
-                                   class="layui-input" value="${editData.title!}">
+                            <input type="text" name="ename" id="ename" lay-verify="ename" autocomplete="off"
+                                   placeholder="请输入英文标识"
+                                   class="layui-input" value="${editData.ename!}">
                         </div>
 
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">博文内容</label>
-                            <textarea id="content" name="content" rows="10" cols="80"
-                                      required="required"
-                                      placeholder="请填写文章内容">${editData.content!}</textarea>
+
+                        <div class="layui-form-item">
+                            <input type="text" name="cname" id="cname" lay-verify="cname" autocomplete="off"
+                                   placeholder="请输入中文描述"
+                                   class="layui-input" value="${editData.cname!}">
                         </div>
 
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">标签</label>
-                            <input type="text" class="form-control tags" lay-verify="topicName" id="topicName"
-                                   name="topicName"
-                                   value="${editData.topicName!}" required="required" placeholder="请填写或选择标签,目前只支持单标签">
-                        </div>
+                        
+
 
                         <div class="layui-form-item">
                             <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存
                             </button>
-                            <button type="submit" class="layui-btn layui-btn-warm" lay-submit lay-filter="drift">保存草稿
-                            </button>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -88,39 +73,27 @@
 
         //自定义验证规则
         form.verify({
-            title: function (value) {
+            ename: function (value) {
                 if (value === undefined || value === '' || value.length === 0) {
-                    return '标题不能为空';
+                    return '英文标识不能为空';
+                }
+            },
+            cname: function (value) {
+                if (value === undefined || value === '' || value.length === 0) {
+                    return '中文描述不能为空';
                 }
             }
+
         });
 
         //监听提交
         form.on('submit(save)', function (data) {
-            var editor_data = CKEDITOR.instances.content.getData();
-
-            if (editor_data === undefined || editor_data === '') {
-                layer.msg("请填写文章内容", function () {
-                });
-                return;
-            }
-
-            data.field.content = editor_data;
-
-            var lastData = data.field;
-
-            if (lastData.topicName === undefined || lastData.topicName === '') {
-                layer.msg("请填写文章标签", function () {
-                });
-                return;
-            }
-
             $.ajax({
                 cache: false,
                 type: "POST",
                 contentType: 'application/json',
-                url: "/post/create",
-                data: JSON.stringify(lastData),
+                url: "/rule/addup",
+                data: JSON.stringify(data.field),
                 async: false,
                 success: function (data) {
                     if (data.code === 0) {
@@ -129,15 +102,12 @@
                         });
 
                         self.setInterval(function () {
-                            $("#editPostForm")[0].reset();
+                            $("#editForm")[0].reset();
                             layui.form.render();
-                            $("#title").val('');
-                            $("#id").val('');
-                            $("#topicName_tagsinput span").remove();
-
-                            CKEDITOR.instances.content.setData("");
+                            $("#cname").val('');
+                            $("#ename").val('');
                             try {
-                                parent.layui.table.reload('postList');
+                                parent.layui.table.reload('roleList');
                             } catch (err) {
                             }
                             var index = parent.layer.getFrameIndex(window.name);
@@ -157,105 +127,8 @@
 
             return false;
         });
-
-        form.on('submit(drift)', function (data) {
-            var editor_data = CKEDITOR.instances.content.getData();
-
-            if (editor_data === undefined || editor_data === '') {
-                layer.msg("请填写文章内容", function () {
-                });
-                return;
-            }
-
-            data.field.content = editor_data;
-
-            var lastData = data.field;
-
-
-            $.ajax({
-                cache: false,
-                type: "POST",
-                contentType: 'application/json',
-                url: "/draft/create",
-                data: JSON.stringify(lastData),
-                async: false,
-                success: function (data) {
-                    if (data.code === 0) {
-                        layer.msg(data.message, {
-                            time: 2000
-                        });
-
-                        self.setInterval(function () {
-                            $("#editPostForm")[0].reset();
-                            layui.form.render();
-                            $("#title").val('');
-                            $("#id").val('');
-                            $("#topicName_tagsinput span").remove();
-
-                            CKEDITOR.instances.content.setData("");
-                            try {
-                                parent.layui.table.reload('postList');
-                            } catch (err) {
-                            }
-                            var index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                        }, 2000);
-
-
-                    } else {
-                        layer.msg(data.message);
-
-                    }
-                },
-                error: function (data) {
-                    layer.msg(data.message);
-                }
-            });
-
-            return false;
-        });
-
-
-        form.on('checkbox(father)', function (data) {
-
-            if (data.elem.checked) {
-                $(data.elem).parent().siblings('td').find('input').prop("checked", true);
-                form.render();
-            } else {
-                $(data.elem).parent().siblings('td').find('input').prop("checked", false);
-                form.render();
-            }
-        });
-
-
     });
 </script>
 
-<script>
-    $(function () {
-        CKEDITOR.replace('content', {
-            language: 'zh-cn',
-            height: 500,
-            pasteFromWordRemoveFontStyles: false,
-            pasteFromWordRemoveStyles: false,
-            forcePasteAsPlainText: false,
-            extraPlugins: 'codesnippet,colorbutton,font,image2,tableresize,uploadfile,find,preview,notification,sharedspace',
-            codeSnippet_theme: 'monokai_sublime',
-            filebrowserUploadUrl: "/post/upload?type=file",
-            filebrowserBrowseUrl: "/post/file/browse?type=file",
-            filebrowserImageUploadUrl: '/post/upload?type=images',
-            filebrowserImageBrowseUrl: '/post/file/browse?type=images',
-            rememberLastFolder: false
-        });
-        $('.textarea').wysihtml5()
-
-
-        $('#topicName').tagsInput({
-            width: 'auto',
-            inputPadding: 100,
-            defaultText: '回车确认'
-        });
-    })
-</script>
 </body>
 </html>
