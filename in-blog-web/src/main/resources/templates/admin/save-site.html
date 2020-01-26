@@ -68,6 +68,7 @@
 
                                             <%if(isNotEmpty(roles)){%>
                                             <select name="regRoleId">
+                                                <option value="">-请选择-</option>
                                                 <% for(data in roles){ %>
 
                                                 <%if(data.id==site.regRoleId){%>

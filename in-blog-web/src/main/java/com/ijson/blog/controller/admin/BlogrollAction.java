@@ -3,14 +3,14 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.BlogrollEntity;
 import com.ijson.blog.dao.query.BlogrollQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.info.BlogrollInfo;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.V2Result;
+import com.ijson.blog.service.model.info.BlogrollInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +38,14 @@ public class BlogrollAction extends BaseController {
         if (Objects.isNull(context)) {
             log.info("添加友情链接异常,未获取到当前登入人用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getCname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.BLOGROLL_DESC_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getLink())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.BLOGROLL_LINK_CANNOT_BE_EMPTY);
         }
 
         if (Strings.isNullOrEmpty(myEntity.getId())) {

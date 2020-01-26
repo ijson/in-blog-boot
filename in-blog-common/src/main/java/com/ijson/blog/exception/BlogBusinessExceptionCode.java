@@ -48,7 +48,9 @@ public enum BlogBusinessExceptionCode {
     LABEL_CANNOT_BE_EMPTY(200_000_035, "标签不能为空"),
     ROLE_CANNOT_BE_EMPTY(200_000_036, "角色不能为空"),
     WEBSITE_NAME_CANNOT_BE_EMPTY(200_000_037, "网站名称不能为空"),
-    REG_ROLE_CANNOT_BE_EMPTY(200_000_038, "注册角色不能为空");
+    REG_ROLE_CANNOT_BE_EMPTY(200_000_038, "注册角色不能为空"),
+    BLOGROLL_DESC_CANNOT_BE_EMPTY(200_000_039, "友情链接描述不能为空"),
+    BLOGROLL_LINK_CANNOT_BE_EMPTY(200_000_040, "友情链接地址不能为空");
 
     private int code;
     private String message;
