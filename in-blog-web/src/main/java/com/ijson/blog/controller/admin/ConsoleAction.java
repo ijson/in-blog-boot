@@ -221,6 +221,19 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/role/settings")
+    public ModelAndView roleSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/role-settings.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
 
     @RequestMapping("/user/settings")
     public ModelAndView userSettings(HttpServletRequest request) {
