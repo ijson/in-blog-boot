@@ -5,7 +5,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.annotation.DocDocument;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.FileUploadEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
@@ -13,10 +12,10 @@ import com.ijson.blog.dao.model.FileType;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
-import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.V2Result;
+import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.service.model.result.UploadResult;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.blog.util.Md5Util;
@@ -54,12 +53,6 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        if (!Strings.isNullOrEmpty(post.getId())) {
-            PostEntity postEntity = postService.findInternalById(post.getId());
-            if (Objects.nonNull(postEntity)) {
-                return updatePost(request, post, postEntity);
-            }
-        }
 
         if (Strings.isNullOrEmpty(post.getTitle())) {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
@@ -67,6 +60,18 @@ public class PostAction extends BaseController {
 
         if (Strings.isNullOrEmpty(post.getContent())) {
             throw new BlogCreateException(BlogBusinessExceptionCode.CONTEXT_NOT_SET);
+        }
+
+        if (Strings.isNullOrEmpty(post.getTopicName())) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.LABEL_CANNOT_BE_EMPTY);
+        }
+
+
+        if (!Strings.isNullOrEmpty(post.getId())) {
+            PostEntity postEntity = postService.findInternalById(post.getId());
+            if (Objects.nonNull(postEntity)) {
+                return updatePost(request, post, postEntity);
+            }
         }
 
         // 使用默认单例（加载默认词典）
@@ -79,9 +84,7 @@ public class PostAction extends BaseController {
 
         List<TopicEntity> topics = null;
         //存在tag 先保存tag,然后保存文章
-        if (!Strings.isNullOrEmpty(post.getTopicName())) {
-            topics = topicService.findTopicByTopicNameAndIncCount(post.getTopicName().trim(), context);
-        }
+        topics = topicService.findTopicByTopicNameAndIncCount(post.getTopicName().trim(), context);
 
         //topicEntitys有判空
         PostEntity entity = PostEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), topics, context.getEname());
@@ -93,19 +96,6 @@ public class PostAction extends BaseController {
 
     private Result updatePost(HttpServletRequest request, PostInfo post, PostEntity entity) {
         AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-        if (Strings.isNullOrEmpty(post.getId())) {
-            throw new BlogUpdateException(BlogBusinessExceptionCode.POST_UPDATE_ID_NOT_FOUND);
-        }
-        if (Strings.isNullOrEmpty(post.getTitle())) {
-            throw new BlogUpdateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
-        }
-
-        if (Strings.isNullOrEmpty(post.getContent())) {
-            throw new BlogUpdateException(BlogBusinessExceptionCode.CONTEXT_NOT_SET);
-        }
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
         List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));

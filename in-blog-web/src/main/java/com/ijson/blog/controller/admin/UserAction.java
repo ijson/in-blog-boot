@@ -3,7 +3,6 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
@@ -11,6 +10,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.UpdPasswordInfo;
 import com.ijson.blog.service.model.info.UserInfo;
 import com.ijson.blog.util.VerifyCodeUtils;
@@ -46,6 +46,18 @@ public class UserAction extends BaseController {
         if (Objects.isNull(context)) {
             log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+
+        if (Strings.isNullOrEmpty(myUser.getEname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_ENAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myUser.getCname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_CNAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myUser.getEmail())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_EMAIL_CANNOT_BE_EMPTY);
         }
 
         if (Strings.isNullOrEmpty(myUser.getId())) {
@@ -195,6 +207,10 @@ public class UserAction extends BaseController {
         Result result = VerifyCodeUtils.validImage(updPassword.getPwdVerCode(), verCode, request, session, updPwdCodeKey, updPwdCodeTime);
         if (result.getCode() != 0) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.CAPTCHA_ERROR_OR_NOT_PRESENT, result.getMessage());
+        }
+
+        if (Strings.isNullOrEmpty(updPassword.getEname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_ENAME_CANNOT_BE_EMPTY);
         }
 
         if (Strings.isNullOrEmpty(updPassword.getOldPassword())) {

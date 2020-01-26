@@ -109,7 +109,7 @@
             overflowToDisk="false"
             diskPersistent="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="3600"
+            timeToLiveSeconds="1800"
             memoryStoreEvictionPolicy="LRU"/>
 
 

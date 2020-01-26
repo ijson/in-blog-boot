@@ -293,6 +293,14 @@
 
         //修改密码监听
         form.on('submit(saveFieldShow)', function (data) {
+
+            if (!data.field.ename) {
+                layer.msg("用户名不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
             if (!data.field.oldPassword) {
                 layer.msg("旧密码不能为空", {
                     time: 2000
@@ -351,6 +359,27 @@
 
         //博主信息监听
         form.on('submit(saveUserInfo)', function (data) {
+
+            if (!data.field.ename) {
+                layer.msg("用户名不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!data.field.cname) {
+                layer.msg("昵称不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!data.field.email) {
+                layer.msg("邮箱不能为空", {
+                    time: 2000
+                });
+                return;
+            }
             $.ajax({
                 cache: false,
                 type: "POST",
