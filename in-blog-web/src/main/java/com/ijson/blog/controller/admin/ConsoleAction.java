@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -203,9 +202,9 @@ public class ConsoleAction extends BaseController {
             disabled = true;
         }
         if (CollectionUtils.isEmpty(authIds)) {
-            view.addObject("auths",  AuthInfo.getAuthMap(authService.findAll(), Lists.newArrayList(), disabled));
+            view.addObject("auths", AuthInfo.getAuthMap(authService.findAll(), Lists.newArrayList(), disabled));
         } else {
-            view.addObject("auths",  AuthInfo.getAuthMap(authService.findAll(), authIds, disabled));
+            view.addObject("auths", AuthInfo.getAuthMap(authService.findAll(), authIds, disabled));
         }
         view.addObject("editData", RoleInfo.create(internalById));
         return view;
@@ -225,7 +224,7 @@ public class ConsoleAction extends BaseController {
     }
 
 
-    @RequestMapping("/user/settings")
+    @RequestMapping("/settings/user")
     public ModelAndView userSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/settings-user.html");
 
