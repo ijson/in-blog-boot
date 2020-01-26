@@ -1,5 +1,6 @@
 package com.ijson.blog.controller.admin;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.controller.admin.model.AuthKey;
@@ -145,22 +146,26 @@ public class ConsoleAction extends BaseController {
         if (CollectionUtils.isEmpty(allAuth)) {
             view.addObject("auths", Maps.newHashMap());
         } else {
-
-            List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
-                return k.getFatherId().equals("0");
-            }).collect(Collectors.toList());
-
-            Map<AuthKey, List<AuthInfo>> auths = fatherEntity.stream().collect(Collectors.toMap(key -> {
-                return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath());
-            }, value -> {
-                return allAuth.stream().filter(vs -> {
-                    return vs.getFatherId().equals(value.getId());
-                }).collect(Collectors.toList()).stream().map(AuthInfo::create).collect(Collectors.toList());
-            }));
-            view.addObject("auths", auths);
+            view.addObject("auths", getAuthMap(allAuth, Lists.newArrayList()));
         }
         view.addObject("editData", null);
         return view;
+    }
+
+    public Map<AuthKey, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds) {
+        List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
+            return k.getFatherId().equals("0");
+        }).collect(Collectors.toList());
+
+        return fatherEntity.stream().collect(Collectors.toMap(key -> {
+            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()));
+        }, value -> {
+            return allAuth.stream().filter(vs -> {
+                return vs.getFatherId().equals(value.getId());
+            }).collect(Collectors.toList()).stream().map(k -> {
+                return AuthInfo.create(k, authIds.contains(k.getId()));
+            }).collect(Collectors.toList());
+        }));
     }
 
     @RequestMapping("/edit/blogroll/{id}/page")
@@ -192,7 +197,12 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/save-role.html");
         addAdminModelAndView(view);
         RoleEntity internalById = roleService.findInternalById(id);
-        view.addObject("auths", Maps.newHashMap());
+        List<String> authIds = internalById.getAuthIds();
+        if (CollectionUtils.isEmpty(authIds)) {
+            view.addObject("auths", getAuthMap(authService.findAll(), Lists.newArrayList()));
+        } else {
+            view.addObject("auths", getAuthMap(authService.findAll(), authIds));
+        }
         view.addObject("editData", RoleInfo.create(internalById));
         return view;
     }

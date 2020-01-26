@@ -32,6 +32,8 @@ public class AuthInfo {
 
     private Constant.MenuType menuType;
 
+    private boolean checked;
+
     public static List<AuthInfo> createAuthList(List<AuthEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();
@@ -41,6 +43,10 @@ public class AuthInfo {
 
 
     public static AuthInfo create(AuthEntity entity) {
+        return create(entity, false);
+    }
+
+    public static AuthInfo create(AuthEntity entity, boolean checked) {
         AuthInfo info = new AuthInfo();
         info.setCname(entity.getCname());
         info.setEnable(entity.isEnable());
@@ -50,6 +56,7 @@ public class AuthInfo {
         info.setFatherId(entity.getFatherId());
         info.setMenuType(entity.getMenuType());
         info.setOrder(entity.getOrder());
+        info.setChecked(checked);
         return info;
     }
 }

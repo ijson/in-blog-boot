@@ -13,14 +13,16 @@ public class AuthKey {
     private String authEname;
     private String authCname;
     private String path;
+    private boolean checked;
 
     public AuthKey() {
     }
 
-    public AuthKey(String authId, String authEname, String authCname, String path) {
+    public AuthKey(String authId, String authEname, String authCname, String path,boolean checked) {
         this.authId = authId;
         this.authEname = authEname;
         this.authCname = authCname;
         this.path = path;
+        this.checked = checked;
     }
 }
