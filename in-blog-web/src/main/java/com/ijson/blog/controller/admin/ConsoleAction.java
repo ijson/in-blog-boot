@@ -65,7 +65,7 @@ public class ConsoleAction extends BaseController {
     @RequestMapping("/v2/post/list/page")
     public ModelAndView postV2List() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("admin/article-list.html");
+        view.setViewName("admin/list-article.html");
         addAdminModelAndView(view);
         return view;
     }
@@ -74,7 +74,7 @@ public class ConsoleAction extends BaseController {
     @RequestMapping("/v2/draft/list/page")
     public ModelAndView postDriftV2List() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("admin/article-draft-list.html");
+        view.setViewName("admin/list-article-draft.html");
         addAdminModelAndView(view);
         return view;
     }
@@ -240,7 +240,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/site/settings")
     public ModelAndView siteSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/site-settings.html");
+        ModelAndView view = new ModelAndView("admin/save-site.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
@@ -261,7 +261,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/blogroll/settings")
     public ModelAndView blogrollSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/blogroll-settings.html");
+        ModelAndView view = new ModelAndView("admin/list-blogroll.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
@@ -274,7 +274,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/auth/settings")
     public ModelAndView authSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/auth-settings.html");
+        ModelAndView view = new ModelAndView("admin/list-auth.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
@@ -287,7 +287,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/role/settings")
     public ModelAndView roleSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/role-settings.html");
+        ModelAndView view = new ModelAndView("admin/list-role.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
@@ -301,7 +301,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/user/settings")
     public ModelAndView userSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/user-settings.html");
+        ModelAndView view = new ModelAndView("admin/settings-user.html");
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
@@ -316,7 +316,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/user/list/page")
     public ModelAndView userList(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/user-list.html");
+        ModelAndView view = new ModelAndView("admin/list-user.html");
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
         if (Objects.isNull(context)) {
@@ -329,7 +329,7 @@ public class ConsoleAction extends BaseController {
 
     @RequestMapping("/user/delete/list/page")
     public ModelAndView userDelList(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/user-del-list.html");
+        ModelAndView view = new ModelAndView("admin/list-user-del.html");
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
         if (Objects.isNull(context)) {
