@@ -33,6 +33,7 @@ public class WebSiteServiceImpl implements WebSiteService {
             entity = new ConfigEntity();
             entity.setType(Constant.ConfigType.site);
         }
+        entity.setRegRoleId(post.getRegRoleId());
         entity.setSiteName(post.getSiteName());
         return configDao.updateWebSite(entity);
     }
@@ -106,6 +107,7 @@ public class WebSiteServiceImpl implements WebSiteService {
 
             if (k.getType() == Constant.ConfigType.site) {
                 entity.setSiteName(k.getSiteName());
+                entity.setRegRoleId(k.getRegRoleId());
             }
 
 

@@ -11,4 +11,6 @@ import lombok.Data;
 public class WebSite {
 
     private String siteName;
+
+    private String regRoleId;
 }

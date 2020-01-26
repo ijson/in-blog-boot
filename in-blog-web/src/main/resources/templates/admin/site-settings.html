@@ -61,12 +61,24 @@
                                     </div>
 
                                     <div class="layui-form-item">
-                                        <label for="regRole" class="layui-form-label" style="width:140px;">注册用户角色</label>
+                                        <label for="regRoleId" class="layui-form-label" style="width:140px;">注册用户角色</label>
                                         <div class="layui-input-inline">
-                                            <select name="regRole">
-                                                <option value="menu">menu</option>
-                                                <option value="action">action</option>
-                                            </select>
+
+
+                                            <%if(isNotEmpty(roles)){%>
+                                                <select name="regRoleId">
+                                                    <% for(data in roles){ %>
+
+                                                        <%if(data.id==site.regRoleId){%>
+                                                            <option value="${data.id}" selected>${data.cname}</option>
+                                                        <%}else{%>
+                                                            <option value="${data.id}">${data.cname}</option>
+                                                        <%}%>
+
+                                                    <%} %>
+                                                </select>
+                                            <%}%>
+
                                         </div>
                                     </div>
 

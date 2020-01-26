@@ -158,12 +158,12 @@ public class ConsoleAction extends BaseController {
         }).collect(Collectors.toList());
 
         return fatherEntity.stream().collect(Collectors.toMap(key -> {
-            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()),disabled);
+            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
         }, value -> {
             return allAuth.stream().filter(vs -> {
                 return vs.getFatherId().equals(value.getId());
             }).collect(Collectors.toList()).stream().map(k -> {
-                return AuthInfo.create(k, authIds.contains(k.getId()),disabled);
+                return AuthInfo.create(k, authIds.contains(k.getId()), disabled);
             }).collect(Collectors.toList());
         }));
     }
@@ -235,6 +235,12 @@ public class ConsoleAction extends BaseController {
             return new ModelAndView(new RedirectView(webCtx));
         }
 
+        List<RoleEntity> roleAll = roleService.findAll();
+        if (CollectionUtils.isEmpty(roleAll)) {
+            view.addObject("roles", Lists.newArrayList());
+        } else {
+            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
+        }
         view.addObject("site", getConfig());
         addAdminModelAndView(view);
         return view;

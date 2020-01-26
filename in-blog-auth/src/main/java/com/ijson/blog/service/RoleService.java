@@ -30,4 +30,6 @@ public interface RoleService {
     PageResult<RoleEntity> find(RoleQuery query, Page pageEntity);
 
     List<RoleEntity> findByIds(List<String> ids);
+
+    List<RoleEntity> findAll();
 }

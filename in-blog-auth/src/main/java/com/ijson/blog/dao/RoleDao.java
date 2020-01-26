@@ -29,4 +29,6 @@ public interface RoleDao {
     PageResult<RoleEntity> find(RoleQuery iquery, Page page);
 
     List<RoleEntity> findByIds(List<String> ids);
+
+    List<RoleEntity> findAll();
 }

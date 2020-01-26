@@ -137,4 +137,11 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
         return query.asList();
     }
 
+    @Override
+    public List<RoleEntity> findAll() {
+        Query<RoleEntity> query = datastore.createQuery(RoleEntity.class);
+        query.field(RoleEntity.Fields.enable).equal(true);
+        return query.asList();
+    }
+
 }

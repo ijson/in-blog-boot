@@ -49,6 +49,9 @@ public class ConfigEntity {
     @Property(Fields.showAdminFields)
     private List<String> showAdminFields;
 
+    @Property(Fields.regRoleId)
+    private String regRoleId;
+
 //    @Property(Fields.ename)
 //    private String ename;
 //    @Property(Fields.cname)
@@ -83,6 +86,7 @@ public class ConfigEntity {
         String id = "_id";
         String type = "type";
         String siteName = "siteName";
+        String regRoleId = "regRoleId";
 
         String openReg = "openReg";
         String openCmt = "openCmt";
