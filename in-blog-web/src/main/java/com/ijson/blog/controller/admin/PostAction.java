@@ -5,7 +5,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.annotation.DocDocument;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.controller.admin.model.V2Result;
+import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.FileUploadEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;

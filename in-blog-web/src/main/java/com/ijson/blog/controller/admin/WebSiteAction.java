@@ -1,11 +1,11 @@
 package com.ijson.blog.controller.admin;
 
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.controller.admin.model.UpdPassword;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.info.UpdPasswordInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +59,7 @@ public class WebSiteAction extends BaseController {
 
 
     @PostMapping("/update/pwd")
-    public Result updatePwd(HttpServletRequest request, HttpSession session, @RequestBody UpdPassword updPassword) {
+    public Result updatePwd(HttpServletRequest request, HttpSession session, @RequestBody UpdPasswordInfo updPassword) {
         AuthContext context = getContext(request);
 
         return Result.ok("保存网站信息成功!");

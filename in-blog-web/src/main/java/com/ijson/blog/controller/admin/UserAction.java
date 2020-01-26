@@ -3,8 +3,7 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.controller.admin.model.UpdPassword;
-import com.ijson.blog.controller.admin.model.V2Result;
+import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
@@ -12,6 +11,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.info.UpdPasswordInfo;
 import com.ijson.blog.service.model.info.UserInfo;
 import com.ijson.blog.util.VerifyCodeUtils;
 import com.ijson.mongo.support.model.Page;
@@ -185,7 +185,7 @@ public class UserAction extends BaseController {
 
 
     @PostMapping(value = "/edit/password")
-    public Result editPassword(HttpServletRequest request, HttpSession session, @RequestBody UpdPassword updPassword) {
+    public Result editPassword(HttpServletRequest request, HttpSession session, @RequestBody UpdPasswordInfo updPassword) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             log.info("用户编辑用户信息时,未获取到当前登入人用户信息");

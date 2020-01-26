@@ -3,7 +3,7 @@ package com.ijson.blog.controller.admin;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.controller.admin.model.V2Result;
+import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;

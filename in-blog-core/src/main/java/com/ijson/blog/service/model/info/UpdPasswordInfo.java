@@ -1,14 +1,9 @@
-package com.ijson.blog.controller.admin.model;
+package com.ijson.blog.service.model.info;
 
 import lombok.Data;
 
-/**
- * desc:
- * version: 6.7
- * Created by cuiyongxu on 2019/12/15 7:55 PM
- */
 @Data
-public class UpdPassword {
+public class UpdPasswordInfo {
 
     private String id;
     private String ename;
