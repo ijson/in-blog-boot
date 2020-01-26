@@ -1,4 +1,4 @@
-package com.ijson.blog.controller.admin.model;
+package com.ijson.blog.service.model;
 
 import lombok.Data;
 

@@ -40,15 +40,15 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('创建文章','/admin/v2/article/add/page','','',true)">
+                    <a onclick="xadmin.open('创建文章','/admin/save/article','','',true)">
                         <i class="iconfont">&#xe6a2;</i>创建文章</a>
                 </dd>
                 <dd>
-                    <a onclick="xadmin.open('创建用户','/admin/add/user','','',true)">
+                    <a onclick="xadmin.open('创建用户','/admin/save/user','','',true)">
                         <i class="iconfont">&#xe6a2;</i>创建用户</a>
                 </dd>
                 <dd>
-                    <a onclick="xadmin.open('创建友链','/admin/add/blogroll','','',true)">
+                    <a onclick="xadmin.open('创建友链','/admin/save/blogroll','','',true)">
                         <i class="iconfont">&#xe6a2;</i>创建友链</a>
                 </dd>
             </dl>
@@ -83,19 +83,19 @@
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('新建/编辑文章','/admin/v2/article/add/page')">
+                        <a onclick="xadmin.add_tab('新建/编辑文章','/admin/save/article')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>新建/编辑文章</cite>
                         </a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('文章列表','/admin/v2/post/list/page',true)">
+                        <a onclick="xadmin.add_tab('文章列表','/admin/list/post',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>文章列表</cite>
                         </a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('草稿列表','/admin/v2/draft/list/page',true)">
+                        <a onclick="xadmin.add_tab('草稿列表','/admin/list/draft',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>草稿列表</cite>
                         </a>
@@ -128,12 +128,12 @@
                     <!--<cite>统计页面</cite></a>-->
                     <!--</li>-->
                     <li>
-                        <a onclick="xadmin.add_tab('会员列表','/admin/user/list/page',true)">
+                        <a onclick="xadmin.add_tab('会员列表','/admin/list/user',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>会员列表</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('删除会员列表','/admin/user/delete/list/page',true)">
+                        <a onclick="xadmin.add_tab('删除会员列表','/admin/list/user/delete',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>删除会员列表</cite></a>
                     </li>
@@ -148,22 +148,22 @@
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('网站设置','/admin/site/settings',true)">
+                        <a onclick="xadmin.add_tab('网站设置','/admin/save/site',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>网站设置</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('友情链接','/admin/blogroll/settings',true)">
+                        <a onclick="xadmin.add_tab('友情链接','/admin/list/blogroll',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>友情链接</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('权限管理','/admin/auth/settings',true)">
+                        <a onclick="xadmin.add_tab('权限管理','/admin/list/auth',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>权限管理</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('角色管理','/admin/role/settings',true)">
+                        <a onclick="xadmin.add_tab('角色管理','/admin/list/role',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>角色管理</cite></a>
                     </li>

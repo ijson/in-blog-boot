@@ -7,6 +7,7 @@ import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -45,10 +46,10 @@ public class AuthInfo {
 
 
     public static AuthInfo create(AuthEntity entity) {
-        return create(entity, false,false);
+        return create(entity, false, false);
     }
 
-    public static AuthInfo create(AuthEntity entity, boolean checked,boolean disabled) {
+    public static AuthInfo create(AuthEntity entity, boolean checked, boolean disabled) {
         AuthInfo info = new AuthInfo();
         info.setCname(entity.getCname());
         info.setEnable(entity.isEnable());
@@ -61,5 +62,22 @@ public class AuthInfo {
         info.setChecked(checked);
         info.setDisabled(disabled);
         return info;
+    }
+
+
+    public static Map<AuthKey, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
+        List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
+            return k.getFatherId().equals("0");
+        }).collect(Collectors.toList());
+
+        return fatherEntity.stream().collect(Collectors.toMap(key -> {
+            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
+        }, value -> {
+            return allAuth.stream().filter(vs -> {
+                return vs.getFatherId().equals(value.getId());
+            }).collect(Collectors.toList()).stream().map(k -> {
+                return AuthInfo.create(k, authIds.contains(k.getId()), disabled);
+            }).collect(Collectors.toList());
+        }));
     }
 }

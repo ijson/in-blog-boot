@@ -3,7 +3,6 @@ package com.ijson.blog.controller.admin;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.controller.admin.model.AuthKey;
 import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
@@ -54,7 +53,8 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-    @RequestMapping("/v2/article/add/page")
+
+    @RequestMapping("/save/article")
     public ModelAndView articleAdd() {
         ModelAndView view = new ModelAndView();
         addAdminModelAndView(view);
@@ -62,23 +62,78 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-    @RequestMapping("/v2/post/list/page")
-    public ModelAndView postV2List() {
+    @RequestMapping("/save/user")
+    public ModelAndView skipUserAdd() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("admin/list-article.html");
+        view.setViewName("admin/save-user.html");
+        addAdminModelAndView(view);
+        List<RoleEntity> roleAll = roleService.findAll();
+        if (CollectionUtils.isEmpty(roleAll)) {
+            view.addObject("roles", Lists.newArrayList());
+        } else {
+            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
+        }
+        view.addObject("editData", null);
+        return view;
+    }
+
+    @RequestMapping("/save/blogroll")
+    public ModelAndView skipBlogrollAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-blogroll.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
+    @RequestMapping("/save/site")
+    public ModelAndView siteSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/save-site.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+
+        List<RoleEntity> roleAll = roleService.findAll();
+        if (CollectionUtils.isEmpty(roleAll)) {
+            view.addObject("roles", Lists.newArrayList());
+        } else {
+            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
+        }
+        view.addObject("site", getConfig());
         addAdminModelAndView(view);
         return view;
     }
 
 
-    @RequestMapping("/v2/draft/list/page")
-    public ModelAndView postDriftV2List() {
+    @RequestMapping("/save/auth")
+    public ModelAndView skipAuthAdd() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("admin/list-article-draft.html");
+        view.setViewName("admin/save-auth.html");
         addAdminModelAndView(view);
+        List<AuthEntity> fathers = authService.findFathers("0");
+        view.addObject("editData", null);
+        view.addObject("fathers", AuthInfo.createAuthList(fathers));
+
         return view;
     }
 
+    @RequestMapping("/save/role")
+    public ModelAndView skipRoleAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-role.html");
+        addAdminModelAndView(view);
+        List<AuthEntity> allAuth = authService.findAll();
+        if (CollectionUtils.isEmpty(allAuth)) {
+            view.addObject("auths", Maps.newHashMap());
+        } else {
+            view.addObject("auths", AuthInfo.getAuthMap(allAuth, Lists.newArrayList(), false));
+        }
+        view.addObject("editData", null);
+        return view;
+    }
 
     /**
      * 跳转到编辑博客页面
@@ -112,74 +167,6 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
-
-    @RequestMapping("/add/user")
-    public ModelAndView skipUserAdd() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/save-user.html");
-        addAdminModelAndView(view);
-        List<RoleEntity> roleAll = roleService.findAll();
-        if (CollectionUtils.isEmpty(roleAll)) {
-            view.addObject("roles", Lists.newArrayList());
-        } else {
-            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
-        }
-        view.addObject("editData", null);
-        return view;
-    }
-
-    @RequestMapping("/add/blogroll")
-    public ModelAndView skipBlogrollAdd() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/save-blogroll.html");
-        addAdminModelAndView(view);
-        view.addObject("editData", null);
-        return view;
-    }
-
-
-    @RequestMapping("/add/auth")
-    public ModelAndView skipAuthAdd() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/save-auth.html");
-        addAdminModelAndView(view);
-        List<AuthEntity> fathers = authService.findFathers("0");
-        view.addObject("editData", null);
-        view.addObject("fathers", AuthInfo.createAuthList(fathers));
-
-        return view;
-    }
-
-    @RequestMapping("/add/role")
-    public ModelAndView skipRoleAdd() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/save-role.html");
-        addAdminModelAndView(view);
-        List<AuthEntity> allAuth = authService.findAll();
-        if (CollectionUtils.isEmpty(allAuth)) {
-            view.addObject("auths", Maps.newHashMap());
-        } else {
-            view.addObject("auths", getAuthMap(allAuth, Lists.newArrayList(), false));
-        }
-        view.addObject("editData", null);
-        return view;
-    }
-
-    public Map<AuthKey, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
-        List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
-            return k.getFatherId().equals("0");
-        }).collect(Collectors.toList());
-
-        return fatherEntity.stream().collect(Collectors.toMap(key -> {
-            return new AuthKey(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
-        }, value -> {
-            return allAuth.stream().filter(vs -> {
-                return vs.getFatherId().equals(value.getId());
-            }).collect(Collectors.toList()).stream().map(k -> {
-                return AuthInfo.create(k, authIds.contains(k.getId()), disabled);
-            }).collect(Collectors.toList());
-        }));
-    }
 
     @RequestMapping("/edit/blogroll/{id}/page")
     public ModelAndView skipBlogrollEdit(@PathVariable("id") String id) {
@@ -216,9 +203,9 @@ public class ConsoleAction extends BaseController {
             disabled = true;
         }
         if (CollectionUtils.isEmpty(authIds)) {
-            view.addObject("auths", getAuthMap(authService.findAll(), Lists.newArrayList(), disabled));
+            view.addObject("auths",  AuthInfo.getAuthMap(authService.findAll(), Lists.newArrayList(), disabled));
         } else {
-            view.addObject("auths", getAuthMap(authService.findAll(), authIds, disabled));
+            view.addObject("auths",  AuthInfo.getAuthMap(authService.findAll(), authIds, disabled));
         }
         view.addObject("editData", RoleInfo.create(internalById));
         return view;
@@ -238,67 +225,6 @@ public class ConsoleAction extends BaseController {
     }
 
 
-    @RequestMapping("/site/settings")
-    public ModelAndView siteSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/save-site.html");
-
-        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
-        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
-        if (Objects.isNull(context)) {
-            return new ModelAndView(new RedirectView(webCtx));
-        }
-
-        List<RoleEntity> roleAll = roleService.findAll();
-        if (CollectionUtils.isEmpty(roleAll)) {
-            view.addObject("roles", Lists.newArrayList());
-        } else {
-            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
-        }
-        view.addObject("site", getConfig());
-        addAdminModelAndView(view);
-        return view;
-    }
-
-    @RequestMapping("/blogroll/settings")
-    public ModelAndView blogrollSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/list-blogroll.html");
-
-        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
-        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
-        if (Objects.isNull(context)) {
-            return new ModelAndView(new RedirectView(webCtx));
-        }
-        addAdminModelAndView(view);
-        return view;
-    }
-
-    @RequestMapping("/auth/settings")
-    public ModelAndView authSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/list-auth.html");
-
-        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
-        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
-        if (Objects.isNull(context)) {
-            return new ModelAndView(new RedirectView(webCtx));
-        }
-        addAdminModelAndView(view);
-        return view;
-    }
-
-    @RequestMapping("/role/settings")
-    public ModelAndView roleSettings(HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("admin/list-role.html");
-
-        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
-        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
-        if (Objects.isNull(context)) {
-            return new ModelAndView(new RedirectView(webCtx));
-        }
-        addAdminModelAndView(view);
-        return view;
-    }
-
-
     @RequestMapping("/user/settings")
     public ModelAndView userSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/settings-user.html");
@@ -313,8 +239,48 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/list/blogroll")
+    public ModelAndView blogrollSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/list-blogroll.html");
 
-    @RequestMapping("/user/list/page")
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
+    @RequestMapping("/list/auth")
+    public ModelAndView authSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/list-auth.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
+
+    @RequestMapping("/list/role")
+    public ModelAndView roleSettings(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/list-role.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        return view;
+    }
+
+
+    @RequestMapping("/list/user")
     public ModelAndView userList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/list-user.html");
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
@@ -327,7 +293,7 @@ public class ConsoleAction extends BaseController {
     }
 
 
-    @RequestMapping("/user/delete/list/page")
+    @RequestMapping("/list/user/delete")
     public ModelAndView userDelList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/list-user-del.html");
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
@@ -335,6 +301,23 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
+        addAdminModelAndView(view);
+        return view;
+    }
+
+    @RequestMapping("/list/post")
+    public ModelAndView postV2List() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-article.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
+
+    @RequestMapping("/list/draft")
+    public ModelAndView postDriftV2List() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-article-draft.html");
         addAdminModelAndView(view);
         return view;
     }
