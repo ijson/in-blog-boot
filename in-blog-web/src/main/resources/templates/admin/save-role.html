@@ -60,6 +60,17 @@
                             </div>
                         </div>
 
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-left: 0;">
+                                <label class="layui-form-label" style="width: 130px;">发表评论需审核</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="verifyCmt" id="verifyCmt" lay-skin="switch"
+                                           lay-filter="verifyCmt" lay-text="ON|OFF"
+                                    <%if(editData!=null && editData.verifyCmt==true){%> checked <% }%> >
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">
@@ -149,6 +160,12 @@
                 data.field.verify = true;
             } else {
                 data.field.verify = false;
+            }
+
+            if (data.field.verifyCmt === 'on') {
+                data.field.verifyCmt = true;
+            } else {
+                data.field.verifyCmt = false;
             }
 
             $.ajax({

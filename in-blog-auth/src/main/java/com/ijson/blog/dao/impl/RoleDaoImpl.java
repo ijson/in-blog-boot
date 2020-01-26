@@ -56,6 +56,7 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
         }
 
         operations.set(RoleEntity.Fields.verify, entity.getVerify());
+        operations.set(RoleEntity.Fields.verifyCmt, entity.getVerifyCmt());
         operations.set(RoleEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, operations);
     }

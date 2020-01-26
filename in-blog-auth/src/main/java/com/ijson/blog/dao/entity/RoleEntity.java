@@ -52,8 +52,17 @@ public class RoleEntity extends BaseEntity {
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
 
+    /**
+     * 发表文章是否审核
+     */
     @Property(Fields.verify)
     private Boolean verify;
+
+    /**
+     * 发表评论是否审核
+     */
+    @Property(Fields.verifyCmt)
+    private Boolean verifyCmt;
 
 
     private volatile List<String> keys;
@@ -66,6 +75,7 @@ public class RoleEntity extends BaseEntity {
         String userIds = "userIds";
         String authIds = "authIds";
         String verify = "verify";
+        String verifyCmt = "verifyCmt";
 
         String enable = "enable";
         String createdBy = "createdBy";

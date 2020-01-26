@@ -73,6 +73,7 @@ public class RoleAction extends BaseController {
         entity.setUserIds(myEntity.getUserIds());
         entity.setAuthIds(myEntity.getAuthIds());
         entity.setVerify(myEntity.getVerify());
+        entity.setVerifyCmt(myEntity.getVerifyCmt());
         roleService.edit(context, entity);
         return Result.ok("更新成功!");
     }
