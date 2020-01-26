@@ -48,6 +48,10 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
             operations.set(AuthEntity.Fields.path, entity.getPath());
         }
 
+        if (Objects.nonNull(entity.getMenuType())) {
+            operations.set(AuthEntity.Fields.menuType, entity.getMenuType());
+        }
+
         operations.set(AuthEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, operations);
     }
@@ -90,6 +94,10 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
 
         if (!Strings.isNullOrEmpty(iquery.getPath())) {
             query.field(AuthEntity.Fields.path).containsIgnoreCase(iquery.getPath());
+        }
+
+        if (Objects.nonNull(iquery.getMenuType())) {
+            query.field(AuthEntity.Fields.menuType).equal(iquery.getMenuType());
         }
 
 

@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.entity;
 
+import com.ijson.blog.model.Constant;
 import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,11 +26,17 @@ public class AuthEntity extends BaseEntity {
     @Property(Fields.ename)
     private String ename;
 
+    @Property(Fields.fatherId)
+    private String fatherId;
+
     @Property(Fields.cname)
     private String cname;
 
     @Property(Fields.path)
     private String path;
+
+    @Property(Fields.menuType)
+    private Constant.MenuType menuType;
 
     @Property(Fields.enable)
     private boolean enable;
@@ -51,7 +58,9 @@ public class AuthEntity extends BaseEntity {
         String cname = "cname";
         String ename = "ename";
         String path = "path";
+        String menuType = "menuType";
         String enable = "enable";
+        String fatherId = "fatherId";
         String createdBy = "createdBy";
         String createTime = "createTime";
         String lastModifiedBy = "lastModifiedBy";

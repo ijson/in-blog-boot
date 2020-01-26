@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.query;
 
+import com.ijson.blog.model.Constant;
 import lombok.Data;
 
 /**
@@ -19,5 +20,7 @@ public class AuthQuery {
     private String path;
 
     private Boolean enable;
+
+    private Constant.MenuType menuType;
 }
 

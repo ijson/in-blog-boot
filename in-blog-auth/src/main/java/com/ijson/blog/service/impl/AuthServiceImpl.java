@@ -1,5 +1,6 @@
 package com.ijson.blog.service.impl;
 
+import com.google.common.base.Strings;
 import com.ijson.blog.dao.AuthDao;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.query.AuthQuery;
@@ -44,6 +45,9 @@ public class AuthServiceImpl implements AuthService {
         entity.setCreatedBy(context.getId());
         entity.setCreateTime(System.currentTimeMillis());
         entity.setLastModifiedBy(context.getId());
+        if(Strings.isNullOrEmpty(entity.getFatherId())){
+            entity.setFatherId("0");
+        }
         return authDao.create(entity);
     }
 

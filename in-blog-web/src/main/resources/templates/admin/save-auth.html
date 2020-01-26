@@ -57,6 +57,18 @@
 
 
                         <div class="layui-form-item">
+                            <label for="menuType" class="layui-form-label">
+                                <span class="x-red">*</span>权限类型</label>
+                            <div class="layui-input-inline">
+                                <select name="menuType">
+                                    <option value="menu" <%if(editData.menuType=="menu"){%>selected <%}%>  >menu</option>
+                                    <option value="action" <%if(editData.menuType=="action"){%>selected <%}%>  >action</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="layui-form-item">
                             <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存
                             </button>
                         </div>

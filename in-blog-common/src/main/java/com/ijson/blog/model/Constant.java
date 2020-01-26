@@ -24,4 +24,13 @@ public interface Constant {
         }
 
     }
+
+    enum MenuType {
+        menu("菜单"),
+        action("操作");
+
+        MenuType(String desc) {
+
+        }
+    }
 }

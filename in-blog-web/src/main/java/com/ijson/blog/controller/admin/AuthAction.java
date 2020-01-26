@@ -49,6 +49,8 @@ public class AuthAction extends BaseController {
         entity.setCname(myEntity.getCname());
         entity.setEname(myEntity.getEname());
         entity.setPath(myEntity.getPath());
+        entity.setFatherId(myEntity.getFatherId());
+        entity.setMenuType(myEntity.getMenuType());
 
         authService.edit(context, entity);
         return Result.ok("更新成功!");

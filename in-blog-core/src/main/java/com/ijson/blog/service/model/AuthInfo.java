@@ -2,6 +2,7 @@ package com.ijson.blog.service.model;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.AuthEntity;
+import com.ijson.blog.model.Constant;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -25,6 +26,10 @@ public class AuthInfo {
 
     private Boolean enable;
 
+    private String fatherId;
+
+    private Constant.MenuType menuType;
+
     public static List<AuthInfo> createAuthList(List<AuthEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();
@@ -40,6 +45,8 @@ public class AuthInfo {
         info.setId(entity.getId());
         info.setEname(entity.getEname());
         info.setPath(entity.getPath());
+        info.setFatherId(entity.getFatherId());
+        info.setMenuType(entity.getMenuType());
         return info;
     }
 }
