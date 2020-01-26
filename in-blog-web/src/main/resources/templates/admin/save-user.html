@@ -54,6 +54,34 @@
                                    class="layui-input" value="${editData.cname!}">
                         </div>
 
+                        <div class="layui-form-item">
+                            <label for="roleId" class="layui-form-label" style="width:140px;">用户角色</label>
+                            <div class="layui-input-inline">
+
+
+                                <%if(isNotEmpty(roles)){%>
+                                <select name="roleId">
+                                    <option value="">-请选择-</option>
+
+                                    <% for(data in roles){ %>
+
+                                        <%if(editData==null){%>
+                                            <option value="${data.id}">${data.cname}</option>
+                                        <%}else{%>
+                                            <%if(data.id==editData.roleId){%>
+                                                <option value="${data.id}" selected>${data.cname}</option>
+                                            <%}else{%>
+                                                <option value="${data.id}">${data.cname}</option>
+                                            <%}%>
+                                        <%}%>
+
+                                    <%} %>
+                                </select>
+                                <%}%>
+
+                            </div>
+                        </div>
+
 
                         <div class="layui-form-item">
                             <input type="text" name="mobile" lay-verify="mobile" autocomplete="off" placeholder="请输入手机号"

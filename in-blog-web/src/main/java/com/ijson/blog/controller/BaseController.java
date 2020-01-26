@@ -1,6 +1,7 @@
 package com.ijson.blog.controller;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -181,6 +183,10 @@ public class BaseController {
         int w = 100, h = 30;
         OutputStream out = response.getOutputStream();
         VerifyCodeUtils.outputImage(w, h, out, verifyCode);
+    }
+
+    protected Map<String,Object> getMenu(){
+        return Maps.newHashMap();
     }
 
 }

@@ -2,14 +2,13 @@ package com.ijson.blog.controller.view.rest;
 
 import com.google.common.base.Strings;
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.UserEntity;
-import com.ijson.blog.exception.BlogBusinessExceptionCode;
-import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.service.UserService;
 import com.ijson.blog.service.model.RegModel;
 import com.ijson.blog.service.model.Result;
-import com.ijson.blog.service.UserService;
 import com.ijson.blog.util.DesUtil;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
@@ -117,6 +116,7 @@ public class UserRestController extends BaseController {
             }
         }
 
+        ConfigEntity allConfig = webSiteService.findAllConfig();
 
         userService.reg(UserEntity.create(
                 entity.getEname(),
@@ -126,7 +126,8 @@ public class UserRestController extends BaseController {
                 entity.getPassword(),
                 entity.getQq(),
                 entity.getWechat(),
-                entity.getWeibo()));
+                entity.getWeibo(),
+                allConfig.getRegRoleId()));
 
 
         return Result.ok("注册成功!");

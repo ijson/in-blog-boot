@@ -97,6 +97,14 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
             operations.set(UserEntity.Fields.profession, entity.getProfession());
         }
 
+        if (!Strings.isNullOrEmpty(entity.getRoleId())) {
+            operations.set(UserEntity.Fields.roleId, entity.getRoleId());
+        }
+
+        if (!Strings.isNullOrEmpty(entity.getRoleCname())) {
+            operations.set(UserEntity.Fields.roleCname, entity.getRoleCname());
+        }
+
         if (Objects.nonNull(entity.getBeginJobTime())) {
             operations.set(UserEntity.Fields.beginJobTime, entity.getBeginJobTime());
         }
@@ -145,12 +153,15 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
 
         if (Objects.nonNull(iquery.getDeleted())) {
             query.field(UserEntity.Fields.deleted).equal(iquery.getDeleted());
-        }else{
+        } else {
             query.field(UserEntity.Fields.deleted).equal(false);
         }
 
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
+        }else{
+            query.order("-" +UserEntity.Fields.createTime);//添加排序
+
         }
 
         if (page.getPageNumber() > 0) {

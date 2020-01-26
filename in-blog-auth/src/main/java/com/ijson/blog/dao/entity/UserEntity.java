@@ -106,10 +106,18 @@ public class UserEntity extends BaseEntity {
     @Property(Fields.endJobTime)
     private String endJobTime;//-1 表示至今
 
-    private volatile String roleCname;
+    @Property(Fields.roleCname)
+    private String roleCname;
 
-
-    public static UserEntity create(String ename, String cname, String email, String mobile, String password, String qq, String wechat, String weibo) {
+    public static UserEntity create(String ename,
+                                    String cname,
+                                    String email,
+                                    String mobile,
+                                    String password,
+                                    String qq,
+                                    String wechat,
+                                    String weibo,
+                                    String roleId) {
         UserEntity userEntity = new UserEntity();
         userEntity.setCreateTime(System.currentTimeMillis());
         userEntity.setDeleted(false);
@@ -123,6 +131,7 @@ public class UserEntity extends BaseEntity {
         userEntity.setWechat(wechat);
         userEntity.setWeibo(weibo);
         userEntity.setLastModifiedTime(System.currentTimeMillis());
+        userEntity.setRoleId(roleId);
         return userEntity;
     }
 
@@ -153,6 +162,7 @@ public class UserEntity extends BaseEntity {
         String profession = "profession";
         String beginJobTime = "beginJobTime";
         String endJobTime = "endJobTime";
+        String roleCname = "roleCname";
     }
 
     public static UserEntity unknownUser() {

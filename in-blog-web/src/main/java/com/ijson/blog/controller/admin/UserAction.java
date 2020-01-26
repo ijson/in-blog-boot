@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.controller.admin.model.UpdPassword;
 import com.ijson.blog.controller.admin.model.V2Result;
+import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -68,6 +69,8 @@ public class UserAction extends BaseController {
         entity.setQq(myUser.getQq());
         entity.setTwitter(myUser.getTwitter());
         entity.setFacebook(myUser.getFacebook());
+        entity.setRoleId(myUser.getRoleId());
+
         userService.edit(entity);
         return Result.ok("更新成功!");
     }
@@ -90,6 +93,13 @@ public class UserAction extends BaseController {
         entity.setQq(myUser.getQq());
         entity.setTwitter(myUser.getTwitter());
         entity.setFacebook(myUser.getFacebook());
+
+        if (Strings.isNullOrEmpty(myUser.getRoleId())) {
+            ConfigEntity allConfig = webSiteService.findAllConfig();
+            entity.setRoleId(allConfig.getRegRoleId());
+        } else {
+            entity.setRoleId(myUser.getRoleId());
+        }
         userService.reg(entity);
         return Result.ok("注册成功!");
     }
@@ -169,7 +179,7 @@ public class UserAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.ENABLED_STATE_CANNOT_BE_DELETED);
         }
 
-        userService.delete(entity.getId() );
+        userService.delete(entity.getId());
         return Result.ok("删除成功!");
     }
 

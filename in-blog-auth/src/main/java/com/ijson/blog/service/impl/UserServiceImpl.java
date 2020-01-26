@@ -137,6 +137,9 @@ public class UserServiceImpl implements UserService {
         if (Objects.nonNull(user)) {
             throw new BlogLoginException(BlogBusinessExceptionCode.USER_ALREADY_EXISTS);
         }
+        RoleEntity role = roleService.findById(entity.getRoleId());
+
+        entity.setRoleCname(role.getCname());
         entity.setAvatar(avatarManager.getAvatarUrl());
         entity.setLastModifiedTime(System.currentTimeMillis());
         entity.setCreateTime(System.currentTimeMillis());
@@ -162,6 +165,10 @@ public class UserServiceImpl implements UserService {
     @CachePut(value = "userInfo", key = "#entity.ename")
     @Override
     public UserEntity edit(UserEntity entity) {
+        if(!Strings.isNullOrEmpty(entity.getRoleId())){
+            RoleEntity byId = roleService.findById(entity.getRoleId());
+            entity.setRoleCname(byId.getCname());
+        }
         return userDao.update(entity);
     }
 

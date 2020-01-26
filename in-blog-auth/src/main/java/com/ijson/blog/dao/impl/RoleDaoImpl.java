@@ -2,9 +2,7 @@ package com.ijson.blog.dao.impl;
 
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.RoleDao;
-import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.entity.RoleEntity;
-import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.RoleQuery;
 import com.ijson.mongo.support.AbstractDao;
 import com.ijson.mongo.support.model.Page;
@@ -64,9 +62,8 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
     @Override
     public RoleEntity find(String roleId) {
         Query<RoleEntity> query = datastore.createQuery(RoleEntity.class);
-        query.field(UserEntity.Fields.id).equal(roleId);
-        query.field(UserEntity.Fields.deleted).equal(false);
-        query.field(UserEntity.Fields.enable).equal(true);
+        query.field(RoleEntity.Fields.id).equal(roleId);
+        query.field(RoleEntity.Fields.enable).equal(true);
         return query.get();
     }
 
@@ -83,7 +80,7 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
 
     @Override
     public void delete(String id) {
-        datastore.delete(datastore.createQuery(RoleEntity.class).field(AuthEntity.Fields.id).equal(id), WriteConcern.UNACKNOWLEDGED);
+        datastore.delete(datastore.createQuery(RoleEntity.class).field(RoleEntity.Fields.id).equal(id), WriteConcern.UNACKNOWLEDGED);
 
     }
 

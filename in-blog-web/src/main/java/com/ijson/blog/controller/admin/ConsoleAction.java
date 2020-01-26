@@ -39,6 +39,7 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/index.html");
         addAdminModelAndView(view);
+        view.addObject("menu", getMenu());
         return view;
     }
 
@@ -101,6 +102,12 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-user.html");
         addAdminModelAndView(view);
+        List<RoleEntity> roleAll = roleService.findAll();
+        if (CollectionUtils.isEmpty(roleAll)) {
+            view.addObject("roles", Lists.newArrayList());
+        } else {
+            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
+        }
         view.addObject("editData", UserInfo.create(internalById));
         return view;
     }
@@ -111,6 +118,12 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-user.html");
         addAdminModelAndView(view);
+        List<RoleEntity> roleAll = roleService.findAll();
+        if (CollectionUtils.isEmpty(roleAll)) {
+            view.addObject("roles", Lists.newArrayList());
+        } else {
+            view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
+        }
         view.addObject("editData", null);
         return view;
     }

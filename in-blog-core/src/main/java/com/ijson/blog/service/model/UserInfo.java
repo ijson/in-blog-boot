@@ -31,6 +31,7 @@ public class UserInfo {
     private String weibo;
     private String wechat;
     private String avatar;
+    private String roleId;
     private String roleCname;
     private boolean enable;
     private Long createTime;
@@ -66,6 +67,7 @@ public class UserInfo {
         userInfo.setEndJobTime(userEntity.getEndJobTime());
         userInfo.setMobile(userEntity.getMobile());
         userInfo.setQq(userEntity.getQq());
+        userInfo.setRoleId(userEntity.getRoleId());
         return userInfo;
     }
 }
