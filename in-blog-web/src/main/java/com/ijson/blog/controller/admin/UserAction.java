@@ -60,6 +60,10 @@ public class UserAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_EMAIL_CANNOT_BE_EMPTY);
         }
 
+        if (Strings.isNullOrEmpty(myUser.getRoleId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_CANNOT_BE_EMPTY);
+        }
+
         if (Strings.isNullOrEmpty(myUser.getId())) {
             return createUser(myUser);
         }

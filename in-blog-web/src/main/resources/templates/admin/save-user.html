@@ -46,7 +46,7 @@
 
                         <div class="layui-form-item">
                             <input type="text" name="ename" lay-verify="ename" autocomplete="off" placeholder="请输入账号"
-                                   class="layui-input" value="${editData.ename!}">
+                                   class="layui-input" value="${editData.ename!}" <%if(editData!=null){%> disabled <%}%>>
                         </div>
 
                         <div class="layui-form-item">
@@ -168,6 +168,34 @@
 
             if (lastData.password) {
                 lastData.password = hex_md5(lastData.password);
+            }
+
+            if (!lastData.ename) {
+                layer.msg("用户名不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!lastData.cname) {
+                layer.msg("昵称不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!lastData.roleId) {
+                layer.msg("角色不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!lastData.email) {
+                layer.msg("邮箱不能为空", {
+                    time: 2000
+                });
+                return;
             }
 
             $.ajax({
