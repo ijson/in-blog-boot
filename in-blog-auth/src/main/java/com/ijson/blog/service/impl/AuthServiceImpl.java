@@ -70,4 +70,9 @@ public class AuthServiceImpl implements AuthService {
     public List<AuthEntity> findByIds(List<String> ids) {
         return authDao.findByIds(ids);
     }
+
+    @Override
+    public List<AuthEntity> findFathers(String fatherId) {
+        return authDao.findFathers(fatherId);
+    }
 }

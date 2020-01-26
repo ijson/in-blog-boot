@@ -27,4 +27,6 @@ public interface AuthDao {
     PageResult<AuthEntity> find(AuthQuery iquery, Page page);
 
     List<AuthEntity> findByIds(List<String> ids);
+
+    List<AuthEntity> findFathers(String fatherId);
 }

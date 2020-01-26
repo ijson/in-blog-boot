@@ -62,8 +62,7 @@
 
 
                         <div class="layui-form-item">
-                            <label for="menuType" class="layui-form-label">
-                                <span class="x-red">*</span>权限类型</label>
+                            <label for="menuType" class="layui-form-label">权限类型</label>
                             <div class="layui-input-inline">
                                 <%if(editData==null){%>
                                 <select name="menuType">
@@ -82,7 +81,47 @@
                             </div>
                         </div>
 
+                        <div class="layui-form-item">
+                            <label for="fatherId" class="layui-form-label">父菜单</label>
+                            <div class="layui-input-inline">
+                                <select name="fatherId">
 
+                                    <%if(isNotEmpty(fathers)){%>
+
+                                        <%if(editData==null){%>
+                                            <!-- 创建数据时渲染 -->
+                                            <option value="0">根目录</option>
+                                            <%
+                                            for(data in fathers){
+                                            %>
+                                            <option value=${data.id}>${data.cname}</option>
+
+                                            <%}%>
+
+
+                                        <%}else{%>
+
+                                            <%
+                                            for(data in fathers){
+                                            %>
+
+                                                <%if(data.id==editData.fatherId){%>
+                                                    <option value=${data.id} selected>${data.cname}</option>
+                                                <%}else if(editData.fatherId=="0"){%>
+                                                    <option value="0" selected>根目录</option>
+                                                <%}else{%>
+                                                    <option value=${data.id}>${data.cname}</option>
+                                                <%}%>
+
+                                            <%}%>
+                                        <%}%>
+                                    <%}else{%>
+                                        <option value="0">根目录</option>
+                                    <%}%>
+
+                                </select>
+                            </div>
+                        </div>
                         <div class="layui-form-item">
                             <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存
                             </button>

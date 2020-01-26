@@ -28,4 +28,6 @@ public interface AuthService {
     PageResult<AuthEntity> find(AuthQuery query, Page pageEntity);
 
     List<AuthEntity> findByIds(List<String> ids);
+
+    List<AuthEntity> findFathers(String fatherId);
 }

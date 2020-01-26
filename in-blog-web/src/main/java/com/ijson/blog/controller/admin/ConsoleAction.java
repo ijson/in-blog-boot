@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * https://www.bootcdn.cn/
@@ -123,7 +125,10 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-auth.html");
         addAdminModelAndView(view);
+        List<AuthEntity> fathers = authService.findFathers("0");
         view.addObject("editData", null);
+        view.addObject("fathers", AuthInfo.createAuthList(fathers));
+
         return view;
     }
 
@@ -152,7 +157,10 @@ public class ConsoleAction extends BaseController {
         view.setViewName("admin/save-auth.html");
         addAdminModelAndView(view);
         AuthEntity internalById = authService.findInternalById(id);
+        List<AuthEntity> fathers = authService.findFathers("0");
+        fathers = fathers.stream().filter(k-> !k.getId().equals(id)).collect(Collectors.toList());
         view.addObject("editData", AuthInfo.create(internalById));
+        view.addObject("fathers", AuthInfo.createAuthList(fathers));
         return view;
     }
 

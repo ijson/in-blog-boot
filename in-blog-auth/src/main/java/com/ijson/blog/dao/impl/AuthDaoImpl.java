@@ -48,6 +48,10 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
             operations.set(AuthEntity.Fields.path, entity.getPath());
         }
 
+        if (!Strings.isNullOrEmpty(entity.getFatherId())) {
+            operations.set(AuthEntity.Fields.fatherId, entity.getFatherId());
+        }
+
         if (Objects.nonNull(entity.getMenuType())) {
             operations.set(AuthEntity.Fields.menuType, entity.getMenuType());
         }
@@ -129,6 +133,14 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
         Query<AuthEntity> query = datastore.createQuery(AuthEntity.class);
         query.field(AuthEntity.Fields.enable).equal(true);
         query.field(AuthEntity.Fields.id).hasAnyOf(new HashSet<>(ids));
+        return query.asList();
+    }
+
+    @Override
+    public List<AuthEntity> findFathers(String fatherId) {
+        Query<AuthEntity> query = datastore.createQuery(AuthEntity.class);
+        query.field(AuthEntity.Fields.enable).equal(true);
+        query.field(AuthEntity.Fields.fatherId).equal(fatherId);
         return query.asList();
     }
 }
