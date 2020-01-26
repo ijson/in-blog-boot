@@ -64,24 +64,22 @@
                                 -->
 
                                 <%for(entry in auths){
-                                var key = entry.key;
-                                var value = entry.value;
+                                    var key = entry.key;
+                                    var value = entry.value;
                                 %>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" name="like1[write]" lay-skin="primary" lay-filter="father" title="${key.authCname}">
-                                    </td>
-                                    <td>
-                                        <div class="layui-input-block">
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="${key.authId}"  lay-skin="primary" lay-filter="authKey" title="${key.authCname}">
+                                        </td>
+                                        <td>
+                                            <div class="layui-input-block">
 
-                                            <%
-                                            for(data in value){
-                                            %>
-                                                <input name="id[]" lay-skin="primary" type="checkbox" title="${data.cname}(${data.menuType})" value="2">
-                                            <%} %>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                <% for(data in value){ %>
+                                                    <input  type="checkbox" name="${data.id}" lay-skin="primary" lay-filter="authKey" title="${data.cname}(${data.menuType})">
+                                                <%}%>
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                 <%}%>
 
