@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
+import com.ijson.blog.model.Constant;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
@@ -46,6 +47,7 @@ public class PostInfo {
     private String imageUrl;
     private String cname;
     private String draftId;
+    private Constant.PostStatus status;
 
 
     private void setIntro(String intro) {
@@ -137,6 +139,7 @@ public class PostInfo {
             post.setShamId(key.getShamId());
             post.setLastModifiedBy(key.getLastModifiedBy());
             post.setDraftId(key.getDraftId());
+            post.setStatus(key.getStatus());
             return post;
         }).collect(Collectors.toList());
     }
@@ -156,6 +159,7 @@ public class PostInfo {
             post.setShamId(key.getShamId());
             post.setUserCname(key.getCname());
             post.setLastModifiedBy(key.getLastModifiedBy());
+            post.setStatus(key.getStatus());
             return post;
         }).collect(Collectors.toList());
     }
@@ -227,6 +231,7 @@ public class PostInfo {
         post.setEnable(entity.isEnable());
         post.setShamId(entity.getShamId());
         post.setDraftId(entity.getDraftId());
+        post.setStatus(entity.getStatus());
         post.setLastModifiedBy(entity.getLastModifiedBy());
         if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
             post.setTopicName(getTpoicNames(entity.getTopicName()));
@@ -251,6 +256,7 @@ public class PostInfo {
         post.setShamId(entity.getShamId());
         post.setLastModifiedBy(entity.getLastModifiedBy());
         post.setDraftId(entity.getDraftId());
+        post.setStatus(entity.getStatus());
         return post;
     }
 }

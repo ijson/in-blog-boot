@@ -57,7 +57,6 @@
         {{# } else{ }}
         <button class="layui-btn layui-btn-normal" lay-event="edit"> 编辑</button>
         {{# } }}
-
         <button class="layui-btn layui-btn-danger" lay-event="delete">删除</button>
     </div>
 </script>
@@ -65,6 +64,18 @@
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
            lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
+</script>
+
+<script type="text/html" id="statusTpl">
+    {{# if(d.status=='pass'){ }}
+        通过
+    {{# } else if(d.status=='in_progress'){ }}
+        审核中
+    {{# } else if(d.status=='reject'){ }}
+        未通过
+    {{# }else{ }}
+        未知
+    {{# } }}
 </script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
@@ -91,7 +102,7 @@
                     title: '最后更新时间',
                     templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
                 },
-                {field: 'userCname', width: 100, title: "创建人", sort: true},
+                {field: 'status', width: 100, title: "审核状态", templet: '#statusTpl'},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
                 {field: '', title: "操作", templet: '#operation'}
 
