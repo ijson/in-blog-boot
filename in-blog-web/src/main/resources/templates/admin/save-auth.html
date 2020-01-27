@@ -38,7 +38,7 @@
                         <div class="layui-form-item">
                             <input type="number" name="order" id="order" lay-verify="order" autocomplete="off"
                                    lay-filter="order"
-                                   placeholder="请输入排列顺序"
+                                   placeholder="父菜单选择后排列顺序自动生成"
                                    class="layui-input" value="${editData.order!}" readonly>
                         </div>
 
@@ -93,9 +93,7 @@
                                         <%if(editData==null){%>
                                             <!-- 创建数据时渲染 -->
                                             <option value="0">根目录</option>
-                                            <%
-                                            for(data in fathers){
-                                            %>
+                                            <% for(data in fathers){ %>
                                                 <option value=${data.id}>${data.cname}</option>
                                             <%}%>
 
@@ -107,6 +105,7 @@
                                                 <option value=${father.id}>${father.cname}</option>
                                                 <%}%>
                                             <%}else{%>
+                                                <option value="0">根目录</option>
 
                                                 <% for(father in fathers){ %>
                                                     <%if(father.id==editData.fatherId){%>
@@ -235,7 +234,8 @@
                     contentType: 'application/json',
                     url: "/auth/order",
                     data: JSON.stringify({
-                        id: val
+                        id: val,
+                        currentId:'${editData.id!}'
                     }),
                     async: false,
                     success: function (data) {

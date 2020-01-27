@@ -38,6 +38,8 @@ public class AuthInfo {
 
     private boolean disabled;
 
+    private String currentId;
+
     public static List<AuthInfo> createAuthList(List<AuthEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();

@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -120,12 +122,22 @@ public class AuthAction extends BaseController {
         }
 
         List<AuthEntity> authEntities = authService.findChild(info.getId());
+        String currentAuthId = info.getCurrentId();
 
         if (Objects.isNull(authEntities)) {
             return Result.ok(0);
         }
 
-        return Result.ok(authEntities.size());
+        if (Strings.isNullOrEmpty(currentAuthId)) {
+            return Result.ok(authEntities.size());
+        } else {
+            Map<String, AuthEntity> authEntityMap = authEntities.stream().collect(Collectors.toMap(AuthEntity::getId, v -> v));
+            if (authEntityMap.keySet().contains(currentAuthId)) {
+                return Result.ok(authEntityMap.get(currentAuthId).getOrder());
+            } else {
+                return Result.ok(authEntities.size());
+            }
+        }
     }
 
     @PostMapping(value = "/delete/{id}")
