@@ -39,7 +39,7 @@
                             <input type="number" name="order" id="order" lay-verify="order" autocomplete="off"
                                    lay-filter="order"
                                    placeholder="请输入排列顺序"
-                                   class="layui-input" value="${editData.order!}">
+                                   class="layui-input" value="${editData.order!}" readonly>
                         </div>
 
                         <div class="layui-form-item">
@@ -90,35 +90,29 @@
 
                                     <%if(isNotEmpty(fathers)){%>
 
-                                    <%if(editData==null){%>
-                                    <!-- 创建数据时渲染 -->
-                                    <option value="0">根目录</option>
-                                    <%
-                                    for(data in fathers){
-                                    %>
-                                    <option value=${data.id}>${data.cname}</option>
+                                        <%if(editData==null){%>
+                                            <!-- 创建数据时渲染 -->
+                                            <option value="0">根目录</option>
+                                            <%
+                                            for(data in fathers){
+                                            %>
+                                                <option value=${data.id}>${data.cname}</option>
+                                            <%}%>
 
+                                        <%}else{%>
+
+                                            <% for(father in fathers){ %>
+
+                                                <%if(father.id==editData.fatherId){%>
+                                                    <option value=${father.id} selected>${father.cname}</option>
+                                                <%}else{%>
+                                                    <option value=${father.id}>${father.cname}</option>
+                                                <%}%>
+                                            <%}%>
                                     <%}%>
-
 
                                     <%}else{%>
-
-                                    <%
-                                    for(data in fathers){
-                                    %>
-
-                                    <%if(data.id==editData.fatherId){%>
-                                    <option value=${data.id} selected>${data.cname}</option>
-                                    <%}else if(editData.fatherId=="0"){%>
-                                    <option value="0" selected>根目录</option>
-                                    <%}else{%>
-                                    <option value=${data.id}>${data.cname}</option>
-                                    <%}%>
-
-                                    <%}%>
-                                    <%}%>
-                                    <%}else{%>
-                                    <option value="0">根目录</option>
+                                        <option value="0">根目录</option>
                                     <%}%>
 
                                 </select>
@@ -172,32 +166,6 @@
 
         });
 
-        form.on('select(fatherType)', function (data) {
-            var val = data.value;
-            if (val) {
-                $.ajax({
-                    cache: false,
-                    type: "POST",
-                    contentType: 'application/json',
-                    url: "/auth/order",
-                    data: JSON.stringify({
-                        id: val
-                    }),
-                    async: false,
-                    success: function (data) {
-                        if (data.code === 0) {
-                            $("#order").attr("value", data.result)
-                        } else {
-                            layer.msg(data.message);
-
-                        }
-                    },
-                    error: function (data) {
-                        layer.msg(data.message);
-                    }
-                });
-            }
-        });
 
         //监听提交
         form.on('submit(save)', function (data) {
@@ -240,6 +208,41 @@
             });
 
             return false;
+        });
+    });
+</script>
+
+
+<script>
+    layui.use(['form', 'layer', 'layedit'], function () {
+        $ = layui.jquery;
+        var form = layui.form;
+
+        form.on('select(fatherType)', function (data) {
+            var val = data.value;
+            if (val) {
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "/auth/order",
+                    data: JSON.stringify({
+                        id: val
+                    }),
+                    async: false,
+                    success: function (data) {
+                        if (data.code === 0) {
+                            $("#order").attr("value", data.result)
+                        } else {
+                            layer.msg(data.message);
+
+                        }
+                    },
+                    error: function (data) {
+                        layer.msg(data.message);
+                    }
+                });
+            }
         });
     });
 </script>

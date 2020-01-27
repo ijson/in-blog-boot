@@ -84,6 +84,8 @@ public class AuthAction extends BaseController {
         AuthEntity newAuth = authService.create(context, myEntity);
         RoleEntity systemRole = roleService.findByEname(Constant.SYSTEM);
         systemRole.getAuthIds().add(newAuth.getId());
+        systemRole.setVerifyCmt(false);
+        systemRole.setVerify(false);
         roleService.edit(context, systemRole);
         return Result.ok("创建成功!");
     }
