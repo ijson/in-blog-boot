@@ -148,7 +148,7 @@ public class PostAction extends BaseController {
         return Result.ok("更新文章成功!");
     }
 
-    @PostMapping("/v2/enable/{ename}/{shamId}")
+    @PostMapping("/enable/{ename}/{shamId}")
     public Result v2Enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
@@ -242,7 +242,7 @@ public class PostAction extends BaseController {
     }
 
 
-    @RequestMapping("/v2/list")
+    @RequestMapping("/list")
     @ResponseBody
     public V2Result<PostInfo> listV2(Integer page, Integer limit, HttpServletRequest request) {
 

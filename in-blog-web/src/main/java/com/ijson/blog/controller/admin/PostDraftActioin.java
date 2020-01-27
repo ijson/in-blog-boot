@@ -102,7 +102,7 @@ public class PostDraftActioin extends BaseController {
     }
 
 
-    @RequestMapping("/v2/list")
+    @RequestMapping("/list")
     @ResponseBody
     public V2Result listV2(Integer page, Integer limit, HttpServletRequest request) {
 

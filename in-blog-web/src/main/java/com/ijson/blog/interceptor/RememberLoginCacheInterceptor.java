@@ -1,5 +1,6 @@
 package com.ijson.blog.interceptor;
 
+import com.google.common.base.Strings;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.util.DesUtil;

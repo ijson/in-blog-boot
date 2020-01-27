@@ -75,7 +75,7 @@
         table.render({
             toolbar: '#toolbarDemo',
             elem: '#postList',
-            url: '/post/v2/list',
+            url: '/post/list',
             page: true,
             cols: [[
                 {field: 'id', hide: true},
@@ -177,7 +177,7 @@
                 cache: false,
                 type: "POST",
                 contentType: 'application/json',
-                url: "/post/v2/enable/" + ename + "/" + shamId,
+                url: "/post/enable/" + ename + "/" + shamId,
                 dataType: "json",
                 data: JSON.stringify({
                     "enable": checked

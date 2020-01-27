@@ -67,7 +67,6 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
-        //TODO 暂时不校验权限
 //        List<String> permissionPath = context.getPermissionPath();
 //        if (!isParadigm(permissionPath, uri)) {
 //            response.sendRedirect("/");
