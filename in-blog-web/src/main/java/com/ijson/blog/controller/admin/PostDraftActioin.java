@@ -4,15 +4,15 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.annotation.DocDocument;
 import com.ijson.blog.controller.BaseController;
-import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.V2Result;
+import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -104,7 +104,7 @@ public class PostDraftActioin extends BaseController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public V2Result listV2(Integer page, Integer limit, HttpServletRequest request) {
+    public V2Result list(Integer page, Integer limit, HttpServletRequest request) {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
@@ -129,7 +129,56 @@ public class PostDraftActioin extends BaseController {
             query.setTitle(keyWord);
         }
 
-        PageResult<PostDraftEntity> result = postDraftService.find(query, pageEntity);
+        PageResult<PostDraftEntity> result = postDraftService.find(context, query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<PostDraftEntity> dataList = result.getDataList();
+        List<PostInfo> posts = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            posts = PostInfo.postDraftList(result);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(posts);
+        v2Result.setMsg("");
+        return v2Result;
+    }
+
+
+    @RequestMapping("/user/list")
+    @ResponseBody
+    public V2Result userList(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setLikeTitle(true);
+            query.setTitle(keyWord);
+        }
+
+        query.setCurrentUser(true);
+        PageResult<PostDraftEntity> result = postDraftService.find(context, query, pageEntity);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
             return new V2Result<>();

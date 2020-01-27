@@ -107,7 +107,7 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
     }
 
     @Override
-    public PageResult<PostEntity> find(PostQuery iquery, Page page) {
+    public PageResult<PostEntity> find(PostQuery iquery, Page page, String authorId) {
         Query<PostEntity> query = datastore.createQuery(PostEntity.class);
 
         if (!Strings.isNullOrEmpty(iquery.getId())) {
@@ -132,6 +132,10 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         }
         if (page.getPageNumber() > 0) {
             query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
+        }
+
+        if (iquery.isCurrentUser()) {
+            query.field(PostEntity.Fields.createdBy).equal(authorId);
         }
 
         long totalNum = query.countAll();

@@ -244,7 +244,7 @@ public class PostAction extends BaseController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public V2Result<PostInfo> listV2(Integer page, Integer limit, HttpServletRequest request) {
+    public V2Result<PostInfo> list(Integer page, Integer limit, HttpServletRequest request) {
 
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
@@ -269,6 +269,54 @@ public class PostAction extends BaseController {
         }
 
         PageResult<PostEntity> result = postService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<PostEntity> dataList = result.getDataList();
+        List<PostInfo> posts = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            posts = PostInfo.postList(result);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(posts);
+        v2Result.setMsg("");
+        return v2Result;
+    }
+
+
+    @RequestMapping("/user/list")
+    @ResponseBody
+    public V2Result<PostInfo> userList(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setLikeTitle(true);
+            query.setTitle(keyWord);
+        }
+
+        query.setCurrentUser(true);
+        PageResult<PostEntity> result = postService.find(context,query, pageEntity);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
             return new V2Result<>();

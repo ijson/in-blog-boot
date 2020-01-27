@@ -15,7 +15,6 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * desc:
@@ -85,7 +84,7 @@ public class PostDraftDaoImpl extends AbstractDao<PostDraftEntity> implements Po
     }
 
     @Override
-    public PageResult<PostDraftEntity> find(PostQuery iquery, Page page) {
+    public PageResult<PostDraftEntity> find(PostQuery iquery, Page page, String authorId) {
         Query<PostDraftEntity> query = datastore.createQuery(PostDraftEntity.class);
 
         if (!Strings.isNullOrEmpty(iquery.getId())) {
@@ -106,6 +105,10 @@ public class PostDraftDaoImpl extends AbstractDao<PostDraftEntity> implements Po
         }
         if (page.getPageNumber() > 0) {
             query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
+        }
+
+        if (iquery.isCurrentUser()) {
+            query.field(PostDraftEntity.Fields.createdBy).equal(authorId);
         }
 
         long totalNum = query.countAll();

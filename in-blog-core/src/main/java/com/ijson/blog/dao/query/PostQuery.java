@@ -31,5 +31,7 @@ public class PostQuery {
 	 */
 	private volatile boolean likeTitle;
 
+	private boolean currentUser;
+
 }
 

@@ -75,8 +75,8 @@ public class PostDraftServiceImpl implements PostDraftService {
 
 
     @Override
-    public PageResult<PostDraftEntity> find(PostQuery iquery, Page page) {
-        PageResult<PostDraftEntity> postEntityPageResult = postDraftDao.find(iquery, page);
+    public PageResult<PostDraftEntity> find(AuthContext context,PostQuery iquery, Page page) {
+        PageResult<PostDraftEntity> postEntityPageResult = postDraftDao.find(iquery, page,context.getId());
 
         List<PostDraftEntity> dataList = postEntityPageResult.getDataList();
 

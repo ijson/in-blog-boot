@@ -21,7 +21,7 @@ public interface PostDao {
 
     PostEntity enable(String id, boolean enable, String userId);
 
-    PageResult<PostEntity> find(PostQuery query, Page page);
+    PageResult<PostEntity> find(PostQuery query, Page page,String authorId);
 
     PostEntity delete(String id, String userId);
 

@@ -21,7 +21,7 @@ public interface PostDraftService {
 
     void delete(String id);
 
-    PageResult<PostDraftEntity> find(PostQuery query, Page page);
+    PageResult<PostDraftEntity> find(AuthContext context,PostQuery query, Page page);
 }
 
 

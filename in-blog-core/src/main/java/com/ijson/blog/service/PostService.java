@@ -18,7 +18,7 @@ public interface PostService {
 
     PostEntity createPost(AuthContext context,PostEntity entity);
 
-    PageResult<PostEntity> find(PostQuery iquery, Page page);
+    PageResult<PostEntity> find(AuthContext context,PostQuery iquery, Page page);
 
     List<PostEntity> findHotPostBeforeTen();
 
