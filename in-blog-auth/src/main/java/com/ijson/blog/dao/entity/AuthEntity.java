@@ -9,6 +9,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
 
+import java.util.Objects;
+
 /**
  * desc:
  * version: 7.0.0
@@ -56,6 +58,16 @@ public class AuthEntity extends BaseEntity {
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
 
+    @Property(Fields.showMenu)
+    private Boolean showMenu;
+
+    public Boolean getShowMenu() {
+        if (Objects.isNull(showMenu)) {
+            return false;
+        }
+        return showMenu;
+    }
+
     public interface Fields {
         String id = "_id";
         String cname = "cname";
@@ -69,6 +81,7 @@ public class AuthEntity extends BaseEntity {
         String createTime = "createTime";
         String lastModifiedBy = "lastModifiedBy";
         String lastModifiedTime = "lastModifiedTime";
+        String showMenu = "showMenu";
 
     }
 }

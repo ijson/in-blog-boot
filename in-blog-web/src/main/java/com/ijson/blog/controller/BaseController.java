@@ -190,7 +190,7 @@ public class BaseController {
     protected Map<AuthArg, List<AuthInfo>> getMenu(HttpServletRequest request) {
         AuthContext context = getContext(request);
         List<AuthEntity> menuAuth = context.getAuths().stream().filter(k -> {
-            return k.getMenuType() == Constant.MenuType.menu;
+            return k.getMenuType() == Constant.MenuType.menu && k.getShowMenu();
         }).collect(Collectors.toList());
         return AuthInfo.getAuthMap(menuAuth, Lists.newArrayList(), false);
     }

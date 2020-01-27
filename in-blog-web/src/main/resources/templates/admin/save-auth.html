@@ -61,6 +61,17 @@
                                    class="layui-input" value="${editData.path!}">
                         </div>
 
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-left: 0;">
+                                <label class="layui-form-label" style="width: 130px;">是否作为菜单显示</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="showMenu" id="showMenu" lay-skin="switch"
+                                           lay-filter="showMenu" lay-text="ON|OFF"
+                                    <%if(editData!=null && editData.showMenu==true){%> checked <% }%> >
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="layui-form-item">
                             <label for="menuType" class="layui-form-label">权限类型</label>
@@ -176,6 +187,13 @@
 
         //监听提交
         form.on('submit(save)', function (data) {
+
+            if (data.field.showMenu === 'on') {
+                data.field.showMenu = true;
+            } else {
+                data.field.showMenu = false;
+            }
+
             $.ajax({
                 cache: false,
                 type: "POST",

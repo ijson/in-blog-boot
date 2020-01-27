@@ -40,6 +40,8 @@ public class AuthInfo {
 
     private String currentId;
 
+    private boolean showMenu;
+
     public static List<AuthInfo> createAuthList(List<AuthEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();
@@ -64,6 +66,7 @@ public class AuthInfo {
         info.setOrder(entity.getOrder());
         info.setChecked(checked);
         info.setDisabled(disabled);
+        info.setShowMenu(entity.getShowMenu());
         return info;
     }
 

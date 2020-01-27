@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * desc:
@@ -50,6 +51,9 @@ public class AuthServiceImpl implements AuthService {
         if (Strings.isNullOrEmpty(entity.getFatherId())) {
             entity.setFatherId("0");
         }
+        if (Objects.isNull(entity.getShowMenu())) {
+            entity.setShowMenu(false);
+        }
         return authDao.create(entity);
     }
 
@@ -70,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public List<AuthEntity> findByIds(List<String> ids) {
-        if(CollectionUtils.isEmpty(ids)){
+        if (CollectionUtils.isEmpty(ids)) {
             return Lists.newArrayList();
         }
         return authDao.findByIds(ids);
