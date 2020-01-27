@@ -155,6 +155,16 @@
                                                        lay-filter="qqLoginSwitch" lay-text="ON|OFF">
                                             </div>
                                         </div>
+
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label" style="width: 140px;">启用动态菜单</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="open" lay-skin="switch"
+                                                   lay-filter="dynamicMenu" lay-text="ON|OFF"
+                                            <%if(site.dynamicMenu==true){%> checked <% }%> >
+                                        </div>
                                     </div>
 
                                 </form>
@@ -237,6 +247,11 @@
         //评论监听
         form.on('switch(openCmt)', function (data) {
             switchConfig("openCmt");
+            return false;
+        });
+
+        form.on('switch(dynamicMenu)', function (data) {
+            switchConfig("dynamicMenu");
             return false;
         });
 

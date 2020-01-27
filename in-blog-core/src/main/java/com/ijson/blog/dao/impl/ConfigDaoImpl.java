@@ -40,6 +40,7 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
         operations.set(ConfigEntity.Fields.openWechatLogin, entity.isOpenWechatLogin());
         operations.set(ConfigEntity.Fields.openWeiboLogin, entity.isOpenWeiboLogin());
         operations.set(ConfigEntity.Fields.openQQLogin, entity.isOpenQQLogin());
+        operations.set(ConfigEntity.Fields.dynamicMenu, entity.isDynamicMenu());
         return datastore.findAndModify(query, operations, false, true);
     }
 

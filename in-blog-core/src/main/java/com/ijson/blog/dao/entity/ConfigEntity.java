@@ -37,6 +37,9 @@ public class ConfigEntity {
     @Property(Fields.showAdminInfo)
     private boolean showAdminInfo;
 
+    @Property(Fields.dynamicMenu)
+    private boolean dynamicMenu;
+
     @Property(Fields.openWechatLogin)
     private boolean openWechatLogin;
 
@@ -90,6 +93,7 @@ public class ConfigEntity {
 
         String openReg = "openReg";
         String openCmt = "openCmt";
+        String dynamicMenu = "dynamicMenu";
         String showAdminInfo = "showAdminInfo";
         String openWechatLogin = "openWechatLogin";
         String openWeiboLogin = "openWeiboLogin";

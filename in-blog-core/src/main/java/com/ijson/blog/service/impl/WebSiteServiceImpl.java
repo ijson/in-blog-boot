@@ -58,6 +58,9 @@ public class WebSiteServiceImpl implements WebSiteService {
             case ConfigEntity.Fields.showAdminInfo:
                 configDaoType.setShowAdminInfo(!configDaoType.isShowAdminInfo());
                 break;
+            case ConfigEntity.Fields.dynamicMenu:
+                configDaoType.setDynamicMenu(!configDaoType.isDynamicMenu());
+                break;
             case ConfigEntity.Fields.openWechatLogin:
                 configDaoType.setOpenWechatLogin(!configDaoType.isOpenWechatLogin());
                 break;
@@ -118,6 +121,7 @@ public class WebSiteServiceImpl implements WebSiteService {
                 entity.setOpenWechatLogin(k.isOpenWechatLogin());
                 entity.setOpenWeiboLogin(k.isOpenWeiboLogin());
                 entity.setOpenQQLogin(k.isOpenQQLogin());
+                entity.setDynamicMenu(k.isDynamicMenu());
             }
 
             if (k.getType() == Constant.ConfigType.fieldShow) {
