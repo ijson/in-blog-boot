@@ -123,6 +123,10 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             query.field(PostEntity.Fields.createdBy).equal(authorId);
         }
 
+        if (Objects.nonNull(iquery.getStatus())) {
+            query.field(PostEntity.Fields.status).equal(iquery.getStatus());
+        }
+
         long totalNum = query.countAll();
         List<PostEntity> entities = query.asList();
 

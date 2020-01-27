@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.query;
 
+import com.ijson.blog.model.Constant;
 import lombok.Data;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class PostQuery {
 	private volatile boolean likeTitle;
 
 	private boolean currentUser;
+
+	private Constant.PostStatus status;
 
 }
 

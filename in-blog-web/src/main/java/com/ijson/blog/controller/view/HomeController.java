@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.util.Pageable;
 import com.ijson.mongo.support.model.Page;
@@ -57,6 +58,7 @@ public class HomeController extends BaseController {
         }
 
         query.setEnable(true);
+        query.setStatus(Constant.PostStatus.pass);
         PageResult<PostEntity> result = postService.find(null,query, page);
 
         view.addObject("total", result.getTotal());
