@@ -251,7 +251,13 @@
         });
 
         form.on('switch(dynamicMenu)', function (data) {
-            switchConfig("dynamicMenu");
+            layer.confirm('关闭后普通成员将具有管理员布局!', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                switchConfig("dynamicMenu");
+            }, function () {
+
+            });
             return false;
         });
 
