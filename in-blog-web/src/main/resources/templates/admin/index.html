@@ -34,26 +34,44 @@
     <div class="left_open">
         <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
     </div>
+
+    <%if(array.contain(session.authContext.permissionPath,"/admin/save/article")||
+    array.contain(session.authContext.permissionPath,"/admin/save/user")||
+    array.contain(session.authContext.permissionPath,"/admin/save/blogroll")){%>
+
+
     <ul class="layui-nav left fast-add" lay-filter="">
         <li class="layui-nav-item">
             <a href="javascript:;">+新增</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
+                <%if(array.contain(session.authContext.permissionPath,"/admin/save/article")){%>
                 <dd>
                     <a onclick="xadmin.open('创建文章','/admin/save/article')">
                         <i class="iconfont">&#xe6a2;</i>创建文章</a>
                 </dd>
+                <%}%>
+                <%if(array.contain(session.authContext.permissionPath,"/admin/save/user")){%>
                 <dd>
                     <a onclick="xadmin.open('创建用户','/admin/save/user')">
                         <i class="iconfont">&#xe6a2;</i>创建用户</a>
                 </dd>
+                <%}%>
+
+                <%if(array.contain(session.authContext.permissionPath,"/admin/save/blogroll")){%>
                 <dd>
                     <a onclick="xadmin.open('创建友链','/admin/save/blogroll')">
                         <i class="iconfont">&#xe6a2;</i>创建友链</a>
                 </dd>
+                <%}%>
             </dl>
         </li>
     </ul>
+
+
+
+    <%}%>
+
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
             <a href="javascript:;"> ${session.authContext.cname}</a>
