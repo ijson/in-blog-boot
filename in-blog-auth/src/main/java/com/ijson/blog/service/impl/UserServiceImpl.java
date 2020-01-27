@@ -1,6 +1,7 @@
 package com.ijson.blog.service.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.ijson.blog.dao.UserDao;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.entity.RoleEntity;
@@ -10,6 +11,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogLoginException;
 import com.ijson.blog.manager.AvatarManager;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.AuthService;
 import com.ijson.blog.service.RoleService;
@@ -82,8 +84,10 @@ public class UserServiceImpl implements UserService {
             List<String> authIds = role.getAuthIds();
             List<AuthEntity> auths = authService.findByIds(authIds);
 
-            context.setPermissionPath(auths.stream().filter(k-> !"#".equals(k.getPath())).map(AuthEntity::getPath).collect(Collectors.toList()));
+            context.setPermissionPath(auths.stream().filter(k -> !"#".equals(k.getPath())).map(AuthEntity::getPath).collect(Collectors.toList()));
             context.setPermissionEname(auths.stream().map(AuthEntity::getEname).collect(Collectors.toList()));
+
+            context.setAuths(auths);
 
         }
 

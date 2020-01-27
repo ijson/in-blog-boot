@@ -1,10 +1,12 @@
 package com.ijson.blog.controller;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.model.arg.AuthArg;
 import com.ijson.blog.service.*;
 import com.ijson.blog.service.model.info.BlogrollInfo;
 import com.ijson.blog.service.model.info.HotTopicInfo;
@@ -185,8 +187,12 @@ public class BaseController {
         VerifyCodeUtils.outputImage(w, h, out, verifyCode);
     }
 
-    protected Map<String,Object> getMenu(){
-        return Maps.newHashMap();
+    protected Map<AuthArg, List<AuthInfo>> getMenu(HttpServletRequest request) {
+        AuthContext context = getContext(request);
+        List<AuthEntity> menuAuth = context.getAuths().stream().filter(k -> {
+            return k.getMenuType() == Constant.MenuType.menu;
+        }).collect(Collectors.toList());
+        return AuthInfo.getAuthMap(menuAuth, Lists.newArrayList(), false);
     }
 
 }

@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.*;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
 import com.ijson.blog.service.model.info.*;
@@ -33,11 +34,11 @@ import java.util.stream.Collectors;
 public class ConsoleAction extends BaseController {
 
     @RequestMapping("/console/page")
-    public ModelAndView indexv2() {
+    public ModelAndView indexv2(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/index.html");
         addAdminModelAndView(view);
-        view.addObject("menu", getMenu());
+        view.addObject("menu", getMenu(request));
         return view;
     }
 

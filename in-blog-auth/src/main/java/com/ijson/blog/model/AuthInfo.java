@@ -1,12 +1,12 @@
-package com.ijson.blog.service.model.info;
+package com.ijson.blog.model;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.AuthEntity;
-import com.ijson.blog.model.Constant;
-import com.ijson.blog.service.model.info.arg.AuthArg;
+import com.ijson.blog.model.arg.AuthArg;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,16 +71,19 @@ public class AuthInfo {
     public static Map<AuthArg, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
         List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
             return k.getFatherId().equals("0");
-        }).collect(Collectors.toList());
+        }).sorted(Comparator.comparing(AuthEntity::getOrder)).collect(Collectors.toList());
 
         return fatherEntity.stream().collect(Collectors.toMap(key -> {
-            return new AuthArg(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
+            AuthArg arg = new AuthArg(key.getId(), key.getEname(), key.getCname(), key.getPath(), authIds.contains(key.getId()), disabled);
+            arg.setOrder(key.getOrder());
+            return arg;
         }, value -> {
-            return allAuth.stream().filter(vs -> {
+            List<AuthInfo> vdata = allAuth.stream().filter(vs -> {
                 return vs.getFatherId().equals(value.getId());
             }).collect(Collectors.toList()).stream().map(k -> {
                 return AuthInfo.create(k, authIds.contains(k.getId()), disabled);
-            }).collect(Collectors.toList());
+            }).sorted(Comparator.comparing(AuthInfo::getOrder)).collect(Collectors.toList());
+            return vdata;
         }));
     }
 }

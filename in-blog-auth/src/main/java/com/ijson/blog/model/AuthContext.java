@@ -1,11 +1,10 @@
 package com.ijson.blog.model;
 
 import com.google.common.base.Strings;
+import com.ijson.blog.dao.entity.AuthEntity;
 import lombok.Data;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -29,6 +28,7 @@ public class AuthContext {
     private List<Permission> permission;
     private List<String> permissionPath;
     private List<String> permissionEname;
+    private List<AuthEntity> auths;
 
     public AuthContext(String id,
                        String ename,

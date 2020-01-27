@@ -90,36 +90,36 @@
 
                                     <%if(isNotEmpty(fathers)){%>
 
-                                        <%if(editData==null){%>
-                                            <!-- 创建数据时渲染 -->
-                                            <option value="0">根目录</option>
-                                            <% for(data in fathers){ %>
-                                                <option value=${data.id}>${data.cname}</option>
-                                            <%}%>
-
-                                        <%}else{%>
-
-                                            <%if(editData.fatherId=="0"){%>
-                                                <option value="0" selected>根目录</option>
-                                                <% for(father in fathers){ %>
-                                                <option value=${father.id}>${father.cname}</option>
-                                                <%}%>
-                                            <%}else{%>
-                                                <option value="0">根目录</option>
-
-                                                <% for(father in fathers){ %>
-                                                    <%if(father.id==editData.fatherId){%>
-                                                        <option value=${father.id} selected>${father.cname}</option>
-                                                    <%}else{%>
-                                                        <option value=${father.id}>${father.cname}</option>
-                                                    <%}%>
-                                                <%}%>
-
-                                            <%}%>
+                                    <%if(editData==null){%>
+                                    <!-- 创建数据时渲染 -->
+                                    <option value="0">根目录</option>
+                                    <% for(data in fathers){ %>
+                                    <option value=${data.id}>${data.cname}</option>
                                     <%}%>
 
                                     <%}else{%>
-                                        <option value="0">根目录</option>
+
+                                    <%if(editData.fatherId=="0"){%>
+                                    <option value="0" selected>根目录</option>
+                                    <% for(father in fathers){ %>
+                                    <option value=${father.id}>${father.cname}</option>
+                                    <%}%>
+                                    <%}else{%>
+                                    <option value="0">根目录</option>
+
+                                    <% for(father in fathers){ %>
+                                    <%if(father.id==editData.fatherId){%>
+                                    <option value=${father.id} selected>${father.cname}</option>
+                                    <%}else{%>
+                                    <option value=${father.id}>${father.cname}</option>
+                                    <%}%>
+                                    <%}%>
+
+                                    <%}%>
+                                    <%}%>
+
+                                    <%}else{%>
+                                    <option value="0">根目录</option>
                                     <%}%>
 
                                 </select>
@@ -235,7 +235,7 @@
                     url: "/auth/order",
                     data: JSON.stringify({
                         id: val,
-                        currentId:'${editData.id!}'
+                        currentId: '${editData.id!}'
                     }),
                     async: false,
                     success: function (data) {
@@ -250,6 +250,8 @@
                         layer.msg(data.message);
                     }
                 });
+            } else {
+                $("#order").attr("value", '')
             }
         });
     });

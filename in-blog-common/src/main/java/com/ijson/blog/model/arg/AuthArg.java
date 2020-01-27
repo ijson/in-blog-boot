@@ -1,4 +1,4 @@
-package com.ijson.blog.service.model.info.arg;
+package com.ijson.blog.model.arg;
 
 import lombok.Data;
 
@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class AuthArg {
+    private int order;
     private String authId;
     private String authEname;
     private String authCname;
