@@ -101,13 +101,21 @@
 
                                         <%}else{%>
 
-                                            <% for(father in fathers){ %>
-
-                                                <%if(father.id==editData.fatherId){%>
-                                                    <option value=${father.id} selected>${father.cname}</option>
-                                                <%}else{%>
-                                                    <option value=${father.id}>${father.cname}</option>
+                                            <%if(editData.fatherId=="0"){%>
+                                                <option value="0" selected>根目录</option>
+                                                <% for(father in fathers){ %>
+                                                <option value=${father.id}>${father.cname}</option>
                                                 <%}%>
+                                            <%}else{%>
+
+                                                <% for(father in fathers){ %>
+                                                    <%if(father.id==editData.fatherId){%>
+                                                        <option value=${father.id} selected>${father.cname}</option>
+                                                    <%}else{%>
+                                                        <option value=${father.id}>${father.cname}</option>
+                                                    <%}%>
+                                                <%}%>
+
                                             <%}%>
                                     <%}%>
 
