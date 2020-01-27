@@ -8,8 +8,8 @@ import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
-import com.ijson.blog.exception.BlogUpdateException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.PostInfo;
@@ -42,16 +42,25 @@ public class PostDraftActioin extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        if (!Strings.isNullOrEmpty(post.getId())) {
-            PostDraftEntity postDraftEntity = postDraftService.find(post.getId());
-            if (Objects.nonNull(postDraftEntity)) {
-                return updatePost(request, post);
-            }
-        }
 
         if (Strings.isNullOrEmpty(post.getTitle())) {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
         }
+
+        if (!Strings.isNullOrEmpty(post.getId())) {
+            PostDraftEntity postDraftEntity = postDraftService.find(post.getId());
+            if (Objects.nonNull(postDraftEntity)) {
+                //不是创建人 && 不是系统管理员
+                if (!context.getId().equals(postDraftEntity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
+                    throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+                }
+                return updatePost(request, post);
+            } else {
+                throw new BlogCreateException(BlogBusinessExceptionCode.DRAFT_NOT_FOUND);
+            }
+        }
+
+
         // 创建草稿还是编辑草稿,如果是创建,需要记录ename
         String ename = post.getEname();
         if (Strings.isNullOrEmpty(ename)) {
@@ -67,15 +76,6 @@ public class PostDraftActioin extends BaseController {
 
     private Result updatePost(HttpServletRequest request, @RequestBody PostInfo post) {
         AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-        if (Strings.isNullOrEmpty(post.getId())) {
-            throw new BlogUpdateException(BlogBusinessExceptionCode.POST_UPDATE_ID_NOT_FOUND);
-        }
-        if (Strings.isNullOrEmpty(post.getTitle())) {
-            throw new BlogUpdateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
-        }
 
         PostDraftEntity newEntity = PostDraftEntity.update(context, post.getId(), post.getTitle(), post.getContent(), post.getTopicName());
 
@@ -94,6 +94,12 @@ public class PostDraftActioin extends BaseController {
         }
         PostDraftEntity postEntity = postDraftService.find(ename, shamId);
         if (Objects.nonNull(postEntity)) {
+
+            //不是创建人 && 不是系统管理员
+            if (!context.getId().equals(postEntity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
+                throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+            }
+
             postDraftService.delete(postEntity.getId());
             return Result.ok("删除成功");
         }

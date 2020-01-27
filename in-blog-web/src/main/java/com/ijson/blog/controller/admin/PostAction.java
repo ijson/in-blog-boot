@@ -13,6 +13,7 @@ import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.PostInfo;
@@ -71,6 +72,8 @@ public class PostAction extends BaseController {
             PostEntity postEntity = postService.findInternalById(post.getId());
             if (Objects.nonNull(postEntity)) {
                 return updatePost(request, post, postEntity);
+            } else {
+                throw new BlogCreateException(BlogBusinessExceptionCode.BLOG_NOT_FOUND);
             }
         }
 
@@ -96,6 +99,11 @@ public class PostAction extends BaseController {
 
     private Result updatePost(HttpServletRequest request, PostInfo post, PostEntity entity) {
         AuthContext context = getContext(request);
+
+        //不是创建人 && 不是系统管理员
+        if (!context.getId().equals(entity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
         List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
@@ -168,6 +176,10 @@ public class PostAction extends BaseController {
         PostEntity postEntity = postService.findByShamIdInternal(ename, shamId, false);
         if (Objects.isNull(postEntity)) {
             return Result.error(-1, "文章不存在,请检查");
+        }
+        //不是创建人 && 不是系统管理员
+        if (!context.getId().equals(postEntity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
         }
 
         if (postEntity != null && postEntity.isEnable()) {
@@ -268,7 +280,7 @@ public class PostAction extends BaseController {
             query.setTitle(keyWord);
         }
 
-        PageResult<PostEntity> result = postService.find(context,query, pageEntity);
+        PageResult<PostEntity> result = postService.find(context, query, pageEntity);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
             return new V2Result<>();
@@ -316,7 +328,7 @@ public class PostAction extends BaseController {
         }
 
         query.setCurrentUser(true);
-        PageResult<PostEntity> result = postService.find(context,query, pageEntity);
+        PageResult<PostEntity> result = postService.find(context, query, pageEntity);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
             return new V2Result<>();

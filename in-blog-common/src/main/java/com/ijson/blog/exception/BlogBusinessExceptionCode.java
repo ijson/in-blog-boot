@@ -60,7 +60,9 @@ public enum BlogBusinessExceptionCode {
     ROLE_ENAME_CANNOT_BE_EMPTY(200_000_047, "角色英文标识不能为空"),
     ROLE_AUTH_CANNOT_BE_EMPTY(200_000_048, "角色未选择权限"),
     ROLE_CNAME_CANNOT_BE_EMPTY(200_000_049, "角色中文标识不能为空"),
-    REQUEST_PARAMETERS_ARE_INCOMPLETE(200_000_050, "请求参数不完整");
+    REQUEST_PARAMETERS_ARE_INCOMPLETE(200_000_050, "请求参数不完整"),
+    NO_RIGHT_TO_DO_THIS(200_000_051, "无权执行此操作"),
+    DRAFT_NOT_FOUND(200_000_052, "草稿未找到");
 
     private int code;
     private String message;
