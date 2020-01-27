@@ -72,8 +72,6 @@ public class PostAction extends BaseController {
             PostEntity postEntity = postService.findInternalById(post.getId());
             if (Objects.nonNull(postEntity)) {
                 return updatePost(request, post, postEntity);
-            } else {
-                throw new BlogCreateException(BlogBusinessExceptionCode.BLOG_NOT_FOUND);
             }
         }
 

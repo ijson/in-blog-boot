@@ -55,8 +55,6 @@ public class PostDraftActioin extends BaseController {
                     throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
                 }
                 return updatePost(request, post);
-            } else {
-                throw new BlogCreateException(BlogBusinessExceptionCode.DRAFT_NOT_FOUND);
             }
         }
 
