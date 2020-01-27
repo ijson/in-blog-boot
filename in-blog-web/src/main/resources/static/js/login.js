@@ -21,7 +21,7 @@ function login() {
         cache: false,
         type: "POST",
         contentType: 'application/json',
-        url: "/user/rest/login",
+        url: "/member/rest/login",
         data: params,
         async: false,
         success: function (data) {
@@ -52,7 +52,7 @@ function logout() {
         cache: false,
         type: "POST",
         contentType: 'application/json',
-        url: "/user/rest/logout",
+        url: "/member/rest/logout",
         async: false,
         success: function (data) {
             if (data.code === 0) {
@@ -135,7 +135,7 @@ function reg() {
         cache: false,
         type: "POST",
         contentType: 'application/json',
-        url: "/user/rest/reg",
+        url: "/member/rest/reg",
         data: params,
         async: false,
         success: function (data) {
@@ -147,7 +147,7 @@ function reg() {
                 toastr.error(data.message);
                 $("#regVerCode").val('');
                 var regCaptcha = document.getElementById("regCaptcha");
-                regCaptcha.src = '/user/rest/reg/image?m=' + Math.floor(Math.random() * 10000);
+                regCaptcha.src = '/member/rest/reg/image?m=' + Math.floor(Math.random() * 10000);
             }
         },
         error: function (data) {

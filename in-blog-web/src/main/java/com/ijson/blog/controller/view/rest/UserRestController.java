@@ -32,7 +32,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RestController
-@RequestMapping("/user/rest")
+@RequestMapping("/member/rest")
 public class UserRestController extends BaseController {
 
     @Autowired

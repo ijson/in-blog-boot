@@ -37,7 +37,12 @@ public class DefaultView implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns(
                 "/admin/**",
                 "/post/**",
-                "/user/edit/**"
+                "/auth/**",
+                "/blogroll/**",
+                "/draft/**",
+                "/role/**",
+                "/user/**",
+                "/site/**"
         ).excludePathPatterns(
                 "/user/edit/image");
 
