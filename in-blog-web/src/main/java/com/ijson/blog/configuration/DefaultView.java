@@ -1,11 +1,10 @@
 package com.ijson.blog.configuration;
 
 import com.ijson.blog.interceptor.AccessStatisticInterceptor;
-import com.ijson.blog.interceptor.RememberLoginCacheInterceptor;
 import com.ijson.blog.interceptor.LoginInterceptor;
+import com.ijson.blog.interceptor.RememberLoginCacheInterceptor;
 import com.ijson.blog.manager.ViewSyncManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

@@ -67,11 +67,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
-//        List<String> permissionPath = context.getPermissionPath();
-//        if (!isParadigm(permissionPath, uri)) {
-//            response.sendRedirect("/");
-//            return false;
-//        }
+        List<String> permissionPath = context.getPermissionPath();
+        if (!isParadigm(permissionPath, uri)) {
+            response.sendRedirect("/");
+            return false;
+        }
 
         if (!Strings.isNullOrEmpty(rememberCookieValue)) {
             Cookie cookie = new Cookie(PassportHelper.getInstance().getCookieName(), rememberCookieValue);
