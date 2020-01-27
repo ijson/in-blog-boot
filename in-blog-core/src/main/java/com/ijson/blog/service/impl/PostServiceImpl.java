@@ -81,8 +81,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageResult<PostEntity> find(AuthContext context,PostQuery iquery, Page page) {
-        PageResult<PostEntity> postEntityPageResult = postDao.find(iquery, page,context.getId());
+    public PageResult<PostEntity> find(AuthContext context, PostQuery iquery, Page page) {
+        String authorId = "";
+        if (Objects.nonNull(context)) {
+            authorId = context.getId();
+        }
+
+        PageResult<PostEntity> postEntityPageResult = postDao.find(iquery, page, authorId);
         Set<String> ids = postEntityPageResult.getDataList().stream().map(PostEntity::getId).collect(Collectors.toSet());
         Map<String, Long> countByIds = countDao.findCountByIds(ids);
 

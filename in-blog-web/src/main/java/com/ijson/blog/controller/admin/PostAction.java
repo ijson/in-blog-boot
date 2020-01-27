@@ -268,7 +268,7 @@ public class PostAction extends BaseController {
             query.setTitle(keyWord);
         }
 
-        PageResult<PostEntity> result = postService.find(query, pageEntity);
+        PageResult<PostEntity> result = postService.find(context,query, pageEntity);
 
         if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
             return new V2Result<>();

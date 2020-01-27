@@ -57,7 +57,7 @@ public class HomeController extends BaseController {
         }
 
         query.setEnable(true);
-        PageResult<PostEntity> result = postService.find(query, page);
+        PageResult<PostEntity> result = postService.find(null,query, page);
 
         view.addObject("total", result.getTotal());
         view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));

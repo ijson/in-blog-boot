@@ -315,11 +315,31 @@ public class ConsoleAction extends BaseController {
 
 
     @RequestMapping("/list/draft")
-    public ModelAndView postDriftV2List() {
+    public ModelAndView postDriftList() {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-article-draft.html");
         addAdminModelAndView(view);
         return view;
     }
 
+    /**
+     * 当前人草稿列表
+     * @return
+     */
+    @RequestMapping("/list/user/draft")
+    public ModelAndView postUserDriftList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-user-article-draft.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
+
+    @RequestMapping("/list/user/post")
+    public ModelAndView postUserList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-user-article.html");
+        addAdminModelAndView(view);
+        return view;
+    }
 }

@@ -134,7 +134,7 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
         }
 
-        if (iquery.isCurrentUser()) {
+        if (iquery.isCurrentUser() && !Strings.isNullOrEmpty(authorId)) {
             query.field(PostEntity.Fields.createdBy).equal(authorId);
         }
 
