@@ -66,13 +66,4 @@ public class WebSiteAction extends BaseController {
         return Result.ok("更新成功!");
     }
 
-
-    @PostMapping("/update/pwd")
-    public Result updatePwd(HttpServletRequest request, HttpSession session, @RequestBody UpdPasswordInfo updPassword) {
-        AuthContext context = getContext(request);
-
-        return Result.ok("保存网站信息成功!");
-    }
-
-
 }

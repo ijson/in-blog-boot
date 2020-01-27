@@ -40,7 +40,7 @@ public class UserAction extends BaseController {
     private String updPwdCodeKey = "updPwdCodeKey";
     private String updPwdCodeTime = "updPwdCodeTime";
 
-    @PostMapping(value = "/edit/user")
+    @PostMapping(value = "/addup")
     public Result editBase(HttpServletRequest request, @RequestBody UserEntity myUser) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
