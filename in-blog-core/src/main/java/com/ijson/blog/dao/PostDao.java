@@ -2,6 +2,7 @@ package com.ijson.blog.dao;
 
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
+import com.ijson.blog.model.AuthContext;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -37,9 +38,9 @@ public interface PostDao {
 
     PostEntity incPros(String id);
 
-    Long findPublishTotal();
+    Long findPublishTotal(AuthContext context);
 
-    Long findTodayPublishTotal();
+    Long findTodayPublishTotal(AuthContext context);
 
     PostEntity incPros(String ename, String shamId);
 

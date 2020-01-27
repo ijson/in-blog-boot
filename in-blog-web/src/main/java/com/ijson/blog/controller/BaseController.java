@@ -90,6 +90,11 @@ public class BaseController {
         view.addObject("site", getConfig());
     }
 
+    protected void addUserModelAndView(ModelAndView view) {
+        view.addObject("webCtx", webCtx);
+        view.addObject("webEname", webEname);
+    }
+
 
     protected void addViewModelAndView(ModelAndView view) {
         view.addObject("hots", getHotPosts());
@@ -98,7 +103,7 @@ public class BaseController {
         view.addObject("blogrolls", getBlogrolls());
         view.addObject("lastPublish", getMostRecentlyPublishedPosts());
         view.addObject("total", postService.count());
-        view.addObject("webSiteCount", postService.getWebSiteCount());
+        view.addObject("webSiteCount", postService.getWebSiteCount(null));
         view.addObject("webCtx", webCtx);
         view.addObject("webEname", webEname);
         view.addObject("site", getConfig());

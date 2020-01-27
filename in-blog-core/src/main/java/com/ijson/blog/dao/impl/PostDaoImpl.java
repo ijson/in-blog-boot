@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.ijson.blog.dao.PostDao;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
+import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.AbstractDao;
@@ -218,15 +219,21 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
     }
 
     @Override
-    public Long findPublishTotal() {
+    public Long findPublishTotal(AuthContext context) {
         Query<PostEntity> query = createQuery();
+        if (Objects.nonNull(context)) {
+            query.field(PostEntity.Fields.createdBy).equal(context.getId());
+        }
         query.field(PostEntity.Fields.enable).equal(true);
         return query.countAll();
     }
 
     @Override
-    public Long findTodayPublishTotal() {
+    public Long findTodayPublishTotal(AuthContext context) {
         Query<PostEntity> query = createQuery();
+        if (Objects.nonNull(context)) {
+            query.field(PostEntity.Fields.createdBy).equal(context.getId());
+        }
         query.field(PostEntity.Fields.enable).equal(true);
         query.field(PostEntity.Fields.lastModifiedTime).greaterThanOrEq(DateUtils.getInstance().getCurrentYYYYMMHH());
         return query.countAll();

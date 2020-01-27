@@ -247,7 +247,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public long getWebSiteCount() {
+    public long getWebSiteCount(AuthContext context) {
         CountEntity countById = countDao.findCountByWebType(AccessType.webSite.name());
         return countById.getViews();
     }
@@ -255,12 +255,19 @@ public class PostServiceImpl implements PostService {
     @Cacheable(value = "consoleData")
     @Override
     public WelcomeInfo getConsoleData() {
-        Long publishTotal = postDao.findPublishTotal();
-        Long readTotal = getWebSiteCount();
+        Long publishTotal = postDao.findPublishTotal(null);
+        Long readTotal = getWebSiteCount(null);
         Long commentTotal = replyDao.count();
-        Long todayPublishTotal = postDao.findTodayPublishTotal();
+        Long todayPublishTotal = postDao.findTodayPublishTotal(null);
         Long userCount = userDao.count();
         return WelcomeInfo.create(publishTotal, readTotal, commentTotal, todayPublishTotal, userCount);
+    }
+
+    @Override
+    public WelcomeInfo getUserConsoleData(AuthContext context) {
+        Long publishTotal = postDao.findPublishTotal(context);
+        Long todayPublishTotal = postDao.findTodayPublishTotal(context);
+        return WelcomeInfo.create(publishTotal, 0L, 0L, todayPublishTotal, 0L);
     }
 
     @Override

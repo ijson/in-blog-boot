@@ -36,11 +36,13 @@ public interface PostService {
 
     PostEntity incPros(String id);
 
-    long getWebSiteCount();
+    long getWebSiteCount(AuthContext context);
 
     WelcomeInfo getConsoleData();
 
-    PostEntity enable(String id,boolean enable,AuthContext context);
+    WelcomeInfo getUserConsoleData(AuthContext context);
+
+    PostEntity enable(String id, boolean enable, AuthContext context);
 
     PostEntity delete(String id,AuthContext context);
 
