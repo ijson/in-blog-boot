@@ -12,10 +12,6 @@ public interface PostDao {
 
     PostEntity createOrUpdate(PostEntity entity,boolean updateLastModifiedTime);
 
-    PostEntity updateShamIdTest(PostEntity entity);
-
-    List<PostEntity> findAllTest();
-
     PostEntity find(String id);
 
     PostEntity findByShamId(String ename,String shamId);

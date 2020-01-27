@@ -38,22 +38,6 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         return entity;
     }
 
-    @Override
-    public PostEntity updateShamIdTest(PostEntity entity) {
-        Query<PostEntity> query = createQuery();
-        query.field(PostEntity.Fields.id).equal(entity.getId());
-        UpdateOperations operations = createUpdateOperations();
-        ObjectId objectId = new ObjectId(entity.getId());
-        operations.set(PostEntity.Fields.shamId, objectId.getTimestamp() + "");
-        return datastore.findAndModify(query, operations);
-    }
-
-    @Override
-    public List<PostEntity> findAllTest() {
-        Query<PostEntity> query = createQuery();
-        return query.asList();
-    }
-
     private PostEntity findAndModify(PostEntity entity, boolean updateLastModifiedTime) {
         Query<PostEntity> query = createQuery();
         query.field(PostEntity.Fields.id).equal(entity.getId());

@@ -42,4 +42,13 @@ public interface Constant {
 
         }
     }
+
+    enum PostStatus {
+        in_progress("审核中"),
+        reject("审核未通过"),
+        pass("审核通过");
+
+        PostStatus(String desc) {
+        }
+    }
 }

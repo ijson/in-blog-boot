@@ -88,6 +88,9 @@ public class PostEntity extends BaseEntity {
     @Property(Fields.draftId)
     private String draftId;
 
+    @Property(Fields.status)
+    private Constant.PostStatus status;
+
     private long views;
 
     private long reply;
@@ -115,6 +118,7 @@ public class PostEntity extends BaseEntity {
         String ename = "ename";
         String shamId = "shamId";
         String draftId = "draftId";
+        String status = "status";
     }
 
 

@@ -27,11 +27,5 @@ public class PostDaoTest {
         postDao.createOrUpdate(new PostEntity(),true);
     }
 
-    @Test
-    public void updateShamId(){
-        List<PostEntity> allTest = postDao.findAllTest();
-        for (PostEntity entity : allTest) {
-            postDao.updateShamIdTest(entity);
-        }
-    }
+
 }

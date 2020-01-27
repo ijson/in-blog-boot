@@ -29,6 +29,7 @@ public class AuthContext {
     private List<String> permissionPath;
     private List<String> permissionEname;
     private List<AuthEntity> auths;
+    private boolean verify;
 
     public AuthContext(String id,
                        String ename,
