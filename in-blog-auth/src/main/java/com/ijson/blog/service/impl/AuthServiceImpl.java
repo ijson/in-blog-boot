@@ -90,4 +90,9 @@ public class AuthServiceImpl implements AuthService {
     public AuthEntity findByEname(String ename) {
         return authDao.findByEname(ename);
     }
+
+    @Override
+    public List<AuthEntity> findChild(String id) {
+        return authDao.findChild(id);
+    }
 }

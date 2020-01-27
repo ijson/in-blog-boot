@@ -34,4 +34,6 @@ public interface AuthService {
     List<AuthEntity> findAll();
 
     AuthEntity findByEname(String ename);
+
+    List<AuthEntity> findChild(String id);
 }

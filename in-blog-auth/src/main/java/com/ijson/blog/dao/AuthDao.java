@@ -33,4 +33,6 @@ public interface AuthDao {
     List<AuthEntity> findAll();
 
     AuthEntity findByEname(String ename);
+
+    List<AuthEntity> findChild(String id);
 }

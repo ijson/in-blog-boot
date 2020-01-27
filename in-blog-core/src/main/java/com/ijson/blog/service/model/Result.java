@@ -37,6 +37,11 @@ public class Result<T> {
         return new Result(0, "");
     }
 
+
+    public static Result ok(Object t) {
+        return new Result(0, "", t);
+    }
+
     public static Result error(BlogBusinessException e) {
         return new Result(e.getErrorCode(), e.getMessage());
     }

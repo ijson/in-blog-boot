@@ -105,6 +105,27 @@ public class AuthAction extends BaseController {
         return Result.ok(entity.isEnable() ? "禁用成功!" : "启用成功!");
     }
 
+    @PostMapping(value = "/order")
+    public Result getOrder(HttpServletRequest request, @RequestBody AuthInfo info) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("未获取到当前登入人用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+
+        if (Strings.isNullOrEmpty(info.getId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.REQUEST_PARAMETERS_ARE_INCOMPLETE);
+        }
+
+        List<AuthEntity> authEntities = authService.findChild(info.getId());
+
+        if (Objects.isNull(authEntities)) {
+            return Result.ok(0);
+        }
+
+        return Result.ok(authEntities.size());
+    }
+
     @PostMapping(value = "/delete/{id}")
     public Result delete(HttpServletRequest request, @PathVariable("id") String id) {
         AuthContext context = getContext(request);

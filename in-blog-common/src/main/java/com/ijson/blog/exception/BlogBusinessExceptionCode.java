@@ -59,7 +59,8 @@ public enum BlogBusinessExceptionCode {
     ROLE_ENAME_ALREADY_EXIST(200_000_046, "角色英文标识已存在"),
     ROLE_ENAME_CANNOT_BE_EMPTY(200_000_047, "角色英文标识不能为空"),
     ROLE_AUTH_CANNOT_BE_EMPTY(200_000_048, "角色未选择权限"),
-    ROLE_CNAME_CANNOT_BE_EMPTY(200_000_049, "角色中文标识不能为空");
+    ROLE_CNAME_CANNOT_BE_EMPTY(200_000_049, "角色中文标识不能为空"),
+    REQUEST_PARAMETERS_ARE_INCOMPLETE(200_000_050, "请求参数不完整");
 
     private int code;
     private String message;

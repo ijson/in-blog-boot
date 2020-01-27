@@ -3,7 +3,6 @@ package com.ijson.blog.dao.impl;
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.AuthDao;
 import com.ijson.blog.dao.entity.AuthEntity;
-import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.mongo.support.AbstractDao;
 import com.ijson.mongo.support.model.Page;
@@ -157,5 +156,12 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
         Query<AuthEntity> query = datastore.createQuery(AuthEntity.class);
         query.field(AuthEntity.Fields.ename).equal(ename);
         return query.get();
+    }
+
+    @Override
+    public List<AuthEntity> findChild(String id) {
+        Query<AuthEntity> query = datastore.createQuery(AuthEntity.class);
+        query.field(AuthEntity.Fields.fatherId).equal(id);
+        return query.asList();
     }
 }
