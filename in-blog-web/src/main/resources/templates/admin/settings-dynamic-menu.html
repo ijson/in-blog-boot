@@ -1,0 +1,34 @@
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+
+            <%for(entry in menu){
+            var key = entry.key;
+            var value = entry.value;
+            %>
+
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont left-nav-li" lay-tips="${key.authCname}">&#xe723;</i>
+                    <cite>${key.authCname}</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu">
+
+                    <% for(data in value){ %>
+
+                    <li>
+                        <a onclick="xadmin.add_tab('${data.cname}','${data.path}')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>${data.cname}</cite>
+                        </a>
+                    </li>
+
+                    <%}%>
+
+                </ul>
+            </li>
+
+            <%}%>
+        </ul>
+    </div>
+</div>
