@@ -84,7 +84,8 @@
                         <div class="layui-form-item">
                             <label for="fatherId" class="layui-form-label">父菜单</label>
                             <div class="layui-input-inline">
-                                <select name="fatherId">
+                                <select name="fatherId" lay-verify="fatherId">
+                                    <option value="">-请选择-</option>
 
                                     <%if(isNotEmpty(fathers)){%>
 
@@ -161,6 +162,11 @@
             path: function (value) {
                 if (value === undefined || value === '' || value.length === 0) {
                     return '权限路径不能为空';
+                }
+            },
+            fatherId: function (value) {
+                if (value === undefined || value === '' || value.length === 0) {
+                    return '父菜单不能为空';
                 }
             }
 
