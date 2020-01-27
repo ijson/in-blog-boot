@@ -66,13 +66,23 @@
            lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
 </script>
 
+
+<style>
+    pass{
+        color: #46c571;
+    }
+    reject{
+        color: red;
+    }
+</style>
+
 <script type="text/html" id="statusTpl">
     {{# if(d.status=='pass'){ }}
-        通过
+        <pass>通过</pass>
     {{# } else if(d.status=='in_progress'){ }}
         审核中
     {{# } else if(d.status=='reject'){ }}
-        未通过
+        <reject>未通过</reject>
     {{# }else{ }}
         未知
     {{# } }}
@@ -102,7 +112,7 @@
                     title: '最后更新时间',
                     templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
                 },
-                {field: 'status', width: 100, title: "审核状态", templet: '#statusTpl'},
+                {field: 'status', width: 80, title: "审核", templet: '#statusTpl'},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
                 {field: '', title: "操作", templet: '#operation'}
 

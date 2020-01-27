@@ -57,6 +57,10 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             operations.set(PostEntity.Fields.title, entity.getTitle());
         }
 
+        if(Objects.nonNull(entity.getStatus())){
+            operations.set(PostEntity.Fields.status, entity.getStatus());
+        }
+
         if (updateLastModifiedTime) {
             operations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         }
