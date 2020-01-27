@@ -72,7 +72,12 @@
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <!-- 左侧菜单开始 -->
-<% include("settings-default-menu.html"){} %>
+
+<%if(site.dynamicMenu==true){%>
+    <% include("settings-dynamic-menu.html"){} %>
+<%}else{%>
+    <% include("settings-default-menu.html"){} %>
+<%}%>
 
 <!-- <div class="x-slide_left"></div> -->
 <!-- 左侧菜单结束 -->

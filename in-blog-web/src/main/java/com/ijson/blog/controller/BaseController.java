@@ -87,6 +87,7 @@ public class BaseController {
         view.addObject("user", getBlogAdministratorInformation());
         view.addObject("webCtx", webCtx);
         view.addObject("webEname", webEname);
+        view.addObject("site", getConfig());
     }
 
 

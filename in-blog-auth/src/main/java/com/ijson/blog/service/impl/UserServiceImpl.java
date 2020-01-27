@@ -81,14 +81,15 @@ public class UserServiceImpl implements UserService {
                 entity.getAvatar());
         if (!Strings.isNullOrEmpty(entity.getRoleId())) {
             RoleEntity role = roleService.findById(entity.getRoleId());
-            List<String> authIds = role.getAuthIds();
-            List<AuthEntity> auths = authService.findByIds(authIds);
+            if(Objects.nonNull(role)){
+                List<String> authIds = role.getAuthIds();
+                List<AuthEntity> auths = authService.findByIds(authIds);
 
-            context.setPermissionPath(auths.stream().filter(k -> !"#".equals(k.getPath())).map(AuthEntity::getPath).collect(Collectors.toList()));
-            context.setPermissionEname(auths.stream().map(AuthEntity::getEname).collect(Collectors.toList()));
+                context.setPermissionPath(auths.stream().filter(k -> !"#".equals(k.getPath())).map(AuthEntity::getPath).collect(Collectors.toList()));
+                context.setPermissionEname(auths.stream().map(AuthEntity::getEname).collect(Collectors.toList()));
 
-            context.setAuths(auths);
-
+                context.setAuths(auths);
+            }
         }
 
         return context;
