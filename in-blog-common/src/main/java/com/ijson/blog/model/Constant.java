@@ -51,4 +51,12 @@ public interface Constant {
         PostStatus(String desc) {
         }
     }
+
+    enum AuditTrigger {
+        create("新建"),
+        update("更新");
+
+        AuditTrigger(String desc) {
+        }
+    }
 }

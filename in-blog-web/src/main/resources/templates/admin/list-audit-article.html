@@ -59,12 +59,9 @@
 
 <script type="text/html" id="operation">
     <div class="layui-btn-container">
-        {{# if(d.draftId){ }}
-        <button class="layui-btn layui-btn-warm" lay-event="draft"> 草稿</button>
-        {{# } else{ }}
-        <button class="layui-btn layui-btn-normal" lay-event="edit"> 编辑</button>
-        {{# } }}
-        <button class="layui-btn layui-btn-danger" lay-event="delete">删除</button>
+        <button class="layui-btn layui-btn-warm" lay-event="draft"> 查看</button>
+        <button class="layui-btn layui-btn-normal" lay-event="edit"> 同意</button>
+        <button class="layui-btn layui-btn-danger" lay-event="delete">驳回</button>
     </div>
 </script>
 
@@ -111,16 +108,15 @@
                 {field: 'shamId', width: 80, hide: true},
                 {field: 'draftId', width: 80, hide: true},
                 {field: 'title', width: 280, title: "标题", sort: true},
-                {field: 'views', width: 90, title: "阅读数", sort: true},
-                {field: 'pros', width: 90, title: "点赞数", sort: true},
+                {field: 'trigger', width: 80, title: "类型", sort: true},
+                {field: 'userCname', width: 100, title: "修改人", sort: true},
                 {
                     field: 'lastModifiedTime',
                     width: 170,
-                    title: '最后更新时间',
+                    title: '更新时间',
                     templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
                 },
                 {field: 'status', width: 80, title: "审核", templet: '#statusTpl'},
-                {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
                 {field: '', title: "操作", templet: '#operation'}
 
             ]]

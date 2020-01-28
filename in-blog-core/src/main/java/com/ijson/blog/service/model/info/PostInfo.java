@@ -48,6 +48,7 @@ public class PostInfo {
     private String cname;
     private String draftId;
     private Constant.PostStatus status;
+    private Constant.AuditTrigger trigger;
     private String reason;
 
 
@@ -142,6 +143,7 @@ public class PostInfo {
             post.setDraftId(key.getDraftId());
             post.setStatus(key.getStatus());
             post.setReason(key.getReason());
+            post.setTrigger(key.getTrigger());
             return post;
         }).collect(Collectors.toList());
     }
@@ -163,6 +165,7 @@ public class PostInfo {
             post.setLastModifiedBy(key.getLastModifiedBy());
             post.setStatus(key.getStatus());
             post.setReason(key.getReason());
+            post.setTrigger(key.getTrigger());
             return post;
         }).collect(Collectors.toList());
     }
@@ -236,6 +239,7 @@ public class PostInfo {
         post.setDraftId(entity.getDraftId());
         post.setStatus(entity.getStatus());
         post.setReason(entity.getReason());
+        post.setTrigger(entity.getTrigger());
         post.setLastModifiedBy(entity.getLastModifiedBy());
         if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
             post.setTopicName(getTpoicNames(entity.getTopicName()));
@@ -262,6 +266,7 @@ public class PostInfo {
         post.setDraftId(entity.getDraftId());
         post.setStatus(entity.getStatus());
         post.setReason(entity.getReason());
+        post.setTrigger(entity.getTrigger());
         return post;
     }
 }

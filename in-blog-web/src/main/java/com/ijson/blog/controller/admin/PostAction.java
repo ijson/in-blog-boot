@@ -90,6 +90,7 @@ public class PostAction extends BaseController {
         //topicEntitys有判空
         PostEntity entity = PostEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), topics, context.getEname());
         entity.setCreate(true);
+        entity.setTrigger(Constant.AuditTrigger.create);
         entity = postService.createPost(context, entity);
         log.info("文章创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
         return Result.ok("创建文章成功!");
@@ -147,7 +148,7 @@ public class PostAction extends BaseController {
 
         //6. 更新post
         PostEntity newEntity = PostEntity.update(context, post.getId(), post.getTitle(), post.getContent(), notDeleteTopic, null);
-
+        newEntity.setTrigger(Constant.AuditTrigger.update);
         postService.createPost(context, newEntity);
 
 

@@ -94,6 +94,9 @@ public class PostEntity extends BaseEntity {
     @Property(Fields.reason)
     private String reason;
 
+    @Property(Fields.trigger)
+    private Constant.AuditTrigger trigger;
+
     private long views;
 
     private long reply;
@@ -123,6 +126,7 @@ public class PostEntity extends BaseEntity {
         String draftId = "draftId";
         String status = "status";
         String reason = "reason";
+        String trigger = "trigger";
     }
 
 
