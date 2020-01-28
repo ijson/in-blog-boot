@@ -205,13 +205,26 @@ public class BaseController {
         return AuthInfo.getAuthMap(menuAuth, Lists.newArrayList(), false);
     }
 
-    protected AuthContext regularCheck(HttpServletRequest request) {
+    /**
+     * @param request
+     * @param handleException 自己处理异常
+     * @return
+     */
+    protected AuthContext regularCheck(HttpServletRequest request, boolean handleException) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
-            throw new BlogBusinessException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+            if (handleException) {
+                return null;
+            } else {
+                throw new BlogBusinessException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+            }
         }
         if (LoginInterceptor.isParadigm(context.getPermissionEname(), request.getRequestURI())) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+            if (handleException) {
+                return null;
+            } else {
+                throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+            }
         }
         return context;
     }
