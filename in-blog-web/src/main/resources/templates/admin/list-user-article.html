@@ -85,13 +85,23 @@
 
 <script type="text/html" id="statusTpl">
     {{# if(d.status=='pass'){ }}
-        <pass>通过</pass>
+    <pass>通过</pass>
     {{# } else if(d.status=='in_progress'){ }}
-        审核中
+    审核中
     {{# } else if(d.status=='reject'){ }}
-        <reject>未通过</reject>
+    <reject>未通过</reject>
     {{# }else{ }}
-        未知
+    未知
+    {{# } }}
+</script>
+
+<script type="text/html" id="titleTpl">
+    {{# if(d.status=='reject'){ }}
+        {{d.title}} [<reject>{{d.reason}}</reject>]
+    {{# }else{ }}
+
+        {{d.title}}
+
     {{# } }}
 </script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
@@ -110,7 +120,7 @@
                 {field: 'ename', width: 80, hide: true},
                 {field: 'shamId', width: 80, hide: true},
                 {field: 'draftId', width: 80, hide: true},
-                {field: 'title', width: 280, title: "标题", sort: true},
+                {field: 'title', width: 280, title: "标题[原因]", sort: true,templet:'#titleTpl'},
                 {field: 'views', width: 90, title: "阅读数", sort: true},
                 {field: 'pros', width: 90, title: "点赞数", sort: true},
                 {
