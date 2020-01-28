@@ -65,32 +65,17 @@
     </div>
 </script>
 
-<script type="text/html" id="switchTpl">
-    <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
-           lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
-</script>
-
-
-<style>
-    pass{
-        color: #46c571;
-    }
-    reject{
-        color: red;
-    }
-</style>
-
-<script type="text/html" id="statusTpl">
-    {{# if(d.status=='pass'){ }}
-        <pass>通过</pass>
-    {{# } else if(d.status=='in_progress'){ }}
-        审核中
-    {{# } else if(d.status=='reject'){ }}
-        <reject>未通过</reject>
+<script type="text/html" id="triggerTpl">
+    {{# if(d.trigger=='create'){ }}
+        新建
+    {{# } else if(d.trigger=='update'){ }}
+        更新
     {{# }else{ }}
         未知
     {{# } }}
 </script>
+
+
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
@@ -106,17 +91,15 @@
                 {field: 'id', hide: true},
                 {field: 'ename', width: 80, hide: true},
                 {field: 'shamId', width: 80, hide: true},
-                {field: 'draftId', width: 80, hide: true},
                 {field: 'title', width: 280, title: "标题", sort: true},
-                {field: 'trigger', width: 80, title: "类型", sort: true},
+                {field: 'trigger', width: 80, title: "类型", sort: true, templet: '#triggerTpl'},
                 {field: 'userCname', width: 100, title: "修改人", sort: true},
                 {
                     field: 'lastModifiedTime',
                     width: 170,
                     title: '更新时间',
-                    templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
+                    templet: "<div>{{layui.util.toDateString(d.lastModifiedTime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
                 },
-                {field: 'status', width: 80, title: "审核", templet: '#statusTpl'},
                 {field: '', title: "操作", templet: '#operation'}
 
             ]]
