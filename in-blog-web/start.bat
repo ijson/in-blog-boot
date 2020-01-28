@@ -1,4 +1,10 @@
-IBO_HOME=/Users/cuiyongxu/workspace/ijson/in-blog-boot
+@echo off
+
+rem ---------------------------------------------------------------------------
+rem start in-blog-boot server
+rem ---------------------------------------------------------------------------
+
+set "IBO_HOME=%cd%"
 
 cd %IBO_HOME%
 
