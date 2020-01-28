@@ -60,13 +60,13 @@
 <script type="text/html" id="operation">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-normal" lay-event="edit"> 编辑</button>
-        <button class="layui-btn layui-btn-danger" lay-event="delete">删除</button>
+        <button class="layui-btn layui-btn-danger" lay-event="delete" {{ d.ename=='system' ? 'disabled': ''}}>删除</button>
     </div>
 </script>
 
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
-           lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
+           lay-filter="selectEnable" {{ d.enable ? 'checked': ''}} {{ d.ename=='system' ? 'disabled': ''}} >
 </script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 

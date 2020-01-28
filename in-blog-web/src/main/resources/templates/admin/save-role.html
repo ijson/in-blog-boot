@@ -39,14 +39,14 @@
                         <div class="layui-form-item">
                             <input type="text" name="ename" id="ename" lay-verify="ename" autocomplete="off"
                                    placeholder="请输入英文标识"
-                                   class="layui-input" value="${editData.ename!}">
+                                   class="layui-input" value="${editData.ename!}" <%if(editData!=null &&editData.ename=="system"){%> readonly <%}%>  >
                         </div>
 
 
                         <div class="layui-form-item">
                             <input type="text" name="cname" id="cname" lay-verify="cname" autocomplete="off"
                                    placeholder="请输入中文描述"
-                                   class="layui-input" value="${editData.cname!}">
+                                   class="layui-input" value="${editData.cname!}" <%if(editData!=null &&editData.ename=="system"){%> readonly <%}%>>
                         </div>
 
                         <div class="layui-form-item">
@@ -116,11 +116,11 @@
                             </table>
                         </div>
 
-
-                        <div class="layui-form-item">
-                            <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存
-                            </button>
-                        </div>
+                        <%if(editData==null||editData.ename!="system"){%>
+                            <div class="layui-form-item">
+                                <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</button>
+                            </div>
+                        <%}%>
                     </form>
                 </div>
             </div>
