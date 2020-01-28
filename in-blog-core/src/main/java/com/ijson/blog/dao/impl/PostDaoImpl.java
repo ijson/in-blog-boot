@@ -285,7 +285,7 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         UpdateOperations<PostEntity> updateOperations = datastore.createUpdateOperations(PostEntity.class);
         updateOperations.set(PostEntity.Fields.status, status);
         updateOperations.set(PostEntity.Fields.reason, reason);
-//        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, updateOperations);
     }
 
