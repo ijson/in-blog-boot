@@ -3,6 +3,10 @@ package com.ijson.blog.controller;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.*;
+import com.ijson.blog.exception.BlogBusinessException;
+import com.ijson.blog.exception.BlogBusinessExceptionCode;
+import com.ijson.blog.exception.BlogCreateException;
+import com.ijson.blog.interceptor.LoginInterceptor;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.model.Constant;
@@ -201,4 +205,14 @@ public class BaseController {
         return AuthInfo.getAuthMap(menuAuth, Lists.newArrayList(), false);
     }
 
+    protected AuthContext regularCheck(HttpServletRequest request) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            throw new BlogBusinessException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        if (LoginInterceptor.isParadigm(context.getPermissionEname(), request.getRequestURI())) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
+        return context;
+    }
 }
