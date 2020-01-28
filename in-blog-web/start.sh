@@ -3,7 +3,7 @@ IBO_HOME=/Users/cuiyongxu/workspace/ijson/in-blog-boot
 
 cd $IBO_HOME
 
-#git pull
+git pull
 
 mvn install -Dmaven.test.skip=true
 
