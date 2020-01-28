@@ -31,7 +31,7 @@ public class TagController extends BaseController {
     @RequestMapping("/")
     public ModelAndView tags(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        view.setViewName("view/tags.html");
+        view.setViewName("view/index-list-tag.html");
         try {
             view.addObject("tags", HotTopicInfo.getHotTopic(topicService.findAll()));
             view.addObject("tagActive", "active");
@@ -47,7 +47,7 @@ public class TagController extends BaseController {
     @RequestMapping("/{id}")
     public ModelAndView tagById(@PathVariable("id") String id, Integer index, HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        view.setViewName("view/tag-post-list.html");
+        view.setViewName("view/index-list-post-tag.html");
         try {
             Page page = new Page();
 
@@ -80,7 +80,7 @@ public class TagController extends BaseController {
     @RequestMapping("/{ename}/tags/{shamId}")
     public ModelAndView tagByShamId(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, Integer index, HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        view.setViewName("view/tag-post-list.html");
+        view.setViewName("view/index-list-post-tag.html");
         TopicEntity topicEntity = topicService.findTopicByShamIdAndEname(ename, shamId);
         if (Objects.isNull(topicEntity)) {
             view.setViewName("error/404.html");

@@ -2,15 +2,15 @@
 
 <html lang="zh-CN">
 <head>
-    <% include("base/meta.html"){} %>
+    <% include("base/web-settings-meta.html"){} %>
     <title>${site.siteName!}-首页</title>
 </head>
 
 <body>
 
-<% include("base/top-nav.html"){} %>
+<% include("base/web-settings-top-nav.html"){} %>
 
-<% include("base/reg-or-login.html"){} %>
+<% include("base/web-settings-reg-login.html"){} %>
 
 
 <div class="container">
@@ -78,20 +78,20 @@
         </div><!-- /.blog-main -->
 
         <div class="col-sm-3 blog-right">
-            <% include("base/my-info.html"){} %>
-            <% include("base/blogroll.html"){} %>
-            <% include("base/hot-article.html"){} %>
-            <% include("base/hot-tags.html"){} %>
-            <% include("base/recently-publish.html"){} %>
+            <% include("base/web-settings-blog-admin-info.html"){} %>
+            <% include("base/index-list-blogroll.html"){} %>
+            <% include("base/index-list-hot-article.html"){} %>
+            <% include("base/index-list-hot-tag.html"){} %>
+            <% include("base/index-list-rece-publish.html"){} %>
         </div>
 
     </div><!-- /.row -->
 
 </div><!-- /.container -->
 
-<% include("base/footer.html"){} %>
+<% include("base/web-settings-footer.html"){} %>
 
-<% include("base/bottom.html"){} %>
+<% include("base/web-settings-bottom.html"){} %>
 
 </body>
 </html>

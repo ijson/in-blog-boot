@@ -29,7 +29,7 @@ public class ArticleController extends BaseController {
      */
     @RequestMapping("/{ename}/details/{shamId}")
     public ModelAndView details(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
-        ModelAndView view = new ModelAndView("view/detail.html");
+        ModelAndView view = new ModelAndView("view/index-article.html");
         try {
             PostEntity entity = postService.findByShamId(ename, shamId);
             view.addObject("data", PostInfo.create(entity));

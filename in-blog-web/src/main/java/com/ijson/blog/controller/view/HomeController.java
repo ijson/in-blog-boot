@@ -43,7 +43,7 @@ public class HomeController extends BaseController {
 
     @RequestMapping("/index")
     public ModelAndView index(Integer index, String keyWord) {
-        ModelAndView view = new ModelAndView("view/index.html");
+        ModelAndView view = new ModelAndView("view/index-list.html");
 
         Page page = new Page();
         if (Objects.isNull(index)) {
