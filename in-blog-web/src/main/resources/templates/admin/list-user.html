@@ -33,6 +33,13 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
+                <%if(array.contain(session.authContext.permissionPath,"/admin/save/user")){%>
+                <div class="layui-card-header">
+                    <button class="layui-btn" onclick="xadmin.open('添加会员','/admin/save/user',900,500)"><i
+                            class="fa fa-plus"></i>添加会员
+                    </button>
+                </div>
+                <%}%>
                 <div class="layui-card-body ">
                     <table id="userList" lay-filter="userList"></table>
                 </div>

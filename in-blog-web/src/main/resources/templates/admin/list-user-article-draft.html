@@ -33,6 +33,13 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
+                <%if(array.contain(session.authContext.permissionPath,"/admin/save/article")){%>
+                <div class="layui-card-header">
+                    <button class="layui-btn" onclick="xadmin.open('创建文章','/admin/save/article',900,500)"><i
+                            class="fa fa-plus"></i>创建文章
+                    </button>
+                </div>
+                <%}%>
                 <div class="layui-card-body ">
                     <table id="postList" lay-filter="postList"></table>
                 </div>
