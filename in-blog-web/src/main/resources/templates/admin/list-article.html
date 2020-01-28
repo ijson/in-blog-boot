@@ -62,6 +62,27 @@
     </div>
 </script>
 
+<style>
+    pass{
+        color: #46c571;
+    }
+    reject{
+        color: red;
+    }
+</style>
+
+<script type="text/html" id="titleTpl">
+    {{# if(d.status=='pass'){ }}
+    [<pass>通过</pass>] {{d.title}}
+    {{# } else if(d.status=='in_progress'){ }}
+    [审核中] {{d.title}}
+    {{# } else if(d.status=='reject'){ }}
+    [<reject>未通过</reject>] {{d.title}}
+    {{# }else{ }}
+    [未知] {{d.title}}
+    {{# } }}
+</script>
+
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
            lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
@@ -82,7 +103,7 @@
                 {field: 'ename', width: 80, hide: true},
                 {field: 'shamId', width: 80, hide: true},
                 {field: 'draftId', width: 80, hide: true},
-                {field: 'title', width: 280, title: "标题", sort: true},
+                {field: 'title', width: 280, title: "[审核状态]标题", templet: '#titleTpl'},
                 {field: 'views', width: 90, title: "阅读数", sort: true},
                 {field: 'pros', width: 90, title: "点赞数", sort: true},
                 {

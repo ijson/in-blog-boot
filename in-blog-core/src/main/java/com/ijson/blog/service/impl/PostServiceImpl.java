@@ -67,6 +67,8 @@ public class PostServiceImpl implements PostService {
         }
         if(context.isVerify()){
             entity.setStatus(Constant.PostStatus.in_progress);
+        }else{
+            entity.setStatus(Constant.PostStatus.pass);
         }
         PostEntity rst = postDao.createOrUpdate(entity, true);
         //创建博文,删除草稿
