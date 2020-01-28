@@ -64,7 +64,6 @@ public class ConsoleAction extends BaseController {
     }
 
 
-
     @RequestMapping("/save/article")
     public ModelAndView articleAdd() {
         ModelAndView view = new ModelAndView();
@@ -335,6 +334,7 @@ public class ConsoleAction extends BaseController {
 
     /**
      * 当前人草稿列表
+     *
      * @return
      */
     @RequestMapping("/list/user/draft")
@@ -353,4 +353,13 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         return view;
     }
+
+    @RequestMapping("/list/audit/post")
+    public ModelAndView postAuditList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-audit-article.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
 }

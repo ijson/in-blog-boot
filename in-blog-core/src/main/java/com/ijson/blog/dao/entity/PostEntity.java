@@ -91,6 +91,9 @@ public class PostEntity extends BaseEntity {
     @Property(Fields.status)
     private Constant.PostStatus status;
 
+    @Property(Fields.reason)
+    private String reason;
+
     private long views;
 
     private long reply;
@@ -119,6 +122,7 @@ public class PostEntity extends BaseEntity {
         String shamId = "shamId";
         String draftId = "draftId";
         String status = "status";
+        String reason = "reason";
     }
 
 
