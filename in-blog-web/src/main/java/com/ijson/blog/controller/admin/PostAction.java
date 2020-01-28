@@ -51,10 +51,7 @@ public class PostAction extends BaseController {
     @DocDocument(name = "博客添加", desc = "控制台执行添加,需要添加topic")
     @PostMapping("/create")
     public Result createPost(HttpServletRequest request, @RequestBody PostInfo post) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Strings.isNullOrEmpty(post.getTitle())) {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
@@ -68,14 +65,10 @@ public class PostAction extends BaseController {
             throw new BlogCreateException(BlogBusinessExceptionCode.LABEL_CANNOT_BE_EMPTY);
         }
 
-        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/create")) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
-        }
-
         if (!Strings.isNullOrEmpty(post.getId())) {
             PostEntity postEntity = postService.findInternalById(post.getId());
             if (Objects.nonNull(postEntity)) {
-                return updatePost(request, post, postEntity);
+                return updatePost(context, post, postEntity);
             }
         }
 
@@ -101,8 +94,7 @@ public class PostAction extends BaseController {
         return Result.ok("创建文章成功!");
     }
 
-    private Result updatePost(HttpServletRequest request, PostInfo post, PostEntity entity) {
-        AuthContext context = getContext(request);
+    private Result updatePost(AuthContext context, PostInfo post, PostEntity entity) {
 
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
@@ -158,14 +150,7 @@ public class PostAction extends BaseController {
 
     @PostMapping("/enable/{ename}/{shamId}")
     public Result enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-
-        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/enable/*/*")) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         PostEntity postEntity = postService.enable(ename, shamId, post.isEnable(), context);
         String reason = !post.isEnable() ? "启用" : "禁用";
@@ -174,14 +159,7 @@ public class PostAction extends BaseController {
 
     @PostMapping("/audit/{ename}/{shamId}")
     public Result audit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-
-        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/audit/*/*")) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         PostEntity postEntity = postService.audit(ename, shamId, post.getStatus(), post.getReason(), context);
         return Result.ok();
@@ -189,10 +167,8 @@ public class PostAction extends BaseController {
 
     @PostMapping("/delete/{ename}/{shamId}")
     public Result delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, HttpServletRequest request) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+
         PostEntity postEntity = postService.findByShamIdInternal(ename, shamId, false);
         if (Objects.isNull(postEntity)) {
             return Result.error(-1, "文章不存在,请检查");
@@ -232,7 +208,7 @@ public class PostAction extends BaseController {
 
         try {
 
-            AuthContext context = getContext(request);
+            AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
             if (Objects.isNull(context)) {
                 return UploadResult.create(fileName, url, BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED.getMessage());
             }
@@ -277,12 +253,7 @@ public class PostAction extends BaseController {
     @RequestMapping("/list")
     @ResponseBody
     public V2Result<PostInfo> list(Integer page, Integer limit, HttpServletRequest request) {
-
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return new V2Result<>();
-        }
-
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         String keyWord = request.getParameter("title");
         return getList(context, page, limit, keyWord, new PostQuery());
     }
@@ -329,14 +300,8 @@ public class PostAction extends BaseController {
     @RequestMapping("/user/list")
     @ResponseBody
     public V2Result<PostInfo> userList(Integer page, Integer limit, HttpServletRequest request) {
-
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return new V2Result<>();
-        }
-
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         String keyWord = request.getParameter("title");
-
         PostQuery query = new PostQuery();
         query.setCurrentUser(true);
         return getList(context, page, limit, keyWord, query);
@@ -346,12 +311,7 @@ public class PostAction extends BaseController {
     @RequestMapping("/audit/list")
     @ResponseBody
     public V2Result<PostInfo> auditList(Integer page, Integer limit, HttpServletRequest request) {
-
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return new V2Result<>();
-        }
-
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         String keyWord = request.getParameter("title");
         PostQuery query = new PostQuery();
         query.setStatus(Constant.PostStatus.in_progress);

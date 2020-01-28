@@ -207,20 +207,21 @@ public class BaseController {
 
     /**
      * @param request
-     * @param handleException 自己处理异常
+     * @param handleContextException 自行处理context 异常
+     * @param handleAuthException    自行处理权限异常
      * @return
      */
-    protected AuthContext regularCheck(HttpServletRequest request, boolean handleException) {
+    protected AuthContext regularCheck(HttpServletRequest request, boolean handleContextException, boolean handleAuthException) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
-            if (handleException) {
+            if (handleContextException) {
                 return null;
             } else {
                 throw new BlogBusinessException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
             }
         }
         if (LoginInterceptor.isParadigm(context.getPermissionEname(), request.getRequestURI())) {
-            if (handleException) {
+            if (handleAuthException) {
                 return null;
             } else {
                 throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
