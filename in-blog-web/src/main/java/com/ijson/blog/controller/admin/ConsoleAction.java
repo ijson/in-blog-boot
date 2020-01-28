@@ -249,6 +249,25 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/settings/article/detail/{ename}/{shamId}")
+    public ModelAndView articleDetailSettings(HttpServletRequest request,
+                                              @PathVariable("ename") String ename,
+                                              @PathVariable("shamId") String shamId) {
+        ModelAndView view = new ModelAndView("admin/settings-article-detail.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
+        view.addObject("viewData", PostInfo.create(entity));
+
+        addAdminModelAndView(view);
+        view.addObject("user", userService.findUserByEname(context.getEname(), null, null));
+        return view;
+    }
+
     @RequestMapping("/list/blogroll")
     public ModelAndView blogrollSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/list-blogroll.html");
