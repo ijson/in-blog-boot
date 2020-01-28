@@ -11,7 +11,7 @@ body{
 .left-nav a{
     color:rgba(255,255,255,.7);
 }
-..left-nav a.active{
+.left-nav a.active{
     background: #009688 !important;
     color: #fff;
 }
