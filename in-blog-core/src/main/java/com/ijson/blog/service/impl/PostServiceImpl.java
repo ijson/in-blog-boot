@@ -65,9 +65,9 @@ public class PostServiceImpl implements PostService {
         if (entity.isCreate()) {
             entity.setId("");
         }
-        if(context.isVerify()){
+        if (context.isVerify()) {
             entity.setStatus(Constant.PostStatus.in_progress);
-        }else{
+        } else {
             entity.setStatus(Constant.PostStatus.pass);
         }
         PostEntity rst = postDao.createOrUpdate(entity, true);
@@ -360,5 +360,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostEntity findByDraftId(String id) {
         return postDao.findByDraftId(id);
+    }
+
+    @Override
+    public PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, AuthContext context) {
+        return postDao.audit(ename, shamId, status, reason, context.getId());
+
     }
 }

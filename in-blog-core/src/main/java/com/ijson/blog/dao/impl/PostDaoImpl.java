@@ -5,6 +5,7 @@ import com.ijson.blog.dao.PostDao;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.util.DateUtils;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.AbstractDao;
@@ -57,15 +58,15 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             operations.set(PostEntity.Fields.title, entity.getTitle());
         }
 
-        if(Objects.nonNull(entity.getStatus())){
+        if (Objects.nonNull(entity.getStatus())) {
             operations.set(PostEntity.Fields.status, entity.getStatus());
         }
 
-        if(!Strings.isNullOrEmpty(entity.getReason())){
+        if (!Strings.isNullOrEmpty(entity.getReason())) {
             operations.set(PostEntity.Fields.reason, entity.getReason());
         }
 
-        if(Objects.nonNull(entity.getTrigger())){
+        if (Objects.nonNull(entity.getTrigger())) {
             operations.set(PostEntity.Fields.trigger, entity.getTrigger());
         }
 
@@ -274,6 +275,18 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         Query<PostEntity> query = datastore.createQuery(PostEntity.class);
         query.field(PostEntity.Fields.draftId).equal(draftId);
         return query.get();
+    }
+
+    @Override
+    public PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, String processorId) {
+        Query<PostEntity> query = datastore.createQuery(PostEntity.class);
+        query.field(PostEntity.Fields.ename).equal(ename);
+        query.field(PostEntity.Fields.shamId).equal(shamId);
+        UpdateOperations<PostEntity> updateOperations = datastore.createUpdateOperations(PostEntity.class);
+        updateOperations.set(PostEntity.Fields.status, status);
+        updateOperations.set(PostEntity.Fields.reason, reason);
+//        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+        return datastore.findAndModify(query, updateOperations);
     }
 
 }

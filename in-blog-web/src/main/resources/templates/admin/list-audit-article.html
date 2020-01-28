@@ -59,19 +59,19 @@
 
 <script type="text/html" id="operation">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-warm" lay-event="draft"> 查看</button>
-        <button class="layui-btn layui-btn-normal" lay-event="edit"> 同意</button>
-        <button class="layui-btn layui-btn-danger" lay-event="delete">驳回</button>
+        <button class="layui-btn layui-btn-warm" lay-event="view"> 查看</button>
+        <button class="layui-btn layui-btn-normal" lay-event="agree"> 同意</button>
+        <button class="layui-btn layui-btn-danger" lay-event="reject">驳回</button>
     </div>
 </script>
 
 <script type="text/html" id="triggerTpl">
     {{# if(d.trigger=='create'){ }}
-        新建
+    新建
     {{# } else if(d.trigger=='update'){ }}
-        更新
+    更新
     {{# }else{ }}
-        未知
+    未知
     {{# } }}
 </script>
 
@@ -112,9 +112,9 @@
             var shamId = item.shamId;
 
             switch (data.event) {
-                case 'edit':
+                case 'view':
                     layer.open({
-                        title: '编辑文章',
+                        title: '查看文章',
                         type: 2,
                         shadeClose: true,
                         maxmin: true,
@@ -122,89 +122,25 @@
                         content: '/admin/edit/article/' + ename + '/' + shamId
                     });
                     return;
-                case 'draft':
-                    layer.open({
-                        title: '编辑草稿',
-                        type: 2,
-                        shadeClose: true,
-                        maxmin: true,
-                        area: ['900px', '500px'],
-                        content: '/admin/edit/draft/' + ename + '/' + shamId
+                case 'agree':
+                    layer.prompt({title: '同意', formType: 2}, function(text, index){
+                        layer.close(index);
+                        layer.msg("审批意见:"+text);
                     });
                     return;
-                case 'delete':
+                case 'reject':
 
-                    if (item.enable) {
-                        layer.msg("禁用后才可删除该文章", function () {
-
-                        });
-                        return;
-                    }
-                    layer.confirm('您确定要删除 ' + item.title + " 吗?", {
-                        btn: ['确定', '取消'] //按钮
-                    }, function () {
-                        $.ajax({
-                            cache: false,
-                            type: "POST",
-                            contentType: 'application/json',
-                            url: "/post/delete/" + ename + "/" + shamId,
-                            async: false,
-                            success: function (data) {
-                                if (data.code === 0) {
-                                    layer.msg(data.message);
-                                    layui.table.reload('postList');
-                                } else {
-                                    layer.msg(data.message, function () {
-                                    });
-                                }
-                            },
-                            error: function (data) {
-                                layer.msg(data.message);
-                            }
-                        });
-
-                    }, function () {
-
+                    layer.prompt({title: '驳回', formType: 2}, function(text, index){
+                        layer.close(index);
+                        layer.msg("审批意见:"+text);
                     });
+
                     return;
             }
         });
     });
 
 
-    layui.use(['form'], function () {
-        var form = layui.form;
-        form.on('switch(selectEnable)', function (data) {
-            //开关是否开启，true或者false
-            var item = $(data.elem).parents('tr').first().find('td');
-            var ename = item.eq(1).text();
-            var shamId = item.eq(2).text();
-            var checked = data.elem.checked;
-            $.ajax({
-                cache: false,
-                type: "POST",
-                contentType: 'application/json',
-                url: "/post/enable/" + ename + "/" + shamId,
-                dataType: "json",
-                data: JSON.stringify({
-                    "enable": checked
-                }),
-                async: false,
-                success: function (data) {
-                    if (data.code === 0) {
-                        layer.msg((checked ? "启用" : "停用") + "成功");
-                        layui.table.reload('postList');
-
-                    } else {
-                        layer.msg(data.message);
-                    }
-                },
-                error: function (data) {
-                    layer.msg(data.message);
-                }
-            });
-        });
-    });
 </script>
 
 <script type="text/javascript">

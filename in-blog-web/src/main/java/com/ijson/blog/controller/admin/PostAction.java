@@ -156,12 +156,28 @@ public class PostAction extends BaseController {
     }
 
     @PostMapping("/enable/{ename}/{shamId}")
-    public Result v2Enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
+    public Result enable(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         PostEntity postEntity = postService.enable(ename, shamId, post.isEnable(), context);
+        String reason = !post.isEnable() ? "启用" : "禁用";
+        return Result.ok(reason + "成功");
+    }
+
+    @PostMapping("/audit/{ename}/{shamId}")
+    public Result audit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        //不是系统管理员 不允许执行此操作
+        if (!Constant.SYSTEM.equals(context.getRoleEname())) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
+
+        PostEntity postEntity = postService.audit(ename, shamId, post.getStatus(), post.getReason(),context);
         String reason = !post.isEnable() ? "启用" : "禁用";
         return Result.ok(reason + "成功");
     }

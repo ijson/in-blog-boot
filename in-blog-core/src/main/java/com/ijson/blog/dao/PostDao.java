@@ -3,6 +3,7 @@ package com.ijson.blog.dao;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -45,5 +46,7 @@ public interface PostDao {
     PostEntity findByShamIdInternal(String ename, String shamId);
 
     PostEntity findByDraftId(String id);
+
+    PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, String processorId);
 }
 
