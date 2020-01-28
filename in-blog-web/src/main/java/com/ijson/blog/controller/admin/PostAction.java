@@ -262,7 +262,14 @@ public class PostAction extends BaseController {
         }
 
         String keyWord = request.getParameter("title");
+        return getList(context, page, limit, keyWord, new PostQuery());
+    }
 
+
+    public V2Result<PostInfo> getList(AuthContext context, Integer page, Integer limit, String keyWord, PostQuery query) {
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
         Page pageEntity = new Page();
         if (Objects.nonNull(page)) {
             pageEntity.setPageNumber(page);
@@ -272,7 +279,6 @@ public class PostAction extends BaseController {
         }
 
 
-        PostQuery query = new PostQuery();
         if (!Strings.isNullOrEmpty(keyWord)) {
             query.setLikeTitle(true);
             query.setTitle(keyWord);
@@ -298,7 +304,6 @@ public class PostAction extends BaseController {
         return v2Result;
     }
 
-
     @RequestMapping("/user/list")
     @ResponseBody
     public V2Result<PostInfo> userList(Integer page, Integer limit, HttpServletRequest request) {
@@ -310,40 +315,25 @@ public class PostAction extends BaseController {
 
         String keyWord = request.getParameter("title");
 
-        Page pageEntity = new Page();
-        if (Objects.nonNull(page)) {
-            pageEntity.setPageNumber(page);
-        }
-        if (Objects.nonNull(limit)) {
-            pageEntity.setPageSize(limit);
-        }
-
-
         PostQuery query = new PostQuery();
-        if (!Strings.isNullOrEmpty(keyWord)) {
-            query.setLikeTitle(true);
-            query.setTitle(keyWord);
-        }
-
         query.setCurrentUser(true);
-        PageResult<PostEntity> result = postService.find(context, query, pageEntity);
+        return getList(context, page, limit, keyWord, query);
 
-        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+    }
+
+    @RequestMapping("/audit/list")
+    @ResponseBody
+    public V2Result<PostInfo> auditList(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
             return new V2Result<>();
         }
 
-        List<PostEntity> dataList = result.getDataList();
-        List<PostInfo> posts = Lists.newArrayList();
-        if (CollectionUtils.isNotEmpty(dataList)) {
-            posts = PostInfo.postList(result);
-        }
-
-        V2Result v2Result = new V2Result();
-        v2Result.setCode(0);
-        v2Result.setCount(result.getTotal());
-        v2Result.setData(posts);
-        v2Result.setMsg("");
-        return v2Result;
+        String keyWord = request.getParameter("title");
+        PostQuery query = new PostQuery();
+        query.setStatus(Constant.PostStatus.in_progress);
+        return getList(context, page, limit, keyWord, query);
     }
 
 }
