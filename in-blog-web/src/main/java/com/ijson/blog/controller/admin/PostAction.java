@@ -12,6 +12,7 @@ import com.ijson.blog.dao.model.FileType;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
+import com.ijson.blog.interceptor.LoginInterceptor;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
@@ -67,6 +68,9 @@ public class PostAction extends BaseController {
             throw new BlogCreateException(BlogBusinessExceptionCode.LABEL_CANNOT_BE_EMPTY);
         }
 
+        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/create")) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
 
         if (!Strings.isNullOrEmpty(post.getId())) {
             PostEntity postEntity = postService.findInternalById(post.getId());
@@ -74,6 +78,7 @@ public class PostAction extends BaseController {
                 return updatePost(request, post, postEntity);
             }
         }
+
 
         // 使用默认单例（加载默认词典）
 //        SensitiveFilter filter = SensitiveFilter.DEFAULT;
@@ -99,10 +104,6 @@ public class PostAction extends BaseController {
     private Result updatePost(HttpServletRequest request, PostInfo post, PostEntity entity) {
         AuthContext context = getContext(request);
 
-        //不是创建人 && 不是系统管理员
-        if (!context.getId().equals(entity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
-        }
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
         List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
@@ -161,6 +162,11 @@ public class PostAction extends BaseController {
         if (Objects.isNull(context)) {
             return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
+
+        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/enable/*/*")) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
+
         PostEntity postEntity = postService.enable(ename, shamId, post.isEnable(), context);
         String reason = !post.isEnable() ? "启用" : "禁用";
         return Result.ok(reason + "成功");
@@ -177,7 +183,12 @@ public class PostAction extends BaseController {
             throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
         }
 
-        PostEntity postEntity = postService.audit(ename, shamId, post.getStatus(), post.getReason(),context);
+
+        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/audit/*/*")) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
+
+        PostEntity postEntity = postService.audit(ename, shamId, post.getStatus(), post.getReason(), context);
         String reason = !post.isEnable() ? "启用" : "禁用";
         return Result.ok(reason + "成功");
     }
@@ -192,12 +203,12 @@ public class PostAction extends BaseController {
         if (Objects.isNull(postEntity)) {
             return Result.error(-1, "文章不存在,请检查");
         }
-        //不是创建人 && 不是系统管理员
-        if (!context.getId().equals(postEntity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
+
+        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/delete/*/*")) {
             throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
         }
 
-        if (postEntity != null && postEntity.isEnable()) {
+        if (postEntity.isEnable()) {
             return Result.error(-1, "禁用后才可删除该文章");
         }
         PostEntity entity = postService.delete(postEntity.getId(), context);

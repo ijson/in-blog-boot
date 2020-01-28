@@ -8,8 +8,8 @@ import com.ijson.blog.dao.entity.PostDraftEntity;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
+import com.ijson.blog.interceptor.LoginInterceptor;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.PostInfo;
@@ -47,13 +47,13 @@ public class PostDraftActioin extends BaseController {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
         }
 
+        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/draft/create")) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
+        }
+
         if (!Strings.isNullOrEmpty(post.getId())) {
             PostDraftEntity postDraftEntity = postDraftService.find(post.getId());
             if (Objects.nonNull(postDraftEntity)) {
-                //不是创建人 && 不是系统管理员
-                if (!context.getId().equals(postDraftEntity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
-                    throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
-                }
                 return updatePost(request, post);
             }
         }
@@ -92,12 +92,9 @@ public class PostDraftActioin extends BaseController {
         }
         PostDraftEntity postEntity = postDraftService.find(ename, shamId);
         if (Objects.nonNull(postEntity)) {
-
-            //不是创建人 && 不是系统管理员
-            if (!context.getId().equals(postEntity.getCreatedBy()) && !Constant.SYSTEM.equals(context.getRoleEname())) {
+            if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/draft/delete/*/*")) {
                 throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
             }
-
             postDraftService.delete(postEntity.getId());
             return Result.ok("删除成功");
         }

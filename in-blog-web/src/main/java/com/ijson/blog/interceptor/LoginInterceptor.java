@@ -87,7 +87,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
 
-    private static boolean isParadigm(List<String> permissionPath, String uri) {
+    public static boolean isParadigm(List<String> permissionPath, String uri) {
         boolean flag = false;
         for (String path : permissionPath) {
             if (pathMatcher.match(path, uri)) {

@@ -60,7 +60,7 @@
 <script type="text/html" id="operation">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-warm" lay-event="view"> 查看</button>
-        <button class="layui-btn layui-btn-normal" lay-event="agree"> 同意</button>
+        <button class="layui-btn layui-btn-normal" lay-event="pass"> 同意</button>
         <button class="layui-btn layui-btn-danger" lay-event="reject">驳回</button>
     </div>
 </script>
@@ -122,21 +122,47 @@
                         content: '/admin/edit/article/' + ename + '/' + shamId
                     });
                     return;
-                case 'agree':
-                    layer.prompt({title: '同意', formType: 2}, function(text, index){
+                case 'pass':
+                    layer.prompt({title: '同意', formType: 2}, function (text, index) {
                         layer.close(index);
-                        layer.msg("审批意见:"+text);
+                        complete('pass', text);
                     });
                     return;
                 case 'reject':
 
-                    layer.prompt({title: '驳回', formType: 2}, function(text, index){
+                    layer.prompt({title: '驳回', formType: 2}, function (text, index) {
                         layer.close(index);
-                        layer.msg("审批意见:"+text);
+                        complete('reject', text);
                     });
-
                     return;
             }
+
+            function complete(status, reason) {
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "/post/audit/" + ename + "/" + shamId,
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "status": status,
+                        "reason": reason
+                    }),
+                    async: false,
+                    success: function (data) {
+                        if (data.code === 0) {
+                            layui.table.reload('postList');
+                        } else {
+                            layer.msg(data.message);
+                        }
+                    },
+                    error: function (data) {
+                        layer.msg(data.message);
+                    }
+                });
+            }
+
+
         });
     });
 
