@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
-bash_path=/Users/cuiyongxu/workspace/ijson/in-blog-boot
+IBO_HOME=/Users/cuiyongxu/workspace/ijson/in-blog-boot
 
-cd $bash_path
+cd $IBO_HOME
 
 #git pull
 
 mvn install -Dmaven.test.skip=true
 
-cd $bash_path/in-blog-common
+cd $IBO_HOME/in-blog-common
 mvn clean install -Dmaven.test.skip=true
 
-cd $bash_path/in-blog-auth
+cd $IBO_HOME/in-blog-auth
 mvn clean install -Dmaven.test.skip=true
 
-cd $bash_path/in-blog-core
+cd $IBO_HOME/in-blog-core
 mvn clean install -Dmaven.test.skip=true
 
-cd $bash_path/in-blog-web
+cd $IBO_HOME/in-blog-web
 
 pid=$(ps -ef | grep "in-blog-web" | grep -v grep | awk '{print $2}')
 
@@ -30,16 +30,16 @@ fi
 
 
 DATE=$(date +%Y%m%d%H%M%S)
-cd $bash_path/in-blog-web
+cd $IBO_HOME/in-blog-web
 
-if [ ! -f "$bash_path/in-blog-web/nohup.out" ]; then
-    if [ ! -d "$bash_path-log/" ]; then
-        mkdir $bash_path-log/
+if [ ! -f "$IBO_HOME/in-blog-web/nohup.out" ]; then
+    if [ ! -d "$IBO_HOME-log/" ]; then
+        mkdir $IBO_HOME-log/
     fi
-    mv $bash_path/in-blog-web/nohup.out $bash_path-log/$DATE.log
+    mv $IBO_HOME/in-blog-web/nohup.out $IBO_HOME-log/$DATE.log
 fi
 
-cd $bash_path/in-blog-web/
+cd $IBO_HOME/in-blog-web/
 nohup mvn spring-boot:run >> nohup.out 2>&1 &
 
 pid=$(ps -ef | grep "in-blog-web" | grep -v grep | awk '{print $2}')
