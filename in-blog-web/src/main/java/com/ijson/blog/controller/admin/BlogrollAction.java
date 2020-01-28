@@ -34,11 +34,7 @@ public class BlogrollAction extends BaseController {
 
     @PostMapping(value = "/addup")
     public Result addOrUpdate(HttpServletRequest request, @RequestBody BlogrollEntity myEntity) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("添加友情链接异常,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Strings.isNullOrEmpty(myEntity.getCname())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.BLOGROLL_DESC_CANNOT_BE_EMPTY);
@@ -63,22 +59,15 @@ public class BlogrollAction extends BaseController {
     }
 
     private Result createBlogroll(HttpServletRequest request, BlogrollEntity myEntity) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("更新友情链接异常,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+
         blogrollService.create(context, myEntity);
         return Result.ok("创建成功!");
     }
 
     @PostMapping(value = "/enable/{id}")
     public Result enable(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         BlogrollEntity entity = blogrollService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -91,11 +80,7 @@ public class BlogrollAction extends BaseController {
 
     @PostMapping(value = "/delete/{id}")
     public Result delete(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         BlogrollEntity entity = blogrollService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -116,7 +101,7 @@ public class BlogrollAction extends BaseController {
     @ResponseBody
     public V2Result<BlogrollInfo> list(Integer page, Integer limit, HttpServletRequest request) {
 
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }

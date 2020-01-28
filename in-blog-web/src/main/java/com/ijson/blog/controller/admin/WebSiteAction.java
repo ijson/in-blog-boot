@@ -28,10 +28,7 @@ public class WebSiteAction extends BaseController {
 
     @PostMapping("/website")
     public Result siteForm(HttpServletRequest request, HttpSession session, @RequestBody WebSiteInfo post) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         if (Strings.isNullOrEmpty(post.getSiteName())) {
             return Result.error(BlogBusinessExceptionCode.WEBSITE_NAME_CANNOT_BE_EMPTY);
         }
@@ -47,10 +44,7 @@ public class WebSiteAction extends BaseController {
 
     @PostMapping("/switch/{type}")
     public Result webSwitch(HttpServletRequest request, HttpSession session, @PathVariable("type") String type) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         ConfigEntity entity = webSiteService.updateSwitch(type);
         return Result.ok("更新成功!");
     }
@@ -58,10 +52,7 @@ public class WebSiteAction extends BaseController {
 
     @PostMapping("/field/show/{name}")
     public Result showField(HttpServletRequest request, HttpSession session, @PathVariable("name") String name) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         webSiteService.updateShowField(name);
         return Result.ok("更新成功!");
     }

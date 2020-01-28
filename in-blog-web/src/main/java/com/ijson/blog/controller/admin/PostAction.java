@@ -12,7 +12,6 @@ import com.ijson.blog.dao.model.FileType;
 import com.ijson.blog.dao.query.PostQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
-import com.ijson.blog.interceptor.LoginInterceptor;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
@@ -172,10 +171,6 @@ public class PostAction extends BaseController {
         PostEntity postEntity = postService.findByShamIdInternal(ename, shamId, false);
         if (Objects.isNull(postEntity)) {
             return Result.error(-1, "文章不存在,请检查");
-        }
-
-        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/post/delete/*/*")) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
         }
 
         if (postEntity.isEnable()) {

@@ -9,10 +9,10 @@ import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.V2Result;
-import com.ijson.blog.model.AuthInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +38,7 @@ public class AuthAction extends BaseController {
 
     @PostMapping(value = "/addup")
     public Result addOrUpdate(HttpServletRequest request, @RequestBody AuthEntity myEntity) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("添加权限异常,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Objects.isNull(myEntity.getOrder())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_ORDER_CANNOT_BE_EMPTY);
@@ -95,11 +91,8 @@ public class AuthAction extends BaseController {
 
     @PostMapping(value = "/enable/{id}")
     public Result enable(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+
         AuthEntity entity = authService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -112,11 +105,7 @@ public class AuthAction extends BaseController {
 
     @PostMapping(value = "/order")
     public Result getOrder(HttpServletRequest request, @RequestBody AuthInfo info) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Strings.isNullOrEmpty(info.getId())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.REQUEST_PARAMETERS_ARE_INCOMPLETE);
@@ -143,11 +132,7 @@ public class AuthAction extends BaseController {
 
     @PostMapping(value = "/delete/{id}")
     public Result delete(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         AuthEntity entity = authService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -168,7 +153,7 @@ public class AuthAction extends BaseController {
     @ResponseBody
     public V2Result<AuthInfo> list(Integer page, Integer limit, HttpServletRequest request) {
 
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }

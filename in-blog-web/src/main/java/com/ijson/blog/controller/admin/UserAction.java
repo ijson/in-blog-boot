@@ -42,11 +42,7 @@ public class UserAction extends BaseController {
 
     @PostMapping(value = "/addup")
     public Result editBase(HttpServletRequest request, @RequestBody UserEntity myUser) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Strings.isNullOrEmpty(myUser.getEname())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_ENAME_CANNOT_BE_EMPTY);
@@ -123,11 +119,7 @@ public class UserAction extends BaseController {
 
     @PostMapping(value = "/enable/{id}")
     public Result enable(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         UserEntity entity = userService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -146,11 +138,7 @@ public class UserAction extends BaseController {
 
     @PostMapping(value = "/delete/{id}")
     public Result delete(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         UserEntity entity = userService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -174,11 +162,7 @@ public class UserAction extends BaseController {
 
     @PostMapping(value = "/tdelete/{id}")
     public Result tDelete(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         UserEntity entity = userService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -202,11 +186,7 @@ public class UserAction extends BaseController {
 
     @PostMapping(value = "/edit/password")
     public Result editPassword(HttpServletRequest request, HttpSession session, @RequestBody UpdPasswordInfo updPassword) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("用户编辑用户信息时,未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         String verCode = (String) session.getAttribute(updPwdCodeKey);
         Result result = VerifyCodeUtils.validImage(updPassword.getPwdVerCode(), verCode, request, session, updPwdCodeKey, updPwdCodeTime);
         if (result.getCode() != 0) {
@@ -249,8 +229,7 @@ public class UserAction extends BaseController {
     @RequestMapping("/list")
     @ResponseBody
     public V2Result<UserInfo> list(Integer page, Integer limit, HttpServletRequest request) {
-
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }
@@ -296,7 +275,7 @@ public class UserAction extends BaseController {
     @ResponseBody
     public V2Result<UserInfo> delList(Integer page, Integer limit, HttpServletRequest request) {
 
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }

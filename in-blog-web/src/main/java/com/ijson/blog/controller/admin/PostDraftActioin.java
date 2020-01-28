@@ -38,17 +38,10 @@ public class PostDraftActioin extends BaseController {
     @DocDocument(name = "博客草稿添加", desc = "控制台执行添加,需要添加topic")
     @PostMapping("/create")
     public Result createPost(HttpServletRequest request, HttpSession session, @RequestBody PostInfo post) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Strings.isNullOrEmpty(post.getTitle())) {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
-        }
-
-        if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/draft/create")) {
-            throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
         }
 
         if (!Strings.isNullOrEmpty(post.getId())) {
@@ -86,15 +79,9 @@ public class PostDraftActioin extends BaseController {
 
     @PostMapping("/delete/{ename}/{shamId}")
     public Result delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, HttpServletRequest request) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            return Result.error(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         PostDraftEntity postEntity = postDraftService.find(ename, shamId);
         if (Objects.nonNull(postEntity)) {
-            if (LoginInterceptor.isParadigm(context.getPermissionEname(), "/draft/delete/*/*")) {
-                throw new BlogCreateException(BlogBusinessExceptionCode.NO_RIGHT_TO_DO_THIS);
-            }
             postDraftService.delete(postEntity.getId());
             return Result.ok("删除成功");
         }
@@ -107,7 +94,7 @@ public class PostDraftActioin extends BaseController {
     @ResponseBody
     public V2Result list(Integer page, Integer limit, HttpServletRequest request) {
 
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }
@@ -155,7 +142,7 @@ public class PostDraftActioin extends BaseController {
     @ResponseBody
     public V2Result userList(Integer page, Integer limit, HttpServletRequest request) {
 
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }

@@ -36,12 +36,7 @@ public class RoleAction extends BaseController {
 
     @PostMapping(value = "/addup")
     public Result addOrUpdate(HttpServletRequest request, @RequestBody RoleEntity myEntity) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
-
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         if (Strings.isNullOrEmpty(myEntity.getEname())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_ENAME_CANNOT_BE_EMPTY);
         }
@@ -89,11 +84,7 @@ public class RoleAction extends BaseController {
 
     @PostMapping(value = "/enable/{id}")
     public Result enable(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         RoleEntity entity = roleService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -111,11 +102,7 @@ public class RoleAction extends BaseController {
 
     @PostMapping(value = "/delete/{id}")
     public Result delete(HttpServletRequest request, @PathVariable("id") String id) {
-        AuthContext context = getContext(request);
-        if (Objects.isNull(context)) {
-            log.info("未获取到当前登入人用户信息");
-            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
-        }
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
         RoleEntity entity = roleService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
@@ -141,7 +128,7 @@ public class RoleAction extends BaseController {
     @ResponseBody
     public V2Result<RoleInfo> list(Integer page, Integer limit, HttpServletRequest request) {
 
-        AuthContext context = getContext(request);
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
             return new V2Result<>();
         }
