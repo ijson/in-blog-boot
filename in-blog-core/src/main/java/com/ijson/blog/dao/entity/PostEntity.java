@@ -43,7 +43,7 @@ public class PostEntity extends BaseEntity {
     private String id;
 
     @Property(Fields.topicId)
-    private List topicId;
+    private List<String> topicId;
 
     @Property(Fields.userId)
     private String userId;
