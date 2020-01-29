@@ -36,13 +36,22 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         return entity;
     }
 
+
+    @Override
+    public TopicEntity subtract(TopicEntity entity) {
+        Query<TopicEntity> query = createQuery();
+        query.field(TopicEntity.Fields.id).equal(entity.getId());
+        UpdateOperations operations = createUpdateOperations();
+        operations.inc(TopicEntity.Fields.postCount, -1);
+        return datastore.findAndModify(query, operations);
+    }
+
     private TopicEntity findAndModify(TopicEntity entity) {
         Query<TopicEntity> query = createQuery();
         query.field(TopicEntity.Fields.id).equal(entity.getId());
         UpdateOperations operations = createUpdateOperations();
 
 
-        operations.set(TopicEntity.Fields.id, entity.getId());
         operations.set(TopicEntity.Fields.userId, entity.getUserId());
         operations.set(TopicEntity.Fields.moduleId, entity.getModuleId());
         operations.set(TopicEntity.Fields.postCount, entity.getPostCount());

@@ -47,7 +47,9 @@ public interface PostService {
 
     PostEntity delete(String id,AuthContext context);
 
-    List<String> removeTopic(PostEntity entity,String id, String topicNames);
+    PostEntity delete(PostEntity entity, AuthContext context);
+
+    List<String> removeTopic(PostEntity entity, String id, String topicNames);
 
     List<String> removeTopic(List<String> removeTopicId);
 

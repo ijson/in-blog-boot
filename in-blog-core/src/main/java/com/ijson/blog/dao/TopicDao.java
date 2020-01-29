@@ -11,6 +11,8 @@ public interface TopicDao {
 
     TopicEntity createOrUpdate(TopicEntity entity);
 
+    TopicEntity subtract(TopicEntity entity);
+
     TopicEntity find(String id);
 
     List<TopicEntity> finds(List<String> ids);
