@@ -176,8 +176,7 @@ public class PostAction extends BaseController {
         if (postEntity.isEnable()) {
             return Result.error(-1, "禁用后才可删除该文章");
         }
-        postService.delete(postEntity,context);
-        PostEntity entity = postService.delete(postEntity.getId(), context);
+        PostEntity entity = postService.delete(postEntity, context);
         if (entity == null || entity.getDeleted()) {
             return Result.ok("删除成功");
         }
