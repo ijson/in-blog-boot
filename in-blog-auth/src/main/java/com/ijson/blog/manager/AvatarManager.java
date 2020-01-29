@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AvatarManager {
 
-    @Value("${cdn.server}")
+    @Value("${avatar.server}")
     private String cdnServer;
 
     private final int MAX_NUMBER = 1666;
