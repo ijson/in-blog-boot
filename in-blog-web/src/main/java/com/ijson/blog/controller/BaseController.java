@@ -73,6 +73,9 @@ public class BaseController {
     @Autowired
     protected RoleService roleService;
 
+    @Autowired
+    protected HeaderService headerService;
+
 
     @Value("${web.ctx}")
     protected String webCtx;

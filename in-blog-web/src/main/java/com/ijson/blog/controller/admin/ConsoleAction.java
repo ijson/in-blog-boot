@@ -96,6 +96,16 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    @RequestMapping("/save/header")
+    public ModelAndView skipHeaderAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-header.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
     @RequestMapping("/save/site")
     public ModelAndView siteSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/save-site.html");
@@ -185,6 +195,16 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         BlogrollEntity internalById = blogrollService.findInternalById(id);
         view.addObject("editData", BlogrollInfo.create(internalById));
+        return view;
+    }
+
+    @RequestMapping("/edit/header/{id}")
+    public ModelAndView skipHeaderEdit(@PathVariable("id") String id) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-header.html");
+        addAdminModelAndView(view);
+        HeaderEntity internalById = headerService.findInternalById(id);
+        view.addObject("editData", HeaderInfo.create(internalById));
         return view;
     }
 
@@ -411,6 +431,14 @@ public class ConsoleAction extends BaseController {
     public ModelAndView tagList() {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-tags.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
+    @RequestMapping("/list/header")
+    public ModelAndView headerList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-header.html");
         addAdminModelAndView(view);
         return view;
     }

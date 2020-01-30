@@ -63,7 +63,10 @@ public enum BlogBusinessExceptionCode {
     REQUEST_PARAMETERS_ARE_INCOMPLETE(200_000_050, "请求参数不完整"),
     NO_RIGHT_TO_DO_THIS(200_000_051, "无权执行此操作"),
     DRAFT_NOT_FOUND(200_000_052, "草稿未找到"),
-    TAGS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_053, "标签不存在或已删除");
+    TAGS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_053, "标签不存在或已删除"),
+    THE_CODE_CANNOT_BE_EMPTY(200_000_054, "代码不能为空"),
+    THE_DESCRIPTION_CANNOT_BE_EMPTY(200_000_055, "描述不能为空"),
+    THE_HEADER_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_056, "header为空或不存在");
 
     private int code;
     private String message;
