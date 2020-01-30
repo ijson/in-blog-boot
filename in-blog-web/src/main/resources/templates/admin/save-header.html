@@ -42,7 +42,7 @@
 
                         <div class="layui-form-item">
                             <textarea name="code" id="code" lay-verify="code" placeholder="请输入代码"
-                                      class="layui-textarea"></textarea>
+                                      class="layui-textarea">${editData.code!}</textarea>
                         </div>
 
                         <div class="layui-form-item">
@@ -80,6 +80,7 @@
 
         //监听提交
         form.on('submit(save)', function (data) {
+            debugger
             $.ajax({
                 cache: false,
                 type: "POST",
