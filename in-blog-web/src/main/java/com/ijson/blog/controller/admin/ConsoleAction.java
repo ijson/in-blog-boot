@@ -247,6 +247,18 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/view/tag/post/{ename}/{shamId}")
+    public ModelAndView viewTagPOst(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+        TopicEntity entity = topicService.findTopicByShamIdAndEname(ename, shamId);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-tag-article.html");
+        addAdminModelAndView(view);
+        if (Objects.nonNull(entity)) {
+            view.addObject("viewData", TopicInfo.create(entity));
+        }
+        return view;
+    }
+
 
     @RequestMapping("/settings/personal")
     public ModelAndView userSettings(HttpServletRequest request) {

@@ -97,7 +97,7 @@ public class PostAction extends BaseController {
 
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
-        if(CollectionUtils.isEmpty(oldTopicNames)){
+        if (CollectionUtils.isEmpty(oldTopicNames)) {
             oldTopicNames = Lists.newArrayList();
         }
         List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
@@ -313,6 +313,20 @@ public class PostAction extends BaseController {
         String keyWord = request.getParameter("title");
         PostQuery query = new PostQuery();
         query.setStatus(Constant.PostStatus.in_progress);
+        return getList(context, page, limit, keyWord, query);
+    }
+
+
+    @RequestMapping("/tag/list")
+    @ResponseBody
+    public V2Result<PostInfo> tagList(Integer page, Integer limit, HttpServletRequest request) {
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
+        String keyWord = request.getParameter("title");
+        String tid = request.getParameter("tid");
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(tid)) {
+            query.setTopicId(tid);
+        }
         return getList(context, page, limit, keyWord, query);
     }
 
