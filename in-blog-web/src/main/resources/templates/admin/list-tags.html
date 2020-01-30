@@ -53,7 +53,8 @@
 <script type="text/html" id="operation">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-normal" lay-event="edit"> 编辑</button>
-        <button class="layui-btn layui-btn-danger" lay-event="delete" {{ d.ename=='system' ? 'disabled': ''}}>删除</button>
+        <button class="layui-btn layui-btn-danger" lay-event="delete" {{ d.ename=='system' ?
+        'disabled': ''}}>删除</button>
     </div>
 </script>
 
@@ -73,6 +74,8 @@
             page: true,
             cols: [[
                 {field: 'id', hide: true},
+                {field: 'ename', hide: true},
+                {field: 'shamId', hide: true},
                 {field: 'name', width: 300, title: "名称"},
                 {field: 'postCount', width: 100, title: "使用数"},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
@@ -84,17 +87,19 @@
 
             var item = data.data;
             var id = item.id;
+            var ename = item.ename;
+            var shamId = item.shamId;
             var cname = item.name;
 
             switch (data.event) {
                 case 'edit':
                     layer.open({
-                        title: '编辑友情链接',
+                        title: '编辑标签',
                         type: 2,
                         shadeClose: true,
                         maxmin: true,
                         area: ['900px', '500px'],
-                        content: '/admin/edit/role/' + id
+                        content: '/admin/edit/tag/' + ename + "/" + shamId
                     });
                     return;
                 case 'delete':

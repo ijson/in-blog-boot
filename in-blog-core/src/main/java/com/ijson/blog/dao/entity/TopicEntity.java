@@ -2,6 +2,7 @@ package com.ijson.blog.dao.entity;
 
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.model.SystemInfo;
 import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
@@ -28,17 +29,11 @@ public class TopicEntity extends BaseEntity {
     @Id
     private String id;
 
-    @Property(Fields.userId)
-    private String userId;
-
     @Property(Fields.ename)
     private String ename;
 
     @Property(Fields.shamId)
     private String shamId;
-
-    @Property(Fields.moduleId)
-    private String moduleId;
 
     @Property(Fields.topicName)
     private String topicName;
@@ -49,6 +44,9 @@ public class TopicEntity extends BaseEntity {
 
     @Property(Fields.lastModifiedBy)
     private String lastModifiedBy;
+
+    @Property(Fields.lastModifiedTime)
+    private long lastModifiedTime;
 
     @Property(Fields.deleted)
     private Boolean deleted;
@@ -70,18 +68,15 @@ public class TopicEntity extends BaseEntity {
         topicEntity.setCreateTime(System.currentTimeMillis());
         topicEntity.setLastModifiedBy(context.getId());
         topicEntity.setTopicName(topicName.toLowerCase().trim());
-        topicEntity.setUserId(context.getId());
-        topicEntity.setModuleId(Constant.defaultTopicModel);
         topicEntity.setPostCount(1L);
         topicEntity.setEname(context.getEname());
+        topicEntity.setLastModifiedTime(System.currentTimeMillis());
         return topicEntity;
     }
 
 
     public interface Fields {
         String id = "_id";
-        String userId = "userId";
-        String moduleId = "moduleId";
         String postCount = "postCount";
         String createdBy = "createdBy";
         String createTime = "createTime";
@@ -91,6 +86,7 @@ public class TopicEntity extends BaseEntity {
         String topicName = "topicName";
         String ename = "ename";
         String shamId = "shamId";
+        String lastModifiedTime = "lastModifiedTime";
 
     }
 }

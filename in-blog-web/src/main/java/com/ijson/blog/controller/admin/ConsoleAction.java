@@ -235,6 +235,19 @@ public class ConsoleAction extends BaseController {
     }
 
 
+    @RequestMapping("/edit/tag/{ename}/{shamId}")
+    public ModelAndView skipTagEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+        TopicEntity entity = topicService.findTopicByShamIdAndEname(ename, shamId);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-tag.html");
+        addAdminModelAndView(view);
+        if (Objects.nonNull(entity)) {
+            view.addObject("editData", TopicInfo.create(entity));
+        }
+        return view;
+    }
+
+
     @RequestMapping("/settings/personal")
     public ModelAndView userSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/settings-personal.html");

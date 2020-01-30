@@ -15,6 +15,10 @@ import java.util.List;
  */
 public interface TopicService {
 
+    TopicEntity edit(AuthContext context, TopicEntity entity);
+
+    TopicEntity create(AuthContext context, TopicEntity myEntity);
+
     List<TopicEntity> findTopicByTopicNameAndIncCount(String topicName, AuthContext context);
 
     List<TopicEntity> findHotTag();
@@ -30,5 +34,6 @@ public interface TopicService {
     TopicEntity enable(AuthContext context, String id, boolean b);
 
     PageResult<TopicEntity> find(TopicQuery query, Page pageEntity);
+
 
 }

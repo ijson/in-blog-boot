@@ -2,15 +2,13 @@ package com.ijson.blog.service.impl;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.TopicDao;
-import com.ijson.blog.dao.entity.*;
+import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.dao.query.TopicQuery;
-import com.ijson.blog.exception.BlogBusinessExceptionCode;
-import com.ijson.blog.exception.BlogNotFoundException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.TopicService;
+import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -38,11 +36,11 @@ public class TopicServicesImpl implements TopicService {
         for (String topic : topics) {
             topicEntity = topicDao.findByTopicName(topic);
             if (Objects.isNull(topicEntity)) {
-                topicEntity = topicDao.createOrUpdate(TopicEntity.create(topic,context));
+                topicEntity = topicDao.createOrUpdate(TopicEntity.create(topic, context));
             } else {
                 topicEntity = topicDao.inc(topicEntity.getId());
             }
-            if(Objects.nonNull(topicEntity)) {
+            if (Objects.nonNull(topicEntity)) {
                 topicEntities.add(topicEntity);
             }
         }
@@ -67,7 +65,7 @@ public class TopicServicesImpl implements TopicService {
 
     @Override
     public TopicEntity findTopicByShamIdAndEname(String ename, String shamId) {
-        return topicDao.findByShamId(ename,shamId);
+        return topicDao.findByShamId(ename, shamId);
     }
 
     @Override
@@ -82,6 +80,29 @@ public class TopicServicesImpl implements TopicService {
 
     @Override
     public PageResult<TopicEntity> find(TopicQuery query, Page pageEntity) {
-        return topicDao.find(query,pageEntity);
+        return topicDao.find(query, pageEntity);
+    }
+
+    @Override
+    public TopicEntity edit(AuthContext context, TopicEntity entity) {
+        entity.setLastModifiedTime(System.currentTimeMillis());
+        entity.setLastModifiedBy(context.getId());
+        return topicDao.update(entity);
+    }
+
+    @Override
+    public TopicEntity create(AuthContext context, TopicEntity entity) {
+        ObjectId objectId = ObjectId.get();
+        entity.setId(objectId.toHexString());
+        entity.setShamId(objectId.getTimestamp() + "");
+        entity.setEname(context.getEname());
+        entity.setLastModifiedTime(System.currentTimeMillis());
+        entity.setEnable(true);
+        entity.setDeleted(false);
+        entity.setCreatedBy(context.getId());
+        entity.setCreateTime(System.currentTimeMillis());
+        entity.setLastModifiedBy(context.getId());
+        entity.setLastModifiedTime(System.currentTimeMillis());
+        return topicDao.create(entity);
     }
 }

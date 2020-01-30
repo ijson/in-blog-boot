@@ -2,7 +2,6 @@ package com.ijson.blog.dao.impl;
 
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.TopicDao;
-import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.dao.query.TopicQuery;
 import com.ijson.mongo.generator.util.ObjectId;
@@ -36,6 +35,27 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         return entity;
     }
 
+    @Override
+    public TopicEntity update(TopicEntity entity) {
+        Query<TopicEntity> query = createQuery();
+        query.field(TopicEntity.Fields.id).equal(entity.getId());
+
+        UpdateOperations operations = createUpdateOperations();
+
+        if (!Strings.isNullOrEmpty(entity.getTopicName())) {
+            operations.set(TopicEntity.Fields.topicName, entity.getTopicName());
+        }
+
+        operations.set(TopicEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+        return datastore.findAndModify(query, operations);
+    }
+
+    @Override
+    public TopicEntity create(TopicEntity entity) {
+        datastore.save(entity);
+        return entity;
+    }
+
 
     @Override
     public TopicEntity subtract(TopicEntity entity) {
@@ -52,8 +72,6 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         UpdateOperations operations = createUpdateOperations();
 
 
-        operations.set(TopicEntity.Fields.userId, entity.getUserId());
-        operations.set(TopicEntity.Fields.moduleId, entity.getModuleId());
         operations.set(TopicEntity.Fields.postCount, entity.getPostCount());
 
         return datastore.findAndModify(query, operations);
@@ -197,9 +215,11 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
     @Override
     public TopicEntity findByShamId(String ename, String shamId) {
         Query<TopicEntity> query = datastore.createQuery(TopicEntity.class);
-        query.field(PostEntity.Fields.shamId).equal(shamId);
-        query.field(PostEntity.Fields.ename).equal(ename);
-        query.field(PostEntity.Fields.enable).equal(true);
+        query.field(TopicEntity.Fields.shamId).equal(shamId);
+        query.field(TopicEntity.Fields.ename).equal(ename);
+        query.field(TopicEntity.Fields.enable).equal(true);
         return query.get();
     }
+
+
 }

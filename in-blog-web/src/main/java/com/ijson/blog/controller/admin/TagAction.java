@@ -32,6 +32,30 @@ import java.util.Objects;
 public class TagAction extends BaseController {
 
 
+    @PostMapping(value = "/addup")
+    public Result editBase(HttpServletRequest request, @RequestBody TopicEntity myEntity) {
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+
+
+        if (Strings.isNullOrEmpty(myEntity.getTopicName())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.LABEL_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myEntity.getId())) {
+            return create(context, myEntity);
+        }
+
+        TopicEntity entity = topicService.find(myEntity.getId());
+        entity.setTopicName(myEntity.getTopicName());
+        topicService.edit(context, entity);
+        return Result.ok("更新成功!");
+    }
+
+    private Result create(AuthContext context, TopicEntity myEntity) {
+        topicService.create(context, myEntity);
+        return Result.ok("创建成功!");
+    }
+
     @PostMapping(value = "/enable/{id}")
     public Result enable(HttpServletRequest request, @PathVariable("id") String id) {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);

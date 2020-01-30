@@ -17,7 +17,6 @@ public class TopicInfo {
     private String name;
     private String ename;
     private String shamId;
-    private String moduleId;
     private String topicName;
     private long postCount;
     private String lastModifiedBy;
@@ -25,6 +24,7 @@ public class TopicInfo {
     private boolean enable;
     private String createdBy;
     private long createTime;
+    private long lastModifiedTime;
 
     public static List<TopicInfo> createList(List<TopicEntity> dataList) {
         return dataList.stream().map(k -> create(k)).collect(Collectors.toList());
@@ -36,7 +36,6 @@ public class TopicInfo {
         topicInfo.setName(topicEntity.getTopicName());
         topicInfo.setEname(topicEntity.getEname());
         topicInfo.setShamId(topicEntity.getShamId());
-        topicInfo.setModuleId(topicEntity.getModuleId());
         topicInfo.setTopicName(topicEntity.getTopicName());
         topicInfo.setPostCount(topicEntity.getPostCount());
         topicInfo.setLastModifiedBy(topicEntity.getLastModifiedBy());
@@ -44,6 +43,7 @@ public class TopicInfo {
         topicInfo.setEnable(topicEntity.isEnable());
         topicInfo.setCreatedBy(topicEntity.getCreatedBy());
         topicInfo.setCreateTime(topicEntity.getCreateTime());
+        topicEntity.setLastModifiedTime(topicEntity.getLastModifiedTime());
         return topicInfo;
     }
 }

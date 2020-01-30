@@ -11,6 +11,10 @@ public interface TopicDao {
 
     TopicEntity createOrUpdate(TopicEntity entity);
 
+    TopicEntity update(TopicEntity entity);
+
+    TopicEntity create(TopicEntity entity);
+
     TopicEntity subtract(TopicEntity entity);
 
     TopicEntity find(String id);
@@ -38,5 +42,7 @@ public interface TopicDao {
     void updateShamIdTest(TopicEntity entity);
 
     TopicEntity findByShamId(String ename, String shamId);
+
+
 }
 
