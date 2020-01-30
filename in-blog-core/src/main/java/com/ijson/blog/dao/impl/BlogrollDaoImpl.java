@@ -108,6 +108,8 @@ public class BlogrollDaoImpl extends AbstractDao<BlogrollEntity> implements Blog
 
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
+        } else {
+            query.order("-" + BlogrollEntity.Fields.createTime);
         }
 
         if (page.getPageNumber() > 0) {

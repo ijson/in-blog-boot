@@ -159,9 +159,8 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
 
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
-        }else{
-            query.order("-" +UserEntity.Fields.createTime);//添加排序
-
+        } else {
+            query.order("-" + UserEntity.Fields.createTime);//添加排序
         }
 
         if (page.getPageNumber() > 0) {

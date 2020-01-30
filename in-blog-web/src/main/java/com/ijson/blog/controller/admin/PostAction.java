@@ -97,6 +97,9 @@ public class PostAction extends BaseController {
 
 
         List<TopicEntity> oldTopicNames = entity.getTopicName();
+        if(CollectionUtils.isEmpty(oldTopicNames)){
+            oldTopicNames = Lists.newArrayList();
+        }
         List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
 
         //1. 对比本次提交的tag 和 库中的tag 的增量name

@@ -77,6 +77,7 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         }
         Query<TopicEntity> query = datastore.createQuery(TopicEntity.class);
         query.field(TopicEntity.Fields.id).hasAnyOf(new HashSet<>(ids));
+        query.field(TopicEntity.Fields.enable).equal(true);
         return query.asList();
     }
 
@@ -105,6 +106,8 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         query.field(TopicEntity.Fields.deleted).equal(false);
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
+        } else {
+            query.order("-" + TopicEntity.Fields.createTime);
         }
         if (page.getPageNumber() > 0) {
             query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
@@ -155,6 +158,7 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
     public List<TopicEntity> finHotTag() {
         Query<TopicEntity> query = createQuery();
         query.order("-" + TopicEntity.Fields.postCount);
+        query.field(TopicEntity.Fields.enable).equal(true);
         return query.limit(10).asList();
     }
 
@@ -162,6 +166,7 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
     public List<TopicEntity> findAll() {
         Query<TopicEntity> query = createQuery();
         query.field(TopicEntity.Fields.postCount).notEqual(0);
+        query.field(TopicEntity.Fields.enable).equal(true);
         query.order("-" + TopicEntity.Fields.postCount);
         return query.asList();
     }
@@ -194,6 +199,7 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         Query<TopicEntity> query = datastore.createQuery(TopicEntity.class);
         query.field(PostEntity.Fields.shamId).equal(shamId);
         query.field(PostEntity.Fields.ename).equal(ename);
+        query.field(PostEntity.Fields.enable).equal(true);
         return query.get();
     }
 }

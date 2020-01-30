@@ -61,7 +61,6 @@
     <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
            lay-filter="selectEnable" {{ d.enable ? 'checked': ''}} {{ d.ename=='system' ? 'disabled': ''}} >
 </script>
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
     layui.use('table', function () {
@@ -74,8 +73,8 @@
             page: true,
             cols: [[
                 {field: 'id', hide: true},
-                {field: 'ename', width: 150, title: "英文标识"},
-                {field: 'cname', width: 300, title: "中文描述"},
+                {field: 'name', width: 300, title: "名称"},
+                {field: 'postCount', width: 100, title: "使用数"},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
                 {field: '', title: "操作", templet: '#operation'}
             ]]
@@ -85,7 +84,7 @@
 
             var item = data.data;
             var id = item.id;
-            var cname = item.cname;
+            var cname = item.name;
 
             switch (data.event) {
                 case 'edit':
@@ -101,7 +100,7 @@
                 case 'delete':
 
                     if (item.enable) {
-                        layer.msg("禁用后才可删除角色", function () {
+                        layer.msg("禁用后才可删除标签", function () {
 
                         });
                         return;
@@ -113,7 +112,7 @@
                             cache: false,
                             type: "POST",
                             contentType: 'application/json',
-                            url: "/role/delete/" + id,
+                            url: "/tag/delete/" + id,
                             async: false,
                             success: function (data) {
                                 if (data.code === 0) {
@@ -147,7 +146,7 @@
                 cache: false,
                 type: "POST",
                 contentType: 'application/json',
-                url: "/role/enable/" + id,
+                url: "/tag/enable/" + id,
                 dataType: "json",
                 async: false,
                 success: function (data) {
@@ -166,6 +165,7 @@
     });
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
 
     function searchTitle() {

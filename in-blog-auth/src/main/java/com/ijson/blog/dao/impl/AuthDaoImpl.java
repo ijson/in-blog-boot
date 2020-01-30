@@ -117,6 +117,8 @@ public class AuthDaoImpl extends AbstractDao<AuthEntity> implements AuthDao {
 
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
+        } else {
+            query.order("-" + AuthEntity.Fields.createTime);
         }
 
         if (page.getPageNumber() > 0) {

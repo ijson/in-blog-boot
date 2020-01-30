@@ -113,6 +113,8 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
 
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
+        } else {
+            query.order("-" + RoleEntity.Fields.createTime);
         }
 
         if (page.getPageNumber() > 0) {

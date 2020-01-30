@@ -38,11 +38,11 @@ public class ModuleDaoImpl extends AbstractDao<ModuleEntity> implements ModuleDa
         UpdateOperations operations = createUpdateOperations();
 
 
-		operations.set(ModuleEntity.Fields.id, entity.getId());
-		operations.set(ModuleEntity.Fields.name, entity.getName());
-		operations.set(ModuleEntity.Fields.detail, entity.getDetail());
-		operations.set(ModuleEntity.Fields.turn, entity.isTurn());
-		operations.set(ModuleEntity.Fields.rowNo, entity.getRowNo());
+        operations.set(ModuleEntity.Fields.id, entity.getId());
+        operations.set(ModuleEntity.Fields.name, entity.getName());
+        operations.set(ModuleEntity.Fields.detail, entity.getDetail());
+        operations.set(ModuleEntity.Fields.turn, entity.isTurn());
+        operations.set(ModuleEntity.Fields.rowNo, entity.getRowNo());
 
         return datastore.findAndModify(query, operations);
     }
@@ -79,6 +79,8 @@ public class ModuleDaoImpl extends AbstractDao<ModuleEntity> implements ModuleDa
         query.field(ModuleEntity.Fields.deleted).equal(false);
         if (page.getOrderBy() != null) {
             query.order("-" + page.getOrderBy());//添加排序
+        } else {
+            query.order("-" + ModuleEntity.Fields.createTime);
         }
         if (page.getPageNumber() > 0) {
             query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
