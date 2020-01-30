@@ -3,6 +3,7 @@ package com.ijson.blog.controller;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.*;
+import com.ijson.blog.dao.query.HeaderQuery;
 import com.ijson.blog.exception.BlogBusinessException;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogCreateException;
@@ -12,14 +13,14 @@ import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.arg.AuthArg;
 import com.ijson.blog.service.*;
-import com.ijson.blog.service.model.info.BlogrollInfo;
-import com.ijson.blog.service.model.info.HotTopicInfo;
-import com.ijson.blog.service.model.info.PostInfo;
-import com.ijson.blog.service.model.info.UserInfo;
+import com.ijson.blog.service.model.info.*;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
 import com.ijson.blog.util.VerifyCodeUtils;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -114,6 +115,20 @@ public class BaseController {
         view.addObject("webCtx", webCtx);
         view.addObject("webEname", webEname);
         view.addObject("site", getConfig());
+        view.addObject("header", getHeader());
+    }
+
+    private List<HeaderInfo> getHeader() {
+        HeaderQuery headerQuery = new HeaderQuery();
+        headerQuery.setEnable(true);
+        Page page = new Page();
+        page.setPageSize(500);
+        PageResult<HeaderEntity> headerResult = headerService.find(headerQuery, page);
+        List<HeaderEntity> dataList = headerResult.getDataList();
+        if (CollectionUtils.isEmpty(dataList)) {
+            return Lists.newArrayList();
+        }
+        return HeaderInfo.createList(dataList);
     }
 
     private List<BlogrollInfo> getBlogrolls() {
