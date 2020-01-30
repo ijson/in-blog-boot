@@ -62,7 +62,8 @@ public enum BlogBusinessExceptionCode {
     ROLE_CNAME_CANNOT_BE_EMPTY(200_000_049, "角色中文标识不能为空"),
     REQUEST_PARAMETERS_ARE_INCOMPLETE(200_000_050, "请求参数不完整"),
     NO_RIGHT_TO_DO_THIS(200_000_051, "无权执行此操作"),
-    DRAFT_NOT_FOUND(200_000_052, "草稿未找到");
+    DRAFT_NOT_FOUND(200_000_052, "草稿未找到"),
+    TAGS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_053, "标签不存在或已删除");
 
     private int code;
     private String message;

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>标签列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="x-nav">
+    <span class="layui-breadcrumb">
+        <a href="/admin/console/page">首页</a>
+        <a><cite>标签列表</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+    </a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <table id="tagList" lay-filter="tagList"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script type="text/html" id="toolbarDemo">
+    <input class="text" style="height:30px;width:157px;" name="title" id="title" placeholder="请输入中文名称">
+    <a href="#" lay-filter="" style="position: absolute;left: 144px;" onclick="searchTitle()">
+        <i class="layui-icon layui-icon-search" style="background:#fff;padding:5px;"></i>
+    </a>
+</script>
+
+<script type="text/html" id="operation">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-normal" lay-event="edit"> 编辑</button>
+        <button class="layui-btn layui-btn-danger" lay-event="delete" {{ d.ename=='system' ? 'disabled': ''}}>删除</button>
+    </div>
+</script>
+
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
+           lay-filter="selectEnable" {{ d.enable ? 'checked': ''}} {{ d.ename=='system' ? 'disabled': ''}} >
+</script>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            toolbar: '#toolbarDemo',
+            elem: '#tagList',
+            url: '/tag/list',
+            page: true,
+            cols: [[
+                {field: 'id', hide: true},
+                {field: 'ename', width: 150, title: "英文标识"},
+                {field: 'cname', width: 300, title: "中文描述"},
+                {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
+                {field: '', title: "操作", templet: '#operation'}
+            ]]
+        });
+
+        table.on('tool(tagList)', function (data) {
+
+            var item = data.data;
+            var id = item.id;
+            var cname = item.cname;
+
+            switch (data.event) {
+                case 'edit':
+                    layer.open({
+                        title: '编辑友情链接',
+                        type: 2,
+                        shadeClose: true,
+                        maxmin: true,
+                        area: ['900px', '500px'],
+                        content: '/admin/edit/role/' + id
+                    });
+                    return;
+                case 'delete':
+
+                    if (item.enable) {
+                        layer.msg("禁用后才可删除角色", function () {
+
+                        });
+                        return;
+                    }
+                    layer.confirm('您确定要删除 ' + cname + " 吗?", {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            contentType: 'application/json',
+                            url: "/role/delete/" + id,
+                            async: false,
+                            success: function (data) {
+                                if (data.code === 0) {
+                                    layer.msg(data.message);
+                                } else {
+                                    layer.msg(data.message, function () {
+                                    });
+                                }
+                                layui.table.reload('tagList');
+                            },
+                            error: function (data) {
+                                layer.msg(data.message);
+                            }
+                        });
+
+                    }, function () {
+
+                    });
+                    return;
+            }
+        });
+    });
+
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('switch(selectEnable)', function (data) {
+            var item = $(data.elem).parents('tr').first().find('td');
+            var id = item.eq(0).text();
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/role/enable/" + id,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                    layui.table.reload('tagList');
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function searchTitle() {
+        debugger;
+        var title = $("#title").val();
+        layui.table.reload('tagList', {
+            page: {
+                curr: 1
+            }
+            , where: {
+                title: title
+            }
+        });
+    }
+
+</script>
+</html>

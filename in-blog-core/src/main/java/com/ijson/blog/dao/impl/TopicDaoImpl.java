@@ -93,8 +93,13 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
     @Override
     public PageResult<TopicEntity> find(TopicQuery iquery, Page page) {
         Query<TopicEntity> query = datastore.createQuery(TopicEntity.class);
+
         if (!Strings.isNullOrEmpty(iquery.getId())) {
             query.field(TopicEntity.Fields.id).equal(iquery.getId());
+        }
+
+        if (!Strings.isNullOrEmpty(iquery.getTopicName())) {
+            query.field(TopicEntity.Fields.topicName).containsIgnoreCase(iquery.getTopicName());
         }
 
         query.field(TopicEntity.Fields.deleted).equal(false);

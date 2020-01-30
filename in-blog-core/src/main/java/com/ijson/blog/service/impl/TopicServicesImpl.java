@@ -2,14 +2,14 @@ package com.ijson.blog.service.impl;
 
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.TopicDao;
-import com.ijson.blog.dao.entity.CountEntity;
-import com.ijson.blog.dao.entity.PostEntity;
-import com.ijson.blog.dao.entity.ReplyEntity;
-import com.ijson.blog.dao.entity.TopicEntity;
+import com.ijson.blog.dao.entity.*;
+import com.ijson.blog.dao.query.TopicQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.BlogNotFoundException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.TopicService;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -68,5 +68,20 @@ public class TopicServicesImpl implements TopicService {
     @Override
     public TopicEntity findTopicByShamIdAndEname(String ename, String shamId) {
         return topicDao.findByShamId(ename,shamId);
+    }
+
+    @Override
+    public void delete(String id) {
+        topicDao.delete(id);
+    }
+
+    @Override
+    public TopicEntity enable(AuthContext context, String id, boolean b) {
+        return topicDao.enable(id, b, context.getId());
+    }
+
+    @Override
+    public PageResult<TopicEntity> find(TopicQuery query, Page pageEntity) {
+        return topicDao.find(query,pageEntity);
     }
 }

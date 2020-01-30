@@ -381,4 +381,13 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    @RequestMapping("/list/tag")
+    public ModelAndView tagList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-tags.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
 }

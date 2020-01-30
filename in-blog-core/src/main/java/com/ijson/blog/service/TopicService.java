@@ -1,7 +1,10 @@
 package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.TopicEntity;
+import com.ijson.blog.dao.query.TopicQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
 
 import java.util.List;
 
@@ -21,5 +24,11 @@ public interface TopicService {
     TopicEntity find(String id);
 
     TopicEntity findTopicByShamIdAndEname(String ename, String shamId);
+
+    void delete(String id);
+
+    TopicEntity enable(AuthContext context, String id, boolean b);
+
+    PageResult<TopicEntity> find(TopicQuery query, Page pageEntity);
 
 }

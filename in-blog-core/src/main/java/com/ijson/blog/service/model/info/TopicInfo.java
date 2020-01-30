@@ -1,6 +1,10 @@
 package com.ijson.blog.service.model.info;
 
+import com.ijson.blog.dao.entity.TopicEntity;
 import lombok.Data;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -13,4 +17,33 @@ public class TopicInfo {
     private String name;
     private String ename;
     private String shamId;
+    private String moduleId;
+    private String topicName;
+    private long postCount;
+    private String lastModifiedBy;
+    private Boolean deleted;
+    private boolean enable;
+    private String createdBy;
+    private long createTime;
+
+    public static List<TopicInfo> createList(List<TopicEntity> dataList) {
+        return dataList.stream().map(k -> create(k)).collect(Collectors.toList());
+    }
+
+    public static TopicInfo create(TopicEntity topicEntity) {
+        TopicInfo topicInfo = new TopicInfo();
+        topicInfo.setId(topicEntity.getId());
+        topicInfo.setName(topicEntity.getTopicName());
+        topicInfo.setEname(topicEntity.getEname());
+        topicInfo.setShamId(topicEntity.getShamId());
+        topicInfo.setModuleId(topicEntity.getModuleId());
+        topicInfo.setTopicName(topicEntity.getTopicName());
+        topicInfo.setPostCount(topicEntity.getPostCount());
+        topicInfo.setLastModifiedBy(topicEntity.getLastModifiedBy());
+        topicInfo.setDeleted(topicEntity.getDeleted());
+        topicInfo.setEnable(topicEntity.isEnable());
+        topicInfo.setCreatedBy(topicEntity.getCreatedBy());
+        topicInfo.setCreateTime(topicEntity.getCreateTime());
+        return topicInfo;
+    }
 }
