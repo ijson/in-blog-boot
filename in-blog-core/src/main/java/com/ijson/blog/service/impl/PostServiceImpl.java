@@ -298,11 +298,13 @@ public class PostServiceImpl implements PostService {
             //遍历所有tags,如果postCount-1 <=0,则需要将tag删除
             topicIds.forEach(topicId -> {
                 TopicEntity topic = topicDao.find(topicId);
-                long lastCount = topic.getPostCount() - 1;
-                if (lastCount <= 0) {
-                    topicDao.delete(topic.getId());
-                } else {
-                    topicDao.subtract(topic);
+                if(Objects.nonNull(topic)){
+                    long lastCount = topic.getPostCount() - 1;
+                    if (lastCount <= 0) {
+                        topicDao.delete(topic.getId());
+                    } else {
+                        topicDao.subtract(topic);
+                    }
                 }
             });
         }
