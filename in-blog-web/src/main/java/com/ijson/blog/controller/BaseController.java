@@ -220,7 +220,7 @@ public class BaseController {
                 throw new BlogBusinessException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
             }
         }
-        if (LoginInterceptor.isParadigm(context.getPermissionEname(), request.getRequestURI())) {
+        if (!LoginInterceptor.isParadigm(context.getPermissionPath(), request.getRequestURI())) {
             if (handleAuthException) {
                 return null;
             } else {
