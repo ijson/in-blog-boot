@@ -77,6 +77,9 @@ public class BaseController {
     @Autowired
     protected HeaderService headerService;
 
+    @Autowired
+    protected IndexMenuService indexMenuService;
+
 
     @Value("${web.ctx}")
     protected String webCtx;
