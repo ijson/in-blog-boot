@@ -34,7 +34,7 @@ public class TagController extends BaseController {
         view.setViewName("view/index-list-tag.html");
         try {
             view.addObject("tags", HotTopicInfo.getHotTopic(topicService.findAll()));
-            view.addObject("tagActive", "active");
+            view.addObject("path", "/tags/index");
             addViewModelAndView(view);
             return view;
         } catch (BlogNotFoundException e) {

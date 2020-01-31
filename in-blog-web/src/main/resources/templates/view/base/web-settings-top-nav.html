@@ -17,7 +17,7 @@
                 <%
                 for(data in indexMenu){
                 %>
-                <li><a href="${data.path!}">${data.cname!}</a></li>
+                <li <%if(path==data.path){%> class="active"<%}%>  ><a href="${data.path!}">${data.cname!}</a></li>
                 <%} %>
             </ul>
 
