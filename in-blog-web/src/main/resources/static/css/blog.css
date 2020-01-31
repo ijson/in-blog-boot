@@ -33,15 +33,16 @@ h6, .h6 {
  * Masthead for nav
  */
 
-.blog-nav-base{
+.blog-nav-base {
     background-color: #ffce3d;
     color: #fff;
 }
 
-.navbar-default .navbar-nav>li>a {
+.navbar-default .navbar-nav > li > a {
     color: #fff;
 }
-.navbar-default .navbar-nav>.active>a {
+
+.navbar-default .navbar-nav > .active > a {
 
 }
 
@@ -54,7 +55,8 @@ h6, .h6 {
     left: 0;
     z-index: 1030;
 }
-.logo{
+
+.logo {
     background-color: #ffce3d;
     color: #fff;
 
@@ -106,7 +108,7 @@ h6, .h6 {
     background-color: #ffbf00;
 }
 
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
     color: #fff;
     background-color: #ffbf00;
 }
@@ -153,18 +155,19 @@ h6, .h6 {
 .blog-main {
     font-size: 18px;
     line-height: 1.5;
-    padding-top:20px;
+    padding-top: 20px;
     overflow: hidden;
 }
 
 .blog-not-find {
     font-size: 14px;
     line-height: 1.5;
-    padding-top:20px;
+    padding-top: 20px;
     overflow: hidden;
 }
-.blog-right{
-    padding-top:20px;
+
+.blog-right {
+    padding-top: 20px;
 }
 
 /* Sidebar modules for boxing content */
@@ -218,7 +221,7 @@ h6, .h6 {
 
 .blog-detail-title {
     font-size: 25px;
-    text-align:center;
+    text-align: center;
 }
 
 .blog-post-meta {
@@ -234,31 +237,32 @@ h6, .h6 {
     margin-bottom: 10px;
     color: #606060;
     font-size: 15px;
-    overflow : hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3; /* 可以显示的行数，超出部分用...表示*/
     -webkit-box-orient: vertical;
 }
-.kratos-post-content img{
+
+.kratos-post-content img {
     margin: auto;
     max-width: 80%;
-    height: auto!important;
+    height: auto !important;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 0;
     vertical-align: middle;
 }
 
-.kratos-post-content h1{
+.kratos-post-content h1 {
     font-size: 30px;
 }
 
-.kratos-post-content h2{
+.kratos-post-content h2 {
     font-size: 24px;
 }
 
-.kratos-post-content p{
+.kratos-post-content p {
     font-size: 14px;
 }
 
@@ -297,7 +301,6 @@ h6, .h6 {
     margin-bottom: 0;
 }
 
-
 .entry-more {
     float: right;
     font-size: 14px;
@@ -326,7 +329,7 @@ h6, .h6 {
 }
 
 /*.blog-sidebar {*/
-    /*width: 350px;*/
+/*width: 350px;*/
 /*}*/
 
 .panel-heading.no-border {
@@ -513,7 +516,7 @@ h6, .h6 {
     padding-right: 15px;
     border-color: #e7ecee;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap
 }
 
@@ -637,7 +640,7 @@ h6, .h6 {
 }
 
 @media (min-width: 1200px) {
-    .container{
+    .container {
         width: 1200px;
     }
 }
@@ -645,16 +648,18 @@ h6, .h6 {
 .kratos-entry-header {
     margin-bottom: 15px;
 }
+
 .kratos-entry-title {
     margin: 0 0 15px;
     font-size: 30px;
 }
+
 .text-center {
     text-align: center;
 }
 
-.kratos-post-meta{
-    font-family: -apple-system,BlinkMacSystemFont,opensans,Optima,"Microsoft Yahei",sans-serif;
+.kratos-post-meta {
+    font-family: -apple-system, BlinkMacSystemFont, opensans, Optima, "Microsoft Yahei", sans-serif;
     line-height: 1.8;
     font-size: 13px;
     font-weight: 300;
@@ -664,11 +669,11 @@ h6, .h6 {
     word-break: break-all;
     word-wrap: break-word;
     margin: 20px;
-    font-size:16px;
-    font-family: -apple-system,BlinkMacSystemFont,opensans,Optima,"Microsoft Yahei",sans-serif;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, opensans, Optima, "Microsoft Yahei", sans-serif;
 }
 
- p {
+p {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
@@ -677,10 +682,9 @@ h6, .h6 {
 }
 
 .kratos-copyright {
-    background-color: rgba(220,220,220,.7);
+    background-color: rgba(220, 220, 220, .7);
     margin: 10px;
     border-radius: 5px;
-
 
 }
 
@@ -705,12 +709,12 @@ h5 {
     margin-bottom: 20px;
 }
 
-
 .kratos-entry-footer .post-like-donate .Donate {
     margin-left: 10px;
     border-color: #3496e6;
     color: #3496e6;
 }
+
 .kratos-entry-footer .post-like-donate .share-btn {
     display: inline-block;
     margin: 0 2px;
@@ -734,7 +738,7 @@ h5 {
 }
 
 .pull-left {
-    float: left!important;
+    float: left !important;
 }
 
 .kratos-entry-footer {
@@ -760,7 +764,7 @@ h5 {
     font-size: 14px;
 }
 
-.footer-tag{
+.footer-tag {
     margin-bottom: 30px;
 }
 
@@ -773,32 +777,30 @@ h5 {
     text-align: left;
     max-width: 50%;
     background-color: #fff;
-    box-shadow: 0 1px 5px rgba(0,0,0,.1);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
     padding: 7px 18px;
 }
 
-.post-navigation .nav-previous  > a{
+.post-navigation .nav-previous > a {
     text-decoration: none;
     color: #5a5a5a;
     transition: .5s;
     font-size: 16px;
 }
 
-
-.post-navigation .nav-next > a{
+.post-navigation .nav-next > a {
     text-decoration: none;
     color: #5a5a5a;
     transition: .5s;
     font-size: 16px;
 }
-
 
 .post-navigation .nav-next {
     float: right;
     text-align: right;
     max-width: 50%;
     background-color: #fff;
-    box-shadow: 0 1px 5px rgba(0,0,0,.1);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
     padding: 7px 18px;
 }
 
@@ -806,16 +808,19 @@ h5 {
     word-wrap: break-word;
     word-break: break-all;
 }
+
 .comments-area ol {
     margin-top: 15px;
     list-style: none;
     margin-left: -40px;
 }
+
 ol, p, ul {
     margin: 0 0 1em 0;
     font-size: 16px;
     color: #333;
 }
+
 ol {
     display: block;
     list-style-type: decimal;
@@ -829,8 +834,8 @@ ol {
 .comments-area .comment-list li {
     padding: 17px 17px 14px;
     background-color: #fff;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.1);
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
     margin-top: 20px;
 }
 
@@ -850,27 +855,32 @@ li {
     height: 50px;
     border-radius: 50%;
     background: url(../images/avatar.png) no-repeat center #f0f0f0;
-    -webkit-box-shadow: 0 0.125rem 1.0625rem 0 rgba(0,0,0,.22);
-    box-shadow: 0 0.125rem 1.0625rem 0 rgba(0,0,0,.22);
+    -webkit-box-shadow: 0 0.125rem 1.0625rem 0 rgba(0, 0, 0, .22);
+    box-shadow: 0 0.125rem 1.0625rem 0 rgba(0, 0, 0, .22);
 }
 
 img {
     vertical-align: middle;
 }
+
 .comments-area .comment-awaiting-moderation, .comments-area .comment-meta, .comments-area .fn {
     margin-left: 63px;
 }
+
 cite {
     font-style: normal;
 }
+
 .comments-area .says {
     display: none;
 }
+
 .comments-area .comment-meta {
     margin-bottom: 5px;
     color: #777;
     font-size: 13px;
 }
+
 .comments-area .comment-awaiting-moderation, .comments-area .comment-meta, .comments-area .fn {
     margin-left: 63px;
 }
@@ -878,9 +888,11 @@ cite {
 .commentmetadata a {
     color: #848484;
 }
+
 article a {
     color: #333;
 }
+
 a {
     color: #51aded;
     text-decoration: none;
@@ -896,7 +908,7 @@ a {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    font-family: -apple-system,BlinkMacSystemFont,opensans,Optima,"Microsoft Yahei",sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, opensans, Optima, "Microsoft Yahei", sans-serif;
     line-height: 1.8;
     font-size: 16px;
 
@@ -908,11 +920,12 @@ ol, p, ul {
     color: #333;
 }
 
-.kratos-post-meta span>i{
+.kratos-post-meta span > i {
     font-size: 13px;
     color: #777;
-    padding-left:15px;
+    padding-left: 15px;
 }
+
 /* 小火箭css */
 #gotop1 {
     width: 80px;
@@ -962,26 +975,23 @@ ol, p, ul {
 
 /* end 小火箭 */
 
-
 .share-wrap {
     display: block;
     margin: 10px 0 -20px;
 }
 
-
-
-.comments{
+.comments {
     background: #FFF;
     border-radius: 4px;
     box-shadow: 1px 1px 1px 1px #c5c5c5;
 
 }
-.comm-main{
+
+.comm-main {
     padding: 20px;
     width: 100%;
     font-size: 14px;
 }
-
 
 .mytextarea {
     width: 100%;
@@ -992,7 +1002,7 @@ ol, p, ul {
     font-size: 1em;
     resize: none;
     outline-color: #32aa66;
-    outline-width:1px;
+    outline-width: 1px;
     padding: 5px 10px 5px 10px;
 }
 
@@ -1005,13 +1015,14 @@ ol, p, ul {
     font-size: 1em;
     resize: none;
     outline-color: #32aa66;
-    outline-width:1px;
+    outline-width: 1px;
     padding: 5px 10px 5px 10px;
 }
 
-.replybox{
+.replybox {
     margin-bottom: 30px;
 }
+
 .comment-list {
     width: 100%;
     margin: 20px auto;
@@ -1053,15 +1064,15 @@ ol, p, ul {
     color: #aaa;
 }
 
-
 .comment-list .comment-info .comment-right .comment-content-header span, .comment-list .comment-info .comment-right .comment-content-footer span.reply-btn, .send, .reply-list-btn {
     cursor: pointer;
 }
 
-.reply-btn{
-    text-align:right;
+.reply-btn {
+    text-align: right;
 }
-.comment-content-header span{
+
+.comment-content-header span {
     font-size: 14px;
 }
 
@@ -1084,20 +1095,21 @@ ol, p, ul {
     color: #aaa;
 }
 
-.content{
+.content {
     font-size: 14px;
 }
-.comment-content-footer span{
+
+.comment-content-footer span {
     font-size: 12px;
 }
 
-.pull-right-verification{
+.pull-right-verification {
     width: 80px;
     height: 30px;
-    padding:2px;
+    padding: 2px;
 }
 
-.wechat-qrcode p{
+.wechat-qrcode p {
     font-size: 12px;
 }
 
@@ -1105,8 +1117,6 @@ ol, p, ul {
     color: #FD485E;
     font-style: normal;
 }
-
-
 
 .in-post-footer {
     padding: 3px 20px;
@@ -1116,7 +1126,7 @@ ol, p, ul {
     display: block;
     clear: both;
     font-size: 12px;
-    background: rgba(253,253,253,.7);
+    background: rgba(253, 253, 253, .7);
 }
 
 /**
@@ -1133,4 +1143,20 @@ ol, p, ul {
 
 .in-post-footer .read-more {
     margin-right: 0;
+}
+
+.index-list-title {
+    padding-left: 8px;
+}
+
+.index-list-reply-code {
+    width: 100px;
+}
+
+.web-settings-top-nav-site-name {
+    color: #FFF;
+}
+
+.index-article-wechat-share {
+    display: none;
 }
