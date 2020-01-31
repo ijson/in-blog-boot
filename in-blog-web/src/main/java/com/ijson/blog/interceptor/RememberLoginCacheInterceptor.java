@@ -1,6 +1,5 @@
 package com.ijson.blog.interceptor;
 
-import com.google.common.base.Strings;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.util.DesUtil;
@@ -8,7 +7,6 @@ import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
 import com.ijson.blog.util.StopWatch;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,7 +42,7 @@ public class RememberLoginCacheInterceptor implements HandlerInterceptor {
             cookie.setPath("/");
             cookie.setMaxAge(60 * 30);
             response.addCookie(cookie);
-            request.getSession().setAttribute("authContext",context);
+            request.getSession().setAttribute("authContext", context);
         }
         stopWatch.logSlow(10);
         //业务代码
