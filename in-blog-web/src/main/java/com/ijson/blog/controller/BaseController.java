@@ -119,6 +119,17 @@ public class BaseController {
         view.addObject("webEname", webEname);
         view.addObject("site", getConfig());
         view.addObject("header", getHeader());
+        view.addObject("indexMenu", getIndexMenu());
+    }
+
+
+    private List<IndexMenuInfo> getIndexMenu() {
+        List<IndexMenuEntity> all = indexMenuService.findAll();
+        if (CollectionUtils.isEmpty(all)) {
+            return IndexMenuInfo.getDefaultIndexMenu();
+        }
+        List<IndexMenuInfo> list = IndexMenuInfo.createList(all);
+        return list.stream().sorted((o1, o2) -> o1.getOrder() < o2.getOrder() ? -1 : 1).collect(Collectors.toList());
     }
 
     private List<HeaderInfo> getHeader() {

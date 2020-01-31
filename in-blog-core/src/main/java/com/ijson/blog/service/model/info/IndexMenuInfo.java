@@ -45,4 +45,25 @@ public class IndexMenuInfo {
         info.setOrder(entity.getOrder());
         return info;
     }
+
+
+    public static List<IndexMenuInfo> getDefaultIndexMenu() {
+        List<IndexMenuInfo> menuInfos = Lists.newArrayList();
+
+        menuInfos.add(IndexMenuInfo.create("", "首页", "", "/", true, 1));
+        menuInfos.add(IndexMenuInfo.create("", "标签墙", "", "/", true, 2));
+
+        return menuInfos;
+    }
+
+    public static IndexMenuInfo create(String id, String cname, String ename, String path, Boolean enable, Integer order) {
+        IndexMenuInfo indexMenuInfo = new IndexMenuInfo();
+        indexMenuInfo.setId(id);
+        indexMenuInfo.setCname(cname);
+        indexMenuInfo.setEname(ename);
+        indexMenuInfo.setPath(path);
+        indexMenuInfo.setEnable(enable);
+        indexMenuInfo.setOrder(order);
+        return indexMenuInfo;
+    }
 }
