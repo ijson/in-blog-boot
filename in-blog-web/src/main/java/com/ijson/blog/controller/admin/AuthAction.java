@@ -41,7 +41,7 @@ public class AuthAction extends BaseController {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Objects.isNull(myEntity.getOrder())) {
-            throw new ReplyCreateException(BlogBusinessExceptionCode.AUTH_ORDER_CANNOT_BE_EMPTY);
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ORDER_CANNOT_BE_EMPTY);
         }
 
         if (Strings.isNullOrEmpty(myEntity.getEname())) {

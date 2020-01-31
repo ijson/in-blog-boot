@@ -29,6 +29,9 @@ public class IndexMenuEntity {
     @Property(Fields.path)
     private String path;
 
+    @Property(Fields.order)
+    private Integer order;
+
     @Property(Fields.enable)
     private boolean enable;
 
@@ -55,5 +58,6 @@ public class IndexMenuEntity {
         String cname = "cname";
         String path = "path";
         String ename = "ename";
+        String order = "order";
     }
 }

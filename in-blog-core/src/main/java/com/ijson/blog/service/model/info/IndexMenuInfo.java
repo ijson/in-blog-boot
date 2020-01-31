@@ -25,6 +25,8 @@ public class IndexMenuInfo {
 
     private Boolean enable;
 
+    private Integer order;
+
     public static List<IndexMenuInfo> createList(List<IndexMenuEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();
@@ -40,6 +42,7 @@ public class IndexMenuInfo {
         info.setId(entity.getId());
         info.setEname(entity.getEname());
         info.setPath(entity.getPath());
+        info.setOrder(entity.getOrder());
         return info;
     }
 }

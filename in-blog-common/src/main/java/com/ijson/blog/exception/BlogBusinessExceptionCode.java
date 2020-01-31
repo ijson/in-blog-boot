@@ -51,7 +51,7 @@ public enum BlogBusinessExceptionCode {
     REG_ROLE_CANNOT_BE_EMPTY(200_000_038, "注册角色不能为空"),
     BLOGROLL_DESC_CANNOT_BE_EMPTY(200_000_039, "友情链接描述不能为空"),
     BLOGROLL_LINK_CANNOT_BE_EMPTY(200_000_040, "友情链接地址不能为空"),
-    AUTH_ORDER_CANNOT_BE_EMPTY(200_000_041, "权限排列顺序不能为空"),
+    ORDER_CANNOT_BE_EMPTY(200_000_041, "排列顺序不能为空"),
     AUTH_ENAME_CANNOT_BE_EMPTY(200_000_042, "权限英文标识不能为空"),
     AUTH_CNAME_CANNOT_BE_EMPTY(200_000_043, "权限中文标识不能为空"),
     AUTH_LINK_CANNOT_BE_EMPTY(200_000_044, "权限地址不能为空"),
@@ -68,7 +68,8 @@ public enum BlogBusinessExceptionCode {
     THE_DESCRIPTION_CANNOT_BE_EMPTY(200_000_055, "描述不能为空"),
     THE_HEADER_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_056, "header为空或不存在"),
     ENGLISH_SIGNS_CANNOT_BE_EMPTY(200_000_057, "英文标识不能为空"),
-    PATH_SIGNS_CANNOT_BE_EMPTY(200_000_058, "路径不能为空");
+    PATH_SIGNS_CANNOT_BE_EMPTY(200_000_058, "路径不能为空"),
+    HOME_MENU_SUPPORTS_MAX_OF_SIX_CUSTOM(200_000_059, "首页菜单最多支持自定义6个");
 
     private int code;
     private String message;

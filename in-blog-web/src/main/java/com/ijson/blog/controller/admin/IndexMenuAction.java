@@ -45,6 +45,10 @@ public class IndexMenuAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.PATH_SIGNS_CANNOT_BE_EMPTY);
         }
 
+        if (Objects.isNull(myEntity.getOrder())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ORDER_CANNOT_BE_EMPTY);
+        }
+
         if (Strings.isNullOrEmpty(myEntity.getId())) {
             return create(request, myEntity);
         }
@@ -53,6 +57,7 @@ public class IndexMenuAction extends BaseController {
 
         entity.setCname(myEntity.getCname());
         entity.setPath(myEntity.getPath());
+        entity.setOrder(myEntity.getOrder());
 //        entity.setEname(myEntity.getEname());
 
         indexMenuService.edit(context, entity);
@@ -62,6 +67,10 @@ public class IndexMenuAction extends BaseController {
     private Result create(HttpServletRequest request, IndexMenuEntity myEntity) {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
+        List<IndexMenuEntity> all = indexMenuService.findAll();
+        if (all.size() > 6) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.HOME_MENU_SUPPORTS_MAX_OF_SIX_CUSTOM);
+        }
         indexMenuService.create(context, myEntity);
         return Result.ok("创建成功!");
     }
