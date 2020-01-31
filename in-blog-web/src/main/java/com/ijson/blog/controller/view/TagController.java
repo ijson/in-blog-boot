@@ -28,46 +28,13 @@ import java.util.Objects;
 @RequestMapping("/tags")
 public class TagController extends BaseController {
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public ModelAndView tags(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("view/index-list-tag.html");
         try {
             view.addObject("tags", HotTopicInfo.getHotTopic(topicService.findAll()));
             view.addObject("tagActive", "active");
-            addViewModelAndView(view);
-            return view;
-        } catch (BlogNotFoundException e) {
-            view.setViewName("error/404.html");
-            return view;
-        }
-    }
-
-
-    @RequestMapping("/{id}")
-    public ModelAndView tagById(@PathVariable("id") String id, Integer index, HttpServletRequest request) {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("view/index-list-post-tag.html");
-        try {
-            Page page = new Page();
-
-            if (Objects.isNull(index)) {
-                index = 1;
-            }
-            page.setPageNumber(index);
-
-            PageResult<PostEntity> result = postService.findPostByTagId(id, page);
-
-            //view.addObject("tags", HotTopic.getHotTopic(topicService.findUseAll()));
-            view.addObject("tagActive", "active");
-            view.addObject("tagPostCount", result.getTotal());
-            view.addObject("tagPost", PostInfo.indexPost(result));
-            view.addObject("id", id);
-            TopicEntity topicEntity = topicService.find(id);
-            if (Objects.nonNull(topicEntity)) {
-                view.addObject("tagName", topicEntity.getTopicName());
-            }
-            view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
             addViewModelAndView(view);
             return view;
         } catch (BlogNotFoundException e) {

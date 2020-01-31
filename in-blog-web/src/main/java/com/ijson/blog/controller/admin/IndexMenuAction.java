@@ -41,8 +41,8 @@ public class IndexMenuAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.THE_DESCRIPTION_CANNOT_BE_EMPTY);
         }
 
-        if (Strings.isNullOrEmpty(myEntity.getEname())) {
-            throw new ReplyCreateException(BlogBusinessExceptionCode.ENGLISH_SIGNS_CANNOT_BE_EMPTY);
+        if (Strings.isNullOrEmpty(myEntity.getPath())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.PATH_SIGNS_CANNOT_BE_EMPTY);
         }
 
         if (Strings.isNullOrEmpty(myEntity.getId())) {
@@ -53,7 +53,7 @@ public class IndexMenuAction extends BaseController {
 
         entity.setCname(myEntity.getCname());
         entity.setPath(myEntity.getPath());
-        entity.setEname(myEntity.getEname());
+//        entity.setEname(myEntity.getEname());
 
         indexMenuService.edit(context, entity);
         return Result.ok("更新成功!");

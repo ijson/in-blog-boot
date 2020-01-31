@@ -67,7 +67,8 @@ public enum BlogBusinessExceptionCode {
     THE_CODE_CANNOT_BE_EMPTY(200_000_054, "代码不能为空"),
     THE_DESCRIPTION_CANNOT_BE_EMPTY(200_000_055, "描述不能为空"),
     THE_HEADER_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_056, "header为空或不存在"),
-    ENGLISH_SIGNS_CANNOT_BE_EMPTY(200_000_057, "英文标识不能为空");
+    ENGLISH_SIGNS_CANNOT_BE_EMPTY(200_000_057, "英文标识不能为空"),
+    PATH_SIGNS_CANNOT_BE_EMPTY(200_000_058, "路径不能为空");
 
     private int code;
     private String message;

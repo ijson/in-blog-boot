@@ -106,6 +106,15 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/save/index/menu")
+    public ModelAndView skipIndexMenuAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-index-menu.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
     @RequestMapping("/save/site")
     public ModelAndView siteSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/save-site.html");
@@ -205,6 +214,16 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         HeaderEntity internalById = headerService.findInternalById(id);
         view.addObject("editData", HeaderInfo.create(internalById));
+        return view;
+    }
+
+    @RequestMapping("/edit/index/menu/{id}")
+    public ModelAndView skipIndexMenuEdit(@PathVariable("id") String id) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-index-menu.html");
+        addAdminModelAndView(view);
+        IndexMenuEntity internalById = indexMenuService.findInternalById(id);
+        view.addObject("editData", IndexMenuInfo.create(internalById));
         return view;
     }
 
@@ -439,6 +458,14 @@ public class ConsoleAction extends BaseController {
     public ModelAndView headerList() {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-header.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
+    @RequestMapping("/list/index/menu")
+    public ModelAndView indexMenuList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-index-menu.html");
         addAdminModelAndView(view);
         return view;
     }
