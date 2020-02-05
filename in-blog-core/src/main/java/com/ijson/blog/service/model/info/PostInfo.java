@@ -174,6 +174,11 @@ public class PostInfo {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * 后台列表页使用
+     * @param result
+     * @return
+     */
     public static List<PostInfo> postDraftList(PageResult<PostDraftEntity> result) {
 
         if (result == null) {
@@ -220,6 +225,7 @@ public class PostInfo {
         post.setShamId(entity.getShamId());
         post.setTopicName(entity.getTopicNames());
         post.setLastModifiedBy(entity.getLastModifiedBy());
+        post.setIndexMenuEname(entity.getIndexMenuEname());
         return post;
     }
 

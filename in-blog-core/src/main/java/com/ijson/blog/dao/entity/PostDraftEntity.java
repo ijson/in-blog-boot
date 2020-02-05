@@ -64,6 +64,8 @@ public class PostDraftEntity extends BaseEntity {
     @Property(Fields.lastModifiedTime)
     private long lastModifiedTime;
 
+    @Property(Fields.indexMenuEname)
+    private String indexMenuEname;
     /**
      * 是否为创建
      */
@@ -110,6 +112,7 @@ public class PostDraftEntity extends BaseEntity {
         String lastModifiedTime = "lastModifiedTime";
         String ename = "ename";
         String shamId = "shamId";
+        String indexMenuEname = "indexMenuEname";
     }
 
 

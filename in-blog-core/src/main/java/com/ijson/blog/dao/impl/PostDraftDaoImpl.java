@@ -59,6 +59,10 @@ public class PostDraftDaoImpl extends AbstractDao<PostDraftEntity> implements Po
         if (!Strings.isNullOrEmpty(entity.getTitle())) {
             operations.set(PostDraftEntity.Fields.title, entity.getTitle());
         }
+
+        if (!Strings.isNullOrEmpty(entity.getIndexMenuEname())) {
+            operations.set(PostDraftEntity.Fields.indexMenuEname, entity.getIndexMenuEname());
+        }
         operations.set(PostDraftEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, operations);
     }

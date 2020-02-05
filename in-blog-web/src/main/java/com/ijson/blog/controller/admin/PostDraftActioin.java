@@ -60,6 +60,7 @@ public class PostDraftActioin extends BaseController {
 
         PostDraftEntity entity = PostDraftEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), post.getTopicName(), ename, post.getShamId());
         entity.setCreate(true);
+        entity.setIndexMenuEname(post.getIndexMenuEname());
         entity = postDraftService.createPostDraft(context, entity);
         log.info("草稿创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
         return Result.ok("创建草稿成功!");
@@ -70,6 +71,7 @@ public class PostDraftActioin extends BaseController {
 
         PostDraftEntity newEntity = PostDraftEntity.update(context, post.getId(), post.getTitle(), post.getContent(), post.getTopicName());
 
+        newEntity.setIndexMenuEname(post.getIndexMenuEname());
         postDraftService.createPostDraft(context, newEntity);
 
 
