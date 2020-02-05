@@ -97,6 +97,9 @@ public class PostEntity extends BaseEntity {
     @Property(Fields.trigger)
     private Constant.AuditTrigger trigger;
 
+    @Property(Fields.indexMenuId)
+    private String indexMenuId;
+
     private long views;
 
     private long reply;
@@ -127,6 +130,7 @@ public class PostEntity extends BaseEntity {
         String status = "status";
         String reason = "reason";
         String trigger = "trigger";
+        String indexMenuId = "indexMenuId";
     }
 
 

@@ -45,6 +45,10 @@ public class IndexMenuAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.PATH_SIGNS_CANNOT_BE_EMPTY);
         }
 
+        if (Strings.isNullOrEmpty(myEntity.getEname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ENGLISH_SIGNS_CANNOT_BE_EMPTY);
+        }
+
         if (Objects.isNull(myEntity.getOrder())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.ORDER_CANNOT_BE_EMPTY);
         }
@@ -58,7 +62,7 @@ public class IndexMenuAction extends BaseController {
         entity.setCname(myEntity.getCname());
         entity.setPath(myEntity.getPath());
         entity.setOrder(myEntity.getOrder());
-//        entity.setEname(myEntity.getEname());
+        entity.setEname(myEntity.getEname());
 
         indexMenuService.edit(context, entity);
         return Result.ok("更新成功!");
@@ -81,7 +85,7 @@ public class IndexMenuAction extends BaseController {
         IndexMenuEntity entity = indexMenuService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
-            throw new ReplyCreateException(BlogBusinessExceptionCode.THE_HEADER_IS_EMPTY_OR_DOES_NOT_EXIST);
+            throw new ReplyCreateException(BlogBusinessExceptionCode.INDEX_MENU_IS_NULL_OR_NOT_EXIST);
         }
 
         indexMenuService.enable(id, !entity.isEnable(), context);
@@ -94,7 +98,7 @@ public class IndexMenuAction extends BaseController {
         IndexMenuEntity entity = indexMenuService.findInternalById(id);
 
         if (Objects.isNull(entity)) {
-            throw new ReplyCreateException(BlogBusinessExceptionCode.THE_HEADER_IS_EMPTY_OR_DOES_NOT_EXIST);
+            throw new ReplyCreateException(BlogBusinessExceptionCode.INDEX_MENU_IS_NULL_OR_NOT_EXIST);
         }
 
         if (entity.isEnable()) {

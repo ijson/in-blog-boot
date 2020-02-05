@@ -70,4 +70,35 @@ public class HomeController extends BaseController {
         return view;
     }
 
+
+
+    @RequestMapping("/activity")
+    public ModelAndView activity(Integer index, String keyWord) {
+        ModelAndView view = new ModelAndView("view/index-list.html");
+
+        Page page = new Page();
+        if (Objects.isNull(index)) {
+            index = 1;
+        }
+        page.setPageNumber(index);
+
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setLikeTitle(true);
+            query.setTitle(keyWord);
+        }
+
+        query.setEnable(true);
+        query.setStatus(Constant.PostStatus.pass);
+        PageResult<PostEntity> result = postService.find(null,query, page);
+
+        view.addObject("total", result.getTotal());
+        view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
+        view.addObject("dataList", PostInfo.indexPost(result,keyWord));
+        view.addObject("path", "/activity");
+        view.addObject("keyWord", keyWord);
+        addViewModelAndView(view);
+        return view;
+    }
+
 }

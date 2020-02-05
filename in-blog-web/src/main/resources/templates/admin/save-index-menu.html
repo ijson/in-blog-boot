@@ -47,11 +47,11 @@
                                    class="layui-input" value="${editData.cname!}">
                         </div>
 
-                        <!--<div class="layui-form-item">-->
-                        <!--<input type="text" name="ename" id="ename" lay-verify="ename" autocomplete="off"-->
-                        <!--placeholder="请输入英文描述"-->
-                        <!--class="layui-input" value="${editData.ename!}">-->
-                        <!--</div>-->
+                        <div class="layui-form-item">
+                        <input type="text" name="ename" id="ename" lay-verify="ename" autocomplete="off"
+                        placeholder="请输入英文描述"
+                        class="layui-input" value="${editData.ename!}">
+                        </div>
 
                         <div class="layui-form-item">
                             <input type="text" name="path" id="path" lay-verify="path" autocomplete="off"
@@ -93,11 +93,11 @@
                     return '中文描述不能为空';
                 }
             },
-            // ename: function (value) {
-            //     if (value === undefined || value === '' || value.length === 0) {
-            //         return '英文描述不能为空';
-            //     }
-            // },
+            ename: function (value) {
+                if (value === undefined || value === '' || value.length === 0) {
+                    return '英文描述不能为空';
+                }
+            },
             path: function (value) {
                 if (value === undefined || value === '' || value.length === 0) {
                     return '路径不能为空';

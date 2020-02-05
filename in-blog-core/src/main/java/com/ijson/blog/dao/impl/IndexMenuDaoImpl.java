@@ -42,9 +42,9 @@ public class IndexMenuDaoImpl extends AbstractDao<IndexMenuEntity> implements In
             operations.set(IndexMenuEntity.Fields.cname, entity.getCname());
         }
 
-//        if (!Strings.isNullOrEmpty(entity.getEname())) {
-//            operations.set(IndexMenuEntity.Fields.ename, entity.getEname());
-//        }
+        if (!Strings.isNullOrEmpty(entity.getEname())) {
+            operations.set(IndexMenuEntity.Fields.ename, entity.getEname());
+        }
 
         if (Objects.nonNull(entity.getOrder())) {
             operations.set(IndexMenuEntity.Fields.order, entity.getOrder());

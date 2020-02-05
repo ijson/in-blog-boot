@@ -35,7 +35,7 @@
             <div class="layui-card">
                 <%if(array.contain(session.authContext.permissionPath,"/admin/save/index/menu")){%>
                 <div class="layui-card-header">
-                    <button class="layui-btn" onclick="xadmin.open('添加Header','/admin/save/index/menu',900,500)"><i
+                    <button class="layui-btn" onclick="xadmin.open('添加首页菜单','/admin/save/index/menu',900,500)"><i
                             class="fa fa-plus"></i>添加首页菜单
                     </button>
                 </div>
@@ -82,7 +82,7 @@
                 {field: 'id', hide: true},
                 {field: 'order', width: 80, title: "顺序编码"},
                 {field: 'cname', width: 150, title: "中文描述"},
-                // {field: 'ename', width: 150, title: "英文描述"},
+                {field: 'ename', width: 150, title: "英文描述"},
                 {field: 'path', width: 150, title: "路径"},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
                 {field: '', title: "操作", templet: '#operation'}
@@ -98,7 +98,7 @@
             switch (data.event) {
                 case 'edit':
                     layer.open({
-                        title: '编辑Header',
+                        title: '编辑首页菜单',
                         type: 2,
                         shadeClose: true,
                         maxmin: true,
@@ -155,7 +155,7 @@
                 cache: false,
                 type: "POST",
                 contentType: 'application/json',
-                url: "/header/enable/" + id,
+                url: "/index/menu/enable/" + id,
                 dataType: "json",
                 async: false,
                 success: function (data) {

@@ -69,7 +69,8 @@ public enum BlogBusinessExceptionCode {
     THE_HEADER_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_056, "header为空或不存在"),
     ENGLISH_SIGNS_CANNOT_BE_EMPTY(200_000_057, "英文标识不能为空"),
     PATH_SIGNS_CANNOT_BE_EMPTY(200_000_058, "路径不能为空"),
-    HOME_MENU_SUPPORTS_MAX_OF_SIX_CUSTOM(200_000_059, "首页菜单最多支持自定义6个");
+    HOME_MENU_SUPPORTS_MAX_OF_SIX_CUSTOM(200_000_059, "首页菜单最多支持自定义6个"),
+    INDEX_MENU_IS_NULL_OR_NOT_EXIST(200_000_059, "首页菜单为空或者不存在");
 
     private int code;
     private String message;
