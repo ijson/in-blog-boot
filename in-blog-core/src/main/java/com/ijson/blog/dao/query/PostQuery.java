@@ -27,6 +27,8 @@ public class PostQuery {
 
 	private Boolean enable;
 
+	private String indexMenuEname;
+
 	/**
 	 * title like 的查询
 	 */

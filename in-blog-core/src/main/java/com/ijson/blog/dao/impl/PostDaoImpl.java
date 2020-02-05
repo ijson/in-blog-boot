@@ -125,6 +125,10 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             query.field(PostEntity.Fields.enable).equal(iquery.getEnable());
         }
 
+        if (!Strings.isNullOrEmpty(iquery.getIndexMenuEname())) {
+            query.field(PostEntity.Fields.indexMenuEname).equal(iquery.getIndexMenuEname());
+        }
+
         if (page.getOrderBy() == null) {
             query.order("-" + PostEntity.Fields.lastModifiedTime);//添加排序
         }
