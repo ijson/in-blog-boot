@@ -72,6 +72,7 @@ public class TagController extends BaseController {
             view.addObject("id", id);
             view.addObject("tagName", topicEntity.getTopicName());
             view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
+            view.addObject("path", "/tags/index");
             addViewModelAndView(view);
             return view;
         } catch (BlogNotFoundException e) {

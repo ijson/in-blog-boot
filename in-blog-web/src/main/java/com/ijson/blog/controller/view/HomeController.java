@@ -36,18 +36,18 @@ public class HomeController extends BaseController {
 
     @RequestMapping("/index")
     public ModelAndView index(Integer index, String keyWord) {
-        return getView(index, keyWord, null);
+        return getView(index, keyWord, null, "/");
     }
 
 
     @RequestMapping("/activity")
     public ModelAndView activity(Integer index, String keyWord) {
-        return getView(index, keyWord, "activity");
+        return getView(index, keyWord, "activity", "/activity");
     }
 
-    @RequestMapping("/software")
+    @RequestMapping("/software/share")
     public ModelAndView software(Integer index, String keyWord) {
-        return getView(index, keyWord, "software");
+        return getView(index, keyWord, "software", "/software/share");
     }
 
 
@@ -62,7 +62,7 @@ public class HomeController extends BaseController {
         return index;
     }
 
-    private ModelAndView getView(Integer index, String keyWord, String indexMenuEname) {
+    private ModelAndView getView(Integer index, String keyWord, String indexMenuEname, String path) {
         ModelAndView view = new ModelAndView("view/index-list.html");
 
         Page page = new Page();
@@ -86,7 +86,7 @@ public class HomeController extends BaseController {
         view.addObject("total", result.getTotal());
         view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
         view.addObject("dataList", PostInfo.indexPost(result, keyWord));
-        view.addObject("path", "/");
+        view.addObject("path", path);
         view.addObject("keyWord", keyWord);
         addViewModelAndView(view);
         return view;

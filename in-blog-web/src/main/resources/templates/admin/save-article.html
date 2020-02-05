@@ -50,6 +50,36 @@
                                    class="layui-input" value="${editData.title!}">
                         </div>
 
+
+                        <div class="layui-form-item">
+                            <label for="indexMenuEname" class="layui-form-label">隶属首页菜单</label>
+                            <div class="layui-input-inline">
+                                <select name="indexMenuEname" id="indexMenuEname" lay-verify="indexMenuEname" lay-filter="indexMenuEname">
+                                    <option value="">-请选择-</option>
+                                    <%if(editData==null){%>
+
+                                    <% for(data in indexMenu){ %>
+                                        <option value=${data.ename}>${data.cname}</option>
+                                    <%}%>
+
+                                    <%}else{%>
+
+                                    <% for(data in indexMenu){ %>
+
+                                        <%if(data.ename==editData.indexMenuEname){%>
+                                            <option value=${data.ename} selected>${data.cname}</option>
+                                        <%}else{%>
+                                            <option value=${data.ename}>${data.cname}</option>
+                                        <%}%>
+
+                                    <%}%>
+
+
+                                    <%}%>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">博文内容</label>
                             <textarea id="content" name="content" rows="10" cols="80"

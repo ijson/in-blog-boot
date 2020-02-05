@@ -68,6 +68,9 @@ public class ConsoleAction extends BaseController {
     public ModelAndView articleAdd() {
         ModelAndView view = new ModelAndView();
         addAdminModelAndView(view);
+        List<IndexMenuEntity> indexMenu = indexMenuService.findAll();
+        view.addObject("indexMenu", indexMenu);
+        view.addObject("editData", null);
         view.setViewName("admin/save-article.html");
         return view;
     }
@@ -172,9 +175,11 @@ public class ConsoleAction extends BaseController {
     @RequestMapping("/edit/article/{ename}/{shamId}")
     public ModelAndView skipV2Edit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
+        List<IndexMenuEntity> indexMenu = indexMenuService.findAll();
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-article.html");
         addAdminModelAndView(view);
+        view.addObject("indexMenu", indexMenu);
         view.addObject("editData", PostInfo.create(entity));
         view.addObject("topic", PostInfo.create(entity).getTopicName());
         return view;
@@ -266,9 +271,14 @@ public class ConsoleAction extends BaseController {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-article.html");
         addAdminModelAndView(view);
+        List<IndexMenuEntity> indexMenu = indexMenuService.findAll();
+        view.addObject("indexMenu", indexMenu);
         if (Objects.nonNull(entity)) {
             view.addObject("editData", PostInfo.create(entity));
             view.addObject("topic", PostInfo.create(entity).getTopicName());
+        } else {
+            view.addObject("editData", null);
+            view.addObject("topic", null);
         }
         return view;
     }

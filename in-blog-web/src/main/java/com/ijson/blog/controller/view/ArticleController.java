@@ -33,6 +33,7 @@ public class ArticleController extends BaseController {
         try {
             PostEntity entity = postService.findByShamId(ename, shamId);
             view.addObject("data", PostInfo.create(entity));
+            view.addObject("path", "/");
             addViewModelAndView(view);
             return view;
         } catch (BlogNotFoundException e) {
