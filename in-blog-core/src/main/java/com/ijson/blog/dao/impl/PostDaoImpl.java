@@ -70,6 +70,10 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             operations.set(PostEntity.Fields.trigger, entity.getTrigger());
         }
 
+        if (!Strings.isNullOrEmpty(entity.getIndexMenuEname())) {
+            operations.set(PostEntity.Fields.indexMenuEname, entity.getIndexMenuEname());
+        }
+
         if (updateLastModifiedTime) {
             operations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         }
@@ -144,7 +148,7 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
             query.field(PostEntity.Fields.status).equal(iquery.getStatus());
         }
 
-        if(!Strings.isNullOrEmpty(iquery.getTopicId())){
+        if (!Strings.isNullOrEmpty(iquery.getTopicId())) {
             query.field(PostEntity.Fields.topicId).hasThisOne(iquery.getTopicId());
         }
 

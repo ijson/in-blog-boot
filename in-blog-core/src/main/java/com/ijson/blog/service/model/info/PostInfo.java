@@ -51,6 +51,8 @@ public class PostInfo {
     private Constant.AuditTrigger trigger;
     private String reason;
 
+    private String indexMenuEname;
+
 
     private void setIntro(String intro) {
         String info = StringEscapeUtils.unescapeHtml(intro).replace("\n", "");
