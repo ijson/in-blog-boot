@@ -146,6 +146,7 @@ public class PostInfo {
             post.setStatus(key.getStatus());
             post.setReason(key.getReason());
             post.setTrigger(key.getTrigger());
+            post.setIndexMenuEname(key.getIndexMenuEname());
             return post;
         }).collect(Collectors.toList());
     }
@@ -168,6 +169,7 @@ public class PostInfo {
             post.setStatus(key.getStatus());
             post.setReason(key.getReason());
             post.setTrigger(key.getTrigger());
+            post.setIndexMenuEname(key.getIndexMenuEname());
             return post;
         }).collect(Collectors.toList());
     }
@@ -243,6 +245,7 @@ public class PostInfo {
         post.setReason(entity.getReason());
         post.setTrigger(entity.getTrigger());
         post.setLastModifiedBy(entity.getLastModifiedBy());
+        post.setIndexMenuEname(entity.getIndexMenuEname());
         if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
             post.setTopicName(getTpoicNames(entity.getTopicName()));
             post.setTopics(entity.getTopicName().stream().map(key -> {
@@ -257,6 +260,11 @@ public class PostInfo {
         return post;
     }
 
+    /**
+     * 热门文章,最近发表使用,不需要太多参数
+     * @param entity
+     * @return
+     */
     public static PostInfo createSimple(PostEntity entity) {
         PostInfo post = new PostInfo();
         post.setId(entity.getId());
@@ -265,10 +273,6 @@ public class PostInfo {
         post.setViews(entity.getViews());
         post.setShamId(entity.getShamId());
         post.setLastModifiedBy(entity.getLastModifiedBy());
-        post.setDraftId(entity.getDraftId());
-        post.setStatus(entity.getStatus());
-        post.setReason(entity.getReason());
-        post.setTrigger(entity.getTrigger());
         return post;
     }
 }
