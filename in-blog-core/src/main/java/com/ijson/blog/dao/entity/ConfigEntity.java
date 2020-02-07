@@ -55,6 +55,12 @@ public class ConfigEntity {
     @Property(Fields.regRoleId)
     private String regRoleId;
 
+    @Property(Fields.appId)
+    private String appId;
+
+    @Property(Fields.appKey)
+    private String appKey;
+
 //    @Property(Fields.ename)
 //    private String ename;
 //    @Property(Fields.cname)
@@ -101,6 +107,10 @@ public class ConfigEntity {
 
 
         String showAdminFields = "showAdminFields";
+
+
+        String appId = "appId";
+        String appKey = "appKey";
 
 
 //        String ename = "ename";

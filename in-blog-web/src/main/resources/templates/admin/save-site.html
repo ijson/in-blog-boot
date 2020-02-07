@@ -38,9 +38,9 @@
                         <li class="layui-this">网站设置</li>
                         <li>开关设置</li>
                         <li>博主信息字段显示</li>
+                        <li>腾讯设置</li>
                         <li>微信设置</li>
                         <li>微博设置</li>
-                        <li>腾讯设置</li>
                     </ul>
                     <div class="layui-tab-content" style="height: 100px;">
 
@@ -54,7 +54,7 @@
                                         <label class="layui-form-label">网站名称</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="siteName" id="siteName" autocomplete="off"
-                                                   value="${site.siteName}"
+                                                   value="${site.siteName!}"
                                                    placeholder="请输入网站名称" class="layui-input">
                                         </div>
                                     </div>
@@ -172,7 +172,6 @@
 
                         </div>
 
-
                         <div class="layui-tab-item">
 
                             <div class="layui-card-body ">
@@ -211,7 +210,37 @@
 
 
                         <div class="layui-tab-item">
-                            待开发
+                            <div class="layui-card-body ">
+                                <form class="layui-form layui-form-pane" action="" id="tencentForm">
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">appId</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="appId" id="appId" autocomplete="off"
+                                                   value="${site.appId!}"
+                                                   placeholder="请输入APPID" class="layui-input">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">appKey</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="appKey" id="appKey" autocomplete="off"
+                                                   value="${site.appKey!}"
+                                                   placeholder="请输入appKey" class="layui-input">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="layui-form-item">
+                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit
+                                                lay-filter="saveTencent">保存
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
                         </div>
 
                         <div class="layui-tab-item">
@@ -324,6 +353,47 @@
                 },
                 error: function (data) {
                     layer.msg(data.message);
+                }
+            });
+            return false;
+        });
+
+
+        //腾讯设置
+        form.on('submit(saveTencent)', function (data) {
+
+            if (!data.field.appId) {
+                layer.msg("appId不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!data.field.appKey) {
+                layer.msg("appKey不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/site/tencent",
+                data: JSON.stringify(data.field),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+                    layer.msg("发生未知异常,请检查权限或请求地址");
                 }
             });
             return false;

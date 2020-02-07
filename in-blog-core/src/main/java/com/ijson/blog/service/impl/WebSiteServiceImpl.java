@@ -6,6 +6,7 @@ import com.ijson.blog.dao.ConfigDao;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.WebSiteService;
+import com.ijson.blog.service.model.info.TencentInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,17 @@ public class WebSiteServiceImpl implements WebSiteService {
         return configDao.updateWebSite(entity);
     }
 
+    @Override
+    public ConfigEntity updateTencent(TencentInfo info) {
+        ConfigEntity entity = configDao.findType(Constant.ConfigType.tencent);
+        if (Objects.isNull(entity)) {
+            entity = new ConfigEntity();
+            entity.setType(Constant.ConfigType.tencent);
+        }
+        entity.setAppId(info.getAppId());
+        entity.setAppKey(info.getAppKey());
+        return configDao.updateTencent(entity);
+    }
 
     @Override
     public ConfigEntity updateSwitch(String type) {
@@ -127,8 +139,15 @@ public class WebSiteServiceImpl implements WebSiteService {
             if (k.getType() == Constant.ConfigType.fieldShow) {
                 entity.setShowAdminFields(k.getShowAdminFields());
             }
+
+            if (k.getType() == Constant.ConfigType.tencent) {
+                entity.setAppId(k.getAppId());
+                entity.setAppKey(k.getAppKey());
+            }
         });
 
         return entity;
     }
+
+
 }

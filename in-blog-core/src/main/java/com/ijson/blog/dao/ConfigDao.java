@@ -14,6 +14,7 @@ public interface ConfigDao {
 
     ConfigEntity updateWebSite(ConfigEntity entity);
 
+    ConfigEntity updateTencent(ConfigEntity entity);
 
     ConfigEntity updateSwitch(ConfigEntity entity);
 

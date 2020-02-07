@@ -30,6 +30,16 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
     }
 
     @Override
+    public ConfigEntity updateTencent(ConfigEntity entity) {
+        Query<ConfigEntity> query = createQuery();
+        query.field(ConfigEntity.Fields.type).equal(Constant.ConfigType.tencent);
+        UpdateOperations operations = createUpdateOperations();
+        operations.set(ConfigEntity.Fields.appId, entity.getAppId());
+        operations.set(ConfigEntity.Fields.appKey, entity.getAppKey());
+        return datastore.findAndModify(query, operations, false, true);
+    }
+
+    @Override
     public ConfigEntity updateSwitch(ConfigEntity entity) {
         Query<ConfigEntity> query = createQuery();
         query.field(ConfigEntity.Fields.type).equal(Constant.ConfigType.switchType);
