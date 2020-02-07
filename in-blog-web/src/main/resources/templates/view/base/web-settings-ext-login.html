@@ -3,7 +3,16 @@
 <script type="text/javascript"  charset="utf-8" src="https://connect.qq.com/qc_jssdk.js"
         data-appid="${site.appId!}" data-redirecturi="${site.callBackUrl!}"></script>
 
-<a href="#" class="btn btn-info  btn-block" id="qqLogin"><i class="fa fa-qq pull-left"></i>QQ登录</a>
+
+
+<a href="#" class="btn btn-info  btn-block m-b-sm" id="qqLogin"><i class="fa fa-qq pull-left"></i>QQ登录</a>
+
+
+
+<%}%>
+<a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
+<a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
+
 
 <script type="text/javascript">
     QC.Login({
@@ -11,8 +20,3 @@
         showModal:true
     });
 </script>
-
-<%}%>
-<a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
-<a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
-
