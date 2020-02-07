@@ -36,6 +36,7 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
         UpdateOperations operations = createUpdateOperations();
         operations.set(ConfigEntity.Fields.appId, entity.getAppId());
         operations.set(ConfigEntity.Fields.appKey, entity.getAppKey());
+        operations.set(ConfigEntity.Fields.callBackUrl, entity.getCallBackUrl());
         return datastore.findAndModify(query, operations, false, true);
     }
 

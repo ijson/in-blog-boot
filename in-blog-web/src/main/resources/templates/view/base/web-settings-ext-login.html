@@ -1,0 +1,18 @@
+<%if(site.openQQLogin){%>
+<script type="text/javascript" src="//connect.qq.com/qc_jssdk.js" charset="utf-8" data-callback="true"></script>
+
+<script type="text/javascript">
+    function loginQQ() {
+        var oOpts ={
+            appId:'${site.appId!}',
+            redirectURI:"${site.callBackUrl!}"
+        };
+        QC.Login.showPopup(oOpts)
+    }
+</script>
+
+<a href="#" class="btn btn-info  btn-block" id="qqLogin" onclick="loginQQ()"><i class="fa fa-qq pull-left"></i>QQ登录</a>
+<%}%>
+<a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
+<a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
+

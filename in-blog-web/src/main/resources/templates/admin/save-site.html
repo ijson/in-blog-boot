@@ -150,8 +150,9 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">QQ登录</label>
                                             <div class="layui-input-block">
-                                                <input type="checkbox" disabled name="open" lay-skin="switch"
-                                                       lay-filter="qqLoginSwitch" lay-text="ON|OFF">
+                                                <input type="checkbox" name="open" lay-skin="switch"
+                                                       lay-filter="qqLoginSwitch" lay-text="ON|OFF"
+                                                <%if(site.openQQLogin==true){%> checked <%}%> }>
                                             </div>
                                         </div>
 
@@ -232,6 +233,15 @@
                                         </div>
                                     </div>
 
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">callBackUrl</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="callBackUrl" id="callBackUrl" autocomplete="off"
+                                                   value="${site.callBackUrl!}"
+                                                   placeholder="请输入与QQ互联预留的地址" class="layui-input">
+                                        </div>
+                                    </div>
+
 
                                     <div class="layui-form-item">
                                         <button type="button" class="layui-btn layui-btn-normal" lay-submit
@@ -269,6 +279,11 @@
         //注册监听
         form.on('switch(openReg)', function (data) {
             switchConfig("openReg");
+            return false;
+        });
+
+        form.on('switch(qqLoginSwitch)', function (data) {
+            switchConfig("openQQLogin");
             return false;
         });
 

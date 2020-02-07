@@ -61,6 +61,10 @@ public class ConfigEntity {
     @Property(Fields.appKey)
     private String appKey;
 
+
+    @Property(Fields.callBackUrl)
+    private String callBackUrl;
+
 //    @Property(Fields.ename)
 //    private String ename;
 //    @Property(Fields.cname)
@@ -111,6 +115,7 @@ public class ConfigEntity {
 
         String appId = "appId";
         String appKey = "appKey";
+        String callBackUrl = "callBackUrl";
 
 
 //        String ename = "ename";

@@ -13,4 +13,6 @@ public class TencentInfo {
     private String appId;
 
     private String appKey;
+
+    private String callBackUrl;
 }
