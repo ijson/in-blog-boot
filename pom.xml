@@ -18,6 +18,7 @@
         <module>in-blog-auth</module>
         <module>in-blog-core</module>
         <module>in-blog-web</module>
+        <module>in-blog-remote</module>
     </modules>
 
 

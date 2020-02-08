@@ -11,12 +11,15 @@ import com.ijson.blog.exception.BlogLoginException;
 import com.ijson.blog.manager.AvatarManager;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.model.GetQQUserInfo;
+import com.ijson.blog.model.RegSourceType;
 import com.ijson.blog.service.AuthService;
 import com.ijson.blog.service.RoleService;
 import com.ijson.blog.service.UserService;
 import com.ijson.blog.util.RegularUtil;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
+import com.ijson.rest.proxy.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
@@ -71,12 +74,26 @@ public class UserServiceImpl implements UserService {
             throw new BlogLoginException(BlogBusinessExceptionCode.INVALID_CURRENT_PASSWORD);
         }
 
+
+        return viewAuthContext(entity);
+    }
+
+
+    private AuthContext viewAuthContext(UserEntity entity) {
+
+        String avatar = entity.getAvatar();
+        if (Strings.isNullOrEmpty(avatar) && entity.getRegSourceType() == RegSourceType.qqReg) {
+            avatar = (String) entity.getQqExtData().get("figureurl_qq_2");
+        }
+
         AuthContext context = new AuthContext(entity.getId(),
                 entity.getEname(),
                 entity.getCname(),
                 entity.getEmail(),
                 entity.getMobile(),
-                entity.getAvatar());
+                avatar);
+
+
         if (!Strings.isNullOrEmpty(entity.getRoleId())) {
             RoleEntity role = roleService.findById(entity.getRoleId());
             if (Objects.nonNull(role)) {
@@ -91,8 +108,12 @@ public class UserServiceImpl implements UserService {
                 context.setVerify(Objects.isNull(role.getVerify()) ? Boolean.TRUE : role.getVerify());
             }
         }
-
         return context;
+    }
+
+    @Override
+    public AuthContext loginQQ(UserEntity entity) {
+        return viewAuthContext(entity);
     }
 
     @Override
@@ -216,6 +237,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String id) {
         userDao.delete(id);
+    }
+
+    @Override
+    public UserEntity findByQQOpenId(String openId) {
+        return userDao.findByQQOpenId(openId);
+    }
+
+    @Override
+    public UserEntity createExtQQUser(GetQQUserInfo.Result qqUserInfo, String qqAccessToken, String openId, String roleId) {
+        UserEntity userEntity = UserEntity.create("", qqUserInfo.getNickname(), "", "", "", "", "", "", roleId);
+        userEntity.setQqAccessToken(qqAccessToken);
+        userEntity.setQqAccessTokenCreateTime(System.currentTimeMillis());
+        userEntity.setQqExtData(JsonUtil.fromJson(JsonUtil.toJson(qqUserInfo), Map.class));
+        userEntity.setQqOpenId(openId);
+        userEntity.setRegSourceType(RegSourceType.qqReg);
+        return userDao.create(userEntity);
     }
 
 }

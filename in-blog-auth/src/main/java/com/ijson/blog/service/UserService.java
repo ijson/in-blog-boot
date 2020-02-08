@@ -3,10 +3,10 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.GetQQUserInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,6 +18,8 @@ import java.util.Set;
 public interface UserService {
 
     AuthContext login(String ename, String password);
+
+    AuthContext loginQQ(UserEntity userEntity);
 
     UserEntity reg(UserEntity entity);
 
@@ -38,4 +40,10 @@ public interface UserService {
     UserEntity delete(String id, Boolean deleted, String userId);
 
     void delete(String id);
+
+    UserEntity findByQQOpenId(String openId);
+
+    UserEntity createExtQQUser(GetQQUserInfo.Result qqUserInfo, String qqAccessToken, String openId, String roleId);
+
+
 }

@@ -1,11 +1,14 @@
 package com.ijson.blog.dao.entity;
 
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.model.RegSourceType;
 import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.mongodb.morphia.annotations.*;
+
+import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -60,6 +63,12 @@ public class UserEntity extends BaseEntity {
     @Property(Fields.mobile)
     private String mobile;
 
+    /**
+     * 性别
+     */
+    @Property(Fields.gender)
+    private String gender;
+
 
     @Property(Fields.lastModifiedBy)
     private String lastModifiedBy;
@@ -112,6 +121,28 @@ public class UserEntity extends BaseEntity {
 
     @Property(Fields.status)
     private Constant.UserStatus status;
+
+    @Property(Fields.regSourceType)
+    private RegSourceType regSourceType = RegSourceType.reg;
+
+    @Property(Fields.qqAccessToken)
+    private String qqAccessToken;
+
+    /**
+     * 默认3个月  需要自动续期
+     */
+    @Property(Fields.qqAccessTokenCreateTime)
+    private Long qqAccessTokenCreateTime;
+    /**
+     * qq login user id
+     */
+    @Property(Fields.qqOpenId)
+    private String qqOpenId;
+
+    @Embedded
+    private Map qqExtData;
+
+
 
     public static UserEntity create(String ename,
                                     String cname,
@@ -168,6 +199,11 @@ public class UserEntity extends BaseEntity {
         String endJobTime = "endJobTime";
         String roleCname = "roleCname";
         String status = "status";
+        String qqOpenId = "qqOpenId";
+        String qqAccessToken = "qqAccessToken";
+        String qqAccessTokenCreateTime = "qqAccessTokenCreateTime";
+        String gender = "gender";
+        String regSourceType = "regSourceType";
     }
 
 }

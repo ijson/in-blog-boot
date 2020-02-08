@@ -72,7 +72,8 @@ public enum BlogBusinessExceptionCode {
     HOME_MENU_SUPPORTS_MAX_OF_SIX_CUSTOM(200_000_059, "首页菜单最多支持自定义6个"),
     INDEX_MENU_IS_NULL_OR_NOT_EXIST(200_000_060, "首页菜单为空或者不存在"),
     APPID_CANNOT_BE_EMPTY(200_000_061, "AppId 不能为空"),
-    APPKEY_CANNOT_BE_EMPTY(200_000_062, "AppKey 不能为空");
+    APPKEY_CANNOT_BE_EMPTY(200_000_062, "AppKey 不能为空"),
+    ACCOUNT_LOGIN_ERROR(200_000_063, "账号登录异常");
 
     private int code;
     private String message;

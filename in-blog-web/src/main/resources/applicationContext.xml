@@ -9,5 +9,6 @@
 
     <import resource="classpath:spring/spring-mongo.xml" />
     <import resource="classpath:spring/spring-cache.xml" />
+    <import resource="classpath:spring/spring-rest.xml" />
 
 </beans>

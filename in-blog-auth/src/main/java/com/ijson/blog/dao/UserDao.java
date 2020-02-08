@@ -34,5 +34,7 @@ public interface UserDao {
     Long count();
 
     UserEntity delete(String id, Boolean deleted, String userId);
+
+    UserEntity findByQQOpenId(String openId);
 }
 
