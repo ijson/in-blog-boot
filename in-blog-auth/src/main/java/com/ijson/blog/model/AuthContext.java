@@ -29,6 +29,8 @@ public class AuthContext {
     private List<String> permissionPath;
     private List<String> permissionEname;
     private List<AuthEntity> auths;
+    private RegSourceType regSourceType;
+    private String qqOpenId;
     /**
      * 默认为true
      */
@@ -39,13 +41,17 @@ public class AuthContext {
                        String cname,
                        String email,
                        String mobile,
-                       String avatar) {
+                       String avatar,
+                       RegSourceType regSourceType,
+                       String qqOpenId) {
         this.id = id;
         this.ename = ename;
         this.cname = cname;
         this.email = email;
         this.mobile = mobile;
         this.avatar = avatar;
+        this.regSourceType = regSourceType;
+        this.qqOpenId = qqOpenId;
 
     }
 

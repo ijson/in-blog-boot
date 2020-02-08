@@ -91,7 +91,9 @@ public class UserServiceImpl implements UserService {
                 entity.getCname(),
                 entity.getEmail(),
                 entity.getMobile(),
-                avatar);
+                avatar,
+                entity.getRegSourceType(),
+                entity.getQqOpenId());
 
 
         if (!Strings.isNullOrEmpty(entity.getRoleId())) {

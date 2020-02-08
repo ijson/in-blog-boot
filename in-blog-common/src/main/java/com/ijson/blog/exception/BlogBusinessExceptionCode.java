@@ -16,7 +16,7 @@ public enum BlogBusinessExceptionCode {
     INVALID_CURRENT_PASSWORD(200_000_003, "密码不正确,请检查"),
     INFORMATION_IS_INCOMPLETE(200_000_004, "信息不完整,请检查"),
     THE_PASSWORD_CANNOT_BE_EMPTY(200_000_005, "密码不能为空,请检查"),
-    USER_ALREADY_EXISTS(200_000_006, "用户已存在,请检查"),
+    USER_ALREADY_EXISTS(200_000_006, "用户名已存在,请检查"),
     TITLE_NOT_SET(200_000_007, "未填写文章标题"),
     CONTEXT_NOT_SET(200_000_008, "未填写文章内容"),
     BLOG_NOT_FOUND(200_000_009, "文章未找到"),

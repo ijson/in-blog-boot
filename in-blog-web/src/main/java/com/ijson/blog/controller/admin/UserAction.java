@@ -7,19 +7,25 @@ import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
+import com.ijson.blog.exception.BlogLoginException;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.UpdPasswordInfo;
 import com.ijson.blog.service.model.info.UserInfo;
+import com.ijson.blog.util.EhcacheUtil;
+import com.ijson.blog.util.PassportHelper;
 import com.ijson.blog.util.VerifyCodeUtils;
+import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -84,6 +90,69 @@ public class UserAction extends BaseController {
         entity.setRoleId(myUser.getRoleId());
 
         userService.edit(entity);
+        return Result.ok("更新成功!");
+    }
+
+
+    @PostMapping(value = "/ext/user")
+    public Result editExtUser(HttpServletRequest request,HttpSession session,@RequestBody UserEntity myUser) {
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+
+        if (Strings.isNullOrEmpty(myUser.getEname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_ENAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myUser.getCname())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_CNAME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myUser.getEmail())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_EMAIL_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(myUser.getRoleId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_CANNOT_BE_EMPTY);
+        }
+
+        UserEntity userEntity = userService.findUserByEname(myUser.getEname(), "", "");
+        if (Objects.nonNull(userEntity)) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.USER_ALREADY_EXISTS);
+        }
+
+        UserEntity entity = userService.findInternalById(myUser.getId());
+
+        entity.setPassword(myUser.getPassword());
+        entity.setCname(myUser.getCname());
+        entity.setMobile(myUser.getMobile());
+        entity.setEmail(myUser.getEmail());
+        entity.setSchool(myUser.getSchool());
+        entity.setSchoolLink(myUser.getSchoolLink());
+        entity.setProfession(myUser.getProfession());
+        entity.setBeginJobTime(myUser.getBeginJobTime());
+        entity.setEndJobTime(myUser.getEndJobTime());
+        entity.setWechat(myUser.getWechat());
+        entity.setWeibo(myUser.getWeibo());
+        entity.setWeibo(myUser.getWeibo());
+        entity.setQq(myUser.getQq());
+        entity.setTwitter(myUser.getTwitter());
+        entity.setFacebook(myUser.getFacebook());
+        entity.setRoleId(myUser.getRoleId());
+        entity.setEname(myUser.getEname());
+
+        entity =   userService.edit(entity);
+
+
+        context.setEname(entity.getEname());
+        context.setEmail(entity.getEmail());
+
+        String tokenId = ObjectId.getId();
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        EhcacheUtil.getInstance().remove(Constant.loginUserCacheKey, cookieValue);
+        EhcacheUtil.getInstance().put(Constant.loginUserCacheKey, cookieValue, context);
+        session.removeAttribute("authContext");
+        session.setAttribute("authContext", context);
+
         return Result.ok("更新成功!");
     }
 

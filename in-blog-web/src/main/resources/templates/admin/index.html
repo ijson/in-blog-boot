@@ -25,6 +25,7 @@
     </script>
     <script src="/js/login.js"></script>
 
+
 </head>
 <body class="index">
 <!-- 顶部开始 -->
@@ -132,5 +133,18 @@
 <style id="theme_style"></style>
 <!-- 右侧主体结束 -->
 </body>
+<script>
+
+    layui.use(['form', 'layer', 'layedit'], function () {
+        $ = layui.jquery;
+
+        var ename = "${session.authContext.ename}";
+        if(!ename){
+            xadmin.open('个人信息设置','/admin/settings/ext/user')
+        }
+    });
+
+
+</script>
 
 </html>

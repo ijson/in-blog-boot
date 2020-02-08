@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.*;
-import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.model.AuthInfo;
-import com.ijson.blog.model.Constant;
-import com.ijson.blog.model.SystemInfo;
+import com.ijson.blog.model.*;
 import com.ijson.blog.service.model.info.*;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
@@ -320,6 +317,26 @@ public class ConsoleAction extends BaseController {
         }
         addAdminModelAndView(view);
         view.addObject("user", userService.findUserByEname(context.getEname(), null, null));
+        return view;
+    }
+
+
+    @RequestMapping("/settings/ext/user")
+    public ModelAndView extUserSetting(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("admin/settings-ext-user.html");
+
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        if (Objects.isNull(context)) {
+            return new ModelAndView(new RedirectView(webCtx));
+        }
+        addAdminModelAndView(view);
+        if (context.getRegSourceType() == RegSourceType.qqReg) {
+            view.addObject("user", userService.findByQQOpenId(context.getQqOpenId()));
+        } else {
+            view.addObject("user", userService.findUserByEname(context.getEname(), null, null));
+        }
+
         return view;
     }
 

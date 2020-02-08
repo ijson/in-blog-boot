@@ -50,6 +50,10 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
             operations.set(UserEntity.Fields.cname, entity.getCname());
         }
 
+        if (!Strings.isNullOrEmpty(entity.getEname())) {
+            operations.set(UserEntity.Fields.ename, entity.getEname());
+        }
+
         if (!Strings.isNullOrEmpty(entity.getPassword())) {
             operations.set(UserEntity.Fields.password, entity.getPassword());
         }
