@@ -51,6 +51,7 @@ public class DefaultView implements WebMvcConfigurer {
                 "/detail/**",
                 "/tags",
                 "/tags/**",
+                "/oauth/**",
                 "/"
         );
     }
