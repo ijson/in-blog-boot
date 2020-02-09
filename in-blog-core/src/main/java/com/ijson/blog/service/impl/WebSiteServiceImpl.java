@@ -166,6 +166,10 @@ public class WebSiteServiceImpl implements WebSiteService {
             }
         });
 
+        if(Strings.isNullOrEmpty(entity.getViewThemeEname())){
+            entity.setViewThemeEname("default");
+        }
+
         return entity;
     }
 
