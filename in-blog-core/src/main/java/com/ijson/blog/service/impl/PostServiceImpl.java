@@ -257,7 +257,7 @@ public class PostServiceImpl implements PostService {
         return countById.getViews();
     }
 
-    @Cacheable(value = "consoleData")
+    @Cacheable(value = "adminWelcome")
     @Override
     public WelcomeInfo getConsoleData() {
         Long publishTotal = postDao.findPublishTotal(null);
@@ -268,6 +268,7 @@ public class PostServiceImpl implements PostService {
         return WelcomeInfo.create(publishTotal, readTotal, commentTotal, todayPublishTotal, userCount);
     }
 
+    @Cacheable(value = "userWelcome")
     @Override
     public WelcomeInfo getUserConsoleData(AuthContext context) {
         Long publishTotal = postDao.findPublishTotal(context);

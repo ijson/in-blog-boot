@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -96,36 +97,56 @@ public class BaseController {
     @Value("${cdn.upload.path}")
     protected String cdnUploadPath;
 
+    /**
+     * 后台使用
+     *
+     * @param view
+     */
     protected void addAdminModelAndView(ModelAndView view) {
-        view.addObject("user", getBlogAdministratorInformation());
-        view.addObject("webCtx", webCtx);
-        view.addObject("webEname", webEname);
         view.addObject("site", getConfig());
     }
 
-    protected void addUserModelAndView(ModelAndView view) {
-        view.addObject("webCtx", webCtx);
-        view.addObject("webEname", webEname);
-    }
 
-
+    /**
+     * 前台使用
+     *
+     * @param view
+     */
     protected void addViewModelAndView(ModelAndView view) {
+
+        //热门文章 缓存 10分钟
         view.addObject("hots", getHotPosts());
-        view.addObject("user", getBlogAdministratorInformation());
+        //热门标签 缓存 10分钟
         view.addObject("hotTags", getHotTags());
+        //友情链接 缓存 10分钟
         view.addObject("blogrolls", getBlogrolls());
-        view.addObject("lastPublish", getMostRecentlyPublishedPosts());
+        //博文总数 缓存 10分钟
         view.addObject("total", postService.count());
-        view.addObject("webSiteCount", postService.getWebSiteCount(null));
-        view.addObject("webCtx", webCtx);
-        view.addObject("webEname", webEname);
+        //网站设置 缓存 5分钟
         view.addObject("site", getConfig());
+        //博主信息 缓存 60分钟
+        view.addObject("user", getBlogAdminUser());
+        //header信息 缓存 1分钟
         view.addObject("header", getHeader());
+        //首页菜单 缓存 5分钟
         view.addObject("indexMenu", getIndexMenu());
+
+        //最近发表 无缓存
+        view.addObject("lastPublish", getRecePublishPosts());
+        //博客访问总数 无缓存
+        view.addObject("webSiteCount", postService.getWebSiteCount(null));
+
+
     }
 
 
-    private List<IndexMenuInfo> getIndexMenu() {
+    /**
+     * 获取首页顶部菜单项
+     *
+     * @return
+     */
+    @Cacheable(value = "indexMenu")
+    public List<IndexMenuInfo> getIndexMenu() {
         List<IndexMenuEntity> all = indexMenuService.findAll();
         if (CollectionUtils.isEmpty(all)) {
             return IndexMenuInfo.getDefaultIndexMenu();
@@ -134,7 +155,13 @@ public class BaseController {
         return list.stream().sorted((o1, o2) -> o1.getOrder() < o2.getOrder() ? -1 : 1).collect(Collectors.toList());
     }
 
-    private List<HeaderInfo> getHeader() {
+    /**
+     * 获取头信息,例如百度分析等
+     *
+     * @return
+     */
+    @Cacheable(value = "header")
+    public List<HeaderInfo> getHeader() {
         HeaderQuery headerQuery = new HeaderQuery();
         headerQuery.setEnable(true);
         Page page = new Page();
@@ -147,6 +174,11 @@ public class BaseController {
         return HeaderInfo.createList(dataList);
     }
 
+    /**
+     * 获取友情链接
+     *
+     * @return
+     */
     private List<BlogrollInfo> getBlogrolls() {
         List<BlogrollEntity> all = blogrollService.findAll();
         return BlogrollInfo.createBlogrollList(all);
@@ -167,7 +199,7 @@ public class BaseController {
      *
      * @return
      */
-    private List<PostInfo> getMostRecentlyPublishedPosts() {
+    private List<PostInfo> getRecePublishPosts() {
         List<PostEntity> recentlyPublished = postService.findRecentlyPublishedBeforeTen();
         return recentlyPublished.stream().map(PostInfo::createSimple).collect(Collectors.toList());
     }
@@ -184,6 +216,11 @@ public class BaseController {
     }
 
 
+    /**
+     * 获取系统配置项
+     *
+     * @return
+     */
     protected ConfigEntity getConfig() {
         return webSiteService.findAllConfig();
     }
@@ -193,7 +230,7 @@ public class BaseController {
      *
      * @return
      */
-    protected UserInfo getBlogAdministratorInformation() {
+    protected UserInfo getBlogAdminUser() {
         UserEntity userEntity = userService.findUserByEname(webEname, null, null);
         if (Objects.isNull(userEntity)) {
             return new UserInfo();
@@ -201,6 +238,12 @@ public class BaseController {
         return UserInfo.create(userEntity);
     }
 
+    /**
+     * 获取context信息
+     *
+     * @param request
+     * @return
+     */
     public AuthContext getContext(HttpServletRequest request) {
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         if (!Strings.isNullOrEmpty(cookieValue)) {
@@ -212,6 +255,15 @@ public class BaseController {
         return null;
     }
 
+    /**
+     * 生成验证码
+     *
+     * @param response
+     * @param session
+     * @param varCodeKey
+     * @param varCodeTime
+     * @throws IOException
+     */
     protected void generateVerification(HttpServletResponse response, HttpSession session, String varCodeKey, String varCodeTime) throws IOException {
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -231,6 +283,12 @@ public class BaseController {
         VerifyCodeUtils.outputImage(w, h, out, verifyCode);
     }
 
+    /**
+     * 获取动态菜单
+     *
+     * @param request
+     * @return
+     */
     protected Map<AuthArg, List<AuthInfo>> getMenu(HttpServletRequest request) {
         AuthContext context = getContext(request);
         List<AuthEntity> menuAuth = context.getAuths().stream().filter(k -> {

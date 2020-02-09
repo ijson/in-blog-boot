@@ -55,7 +55,6 @@ public class ConsoleAction extends BaseController {
     public ModelAndView defaultWelcome(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/welcome-default.html");
-        addUserModelAndView(view);
         WelcomeInfo consoleData = postService.getUserConsoleData(getContext(request));
         view.addObject("consoleData", consoleData);
         return view;

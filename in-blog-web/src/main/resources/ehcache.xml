@@ -16,17 +16,7 @@
             memoryStoreEvictionPolicy="LRU"/>
 
 
-    <cache
-            name="blogViewIP"
-            eternal="false"
-            maxElementsInMemory="1000"
-            overflowToDisk="false"
-            diskPersistent="false"
-            timeToIdleSeconds="0"
-            timeToLiveSeconds="3600"
-            memoryStoreEvictionPolicy="LRU"/>
-
-    <!--1 小时 -->
+    <!--登录用户 1 小时 -->
     <cache
             name="loginUser"
             eternal="false"
@@ -37,6 +27,7 @@
             timeToLiveSeconds="3600"
             memoryStoreEvictionPolicy="LRU"/>
 
+    <!-- 记住我 7天-->
     <cache
             name="remember"
             eternal="false"
@@ -56,6 +47,54 @@
             diskPersistent="false"
             timeToIdleSeconds="0"
             timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU"/>
+
+
+    <!-- 友情链接  10分钟-->
+    <cache
+            name="blogroll"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU"/>
+
+    <!-- 网站设置  5分钟-->
+    <cache
+            name="site"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="300"
+            memoryStoreEvictionPolicy="LRU"/>
+
+
+
+    <!-- 头信息  1分钟-->
+    <cache
+            name="header"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="60"
+            memoryStoreEvictionPolicy="LRU"/>
+
+
+    <!-- 首页菜单 -->
+    <cache
+            name="indexMenu"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="300"
             memoryStoreEvictionPolicy="LRU"/>
 
 
@@ -82,16 +121,8 @@
             timeToLiveSeconds="600"
             memoryStoreEvictionPolicy="LRU"/>
 
-    <cache
-            name="pros"
-            eternal="false"
-            maxElementsInMemory="1000"
-            overflowToDisk="false"
-            diskPersistent="false"
-            timeToIdleSeconds="0"
-            timeToLiveSeconds="2592000"
-            memoryStoreEvictionPolicy="LRU"/>
 
+    <!-- 通过ename查询到的用户信息  1小时-->
     <cache
             name="userInfo"
             eternal="false"
@@ -102,8 +133,9 @@
             timeToLiveSeconds="3600"
             memoryStoreEvictionPolicy="LRU"/>
 
+    <!-- 系统管理员登录后台后,看到系统发布情况 30分钟-->
     <cache
-            name="consoleData"
+            name="adminWelcome"
             eternal="false"
             maxElementsInMemory="1000"
             overflowToDisk="false"
@@ -111,6 +143,20 @@
             timeToIdleSeconds="0"
             timeToLiveSeconds="1800"
             memoryStoreEvictionPolicy="LRU"/>
+
+
+    <!-- 系统管理员登录后台后,看到系统发布情况 15分钟-->
+    <cache
+            name="userWelcome"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="900"
+            memoryStoreEvictionPolicy="LRU"/>
+
+
 
 
 </ehcache>

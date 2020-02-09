@@ -9,6 +9,7 @@ import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,6 +63,7 @@ public class BlogrollServiceImpl implements BlogrollService {
         return blogrollDao.find(query, pageEntity);
     }
 
+    @Cacheable(value = "blogroll")
     @Override
     public List<BlogrollEntity> findAll() {
         return blogrollDao.findUseAll();

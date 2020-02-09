@@ -11,6 +11,7 @@ import com.ijson.blog.service.model.info.ThemeInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -126,6 +127,7 @@ public class WebSiteServiceImpl implements WebSiteService {
         return configDao.updateShowField(configDaoType);
     }
 
+    @Cacheable(value = "site")
     @Override
     public ConfigEntity findAllConfig() {
         ConfigEntity entity = new ConfigEntity();
