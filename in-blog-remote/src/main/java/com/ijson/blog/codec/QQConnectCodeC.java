@@ -3,6 +3,7 @@ package com.ijson.blog.codec;
 import com.alibaba.fastjson.JSONObject;
 import com.ijson.blog.model.BaseResult;
 import com.ijson.blog.model.GetQQOpenToken;
+import com.ijson.blog.model.GetQQTokenByCode;
 import com.ijson.rest.proxy.codec.AbstractRestCodeC;
 import com.ijson.rest.proxy.exception.RestProxyBusinessException;
 import com.ijson.rest.proxy.util.JsonUtil;
@@ -34,6 +35,10 @@ public class QQConnectCodeC extends AbstractRestCodeC {
 
             if (clazz == GetQQOpenToken.Result.class) {
                 json = GetQQOpenToken.Result.format(json);
+            }
+
+            if (clazz == GetQQTokenByCode.Result.class) {
+                json = GetQQTokenByCode.Result.format(json);
             }
 
             if (isJson(json)) {

@@ -14,6 +14,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ExtLoginException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
+import com.ijson.blog.model.GetQQTokenByCode;
 import com.ijson.blog.model.GetQQUserInfo;
 import com.ijson.blog.proxy.QQConnectProxy;
 import com.ijson.blog.util.EhcacheUtil;
@@ -23,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -39,18 +42,26 @@ public class ExtOAuthController extends BaseController {
     @Autowired
     private QQConnectProxy qqConnectProxy;
 
+    //http://www.openote.org/oauth/callback/qq?code=BBC3FC0367690A11891135E781BFBEA9&state=33eueueu
     @RequestMapping(value = "/callback/qq")
-    public void login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public RedirectView login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         //expires_in=7776000
-        String accessToken = request.getParameter("access_token");
-        String expires_in = request.getParameter("expires_in");
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
 
-        if (Strings.isNullOrEmpty(accessToken)) {
+        if (Strings.isNullOrEmpty(code)) {
             throw new ExtLoginException(BlogBusinessExceptionCode.ACCOUNT_LOGIN_ERROR);
         }
 
         ConfigEntity config = getConfig();
 
+        GetQQTokenByCode.Result qqTokenByCode = qqConnectProxy.getQQTokenByCode(config.getAppId(), config.getAppKey(), code, config.getQqCallBackUrl());
+
+        if (Objects.isNull(qqTokenByCode)) {
+            throw new ExtLoginException(BlogBusinessExceptionCode.ACCOUNT_LOGIN_ERROR);
+        }
+
+        String accessToken = qqTokenByCode.getAccess_token();
         String openId = qqConnectProxy.getQQOpenToken(accessToken);
         if (Strings.isNullOrEmpty(openId)) {
             throw new ExtLoginException(BlogBusinessExceptionCode.ACCOUNT_LOGIN_ERROR);
@@ -81,5 +92,8 @@ public class ExtOAuthController extends BaseController {
             response.addCookie(cookie);
         }
 
+        RedirectView redirectView = new RedirectView("/");
+        return redirectView;
     }
+
 }

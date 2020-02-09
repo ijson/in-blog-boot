@@ -48,7 +48,7 @@ public class WebSiteServiceImpl implements WebSiteService {
         }
         entity.setAppId(info.getAppId());
         entity.setAppKey(info.getAppKey());
-        entity.setCallBackUrl(info.getCallBackUrl());
+        entity.setQqCallBackUrl(info.getQqCallBackUrl());
         return configDao.updateTencent(entity);
     }
 
@@ -144,7 +144,7 @@ public class WebSiteServiceImpl implements WebSiteService {
             if (k.getType() == Constant.ConfigType.tencent) {
                 entity.setAppId(k.getAppId());
                 entity.setAppKey(k.getAppKey());
-                entity.setCallBackUrl(k.getCallBackUrl());
+                entity.setQqCallBackUrl(k.getQqCallBackUrl());
             }
         });
 

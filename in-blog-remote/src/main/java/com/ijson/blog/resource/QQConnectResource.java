@@ -1,6 +1,7 @@
 package com.ijson.blog.resource;
 
 import com.ijson.blog.model.GetQQOpenToken;
+import com.ijson.blog.model.GetQQTokenByCode;
 import com.ijson.blog.model.GetQQUserInfo;
 import com.ijson.rest.proxy.annotation.GET;
 import com.ijson.rest.proxy.annotation.PathParams;
@@ -23,4 +24,7 @@ public interface QQConnectResource {
     @GET(value = "/user/get_user_info?access_token={access_token}&oauth_consumer_key={oauth_consumer_key}&openid={openid}", contentType = "application/json")
     GetQQUserInfo.Result getQQUserInfo(@PathParams Map<String, String> params);
 
+
+    @GET(value = "/oauth2.0/token?grant_type=authorization_code&client_id={client_id}&client_secret={client_secret}&code={code}&redirect_uri={redirect_uri}", contentType = "application/json")
+    GetQQTokenByCode.Result getQQTokenByCode(@PathParams Map<String, String> params);
 }

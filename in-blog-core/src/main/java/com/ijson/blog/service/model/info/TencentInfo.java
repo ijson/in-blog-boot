@@ -14,5 +14,5 @@ public class TencentInfo {
 
     private String appKey;
 
-    private String callBackUrl;
+    private String qqCallBackUrl;
 }

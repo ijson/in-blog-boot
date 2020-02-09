@@ -76,6 +76,7 @@ public class UserRestController extends BaseController {
         if (Strings.isNullOrEmpty(cookieValue)) {
             EhcacheUtil.getInstance().remove(Constant.loginUserCacheKey, cookieValue);
             EhcacheUtil.getInstance().remove(Constant.remember, cookieValue);
+            session.removeAttribute("authContext");
             return Result.error("登录证书已失效,自动退出");
         }
         AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
@@ -83,6 +84,7 @@ public class UserRestController extends BaseController {
             session.removeAttribute(cookieValue);
             EhcacheUtil.getInstance().remove(Constant.loginUserCacheKey, cookieValue);
             EhcacheUtil.getInstance().remove(Constant.remember, cookieValue);
+            session.removeAttribute("authContext");
             return Result.error("登录证书已失效,自动退出");
         }
         session.removeAttribute("authContext");

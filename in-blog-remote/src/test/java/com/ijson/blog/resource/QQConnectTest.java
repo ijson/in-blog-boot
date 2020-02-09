@@ -3,6 +3,7 @@ package com.ijson.blog.resource;
 import com.google.common.collect.Maps;
 import com.ijson.blog.BaseTest;
 import com.ijson.blog.model.GetQQOpenToken;
+import com.ijson.blog.model.GetQQTokenByCode;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +37,18 @@ public class QQConnectTest extends BaseTest {
         data.put("oauth_consumer_key", "");
         data.put("openid", result.getOpenid());
         qqConnectResource.getQQUserInfo(data);
+    }
+
+
+    @Test
+    public void getQQTokenByCode() {
+        Map<String, String> data = Maps.newHashMap();
+        data.put("client_id", "");
+        data.put("client_secret", "");
+        data.put("code", "");
+        data.put("redirect_uri", "http://www.openote.org/oauth/callback/qq");
+        GetQQTokenByCode.Result result = qqConnectResource.getQQTokenByCode(data);
+        System.out.println(1);
     }
 }
 

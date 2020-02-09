@@ -2,11 +2,10 @@ package com.ijson.blog.proxy;
 
 import com.google.common.collect.Maps;
 import com.ijson.blog.model.GetQQOpenToken;
+import com.ijson.blog.model.GetQQTokenByCode;
 import com.ijson.blog.model.GetQQUserInfo;
 import com.ijson.blog.resource.QQConnectResource;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -38,5 +37,14 @@ public class QQConnectProxy {
         prams.put("oauth_consumer_key", appId);
         prams.put("openid", openId);
         return qqConnectResource.getQQUserInfo(prams);
+    }
+
+    public GetQQTokenByCode.Result getQQTokenByCode(String appId, String secret, String code, String redirectUrl) {
+        Map<String, String> data = Maps.newHashMap();
+        data.put("client_id", appId);
+        data.put("client_secret", secret);
+        data.put("code", code);
+        data.put("redirect_uri", redirectUrl);
+        return qqConnectResource.getQQTokenByCode(data);
     }
 }
