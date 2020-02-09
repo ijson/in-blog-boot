@@ -52,6 +52,10 @@ public class PostAction extends BaseController {
     public Result createPost(HttpServletRequest request, @RequestBody PostInfo post) {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
+        if (Strings.isNullOrEmpty(context.getEname())) {
+            throw new BlogCreateException(BlogBusinessExceptionCode.PLEASE_ADD_USER_ENAME);
+        }
+
         if (Strings.isNullOrEmpty(post.getTitle())) {
             throw new BlogCreateException(BlogBusinessExceptionCode.TITLE_NOT_SET);
         }

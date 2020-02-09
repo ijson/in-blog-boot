@@ -1,6 +1,7 @@
 package com.ijson.blog.service.model.info;
 
 import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.model.RegSourceType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +38,7 @@ public class UserInfo {
     private Long createTime;
     private String mobile;
     private String qq;
+    private RegSourceType regSourceType;
 
     public static List<UserInfo> creaetUserList(List<UserEntity> userEntityList) {
 
@@ -68,6 +70,7 @@ public class UserInfo {
         userInfo.setMobile(userEntity.getMobile());
         userInfo.setQq(userEntity.getQq());
         userInfo.setRoleId(userEntity.getRoleId());
+        userInfo.setRegSourceType(userEntity.getRegSourceType());
         return userInfo;
     }
 }

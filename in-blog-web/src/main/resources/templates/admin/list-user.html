@@ -18,6 +18,12 @@
     <![endif]-->
 </head>
 
+<style>
+    .reg-source-type{
+        font-size: 12px;
+    }
+</style>
+
 <body>
 <div class="x-nav">
     <span class="layui-breadcrumb">
@@ -68,6 +74,20 @@
     <input type="checkbox" name="enable" value="{{d.enable}}" lay-skin="switch" lay-text="启用|停用"
            lay-filter="selectEnable" {{ d.enable ? 'checked': ''}}>
 </script>
+
+
+
+<script type="text/html" id="regSourceTypeTpl">
+    <div class="layui-btn-container reg-source-type">
+        {{# if(d.regSourceType=="reg" || d.regSourceType==null){ }}
+           自注册
+        {{# }else if(d.regSourceType=="qqReg"){ }}
+           QQ互联
+        {{# } }}
+    </div>
+</script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
@@ -92,7 +112,8 @@
                     templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"
                 },
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
-                {field: '', title: "操作", templet: '#operation'}
+                {field: '', width: 150,title: "操作", templet: '#operation'},
+                {field: 'regSourceType', width: 120, title: "注册来源", sort: true,templet: '#regSourceTypeTpl'}
 
             ]]
         });
@@ -117,7 +138,7 @@
                 case 'delete':
 
                     if (item.enable) {
-                        layer.msg("禁用后才可删除该文章", function () {
+                        layer.msg("禁用后才可删除该用户", function () {
 
                         });
                         return;

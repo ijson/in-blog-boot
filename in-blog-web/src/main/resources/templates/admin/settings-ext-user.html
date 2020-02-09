@@ -38,7 +38,6 @@
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
                         <li class="layui-this">用户信息</li>
-                        <li>修改密码</li>
                     </ul>
                     <div class="layui-tab-content" style="height: 100px;">
 
@@ -193,81 +192,6 @@
                             </div>
                         </div>
 
-
-                        <div class="layui-tab-item">
-
-                            <div class="layui-card-body ">
-                                <form class="layui-form layui-form-pane" action="" id="updPwdForm">
-                                    <input type="hidden" name="id" id="id" value="${user.id}">
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">账户</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" disabled name="ename" id="ename"
-                                                   value="${user.ename}"
-                                                   class="layui-input">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">原密码</label>
-                                        <div class="layui-input-inline">
-                                            <input type="password" name="oldPassword" id="oldPassword"
-                                                   placeholder="请输入原密码" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">新密码</label>
-                                            <div class="layui-input-inline">
-                                                <input type="password" name="newPassword" id="newPassword"
-                                                       placeholder="请输入新密码" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">重新输入</label>
-                                            <div class="layui-input-inline">
-                                                <input type="password" name="againPassword" name="againPassword"
-                                                       placeholder="请重新输入新密码" autocomplete="off"
-                                                       class="layui-input">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="layui-form-item">
-
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">验证码</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" placeholder="请输入验证码" autocomplete="off"
-                                                       name="pwdVerCode" id="pwdVerCode"
-                                                       class="layui-input">
-                                            </div>
-                                        </div>
-
-                                        <div class="layui-inline">
-                                            <img id="pwdCaptcha"
-                                                 onclick="this.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);"
-                                                 src="/user/edit/image?m=" + Math.floor(Math.random() * 10000);>
-                                        </div>
-
-
-                                    </div>
-
-
-                                    <div class="layui-form-item">
-                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit
-                                                lay-filter="saveFieldShow">保存
-                                        </button>
-                                    </div>
-
-                                </form>
-                            </div>
-
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -290,72 +214,6 @@
         laydate.render({
             elem: '#endJobTime' //指定元素
         });
-
-        //修改密码监听
-        form.on('submit(saveFieldShow)', function (data) {
-
-            if (!data.field.ename) {
-                layer.msg("用户名不能为空", {
-                    time: 2000
-                });
-                return;
-            }
-
-            if (!data.field.oldPassword) {
-                layer.msg("旧密码不能为空", {
-                    time: 2000
-                });
-                return;
-            }
-
-            if (!data.field.newPassword) {
-                layer.msg("新密码不能为空", {
-                    time: 2000
-                });
-                return;
-            }
-
-            if (!data.field.againPassword) {
-                layer.msg("请重新输入新密码", {
-                    time: 2000
-                });
-                return;
-            }
-            data.field.oldPassword = hex_md5(data.field.oldPassword);
-            data.field.newPassword = hex_md5(data.field.newPassword);
-            data.field.againPassword = hex_md5(data.field.againPassword);
-
-
-            $.ajax({
-                cache: false,
-                type: "POST",
-                contentType: 'application/json',
-                url: "/user/edit/password",
-                data: JSON.stringify(data.field),
-                async: false,
-                success: function (data) {
-                    if (data.code === 0) {
-                        layer.msg(data.message);
-                    } else {
-                        layer.msg(data.message, {
-                            time: 2000
-                        });
-                    }
-
-                    $("#pwdVerCode").val('');
-                    var pwdCaptcha = document.getElementById("pwdCaptcha");
-                    pwdCaptcha.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);
-                },
-                error: function (data) {
-                    layer.msg(data.message);
-                    $("#pwdVerCode").val('');
-                    var pwdCaptcha = document.getElementById("pwdCaptcha");
-                    pwdCaptcha.src = '/user/edit/image?m=' + Math.floor(Math.random() * 10000);
-                }
-            });
-            return false;
-        });
-
 
         //博主信息监听
         form.on('submit(saveUserInfo)', function (data) {

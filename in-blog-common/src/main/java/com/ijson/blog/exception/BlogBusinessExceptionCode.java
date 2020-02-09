@@ -73,7 +73,8 @@ public enum BlogBusinessExceptionCode {
     INDEX_MENU_IS_NULL_OR_NOT_EXIST(200_000_060, "首页菜单为空或者不存在"),
     APPID_CANNOT_BE_EMPTY(200_000_061, "AppId 不能为空"),
     APPKEY_CANNOT_BE_EMPTY(200_000_062, "AppKey 不能为空"),
-    ACCOUNT_LOGIN_ERROR(200_000_063, "账号登录异常");
+    ACCOUNT_LOGIN_ERROR(200_000_063, "账号登录异常"),
+    PLEASE_ADD_USER_ENAME(200_000_064, "用户信息不完整,请补充用户ename");
 
     private int code;
     private String message;

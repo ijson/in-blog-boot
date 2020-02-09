@@ -301,13 +301,6 @@
                 return;
             }
 
-            if (!data.field.oldPassword) {
-                layer.msg("旧密码不能为空", {
-                    time: 2000
-                });
-                return;
-            }
-
             if (!data.field.newPassword) {
                 layer.msg("新密码不能为空", {
                     time: 2000
@@ -321,9 +314,16 @@
                 });
                 return;
             }
-            data.field.oldPassword = hex_md5(data.field.oldPassword);
-            data.field.newPassword = hex_md5(data.field.newPassword);
-            data.field.againPassword = hex_md5(data.field.againPassword);
+            if (data.field.oldPassword) {
+                data.field.oldPassword = hex_md5(data.field.oldPassword);
+            }
+            if (data.field.newPassword) {
+
+                data.field.newPassword = hex_md5(data.field.newPassword);
+            }
+            if (data.field.againPassword) {
+                data.field.againPassword = hex_md5(data.field.againPassword);
+            }
 
 
             $.ajax({

@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -95,7 +94,7 @@ public class UserAction extends BaseController {
 
 
     @PostMapping(value = "/ext/user")
-    public Result editExtUser(HttpServletRequest request,HttpSession session,@RequestBody UserEntity myUser) {
+    public Result editExtUser(HttpServletRequest request, HttpSession session, @RequestBody UserEntity myUser) {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         if (Strings.isNullOrEmpty(myUser.getEname())) {
@@ -139,7 +138,7 @@ public class UserAction extends BaseController {
         entity.setRoleId(myUser.getRoleId());
         entity.setEname(myUser.getEname());
 
-        entity =   userService.edit(entity);
+        entity = userService.edit(entity);
 
 
         context.setEname(entity.getEname());
@@ -266,9 +265,7 @@ public class UserAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_ENAME_CANNOT_BE_EMPTY);
         }
 
-        if (Strings.isNullOrEmpty(updPassword.getOldPassword())) {
-            return Result.error("旧密码不能为空!");
-        }
+
         if (Strings.isNullOrEmpty(updPassword.getNewPassword())) {
             return Result.error("新密码不能为空!");
         }
@@ -279,7 +276,11 @@ public class UserAction extends BaseController {
 
         UserEntity entity = userService.findUserById(updPassword.getId());
 
-        if (!entity.getPassword().equals(updPassword.getOldPassword())) {
+        if (!Strings.isNullOrEmpty(entity.getPassword()) && Strings.isNullOrEmpty(updPassword.getOldPassword())) {
+            return Result.error("旧密码不能为空!");
+        }
+
+        if (!Strings.isNullOrEmpty(entity.getPassword()) && !entity.getPassword().equals(updPassword.getOldPassword())) {
             return Result.error("原始密码不正确!");
         }
 
