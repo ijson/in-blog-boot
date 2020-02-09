@@ -35,7 +35,7 @@ public class TagController extends BaseController {
         try {
             view.addObject("tags", HotTopicInfo.getHotTopic(topicService.findAll()));
             view.addObject("path", "/tags/index");
-            addViewModelAndView(view);
+            addViewModelAndView(request,view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");
@@ -73,7 +73,7 @@ public class TagController extends BaseController {
             view.addObject("tagName", topicEntity.getTopicName());
             view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
             view.addObject("path", "/tags/index");
-            addViewModelAndView(view);
+            addViewModelAndView(request,view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");

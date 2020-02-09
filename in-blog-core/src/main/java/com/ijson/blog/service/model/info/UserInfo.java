@@ -1,6 +1,7 @@
 package com.ijson.blog.service.model.info;
 
 import com.ijson.blog.dao.entity.UserEntity;
+import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.RegSourceType;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,6 +72,15 @@ public class UserInfo {
         userInfo.setQq(userEntity.getQq());
         userInfo.setRoleId(userEntity.getRoleId());
         userInfo.setRegSourceType(userEntity.getRegSourceType());
+        return userInfo;
+    }
+
+    public static UserInfo create(AuthContext context) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setEname(context.getEname());
+        userInfo.setCname(context.getCname());
+        userInfo.setWeibo(context.getWeibo());
+        userInfo.setAvatar(context.getAvatar());
         return userInfo;
     }
 }

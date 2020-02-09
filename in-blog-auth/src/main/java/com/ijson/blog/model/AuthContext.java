@@ -2,6 +2,7 @@ package com.ijson.blog.model;
 
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.entity.AuthEntity;
+import com.ijson.blog.dao.entity.UserEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class AuthContext {
     private String mobile;
     private String password;
     private String remember;
+    private String weibo;
     private String avatar;
     private String roleId;
     private String roleEname;
@@ -52,6 +54,20 @@ public class AuthContext {
         this.avatar = avatar;
         this.regSourceType = regSourceType;
         this.qqOpenId = qqOpenId;
+
+    }
+
+
+    public AuthContext(UserEntity entity) {
+        this.id = entity.getId();
+        this.ename = entity.getEname();
+        this.cname = entity.getCname();
+        this.email = entity.getEmail();
+        this.mobile = entity.getMobile();
+        this.avatar = entity.getAvatar();
+        this.regSourceType = entity.getRegSourceType();
+        this.qqOpenId = entity.getQqOpenId();
+        this.weibo = entity.getWeibo();
 
     }
 

@@ -1,6 +1,6 @@
 <div class="panel b-a">
     <div class="panel-heading bg-orang dk no-border wrapper-lg">
-        <a href="https://www.weibo.com/${user.weibo}" target="_blank">
+        <a href="https://www.weibo.com/${user.weibo!}" target="_blank">
             <button class="btn btn-sm btn-icon   pull-right m-r btn-rounded" title="点击跳转到微博"><i class="fa fa-weibo"></i></button>
         </a>
         <a href="#">
@@ -16,9 +16,9 @@
 
     <div class="text-center m-b clearfix">
         <div class="thumb-lg avatar m-t-n-xxl">
-            <img src="https://data.ijson.net/avatar.jpg" alt="..."
+            <img src="${user.avatar!}" alt="..."
                  class="b b-3x b-white">
-            <div class="h4 font-thin m-t-sm">${user.cname}</div>
+            <div class="h4 font-thin m-t-sm">${user.cname!}</div>
         </div>
     </div>
     <%if(site.showAdminInfo){%>
@@ -27,59 +27,59 @@
 
             <% if(user.email!=null && array.contain(site.showAdminFields,"email")){%>
                 <a href="mailto:${user.email}" target="_blank" class="list-group-item">
-                    <i class="fa fa-envelope fa-fw m-r-xs"></i> ${user.email}
+                    <i class="fa fa-envelope fa-fw m-r-xs"></i> ${user.email!}
                 </a>
             <%}%>
 
 
             <% if(user.twitter!=null && array.contain(site.showAdminFields,"twitter")){%>
                 <a href="https://twitter.com/${user.twitter}" target="_blank" class="list-group-item">
-                    <i class="fa fa-twitter fa-fw m-r-xs"></i> ${user.twitter}
+                    <i class="fa fa-twitter fa-fw m-r-xs"></i> ${user.twitter!}
                 </a>
             <%}%>
 
 
             <% if(user.facebook!=null && array.contain(site.showAdminFields,"facebook")){%>
                 <a href="https://www.facebook.com/${user.facebook}" target="_blank" class="list-group-item">
-                    <i class="fa fa-facebook fa-fw m-r-xs"></i> ${user.facebook}
+                    <i class="fa fa-facebook fa-fw m-r-xs"></i> ${user.facebook!}
                 </a>
             <%}%>
 
             <% if(user.school!=null && array.contain(site.showAdminFields,"school")){%>
                 <a href="${user.schoolLink}" target="_blank" class="list-group-item">
-                    <i class="fa fa-graduation-cap fa-fw m-r-xs"></i> ${user.school}
+                    <i class="fa fa-graduation-cap fa-fw m-r-xs"></i> ${user.school!}
                 </a>
             <%}%>
 
 
             <% if(user.profession!=null && array.contain(site.showAdminFields,"profession")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-book fa-fw m-r-xs"></i> ${user.profession}
+                <i class="fa fa-book fa-fw m-r-xs"></i> ${user.profession!}
             </a>
             <%}%>
 
             <% if(user.mobile!=null && array.contain(site.showAdminFields,"mobile")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-mobile fa-fw m-r-xs"></i> ${user.mobile}
+                <i class="fa fa-mobile fa-fw m-r-xs"></i> ${user.mobile!}
             </a>
             <%}%>
 
             <% if(user.weibo!=null && array.contain(site.showAdminFields,"weibo")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-weibo fa-fw m-r-xs"></i> ${user.weibo}
+                <i class="fa fa-weibo fa-fw m-r-xs"></i> ${user.weibo!}
             </a>
             <%}%>
 
             <% if(user.qq!=null && array.contain(site.showAdminFields,"qq")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-qq fa-fw m-r-xs"></i> ${user.qq}
+                <i class="fa fa-qq fa-fw m-r-xs"></i> ${user.qq!}
             </a>
             <%}%>
 
 
             <% if(user.wechat!=null && array.contain(site.showAdminFields,"wechat")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-wechat fa-fw m-r-xs"></i> ${user.wechat}
+                <i class="fa fa-wechat fa-fw m-r-xs"></i> ${user.wechat!}
             </a>
             <%}%>
 
@@ -87,14 +87,14 @@
 
             <% if(user.beginJobTime!=null && array.contain(site.showAdminFields,"beginJobTime")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-calendar fa-fw m-r-xs"></i>工作开始时间: ${user.beginJobTime}
+                <i class="fa fa-calendar fa-fw m-r-xs"></i>工作开始时间: ${user.beginJobTime!}
             </a>
             <%}%>
 
 
             <% if(user.endJobTime!=null && array.contain(site.showAdminFields,"endJobTime")){%>
             <a href="#" class="list-group-item">
-                <i class="fa fa-calendar fa-fw m-r-xs"></i> 工作结束时间: ${user.endJobTime}
+                <i class="fa fa-calendar fa-fw m-r-xs"></i> 工作结束时间: ${user.endJobTime!}
             </a>
             <%}%>
 

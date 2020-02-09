@@ -112,7 +112,7 @@ public class BaseController {
      *
      * @param view
      */
-    protected void addViewModelAndView(ModelAndView view) {
+    protected void addViewModelAndView(HttpServletRequest request, ModelAndView view) {
 
         //热门文章 缓存 10分钟
         view.addObject("hots", getHotPosts());
@@ -125,7 +125,7 @@ public class BaseController {
         //网站设置 缓存 5分钟
         view.addObject("site", getConfig());
         //博主信息 缓存 60分钟
-        view.addObject("user", getBlogAdminUser());
+        view.addObject("user", getBlogAdminUser(request));
         //header信息 缓存 1分钟
         view.addObject("header", getHeader());
         //首页菜单 缓存 5分钟
@@ -230,7 +230,11 @@ public class BaseController {
      *
      * @return
      */
-    protected UserInfo getBlogAdminUser() {
+    protected UserInfo getBlogAdminUser(HttpServletRequest request) {
+        AuthContext context = getContext(request);
+        if (Objects.nonNull(context)) {
+            return UserInfo.create(context);
+        }
         UserEntity userEntity = userService.findUserByEname(webEname, null, null);
         if (Objects.isNull(userEntity)) {
             return new UserInfo();

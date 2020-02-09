@@ -86,14 +86,7 @@ public class UserServiceImpl implements UserService {
             avatar = (String) entity.getQqExtData().get("figureurl_qq_2");
         }
 
-        AuthContext context = new AuthContext(entity.getId(),
-                entity.getEname(),
-                entity.getCname(),
-                entity.getEmail(),
-                entity.getMobile(),
-                avatar,
-                entity.getRegSourceType(),
-                entity.getQqOpenId());
+        AuthContext context = new AuthContext(entity);
 
 
         if (!Strings.isNullOrEmpty(entity.getRoleId())) {
@@ -254,6 +247,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setQqExtData(JsonUtil.fromJson(JsonUtil.toJson(qqUserInfo), Map.class));
         userEntity.setQqOpenId(openId);
         userEntity.setRegSourceType(RegSourceType.qqReg);
+        userEntity.setAvatar(qqUserInfo.getFigureurl_qq_2());
         return userDao.create(userEntity);
     }
 

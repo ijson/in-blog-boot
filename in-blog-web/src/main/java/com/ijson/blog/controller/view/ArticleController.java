@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * desc:
  * version: 6.7
@@ -28,13 +30,13 @@ public class ArticleController extends BaseController {
      * @return
      */
     @RequestMapping("/{ename}/details/{shamId}")
-    public ModelAndView details(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+    public ModelAndView details(HttpServletRequest request,@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
         ModelAndView view = new ModelAndView("view/index-article.html");
         try {
             PostEntity entity = postService.findByShamId(ename, shamId);
             view.addObject("data", PostInfo.create(entity));
             view.addObject("path", "/");
-            addViewModelAndView(view);
+            addViewModelAndView(request,view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");
