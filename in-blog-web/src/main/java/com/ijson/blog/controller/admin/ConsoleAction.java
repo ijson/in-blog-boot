@@ -497,4 +497,13 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+
+    @RequestMapping("/list/theme")
+    public ModelAndView themeList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-theme.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
 }
