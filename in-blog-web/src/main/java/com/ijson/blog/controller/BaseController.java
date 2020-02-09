@@ -80,6 +80,8 @@ public class BaseController {
     @Autowired
     protected IndexMenuService indexMenuService;
 
+    @Autowired
+    protected ThemeService themeService;
 
     @Value("${web.ctx}")
     protected String webCtx;

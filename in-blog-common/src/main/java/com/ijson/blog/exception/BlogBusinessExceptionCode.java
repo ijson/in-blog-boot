@@ -74,7 +74,10 @@ public enum BlogBusinessExceptionCode {
     APPID_CANNOT_BE_EMPTY(200_000_061, "AppId 不能为空"),
     APPKEY_CANNOT_BE_EMPTY(200_000_062, "AppKey 不能为空"),
     ACCOUNT_LOGIN_ERROR(200_000_063, "账号登录异常"),
-    PLEASE_ADD_USER_ENAME(200_000_064, "用户信息不完整,请补充用户ename");
+    PLEASE_ADD_USER_ENAME(200_000_064, "用户信息不完整,请补充用户ename"),
+    CHINESE_LABEL_CANNOT_BE_EMPTY(200_000_065, "中文标示不能为空"),
+    TYPE_CANNOT_BE_EMPTY(200_000_066, "类型不能为空"),
+    DATA_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_067, "数据为空或者不存在");
 
     private int code;
     private String message;
