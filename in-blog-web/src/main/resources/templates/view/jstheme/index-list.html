@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/normalize/2.1.3/normalize.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/theme/view/jstheme.css">
+    <title>IBO</title>
+
+</head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/">IBO</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>首页</span></a>
+        <a href="/tags" title="标签墙"><i class="fa fa-tags"></i><span>标签墙</span></a>
+        <a href="/tags" title="友情链接"><i class="fa fa-link"></i><span>友情链接</span></a>
+    </nav>
+</div>
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-donate" href="javascript:"><i class="fa fa-weixin"></i></a>
+</div>
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+                <div class="cover-img"
+                     style="background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581275627363&di=07a2514d2521910cf67bbe105cdb239e&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-fo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F0df431adcbef7609bd5dd79d2ddda3cc7cd99e5a.jpg') center center / cover no-repeat;"></div>
+                <div class="cover-info">
+                    <img class="avatar" width="72"
+                         src="http://img3.imgtn.bdimg.com/it/u=378824344,1185609431&fm=26&gp=0.jpg" alt="avatar"/>
+                    <h1>IBO</h1>
+                    <h3>小标题</h3>
+                    <p>介绍博客</p>
+                    <div class="cover-sns">
+                        <div class="btn btn-weixin">
+                            <a class="" href="javascript:"><i class="fa fa-weixin"></i></a>
+                            <div class="qrcode"><img src="https://data.ijson.net/qrcode_for_gh_78588d50f358_344.jpg"
+                                                     alt="weixinQrcode"/></div>
+                            <div class="qrcode-arrow"></div>
+                        </div>
+                        <div class="btn btn-weibo">
+                            <a href="https://weibo.com/cuiyongxu" target="_blank" rel="nofollow"><i
+                                    class="fa fa-weibo"></i></a>
+                        </div>
+                        <div class="btn btn-facebook">
+                            <a href="https://fackbook.com/cuiyongxu" target="_blank" rel="nofollow"><i
+                                    class="fa fa-facebook"></i></a>
+                        </div>
+                        <div class="btn btn-github">
+                            <a href="https://github.com/ijson" target="_blank" rel="nofollow"><i
+                                    class="fa fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title">
+                <ul>
+                    <li class="active">
+                        <a href="#" data-name="全部文章">全部文章</a>
+                    </li>
+
+                    <li class="">
+                        <a href="#" data-name="最近发表">最近发表</a>
+                    </li>
+
+                    <li class="">
+                        <a href="#" data-name="热门文章">热门文章</a>
+                    </li>
+
+
+                    <li class="page-search">
+                        <form id="search" class="search-form">
+                            <label for="keyWord" class="sr-only">请输入博文名称</label>
+                            <input class="search-field" type="text" name="s" class="text" placeholder="请输入博文名称"/>
+                            <button type="submit" class="search-form-submit" title="搜索"><i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                        <div class="ins-search">
+                            <div class="ins-search-mask"></div>
+                            <div class="ins-search-container">
+                                <div class="ins-input-wrapper">
+                                    <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+                                    <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+                                </div>
+                                <div class="ins-section-wrapper">
+                                    <div class="ins-section-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="main-inner">
+
+                <!-- 首页默认取最最新文章集 -->
+
+
+                <% if(isEmpty(dataList)){ %>
+
+                <% if(isEmpty(keyWord)){ %>
+                <div class="alert alert-info blog-not-find">未检索到博文条目,请后台录入</div>
+                <% }else{ %>
+                <div class="alert alert-info blog-not-find">未搜索到与 "${keyWord!}" 相关的博文信息</div>
+                <% } %>
+
+                <% }else{
+                for(data in dataList){
+                %>
+                <article class="post">
+
+                    <div class="post-header">
+                        <div class="post-meta">
+                            <a href="#" target="_self">
+                                <strong>${data.cname}</strong>
+                            </a>
+                            <em>·</em>${data.createTime,dateFormat="yyyy-MM-dd"}
+                        </div>
+                        <a class="post-title" href="/article/${data.ename}/details/${data.shamId}.html" target="_self" title="${data.title}">${data.title}</a>
+                        <div class="post-meta">
+                            <a href="/tags" target="_self"><i class="fa fa-tags"></i></a>
+                            <em>·</em>
+                            <a href="#" target="_self">Java</a>
+
+                        </div>
+                    </div>
+                    <div class="post-desc">
+                        ${data.intro}
+                    </div>
+                </article>
+
+                <%}} %>
+
+            </div>
+
+            <div id="btn-pager">
+
+
+                <%
+
+                for(var i=1;i<page.totalPage+1;i++){
+                    if(page.currentPage==i){
+                        print("<span class='page-number current'>"+i+"</span>");
+                    }else{
+                        print("<a class='page-number' href='/index?index="+i+"'>"+i+"</a>");
+                    }
+                }
+                %>
+            </div>
+
+
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>
+                <a href="/links" title="友情链接">友情链接</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            </p>
+            <p>
+                本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a><br/>
+                © 2020 西数云科, Inc.
+            </p>
+
+
+        </div>
+    </footer>
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+
+</body>
+</html>
