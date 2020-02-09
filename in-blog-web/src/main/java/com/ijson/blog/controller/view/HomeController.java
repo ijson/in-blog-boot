@@ -63,7 +63,7 @@ public class HomeController extends BaseController {
     }
 
     private ModelAndView getView(HttpServletRequest request,Integer index, String keyWord, String indexMenuEname, String path) {
-        ModelAndView view = new ModelAndView("view/index-list.html");
+        ModelAndView view = new ModelAndView(getViewTheme() + "/index-list.html");
 
         Page page = new Page();
         if (Objects.isNull(index)) {

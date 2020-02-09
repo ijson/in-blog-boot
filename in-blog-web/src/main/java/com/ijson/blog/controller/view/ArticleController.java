@@ -30,13 +30,13 @@ public class ArticleController extends BaseController {
      * @return
      */
     @RequestMapping("/{ename}/details/{shamId}")
-    public ModelAndView details(HttpServletRequest request,@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
-        ModelAndView view = new ModelAndView("view/index-article.html");
+    public ModelAndView details(HttpServletRequest request, @PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+        ModelAndView view = new ModelAndView(getViewTheme() + "/index-article.html");
         try {
             PostEntity entity = postService.findByShamId(ename, shamId);
             view.addObject("data", PostInfo.create(entity));
             view.addObject("path", "/");
-            addViewModelAndView(request,view);
+            addViewModelAndView(request, view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");

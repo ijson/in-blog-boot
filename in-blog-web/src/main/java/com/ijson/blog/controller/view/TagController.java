@@ -31,11 +31,11 @@ public class TagController extends BaseController {
     @RequestMapping("/index")
     public ModelAndView tags(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        view.setViewName("view/index-list-tag.html");
+        view.setViewName(getViewTheme() + "/index-list-tag.html");
         try {
             view.addObject("tags", HotTopicInfo.getHotTopic(topicService.findAll()));
             view.addObject("path", "/tags/index");
-            addViewModelAndView(request,view);
+            addViewModelAndView(request, view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");
@@ -47,7 +47,7 @@ public class TagController extends BaseController {
     @RequestMapping("/{ename}/tags/{shamId}")
     public ModelAndView tagByShamId(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, Integer index, HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        view.setViewName("view/index-list-post-tag.html");
+        view.setViewName(getViewTheme() + "/index-list-post-tag.html");
         TopicEntity topicEntity = topicService.findTopicByShamIdAndEname(ename, shamId);
         if (Objects.isNull(topicEntity)) {
             view.setViewName("error/404.html");
@@ -73,7 +73,7 @@ public class TagController extends BaseController {
             view.addObject("tagName", topicEntity.getTopicName());
             view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
             view.addObject("path", "/tags/index");
-            addViewModelAndView(request,view);
+            addViewModelAndView(request, view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");

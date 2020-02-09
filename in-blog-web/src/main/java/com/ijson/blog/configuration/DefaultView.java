@@ -20,12 +20,6 @@ public class DefaultView implements WebMvcConfigurer {
     @Autowired
     private ViewSyncManager viewSyncManager;
 
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/").setViewName("view/index.html");
-//        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RememberLoginCacheInterceptor()).addPathPatterns(

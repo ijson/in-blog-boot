@@ -139,6 +139,9 @@ public class BaseController {
 
     }
 
+    protected String getViewTheme() {
+        return "view/" + getConfig().getViewThemeEname();
+    }
 
     /**
      * 获取首页顶部菜单项
