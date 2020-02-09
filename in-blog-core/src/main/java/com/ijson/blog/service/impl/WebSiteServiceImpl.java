@@ -7,6 +7,7 @@ import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.WebSiteService;
 import com.ijson.blog.service.model.info.TencentInfo;
+import com.ijson.blog.service.model.info.ThemeInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,18 @@ public class WebSiteServiceImpl implements WebSiteService {
         entity.setAppKey(info.getAppKey());
         entity.setQqCallBackUrl(info.getQqCallBackUrl());
         return configDao.updateTencent(entity);
+    }
+
+    @Override
+    public ConfigEntity updateDefaultTheme(ThemeInfo info) {
+        ConfigEntity entity = configDao.findType(Constant.ConfigType.theme);
+        if (Objects.isNull(entity)) {
+            entity = new ConfigEntity();
+            entity.setType(Constant.ConfigType.theme);
+        }
+        entity.setAdminThemeEname(info.getAdminTheme());
+        entity.setViewThemeEname(info.getViewTheme());
+        return configDao.updateDefaultTheme(entity);
     }
 
     @Override
@@ -145,6 +158,11 @@ public class WebSiteServiceImpl implements WebSiteService {
                 entity.setAppId(k.getAppId());
                 entity.setAppKey(k.getAppKey());
                 entity.setQqCallBackUrl(k.getQqCallBackUrl());
+            }
+
+            if(k.getType()==Constant.ConfigType.theme){
+                entity.setAdminThemeEname(k.getAdminThemeEname());
+                entity.setViewThemeEname(k.getViewThemeEname());
             }
         });
 

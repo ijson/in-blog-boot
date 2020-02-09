@@ -2,6 +2,7 @@ package com.ijson.blog.dao.impl;
 
 import com.google.common.base.Strings;
 import com.ijson.blog.dao.ThemeDao;
+import com.ijson.blog.dao.entity.IndexMenuEntity;
 import com.ijson.blog.dao.entity.ThemeEntity;
 import com.ijson.blog.dao.query.ThemeQuery;
 import com.ijson.mongo.support.AbstractDao;
@@ -115,5 +116,12 @@ public class ThemeDaoImpl extends AbstractDao<ThemeEntity> implements ThemeDao {
         ret.setDataList(entities);
         ret.setTotal(totalNum);
         return ret;
+    }
+
+    @Override
+    public List<ThemeEntity> findAll() {
+        Query<ThemeEntity> query = datastore.createQuery(ThemeEntity.class);
+        query.field(IndexMenuEntity.Fields.enable).equal(true);
+        return query.asList();
     }
 }

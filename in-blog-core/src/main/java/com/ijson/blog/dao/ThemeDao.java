@@ -5,6 +5,8 @@ import com.ijson.blog.dao.query.ThemeQuery;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
+import java.util.List;
+
 /**
  * desc:
  * version: 7.0.0
@@ -23,5 +25,7 @@ public interface ThemeDao {
     ThemeEntity findInternalById(String id);
 
     PageResult<ThemeEntity> find(ThemeQuery iquery, Page page);
+
+    List<ThemeEntity> findAll();
 
 }

@@ -41,6 +41,16 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
     }
 
     @Override
+    public ConfigEntity updateDefaultTheme(ConfigEntity entity) {
+        Query<ConfigEntity> query = createQuery();
+        query.field(ConfigEntity.Fields.type).equal(Constant.ConfigType.theme);
+        UpdateOperations operations = createUpdateOperations();
+        operations.set(ConfigEntity.Fields.adminThemeEname, entity.getAdminThemeEname());
+        operations.set(ConfigEntity.Fields.viewThemeEname, entity.getViewThemeEname());
+        return datastore.findAndModify(query, operations, false, true);
+    }
+
+    @Override
     public ConfigEntity updateSwitch(ConfigEntity entity) {
         Query<ConfigEntity> query = createQuery();
         query.field(ConfigEntity.Fields.type).equal(Constant.ConfigType.switchType);

@@ -38,6 +38,7 @@
                         <li class="layui-this">网站设置</li>
                         <li>开关设置</li>
                         <li>博主信息字段显示</li>
+                        <li>主题设置</li>
                         <li>腾讯设置</li>
                         <li>微信设置</li>
                         <li>微博设置</li>
@@ -209,6 +210,68 @@
                             </div>
                         </div>
 
+                        <div class="layui-tab-item">
+                            <div class="layui-card-body ">
+                                <form class="layui-form layui-form-pane" action="" id="themeForm">
+
+
+                                    <div class="layui-form-item">
+                                        <label for="viewTheme" class="layui-form-label"
+                                               style="width:140px;">前台主题</label>
+                                        <div class="layui-input-inline">
+
+
+                                            <%if(isNotEmpty(viewTheme)){%>
+                                            <select name="viewTheme">
+                                                <option value="">-请选择-</option>
+                                                <% for(data in viewTheme){ %>
+
+                                                <%if(data.ename==site.viewThemeEname){%>
+                                                <option value="${data.ename}" selected>${data.cname}</option>
+                                                <%}else{%>
+                                                <option value="${data.ename}">${data.cname}</option>
+                                                <%}%>
+
+                                                <%} %>
+                                            </select>
+                                            <%}%>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="layui-form-item">
+                                        <label for="adminTheme" class="layui-form-label" style="width:140px;">后台主题</label>
+                                        <div class="layui-input-inline">
+
+
+                                            <%if(isNotEmpty(adminTheme)){%>
+                                            <select name="adminTheme">
+                                                <option value="">-请选择-</option>
+                                                <% for(data in adminTheme){ %>
+
+                                                <%if(data.ename==site.adminThemeEname){%>
+                                                <option value="${data.ename}" selected>${data.cname}</option>
+                                                <%}else{%>
+                                                <option value="${data.ename}">${data.cname}</option>
+                                                <%}%>
+
+                                                <%} %>
+                                            </select>
+                                            <%}%>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveTheme">保存
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
 
                         <div class="layui-tab-item">
                             <div class="layui-card-body ">
@@ -331,6 +394,45 @@
                 }
             });
         }
+
+        form.on('submit(saveTheme)', function (data) {
+
+            if (!data.field.viewTheme) {
+                layer.msg("前端主题不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            if (!data.field.adminTheme) {
+                layer.msg("后端主题不能为空", {
+                    time: 2000
+                });
+                return;
+            }
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/site/theme",
+                data: JSON.stringify(data.field),
+                async: false,
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message, {
+                            time: 2000
+                        });
+                    }
+                },
+                error: function (data) {
+                    layer.msg(data.message);
+                }
+            });
+            return false;
+        });
 
 
         //网站设置保存

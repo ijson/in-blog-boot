@@ -65,6 +65,12 @@ public class ConfigEntity {
     @Property(Fields.qqCallBackUrl)
     private String qqCallBackUrl;
 
+    @Property(Fields.adminThemeEname)
+    private String adminThemeEname;
+
+    @Property(Fields.viewThemeEname)
+    private String viewThemeEname;
+
 //    @Property(Fields.ename)
 //    private String ename;
 //    @Property(Fields.cname)
@@ -117,6 +123,8 @@ public class ConfigEntity {
         String appKey = "appKey";
         String qqCallBackUrl = "qqCallBackUrl";
 
+        String viewThemeEname = "viewThemeEname";
+        String adminThemeEname = "adminThemeEname";
 
 //        String ename = "ename";
 //        String cname = "cname";

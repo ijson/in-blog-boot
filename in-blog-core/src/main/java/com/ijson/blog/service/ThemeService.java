@@ -6,6 +6,8 @@ import com.ijson.blog.model.AuthContext;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
+import java.util.List;
+
 /**
  * desc:
  * version: 7.0.0
@@ -24,4 +26,7 @@ public interface ThemeService {
     void delete(String id);
 
     PageResult<ThemeEntity> find(ThemeQuery query, Page pageEntity);
+
+    List<ThemeEntity> findAll();
+
 }

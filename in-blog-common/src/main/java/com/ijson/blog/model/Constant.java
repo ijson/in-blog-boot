@@ -19,7 +19,8 @@ public interface Constant {
         site("网站设置"),
         switchType("开关设置"),
         fieldShow("博主字段信息显示"),
-        tencent("腾讯设置");
+        tencent("腾讯设置"),
+        theme("主题设置");
 
         ConfigType(String desc) {
         }

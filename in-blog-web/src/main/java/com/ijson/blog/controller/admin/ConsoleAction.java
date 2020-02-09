@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.*;
+import com.ijson.blog.dao.model.ViewOrAdminType;
 import com.ijson.blog.model.*;
 import com.ijson.blog.service.model.info.*;
 import com.ijson.blog.util.EhcacheUtil;
@@ -141,6 +142,13 @@ public class ConsoleAction extends BaseController {
             view.addObject("roles", roleAll.stream().map(RoleInfo::create).collect(Collectors.toList()));
         }
         view.addObject("site", getConfig());
+
+        List<ThemeEntity> themeAll = themeService.findAll();
+
+        List<ThemeEntity> adminThemeList = themeAll.stream().filter(k -> k.getType() == ViewOrAdminType.admin).collect(Collectors.toList());
+        view.addObject("adminTheme", ThemeInfo.createList(adminThemeList));
+        List<ThemeEntity> viewThemeList = themeAll.stream().filter(k -> k.getType() == ViewOrAdminType.view).collect(Collectors.toList());
+        view.addObject("viewTheme", ThemeInfo.createList(viewThemeList));
         addAdminModelAndView(view);
         return view;
     }

@@ -11,6 +11,8 @@ import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * desc:
  * version: 7.0.0
@@ -58,6 +60,11 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public PageResult<ThemeEntity> find(ThemeQuery query, Page pageEntity) {
         return themeDao.find(query, pageEntity);
+    }
+
+    @Override
+    public List<ThemeEntity> findAll() {
+        return themeDao.findAll();
     }
 
 

@@ -16,6 +16,8 @@ public interface ConfigDao {
 
     ConfigEntity updateTencent(ConfigEntity entity);
 
+    ConfigEntity updateDefaultTheme(ConfigEntity entity);
+
     ConfigEntity updateSwitch(ConfigEntity entity);
 
 
@@ -24,4 +26,6 @@ public interface ConfigDao {
     ConfigEntity findType(Constant.ConfigType type);
 
     List<ConfigEntity> findAllType();
+
+
 }

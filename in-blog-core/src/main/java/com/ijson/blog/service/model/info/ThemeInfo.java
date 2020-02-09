@@ -35,6 +35,10 @@ public class ThemeInfo {
 
     private String lastModifiedBy;
 
+    private String viewTheme;
+
+    private String adminTheme;
+
     public static List<ThemeInfo> createList(List<ThemeEntity> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return Lists.newArrayList();

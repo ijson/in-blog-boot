@@ -7,6 +7,7 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.info.TencentInfo;
+import com.ijson.blog.service.model.info.ThemeInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,24 @@ public class WebSiteAction extends BaseController {
         }
         ConfigEntity entity = webSiteService.updateTencent(tencentInfo);
         return Result.ok("保存腾讯信息成功!");
+    }
+
+
+    @PostMapping("/theme")
+    public Result theme(HttpServletRequest request, HttpSession session, @RequestBody ThemeInfo themeInfo) {
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+
+        if (Strings.isNullOrEmpty(themeInfo.getViewTheme())) {
+            return Result.error(BlogBusinessExceptionCode.FRONTEND_THEME_CANNOT_BE_EMPTY);
+        }
+
+        if (Strings.isNullOrEmpty(themeInfo.getAdminTheme())) {
+            return Result.error(BlogBusinessExceptionCode.BACKEND_THEME_CANNOT_BE_EMPTY);
+        }
+
+
+        ConfigEntity entity = webSiteService.updateDefaultTheme(themeInfo);
+        return Result.ok("保存主题信息成功!");
     }
 
 

@@ -2,6 +2,7 @@ package com.ijson.blog.service;
 
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.service.model.info.TencentInfo;
+import com.ijson.blog.service.model.info.ThemeInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 
 /**
@@ -19,4 +20,6 @@ public interface WebSiteService {
     ConfigEntity findAllConfig();
 
     ConfigEntity updateTencent(TencentInfo post);
+
+    ConfigEntity updateDefaultTheme(ThemeInfo themeInfo);
 }
