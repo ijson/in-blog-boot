@@ -1,7 +1,7 @@
 package com.ijson.blog.controller.view;
 
 /**
- * desc:
+ * desc:https://www.ijson.net/ext/oauth/callback/qq
  * version: 7.0.0
  * Created by cuiyongxu on 2020/2/8 11:35 AM
  */
@@ -35,7 +35,7 @@ import java.util.Objects;
 
 @Slf4j
 @Controller()
-@RequestMapping("/oauth")
+@RequestMapping("/ext/oauth")
 public class ExtOAuthController extends BaseController {
 
 
