@@ -115,6 +115,15 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/save/theme")
+    public ModelAndView skipThemeAdd() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-theme.html");
+        addAdminModelAndView(view);
+        view.addObject("editData", null);
+        return view;
+    }
+
     @RequestMapping("/save/site")
     public ModelAndView siteSettings(HttpServletRequest request) {
         ModelAndView view = new ModelAndView("admin/save-site.html");
@@ -226,6 +235,16 @@ public class ConsoleAction extends BaseController {
         addAdminModelAndView(view);
         IndexMenuEntity internalById = indexMenuService.findInternalById(id);
         view.addObject("editData", IndexMenuInfo.create(internalById));
+        return view;
+    }
+
+    @RequestMapping("/edit/theme/{id}")
+    public ModelAndView skipThemeEdit(@PathVariable("id") String id) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/save-theme.html");
+        addAdminModelAndView(view);
+        ThemeEntity internalById = themeService.findInternalById(id);
+        view.addObject("editData", ThemeInfo.create(internalById));
         return view;
     }
 
