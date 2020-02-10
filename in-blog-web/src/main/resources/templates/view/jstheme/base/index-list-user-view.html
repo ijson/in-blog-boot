@@ -1,0 +1,49 @@
+<div id="cover">
+    <div class="cover-img"
+         style="background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581275627363&di=07a2514d2521910cf67bbe105cdb239e&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-fo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F0df431adcbef7609bd5dd79d2ddda3cc7cd99e5a.jpg') center center / cover no-repeat;"></div>
+    <div class="cover-info">
+        <img class="avatar" width="72"
+             src="${user.avatar!}" alt="avatar"/>
+        <h1>${user.cname!}</h1>
+        <p>文章总数(${total})&nbsp;&nbsp<em>·</em>&nbsp;&nbsp访问量(${webSiteCount})</p>
+        <div class="cover-sns">
+
+            <div class="btn btn-weixin">
+                <a class="#" href="javascript:"><i class="fa fa-weixin"></i></a>
+                <div class="qrcode">
+                    <img style="width: 150px;height: 150px"
+                         src="https://data.ijson.net/qrcode_for_gh_78588d50f358_344.jpg"
+                         alt="weixinQrcode"/>
+                </div>
+                <div class="qrcode-arrow"></div>
+            </div>
+
+
+            <% if(user.weibo!=null && array.contain(site.showAdminFields,"weibo")){%>
+            <div class="btn btn-weibo">
+                <a href="https://www.weibo.com/${user.weibo!}" target="_blank" rel="nofollow"><i
+                        class="fa fa-weibo"></i></a>
+            </div>
+            <%}%>
+
+
+            <% if(user.facebook!=null && array.contain(site.showAdminFields,"facebook")){%>
+            <div class="btn btn-facebook">
+                <a href="https://www.facebook.com/${user.facebook}" target="_blank" rel="nofollow"><i
+                        class="fa fa-facebook"></i></a>
+            </div>
+            <%}%>
+
+            <% if(user.twitter!=null && array.contain(site.showAdminFields,"twitter")){%>
+            <div class="btn btn-twitter">
+                <a href="https://twitter.com/${user.twitter}" target="_blank" rel="nofollow"><i
+                        class="fa fa-twitter"></i></a>
+            </div>
+            <%}%>
+
+            <!--<div class="btn btn-github">-->
+            <!--<a href="https://github.com/ijson" target="_blank" rel="nofollow"><i class="fa fa-github"></i></a>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>

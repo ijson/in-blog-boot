@@ -279,6 +279,7 @@ public class PostInfo {
         post.setViews(entity.getViews());
         post.setShamId(entity.getShamId());
         post.setLastModifiedBy(entity.getLastModifiedBy());
+        post.setCreateTime(entity.getCreateTime());
         return post;
     }
 }

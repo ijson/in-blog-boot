@@ -1,3 +1,4 @@
+
 body {
     font: 14px/1.7 "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "å¾®è½¯é›…é»‘", STXihei, "åŽæ–‡ç»†é»‘", "WenQuanYi Micro Hei", sans-serif;
     color: #1a1a1a
@@ -185,11 +186,12 @@ a.btn:hover {
 }
 
 .btn-facebook {
-    background-color: #1c95f4
+    background-color: #1c95f4;
+    width: 15px;
 }
 
 .btn-facebook:hover {
-    background-color: #3286f9
+    background-color: #3286f9;
 }
 
 .btn-github {
@@ -198,6 +200,15 @@ a.btn:hover {
 
 .btn-github:hover {
     background-color: #8a8a8a
+}
+
+
+.btn-twitter {
+    background-color: #47acdf
+}
+
+.btn-twitter:hover {
+    background-color: #47acdf
 }
 
 a.avatar img, img.avatar {
@@ -276,7 +287,8 @@ body {
     top: -130px;
     left: -48px;
     padding: 10px;
-    background-color: #fff
+    background-color: #fff;
+    z-index: 1;
 }
 
 #cover .cover-sns .btn .qrcode-arrow {
@@ -304,7 +316,8 @@ body {
 #body {
     margin-left: 25%;
     width: 58.33333%;
-    max-width: 1000px
+    max-width: 1000px;
+    min-height: 600px;
 }
 
 .fleft {
@@ -562,7 +575,8 @@ body {
 
 #btn-pager {
     text-align: center;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    margin-top:30px;
 }
 
 .page-number {
@@ -642,6 +656,8 @@ body {
     font-weight: normal;
     line-height: 20px
 }
+
+
 
 .footer-inner p {
     padding-left: 15px
@@ -889,7 +905,7 @@ img.alignright {
     #body, .single #body {
         width: 100%;
         margin-left: 0;
-        float: none
+        float: none;
     }
 
     .main-inner {
@@ -1652,4 +1668,19 @@ body.night-mode, .night-mode .btn, body.night-mode a, .night-mode .nav-user a, #
 
 .ins-section .ins-search-item:hover .ins-slug, .ins-section .ins-search-item.active .ins-slug, .ins-section .ins-search-item:hover .ins-search-preview, .ins-section .ins-search-item.active .ins-search-preview {
     color: #fff !important
+}
+
+.tabs-content-placeholder post {
+    display: none;
+}
+
+.tabs-content-placeholder post.tab-content-active {
+    display: block;
+    padding-top: 45px;
+    padding-left: 32px;
+}
+
+.post-desc{
+    width: 100%;
+    word-wrap:break-word;
 }

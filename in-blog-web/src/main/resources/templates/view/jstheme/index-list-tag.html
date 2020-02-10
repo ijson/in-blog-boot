@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+
+<head>
+    <% include("base/web-settings-meta.html"){} %>
+    <title>${site.siteName!}-标签墙</title>
+</head>
+<body>
+
+<% include("base/index-list-left-menu.html"){} %>
+
+
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-donate" href="javascript:"><i class="fa fa-weixin"></i></a>
+</div>
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+
+            <% include("base/index-list-user-view.html"){} %>
+
+            <div class="page-title">
+
+                <div class="page-title">
+                    <ul>
+                        <li><a href="index-list.html" data-name="首页" title="Back Home">首页</a></li>
+
+                        <li class="page-search">
+                            <form id="search" class="search-form">
+                                <label for="keyWord" class="sr-only">请输入博文名称</label>
+                                <input class="search-field" type="text" name="s" class="text" placeholder="请输入博文名称"/>
+                                <button type="submit" class="search-form-submit" title="搜索"><i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+            <div class="main-inner">
+                <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+
+                    <% if(isEmpty(tags)){ %>
+
+                    <div class="alert alert-info blog-not-find">未检索到标签条目,请后台录入</div>
+
+
+                    <%}else{%>
+
+
+                    <div class="post-header">
+                        <h3 class="post-title">共计${tags.~size}类标签</h3>
+                    </div>
+                    <div class="post-content markdown-body" itemprop="articleBody">
+                        <ul class="tag-list">
+                            <%for(data in tags){%>
+                            <li><a href="/tags/${data.ename}/tags/${data.shamId}.html">${data.topicName}(${data.count})</a></li>
+                            <%}%>
+                        </ul>
+                    </div>
+
+                    <%}%>
+
+
+
+
+                </article>
+            </div><!-- end #main-->
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <% include("base/web-settings-footer.html"){} %>
+</div>
+</body>
+</html>

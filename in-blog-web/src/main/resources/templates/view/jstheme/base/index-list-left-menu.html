@@ -1,0 +1,22 @@
+<div id="nav">
+    <nav class="nav-menu">
+
+        <% for(data in indexMenu){ %>
+
+        <%if(data.path=="/"){%>
+
+        <a class="site-name <%if(path==data.path){%>current <%}%> " href="${data.path!}" title="${data.cname!}">${site.siteName!}</a>
+
+
+        <%}else{%>
+
+        <a class="<%if(path==data.path){%>current <%}%> " href="${data.path!}" title="${data.cname!}"><i class="fa fa-tags"></i><span>${data.cname!}</span></a>
+
+
+        <%}%>
+
+
+        <%}%>
+
+    </nav>
+</div>
