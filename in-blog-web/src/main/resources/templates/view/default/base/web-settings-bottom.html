@@ -6,6 +6,21 @@
 
 <script>
     $(function () {
+
+
+        window.onscroll=function () {
+            //获取滚动条到顶部的距离
+            var t = document.documentElement.scrollTop || document.body.scrollTop;
+            //判断滚动条高度，设置事件
+            if (t > 500 ) {
+                $("#showTop").css({"display":"block"});
+            }else{
+                $("#showTop").css({"display":"none"});
+            }
+        };
+
+
+
         $("#gotop1").click(function (e) {
             TweenMax.to(window, 1.5, {scrollTo: 0, ease: Expo.easeInOut});
             var huojian = new TimelineLite();
