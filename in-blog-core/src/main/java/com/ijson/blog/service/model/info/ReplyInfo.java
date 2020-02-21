@@ -42,6 +42,7 @@ public class ReplyInfo {
     private String replyCode;
     private String ename;
     private String shamId;
+    private String replyUserId;
 
     /*
 
@@ -128,6 +129,7 @@ public class ReplyInfo {
         reply.setAddress(entity.getAddress());
         reply.setOsname(entity.getOs());
         reply.setReplyBody(Lists.newArrayList());
+        reply.setReplyUserId(entity.getCreatedBy());
         return reply;
     }
 }

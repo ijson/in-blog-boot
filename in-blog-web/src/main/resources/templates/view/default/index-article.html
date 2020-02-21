@@ -195,6 +195,15 @@
             index: 1
         };
 
+        var context = {
+            cname:'${session.authContext.cname!}',
+            id:'${session.authContext.id!}'
+        };
+
+        if(!context.id){
+            context = null;
+        }
+
         $.ajax({
             cache: false,
             type: "POST",
@@ -203,27 +212,13 @@
             async: false,
             data: params,
             success: function (data) {
-                $(".comment-list").addCommentList({data: data.reply, add: ""});
+                $(".comment-list").addCommentList({data: data.reply, add: "",toastr:toastr,context:context});
             },
             error: function (data) {
                 toastr.error(data.message);
             }
         });
 
-        /*
-        {
-            id: 3,
-            img: im,
-            replyName: "帅大叔",
-            beReplyName: "匿名",
-            content: "同学聚会，看到当年追我的屌丝开着宝马车带着他老婆来了，他老婆是我隔壁宿舍的同班同学，心里后悔极了。",
-            time: "2017-10-17 11:42:53",
-            address: "深圳",
-            osname: "win10",
-            browse: "谷歌",
-            replyBody: []
-        }
-         */
 
         $("#comment").click(function () {
 
