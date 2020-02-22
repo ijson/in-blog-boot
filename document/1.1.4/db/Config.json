@@ -1,5 +1,5 @@
 {"_id":{"$oid":"5e29a85f6e856132fa364998"},"type":"site","siteName":"IBO","regRoleId":"5e2e84cb1df8f4aa18334fe0"}
 {"_id":{"$oid":"5e29b5026e856132fa364999"},"type":"switchType","openWeiboLogin":false,"openCmt":true,"openReg":true,"showAdminInfo":false,"openWechatLogin":false,"openQQLogin":false,"dynamicMenu":true}
 {"_id":{"$oid":"5e29bf0d6e856132fa36499a"},"type":"fieldShow","showAdminFields":[]}
-{"_id":{"$oid":"5e3d6ecdbd0c9db3a423e5de"},"type":"tencent","appId":"222","appKey":"3222","callBackUrl":"444","qqCallBackUrl":"4444"}
+{"_id":{"$oid":"5e3d6ecdbd0c9db3a423e5de"},"type":"tencent","appId":"222","appKey":"3222","qqCallBackUrl":"https://www.ijson.net/ext/oauth/callback/qq"}
 {"_id":{"$oid":"5e3ff7428a7cc517adc24f89"},"type":"theme","viewThemeEname":"default","adminThemeEname":"theme5"}

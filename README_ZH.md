@@ -4,7 +4,7 @@
 
 官方站点：https://www.ijson.net
 
-> 本博客开发周期按月计算,毕竟平时都上班,不会天天来编写代码,只能周六日去编写此代码,按月发布
+> 本博客开发周期按月计算,毕竟平时都上班,不会天天来编写代码,只能周六日去编写此代码,按月发布,后期安装文档见document目录
 
 
 
@@ -48,9 +48,38 @@
 * 可预览注册用户,且支持用户禁用删除等操作
 * 支持文章审核发布,注册用户发布文章需要管理员审核后发布(可在角色中修改)
 * 支持查看文章标签列表,且支持标签反查询博文列表
+* 首页菜单自定义
+* 后台多主题管理
+* QQ 登录
+
+
 
 
 # 首页预览
+
+
+# 1.1.4 添加多后台主题
+
+> 目前暂只支持后台主题,前端主题会持续开发中,后期会持续优化
+
+![列表及主题展示](https://oscimg.oschina.net/oscnet/up-9d2ed32440f1a93bd07e80681d4383798a2.png)
+![主题设置面板](https://oscimg.oschina.net/oscnet/up-ee2f58c10afc18391c725d004dea929cfc8.png)
+
+
+# 1.1.4 设置首页菜单
+
+> 目前只支持单一主题,后期会陆续添加
+
+![首页菜单设置列表](https://oscimg.oschina.net/oscnet/up-c10975adeca2baf7f8d70dfe08d7b37808b.png)
+
+
+# 1.1.4 支持QQ登录
+
+> QQ设置见 `网站设置`-`腾讯设置`  添加对应的appId,appKey 以及callBackUrl,目前callBackUrl = https://www.ijson.net/ext/oauth/callback/qq,各位可以调整自己的域名
+
+![QQ登录页面](https://oscimg.oschina.net/oscnet/up-ae7a54fc62f4487b08a39c562c50b91397a.png)
+
+
 
 > 1.1.0添加友情链接
 
@@ -66,8 +95,6 @@
 ![最近发表](https://github.com/ijson/resource/blob/master/in-blog-boot/readme/9.jpeg)
 ![登陆后详情页评论展示](https://github.com/ijson/resource/blob/master/in-blog-boot/readme/10.jpeg)
 ![评论展示](https://github.com/ijson/resource/blob/master/in-blog-boot/readme/21.jpeg)
-
-
 
 
 
