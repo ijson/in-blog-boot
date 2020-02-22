@@ -4,7 +4,7 @@
 
 Official site: https://www.ijson.net
 
-> The development cycle of this blog is calculated on a monthly basis.After all, I usually go to work. I don't write code every day. I can only write this code on Saturday and Sunday and release it monthly.
+> The development cycle of this blog is calculated on a monthly basis.After all, I usually go to work. I don't write code every day. I can only write this code on Saturday and Sunday and release it monthly.Post installation documentation see document directory
 
 
 
@@ -48,9 +48,36 @@ Official site: https://www.ijson.net
 * Can preview registered users, and support users to disable delete and other operations
 * Support article review and release. Registered users can publish articles after review by the administrator (can be modified in the role)
 * Support to view the list of article tags, and support the reverse query of blog posts
+* Home module customization
+* Multi-theme management in the background
+* QQ Login
 
 
 # Home Preview
+
+
+# 1.1.4 Add multiple background themes
+
+> Currently, only back-end themes are supported.
+
+![List and theme display](https://oscimg.oschina.net/oscnet/up-9d2ed32440f1a93bd07e80681d4383798a2.png)
+![Theme settings panel](https://oscimg.oschina.net/oscnet/up-ee2f58c10afc18391c725d004dea929cfc8.png)
+
+
+# 1.1.4 Set Home Menu
+
+> Currently only supports a single theme, which will be added later
+
+![Home menu settings list](https://oscimg.oschina.net/oscnet/up-c10975adeca2baf7f8d70dfe08d7b37808b.png)
+
+
+# 1.1.4 Support QQ login
+
+> For QQ settings, please refer to `Site Settings`-`Tencent Settings`. Add the corresponding appId, appKey and callBackUrl. Currently callBackUrl = https://www.ijson.net/ext/oauth/callback/qq. You can adjust your domain
+
+![QQ login page](https://oscimg.oschina.net/oscnet/up-ae7a54fc62f4487b08a39c562c50b91397a.png)
+
+
 
 > 1.1.0 Add Friendly Link
 
@@ -74,6 +101,10 @@ Official site: https://www.ijson.net
 # 1.1.* Preview of background interface
 
 ![Management background](https://oscimg.oschina.net/oscnet/up-50a4a2f597f74377f651e65cb28442d62ec.png)
+
+
+
+
 
 
 ### Website settings
