@@ -1,3 +1,17 @@
+
+<%if(site.openQQLogin){%>
+<script type="text/javascript" charset="utf-8" src="https://connect.qq.com/qc_jssdk.js"
+        data-appid="${site.appId!}" data-redirecturi="${site.qqCallBackUrl!}"></script>
+<script type="text/javascript">
+    function qqLogin() {
+        //以下为按钮点击事件的逻辑。注意这里要重新打开窗口
+        //否则后面跳转到QQ登录，授权页面时会直接缩小当前浏览器的窗口，而不是打开新窗口
+        window.location.href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${site.appId!}&redirect_uri=${site.qqCallBackUrl!}&state="+new Date().getTime()+"&scope=all","TencentLogin", "width=450,height=320,menubar=0,scrollbars=1,resizable=1,status=1,titlebar=0,toolbar=0,location=1"
+    }
+</script>
+
+
 <a href="#" class="btn btn-info  btn-block m-b-sm" id="login_btn_modal"  onclick="qqLogin()"><i class="fa fa-qq pull-left"></i>QQ登录</a>
+<%}%>
 <a disabled="true" href="#" class="btn btn-success btn-block m-b-sm"><i class="fa fa-weixin pull-left"></i>微信登录</a>
 <a disabled="true" href="#" class="btn btn-danger btn-block m-b-sm"><i class="fa fa-weibo pull-left"></i>微博登录</a>
