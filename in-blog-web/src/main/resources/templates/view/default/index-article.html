@@ -3,7 +3,8 @@
 <head>
     <% include("base/web-settings-meta.html"){} %>
     <title>${site.siteName!}-${data.title!}</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark.min.css"
+          rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
 
 </head>
@@ -75,11 +76,11 @@
                     <div class="footer-tag clearfix">
                         <div class="pull-left">
                             <%if(data.topics!=null){%>
-                                <i class="fa fa-tags"></i>
+                            <i class="fa fa-tags"></i>
 
-                                <%for(topic in data.topics!){%>
-                                <a href="/tags/${topic.ename}/tags/${topic.shamId}.html" rel="tag">${topic.name}</a>
-                                <%}%>
+                            <%for(topic in data.topics!){%>
+                            <a href="/tags/${topic.ename}/tags/${topic.shamId}.html" rel="tag">${topic.name}</a>
+                            <%}%>
                             <%}%>
                         </div>
 
@@ -105,7 +106,8 @@
                     <textarea cols="80" rows="50" placeholder=" 在这里发表你对此文的观点,最多300个字哟~~" class="mytextarea" id="content"
                               maxlength="300"></textarea>
 
-                    <input type="text" class="form-control pull-right index-list-reply-code" name="replyCode" id="replyCode"
+                    <input type="text" class="form-control pull-right index-list-reply-code" name="replyCode"
+                           id="replyCode"
                            placeholder="验证码">
                     <img class="pull-right pull-right-verification" id="replyCaptcha"
                          onclick="this.src = '/reply/image?m=' + Math.floor(Math.random() * 10000);"
@@ -187,7 +189,6 @@
 <script>
 
 
-    var im = 'https://data.ijson.net/avatar.jpg';
     //初始化数据
     $(function () {
 
@@ -196,11 +197,11 @@
         };
 
         var context = {
-            cname:'${session.authContext.cname!}',
-            id:'${session.authContext.id!}'
+            cname: '${session.authContext.cname!}',
+            id: '${session.authContext.id!}'
         };
 
-        if(!context.id){
+        if (!context.id) {
             context = null;
         }
 
@@ -212,7 +213,7 @@
             async: false,
             data: params,
             success: function (data) {
-                $(".comment-list").addCommentList({data: data.reply, add: "",toastr:toastr,context:context});
+                $(".comment-list").addCommentList({data: data.reply, add: "", toastr: toastr, context: context});
             },
             error: function (data) {
                 toastr.error(data.message);
@@ -271,7 +272,45 @@
 
             //$(".comment-list").addCommentList({data: [], add: obj});
         });
+
+
     })
+
+    function doFatherComment(content, fatherId,beReplyNameId) {
+
+        var obj = {
+            img: '${session.authContext.avatar!}',
+            postId: '${data.id}',
+            replyName: "${session.authContext.cname!}",
+            content: content,
+            fatherId: fatherId,
+            beReplyNameId:beReplyNameId
+        };
+
+        debugger;
+        console.log(obj)
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/reply/${data.ename}/${data.shamId}/resave",
+            async: false,
+            data: JSON.stringify(obj),
+            success: function (data) {
+                if (data.code !== undefined && data.code >= 200000013) {
+                    toastr.error(data.message);
+                } else {
+                    $("#content").val('');
+                    $(".comment-list").addCommentList({data: data, add: obj});
+                }
+
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
 </script>
 <%}%>
 

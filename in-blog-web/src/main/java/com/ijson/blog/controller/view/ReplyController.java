@@ -2,14 +2,15 @@ package com.ijson.blog.controller.view;
 
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.ReplyEntity;
+import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.ReplyQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.ReplyService;
+import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.info.ReplyInfo;
 import com.ijson.blog.service.model.result.ReplyResult;
-import com.ijson.blog.service.model.Result;
-import com.ijson.blog.service.ReplyService;
 import com.ijson.blog.util.Pageable;
 import com.ijson.blog.util.VerifyCodeUtils;
 import com.ijson.mongo.support.model.Page;
@@ -24,8 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * desc:
@@ -60,15 +63,16 @@ public class ReplyController extends BaseController {
         replyQuery.setShamId(shamId);
 
         PageResult<ReplyEntity> result = replyService.find(replyQuery, page);
-        List<ReplyInfo> replies = result.getDataList().stream().map(ReplyInfo::formReply).collect(Collectors.toList());
 
+        Function<Set<String>, Map<String, String>> userNames = userIds -> userService.findCnameByIds(userIds);
+        List<ReplyInfo> replies = ReplyInfo.transform(result,userNames);
         return new ReplyResult(replies, new Pageable(((Long) result.getTotal()).intValue(), index));
     }
 
 
     @RequestMapping("/{ename}/{shamId}/save")
     @ResponseBody
-    public ReplyInfo getReplyList(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody ReplyInfo reply, HttpSession session, HttpServletRequest request) throws Exception {
+    public ReplyInfo save(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody ReplyInfo reply, HttpSession session, HttpServletRequest request) throws Exception {
 
         String verCode = (String) session.getAttribute(replyCodeKey);
         Result result = VerifyCodeUtils.validImage(reply.getReplyCode(), verCode, request, session, replyCodeKey, replyCodeTime);
@@ -76,6 +80,18 @@ public class ReplyController extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.CAPTCHA_ERROR_OR_NOT_PRESENT, result.getMessage());
         }
 
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("创建评论时,未获取到用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        return ReplyInfo.formReply(replyService.save(reply.getContent(), shamId, ename, ReplyInfo.formReplyEntity(reply, request, context)));
+    }
+
+
+    @RequestMapping("/{ename}/{shamId}/resave")
+    @ResponseBody
+    public ReplyInfo resave(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody ReplyInfo reply, HttpSession session, HttpServletRequest request) throws Exception {
         AuthContext context = getContext(request);
         if (Objects.isNull(context)) {
             log.info("创建评论时,未获取到用户信息");

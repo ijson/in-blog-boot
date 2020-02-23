@@ -45,6 +45,7 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
         operations.set(ReplyEntity.Fields.userId, entity.getUserId());
         operations.set(ReplyEntity.Fields.postId, entity.getPostId());
         operations.set(ReplyEntity.Fields.content, entity.getContent());
+        operations.set(ReplyEntity.Fields.fatherId, entity.getFatherId());
 
         return datastore.findAndModify(query, operations);
     }

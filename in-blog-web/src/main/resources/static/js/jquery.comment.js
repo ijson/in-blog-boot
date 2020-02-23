@@ -1,6 +1,5 @@
 (function ($) {
     function crateCommentInfo(obj, options) {
-        debugger
         if (typeof(obj.time) === "undefined" || obj.time === "") {
             obj.time = getNowDateFormat();
         }
@@ -17,9 +16,8 @@
             el = el + "<span><i class='glyphicon glyphicon-globe'></i> " + obj.browse + "</span>";
         }
 
-        debugger
         if (options.context) {
-            el = el + "</div><div class='col-md-2'><span class='reply-btn' dtid='" + obj.replyUserId + "'>回复</span></div></div></div><div class='reply-list'>";
+            el = el + "</div><div class='col-md-2'><span class='reply-btn' breId='" + obj.userId + "' drid='" + obj.id + "' dtid='" + obj.replyUserId + "'>回复</span></div></div></div><div class='reply-list'>";
         } else {
             el = el + "</div></div></div><div class='reply-list'>";
         }
@@ -60,6 +58,7 @@
 
     function replyClick(el, options) {
         el.parent().parent().append("<div class='replybox'><textarea cols='80' rows='50' placeholder='请在这里回复评论,最多300个字哟~~' class='mytextarea' id='content2' maxlength='300' ></textarea><div class='btn btn-success pull-right' id='send'><i class='fa fa-edit'></i> 发表评论</div></div>").find("#send").click(function () {
+            debugger;
             var content = $(this).prev().val();
             if (content !== "") {
                 var parentEl = $(this).parent().parent().parent().parent();
@@ -72,9 +71,11 @@
                 }
                 obj.content = content;
                 obj.time = getNowDateFormat();
+
+
+                doFatherComment(content, options.drid, options.breId);
                 var replyString = createReplyComment(obj);
                 $(".replybox").remove();
-                debugger;
                 parentEl.find(".reply-list").append(replyString).find(".reply-list-btn:last").click(function () {
                     options.toastr.error("不能回复自己");
                 });
@@ -105,7 +106,9 @@
                     $(".replybox").remove();
                 } else {
                     $(".replybox").remove();
-                    debugger;
+                    debugger
+                    options.drid = $(this).attr("drid")
+                    options.breId = $(this).attr("breId")
                     replyClick($(this), options);
                 }
             });

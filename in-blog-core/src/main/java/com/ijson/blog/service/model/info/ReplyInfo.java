@@ -1,17 +1,24 @@
 package com.ijson.blog.service.model.info;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.ReplyEntity;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.mongo.support.model.PageResult;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.Data;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -34,7 +41,7 @@ public class ReplyInfo {
     private String createdBy;
     private long createTime;
     private String img;
-    private List<String> replyBody = Lists.newArrayList();
+    private List<ReplyInfo> replyBody = Lists.newArrayList();
 
     private String time;
     private String osname;
@@ -43,6 +50,10 @@ public class ReplyInfo {
     private String ename;
     private String shamId;
     private String replyUserId;
+
+    private String id;
+    private String userId;
+
 
     /*
 
@@ -92,7 +103,7 @@ public class ReplyInfo {
         entity.setContent(reply.getContent());
         entity.setPortraits(reply.getPortraits());
         entity.setReplyName(context.getCname());
-        entity.setBeReplyName(reply.getBeReplyName());
+        entity.setBeReplyName(context.getId());
         entity.setAddress("未知");
         entity.setEname(reply.getEname());
         entity.setShamId(reply.getShamId());
@@ -105,7 +116,11 @@ public class ReplyInfo {
         entity.setOs(os.getName());
         String browserName = browser.getName();
         entity.setBrowse(browserName);
-        entity.setFatherId("0");
+        if (Strings.isNullOrEmpty(reply.getFatherId())) {
+            entity.setFatherId("0");
+        } else {
+            entity.setFatherId(reply.getFatherId());
+        }
         entity.setLastModifiedBy(context.getId());
         entity.setDeleted(false);
         entity.setEnable(true);
@@ -124,12 +139,50 @@ public class ReplyInfo {
         reply.setEname(entity.getEname());
         reply.setShamId(entity.getShamId());
         reply.setImg(entity.getAvatar());
-        reply.setBeReplyName(entity.getBeReplyName());
         reply.setTime(DateFormatUtils.format(new Date(entity.getCreateTime()), "yyyy-MM-dd HH:mm:ss"));
         reply.setAddress(entity.getAddress());
         reply.setOsname(entity.getOs());
         reply.setReplyBody(Lists.newArrayList());
         reply.setReplyUserId(entity.getCreatedBy());
+        reply.setId(entity.getId());
+        reply.setFatherId(entity.getFatherId());
+        reply.setBeReplyName(entity.getUserId());
+        reply.setUserId(entity.getUserId());
         return reply;
+    }
+
+    public static List<ReplyInfo> transform(PageResult<ReplyEntity> result, Function<Set<String>, Map<String, String>> userName) {
+        List<ReplyEntity> dataList = result.getDataList();
+        if (CollectionUtils.isEmpty(dataList)) {
+            return Lists.newArrayList();
+        }
+
+
+        Set<String> uSetIds = dataList.stream().map(k -> {
+            return k.getBeReplyName();
+        }).collect(Collectors.toSet());
+
+        Map<String, String> idOrNames = userName.apply(uSetIds);
+
+        List<ReplyInfo> replies = result.getDataList().stream().map(k -> {
+            ReplyInfo replyInfo = ReplyInfo.formReply(k);
+            replyInfo.setBeReplyName(idOrNames.get(replyInfo.getBeReplyName()));
+            return replyInfo;
+        }).collect(Collectors.toList());
+
+
+        // 获取所有 主comment
+        List<ReplyInfo> baseComment = replies.stream().filter(k -> {
+            return "0".equals(k.getFatherId());
+        }).map(v -> {
+            List<ReplyInfo> collect = replies.stream().filter(k -> {
+                return v.getId().equals(k.getFatherId());
+            }).collect(Collectors.toList());
+            v.setReplyBody(collect);
+            return v;
+        }).collect(Collectors.toList());
+
+
+        return baseComment;
     }
 }
