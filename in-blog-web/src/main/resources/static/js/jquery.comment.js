@@ -17,7 +17,7 @@
         }
 
         if (options.context) {
-            el = el + "</div><div class='col-md-2'><span class='reply-btn' breId='" + obj.userId + "' drid='" + obj.id + "' dtid='" + obj.replyUserId + "'>回复</span></div></div></div><div class='reply-list'>";
+            el = el + "</div><div class='col-md-2'><span class='reply-btn' breId='" + obj.beReplyId + "' drid='" + obj.id + "' dtid='" + obj.replyUserId + "'>回复</span></div></div></div><div class='reply-list'>";
         } else {
             el = el + "</div></div></div><div class='reply-list'>";
         }

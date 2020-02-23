@@ -53,6 +53,7 @@ public class ReplyInfo {
 
     private String id;
     private String userId;
+    private String beReplyId;
 
 
     /*
@@ -127,6 +128,7 @@ public class ReplyInfo {
         entity.setCreatedBy(context.getId());
         entity.setCreateTime(System.currentTimeMillis());
         entity.setAvatar(context.getAvatar());
+        entity.setBeReplyId(reply.getBeReplyId());
         return entity;
     }
 
@@ -146,8 +148,9 @@ public class ReplyInfo {
         reply.setReplyUserId(entity.getCreatedBy());
         reply.setId(entity.getId());
         reply.setFatherId(entity.getFatherId());
-        reply.setBeReplyName(entity.getUserId());
+        reply.setBeReplyName(entity.getBeReplyName());
         reply.setUserId(entity.getUserId());
+        reply.setBeReplyId(entity.getBeReplyId());
         return reply;
     }
 
@@ -159,14 +162,20 @@ public class ReplyInfo {
 
 
         Set<String> uSetIds = dataList.stream().map(k -> {
-            return k.getBeReplyName();
+            if (!Strings.isNullOrEmpty(k.getBeReplyId())) {
+                return k.getBeReplyId();
+            } else {
+                return "";
+            }
         }).collect(Collectors.toSet());
 
         Map<String, String> idOrNames = userName.apply(uSetIds);
 
         List<ReplyInfo> replies = result.getDataList().stream().map(k -> {
             ReplyInfo replyInfo = ReplyInfo.formReply(k);
-            replyInfo.setBeReplyName(idOrNames.get(replyInfo.getBeReplyName()));
+            if (!Strings.isNullOrEmpty(replyInfo.getBeReplyId())) {
+                replyInfo.setBeReplyName(idOrNames.get(replyInfo.getBeReplyId()));
+            }
             return replyInfo;
         }).collect(Collectors.toList());
 
