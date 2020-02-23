@@ -69,7 +69,11 @@ public class UserAction extends BaseController {
             return createUser(myUser);
         }
 
+
         UserEntity entity = userService.findInternalById(myUser.getId());
+        if (Objects.nonNull(entity)) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.USER_CNAME_ALREADY_EXISTS);
+        }
 
         entity.setPassword(myUser.getPassword());
         entity.setCname(myUser.getCname());

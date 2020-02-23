@@ -21,6 +21,9 @@ public interface UserDao {
 
     UserEntity findByEname(String ename);
 
+    UserEntity findByCname(String cname);
+
+
     PageResult<UserEntity> find(UserQuery query, Page page);
 
     Map<String,String> batchCnameByIds(Set<String> userIds);
@@ -36,5 +39,6 @@ public interface UserDao {
     UserEntity delete(String id, Boolean deleted, String userId);
 
     UserEntity findByQQOpenId(String openId);
+
 }
 

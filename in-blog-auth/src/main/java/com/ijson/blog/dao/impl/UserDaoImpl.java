@@ -141,8 +141,17 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     public UserEntity findByEname(String ename) {
         Query<UserEntity> query = datastore.createQuery(UserEntity.class);
         query.field(UserEntity.Fields.ename).equal(ename);
-        query.field(UserEntity.Fields.deleted).equal(false);
-        query.field(UserEntity.Fields.enable).equal(true);
+        //query.field(UserEntity.Fields.deleted).equal(false);
+        //query.field(UserEntity.Fields.enable).equal(true);
+        return query.get();
+    }
+
+    @Override
+    public UserEntity findByCname(String cname) {
+        Query<UserEntity> query = datastore.createQuery(UserEntity.class);
+        query.field(UserEntity.Fields.cname).equal(cname);
+        //query.field(UserEntity.Fields.deleted).equal(false);
+        //query.field(UserEntity.Fields.enable).equal(true);
         return query.get();
     }
 

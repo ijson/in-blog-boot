@@ -79,7 +79,8 @@ public enum BlogBusinessExceptionCode {
     TYPE_CANNOT_BE_EMPTY(200_000_066, "类型不能为空"),
     DATA_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_067, "数据为空或者不存在"),
     FRONTEND_THEME_CANNOT_BE_EMPTY(200_000_068, "前端主题不能为空"),
-    BACKEND_THEME_CANNOT_BE_EMPTY(200_000_069, "后端主题不能为空");
+    BACKEND_THEME_CANNOT_BE_EMPTY(200_000_069, "后端主题不能为空"),
+    USER_CNAME_ALREADY_EXISTS(200_000_070, "该昵称已存在,不允许重复,请修改");
 
     private int code;
     private String message;
