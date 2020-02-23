@@ -1079,8 +1079,14 @@ ol, p, ul {
     cursor: pointer;
 }
 
+
+
 .reply-btn {
     text-align: right;
+}
+
+.reply-list-btn{
+    font-size: 12px;
 }
 
 .comment-content-header span {
