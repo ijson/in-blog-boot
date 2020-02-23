@@ -69,6 +69,11 @@
                 } else {
                     obj.beReplyName = parentEl.find("h3").text();
                 }
+
+                if (obj.replyName === obj.beReplyName) {
+                    options.toastr.error("不能回复自己");
+                    return;
+                }
                 obj.content = content;
                 obj.time = getNowDateFormat();
 
@@ -78,9 +83,11 @@
                 $(".replybox").remove();
                 parentEl.find(".reply-list").append(replyString).find(".reply-list-btn:last").click(function () {
                     options.toastr.error("不能回复自己");
+                    return;
                 });
             } else {
                 options.toastr.error("请输入该回复的评论内容");
+                return;
             }
         });
     }
