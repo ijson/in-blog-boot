@@ -80,7 +80,9 @@ public enum BlogBusinessExceptionCode {
     DATA_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_067, "数据为空或者不存在"),
     FRONTEND_THEME_CANNOT_BE_EMPTY(200_000_068, "前端主题不能为空"),
     BACKEND_THEME_CANNOT_BE_EMPTY(200_000_069, "后端主题不能为空"),
-    USER_CNAME_ALREADY_EXISTS(200_000_070, "该昵称已存在,不允许重复,请修改");
+    USER_CNAME_ALREADY_EXISTS(200_000_070, "该昵称已存在,不允许重复,请修改"),
+    REPLY_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_071, "回复不存在或者已删除"),
+    YOU_ARE_NOT_AUTHORIZED_TO_DELETE_THE_CURRENT_COMMENT(200_000_072, "当前评论您无权删除");
 
     private int code;
     private String message;

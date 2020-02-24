@@ -2,7 +2,6 @@ package com.ijson.blog.controller.view;
 
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.ReplyEntity;
-import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.ReplyQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
@@ -65,7 +64,7 @@ public class ReplyController extends BaseController {
         PageResult<ReplyEntity> result = replyService.find(replyQuery, page);
 
         Function<Set<String>, Map<String, String>> userNames = userIds -> userService.findCnameByIds(userIds);
-        List<ReplyInfo> replies = ReplyInfo.transform(result,userNames);
+        List<ReplyInfo> replies = ReplyInfo.transform(result, userNames);
         return new ReplyResult(replies, new Pageable(((Long) result.getTotal()).intValue(), index));
     }
 
@@ -86,6 +85,29 @@ public class ReplyController extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         return ReplyInfo.formReply(replyService.save(reply.getContent(), shamId, ename, ReplyInfo.formReplyEntity(reply, request, context)));
+    }
+
+
+    @RequestMapping("/{ename}/{shamId}/delete/{id}")
+    @ResponseBody
+    public ReplyResult delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @PathVariable("id") String id, HttpSession session, HttpServletRequest request) throws Exception {
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("删除评论时,未获取到用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        ReplyEntity entity = replyService.find(id);
+        if (Objects.isNull(entity)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.REPLY_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
+        }
+
+        if (!entity.getUserId().equals(context.getId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.YOU_ARE_NOT_AUTHORIZED_TO_DELETE_THE_CURRENT_COMMENT);
+        }
+
+        replyService.delete(id);
+
+        return getReplyList(ename, shamId, 0);
     }
 
 

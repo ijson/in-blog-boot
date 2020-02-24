@@ -54,12 +54,7 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
     public ReplyEntity find(String id) {
         Query<ReplyEntity> query = datastore.createQuery(ReplyEntity.class);
         query.field(ReplyEntity.Fields.id).equal(id);
-        ReplyEntity entity = query.get();
-        if (!Objects.isNull(entity)) {
-            return entity;
-        } else {
-            throw new RuntimeException("数据不存在或已删除");
-        }
+        return query.get();
     }
 
     @Override

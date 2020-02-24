@@ -276,7 +276,44 @@
 
     })
 
-    function doFatherComment(content, fatherId,beReplyNameId) {
+
+    /**
+     *
+     * 回调删除子回复
+     **/
+    function deleteComments(options) {
+        var r = confirm("是否删除该评论")
+        if (r === true) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                contentType: 'application/json',
+                url: "/reply/${data.ename}/${data.shamId}/delete/" + options.did,
+                async: false,
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    if (data.code !== undefined && data.code >= 200000013) {
+                        toastr.error(data.message);
+                    } else {
+                        $("#content").val('');
+                        $(".comment-list").addCommentList({data: data, add: obj});
+                    }
+                },
+                error: function (data) {
+                    toastr.error(data.message);
+                }
+            });
+        }
+    }
+
+
+    /**
+     * 回调子回复
+     * @param content
+     * @param fatherId
+     * @param beReplyNameId
+     */
+    function doFatherComment(content, fatherId, beReplyNameId) {
 
         var obj = {
             img: '${session.authContext.avatar!}',
@@ -284,10 +321,9 @@
             replyName: "${session.authContext.cname!}",
             content: content,
             fatherId: fatherId,
-            beReplyId:beReplyNameId
+            beReplyId: beReplyNameId
         };
 
-        debugger;
         console.log(obj)
 
         $.ajax({

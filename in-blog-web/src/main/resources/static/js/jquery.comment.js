@@ -25,16 +25,16 @@
             var arr = obj.replyBody;
             for (var j = 0; j < arr.length; j++) {
                 var replyObj = arr[j];
-                el = el + createReplyComment(replyObj);
+                el = el + createReplyComment(replyObj,obj.id);
             }
         }
         el = el + "</div></div></div>";
         return el;
     }
 
-    function createReplyComment(reply) {
+    function createReplyComment(reply,id) {
         return "<div class='reply'><div><a href='javascript:void(0)' class='replyname'>" + reply.replyName + "</a>:<a href='javascript:void(0)'>@" + reply.beReplyName + "</a><span>" + reply.content + "</span></div>"
-            + "<p><span>" + reply.time + "</span> <span class='reply-list-btn'>回复</span></p></div>";
+            + "<p><span>" + reply.time + "</span> <span class='reply-list-btn'>回复</span><span class='reply-list-del' did='"+id+"'>删除</span></p></div>";
     }
 
     function getNowDateFormat() {
@@ -79,7 +79,7 @@
 
 
                 doFatherComment(content, options.drid, options.breId);
-                var replyString = createReplyComment(obj);
+                var replyString = createReplyComment(obj,options.drid);
                 $(".replybox").remove();
                 parentEl.find(".reply-list").append(replyString).find(".reply-list-btn:last").click(function () {
                     options.toastr.error("不能回复自己");
@@ -90,6 +90,10 @@
                 return;
             }
         });
+    }
+
+    function delClick(el, options) {
+        deleteComments(option);
     }
 
     $.fn.addCommentList = function (options) {
@@ -127,6 +131,10 @@
                     debugger
                     replyClick($(this), options);
                 }
+            })
+            $(".reply-list-del").click(function () {
+                options.did = $(this).attr("did")
+                delClick($(this), options);
             })
         }
     }

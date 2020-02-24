@@ -1075,7 +1075,7 @@ ol, p, ul {
     color: #aaa;
 }
 
-.comment-list .comment-info .comment-right .comment-content-header span, .comment-list .comment-info .comment-right .comment-content-footer span.reply-btn, .send, .reply-list-btn {
+.comment-list .comment-info .comment-right .comment-content-header span, .comment-list .comment-info .comment-right .comment-content-footer span.reply-btn, .send, .reply-list-btn .reply-list-del{
     cursor: pointer;
 }
 
@@ -1086,6 +1086,10 @@ ol, p, ul {
 }
 
 .reply-list-btn{
+    font-size: 12px;
+}
+
+.reply-list-del{
     font-size: 12px;
 }
 
