@@ -19,6 +19,7 @@ import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.service.model.result.UploadResult;
 import com.ijson.blog.util.DateUtils;
+import com.ijson.blog.util.INFileUtil;
 import com.ijson.blog.util.Md5Util;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -199,23 +200,20 @@ public class PostAction extends BaseController {
     public UploadResult upload(@RequestParam("upload") MultipartFile file,
                                HttpServletRequest request,
                                HttpServletResponse response) {
-        String type = request.getParameter("type");
 
-        FileType uploadType = FileType.files;
-        if ("images".equals(type)) {
-            uploadType = FileType.images;
-        }
-        String newFileName = "";
-        String url = "";
         // 获取文件名
         String fileName = file.getOriginalFilename();
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
+        if (Objects.isNull(context)) {
+            return UploadResult.create(fileName, "", BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED.getMessage());
+        }
+
+        String newFileName;
+        String url = "";
 
         try {
 
-            AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
-            if (Objects.isNull(context)) {
-                return UploadResult.create(fileName, url, BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED.getMessage());
-            }
+
             // 获取文件的后缀名
             int lastIndex = fileName.lastIndexOf(".");
             if (lastIndex == -1) {
@@ -226,6 +224,11 @@ public class PostAction extends BaseController {
 
             newFileName = DateUtils.getInstance().getLongTime() + suffixName;
 
+
+            FileType uploadType = FileType.files;
+            if (INFileUtil.isImage(suffixName)) {
+                uploadType = FileType.images;
+            }
 
             String filePath = cdnUploadPath + uploadType + "/" + newFileName;
             log.info("写入文件:{}", filePath);

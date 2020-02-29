@@ -1,5 +1,5 @@
 mongo.servers = mongodb://localhost
-mongo.dbName = ibo_114
+mongo.dbName = post
 
 mongo.mapPackage = com.ijson.blog.dao.entity
 mongo.connectTimeout = 5000
