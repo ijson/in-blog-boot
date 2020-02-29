@@ -46,6 +46,14 @@ public class ReplyController extends BaseController {
     private String replyCodeKey = "replyCode";
     private String replyCodeTime = "replyCodeTime";
 
+    /**
+     * 查询列表
+     * @param ename
+     * @param shamId
+     * @param index
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/{ename}/replys/{shamId}")
     @ResponseBody
     public ReplyResult getReplyList(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, Integer index) throws Exception {
@@ -69,6 +77,16 @@ public class ReplyController extends BaseController {
     }
 
 
+    /**
+     * 保存文章评论
+     * @param ename
+     * @param shamId
+     * @param reply
+     * @param session
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/{ename}/{shamId}/save")
     @ResponseBody
     public ReplyInfo save(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody ReplyInfo reply, HttpSession session, HttpServletRequest request) throws Exception {

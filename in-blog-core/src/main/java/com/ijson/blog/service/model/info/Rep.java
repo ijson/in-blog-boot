@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
  */
 public interface Rep {
 
+    /**
+     * 后端model
+     */
     @Data
     class RepInfo {
         private String id;
