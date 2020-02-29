@@ -20,6 +20,7 @@ layui.define(["table", "util"], function (exports) {
         };
 
 
+        //全部消息
         i.render({
             elem: "#LAY-app-message-all",
             url: "/json/a.json",
@@ -42,6 +43,7 @@ layui.define(["table", "util"], function (exports) {
         });
 
 
+        //通知
         i.render({
             elem: "#LAY-app-message-notice",
             url: "/json/b.json",
@@ -62,6 +64,8 @@ layui.define(["table", "util"], function (exports) {
             }]],
             skin: "line"
         });
+
+        //私信
         i.render({
             elem: "#LAY-app-message-direct",
             url: "/json/c.json",
