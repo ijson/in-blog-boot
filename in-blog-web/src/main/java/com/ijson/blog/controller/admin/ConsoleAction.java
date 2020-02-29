@@ -532,4 +532,12 @@ public class ConsoleAction extends BaseController {
         return view;
     }
 
+    @RequestMapping("/list/message")
+    public ModelAndView messageList() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-message.html");
+        addAdminModelAndView(view);
+        return view;
+    }
+
 }
