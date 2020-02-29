@@ -86,6 +86,14 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
             query.field(ReplyEntity.Fields.shamId).equal(iquery.getShamId());
         }
 
+        if (!Strings.isNullOrEmpty(iquery.getContent())) {
+            query.field(ReplyEntity.Fields.content).containsIgnoreCase(iquery.getContent());
+        }
+
+        if (!Strings.isNullOrEmpty(iquery.getUserId())) {
+            query.field(ReplyEntity.Fields.createdBy).equal(iquery.getUserId());
+        }
+
         query.field(ReplyEntity.Fields.deleted).equal(false);
 
         if (page.getOrderBy() != null) {

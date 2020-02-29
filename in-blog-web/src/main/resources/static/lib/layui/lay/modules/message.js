@@ -6,14 +6,18 @@ layui.define(["table", "util"], function (exports) {
                 text: "全部消息",
                 id: "LAY-app-message-all"
             },
-            notice: {
-                text: "通知",
-                id: "LAY-app-message-notice"
+            reply: {
+                text: "回复",
+                id: "LAY-app-message-reply"
             },
-            direct: {
-                text: "私信",
-                id: "LAY-app-message-direct"
-            }
+            // notice: {
+            //     text: "通知",
+            //     id: "LAY-app-message-notice"
+            // },
+            // direct: {
+            //     text: "私信",
+            //     id: "LAY-app-message-direct"
+            // }
         });
         var a = function (e) {
             return '<a href="detail.html?id=' + e.id + '">' + e.title
@@ -42,10 +46,9 @@ layui.define(["table", "util"], function (exports) {
             skin: "line"
         });
 
-
-        //通知
+        //回复
         i.render({
-            elem: "#LAY-app-message-notice",
+            elem: "#LAY-app-message-reply",
             url: "/json/b.json",
             page: !0,
             cols: [[{
@@ -65,27 +68,50 @@ layui.define(["table", "util"], function (exports) {
             skin: "line"
         });
 
-        //私信
-        i.render({
-            elem: "#LAY-app-message-direct",
-            url: "/json/c.json",
-            page: !0,
-            cols: [[{
-                type: "checkbox",
-                fixed: "left"
-            }, {
-                field: "title",
-                title: "标题内容",
-                minWidth: 300,
-                templet: a
-            }, {
-                field: "time",
-                title: "时间",
-                width: 170,
-                templet: "<div>{{ layui.util.timeAgo(d.time) }}</div>"
-            }]],
-            skin: "line"
-        });
+        //
+        // //通知
+        // i.render({
+        //     elem: "#LAY-app-message-notice",
+        //     url: "/json/b.json",
+        //     page: !0,
+        //     cols: [[{
+        //         type: "checkbox",
+        //         fixed: "left"
+        //     }, {
+        //         field: "title",
+        //         title: "标题内容",
+        //         minWidth: 300,
+        //         templet: a
+        //     }, {
+        //         field: "time",
+        //         title: "时间",
+        //         width: 170,
+        //         templet: "<div>{{ layui.util.timeAgo(d.time) }}</div>"
+        //     }]],
+        //     skin: "line"
+        // });
+        //
+        // //私信
+        // i.render({
+        //     elem: "#LAY-app-message-direct",
+        //     url: "/json/c.json",
+        //     page: !0,
+        //     cols: [[{
+        //         type: "checkbox",
+        //         fixed: "left"
+        //     }, {
+        //         field: "title",
+        //         title: "标题内容",
+        //         minWidth: 300,
+        //         templet: a
+        //     }, {
+        //         field: "time",
+        //         title: "时间",
+        //         width: 170,
+        //         templet: "<div>{{ layui.util.timeAgo(d.time) }}</div>"
+        //     }]],
+        //     skin: "line"
+        // });
 
 
         var d = {
