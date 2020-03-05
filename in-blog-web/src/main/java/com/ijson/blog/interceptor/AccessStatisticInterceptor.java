@@ -42,8 +42,7 @@ public class AccessStatisticInterceptor implements WebRequestInterceptor {
         String requestURI = httpSelectRequest.getRequestURI();
 
 
-        log.info("访问时间:{},访问IP:{},访问方式:{},访问语言:{},访问路径:{}", nowTime
-                , ip, method, language, requestURI);
+        log.info("访问时间:{},访问IP:{},访问方式:{},访问语言:{},访问路径:{}", nowTime, ip, method, language, requestURI);
         viewSyncManager.syncWebSite();
     }
 

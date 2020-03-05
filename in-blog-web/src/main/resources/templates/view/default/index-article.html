@@ -110,8 +110,8 @@
                            id="replyCode"
                            placeholder="验证码">
                     <img class="pull-right pull-right-verification" id="replyCaptcha"
-                         onclick="this.src = '/reply/image?m=' + Math.floor(Math.random() * 10000);"
-                         src="/reply/image?m=' + Math.floor(Math.random() * 10000);">
+                         onclick="this.src = '/comment/image?m=' + Math.floor(Math.random() * 10000);"
+                         src="/comment/image?m=' + Math.floor(Math.random() * 10000);">
                     <div class="btn btn-success pull-right" id="comment"><i class="fa fa-edit"></i> 发表评论</div>
                     <%}%>
                     <div class="comment-list"></div>
@@ -187,44 +187,21 @@
 
 <%if(site.openCmt){%>
 <script>
-
-
     //初始化数据
     $(function () {
 
-        var params = {
-            index: 1
-        };
-
-        var context = {
-            cname: '${session.authContext.cname!}',
-            id: '${session.authContext.id!}'
-        };
-
-        if (!context.id) {
-            context = null;
-        }
-
-        $.ajax({
-            cache: false,
-            type: "POST",
-            contentType: 'application/json',
-            url: "/reply/${data.ename}/replys/${data.shamId}",
-            async: false,
-            data: params,
-            success: function (data) {
-                $(".comment-list").addCommentList({data: data.reply, add: "", toastr: toastr, context: context});
-            },
-            error: function (data) {
-                toastr.error(data.message);
-            }
+        queryComment({
+            index: 1,
+            ename: '${data.ename}',
+            shamId: '${data.shamId}'
         });
 
-
+        //提交评论信息
         $("#comment").click(function () {
 
-            var contentValue = $("#content").val();
             var replyCode = $("#replyCode").val();
+            var contentValue = $("#content").val();
+
             if (contentValue == null || contentValue === '' || contentValue === undefined) {
                 toastr.error("请输入评论内容");
                 return
@@ -235,112 +212,52 @@
                 return
             }
 
-            var obj = {
-                img: '${session.authContext.avatar!}',
-                postId: '${data.id}',
-                replyName: "${session.authContext.cname!}",
-                content: contentValue,
-                replyBody: [],
-                replyCode: replyCode
-            };
-
             $.ajax({
                 cache: false,
                 type: "POST",
                 contentType: 'application/json',
-                url: "/reply/${data.ename}/${data.shamId}/save",
+                url: "/comment/save",
                 async: false,
-                data: JSON.stringify(obj),
+                data: JSON.stringify({
+                    replyCode: replyCode,
+                    content: contentValue,
+                    ename: '${data.ename}',
+                    shamId: '${data.shamId}',
+                    replyType: 'comment',
+                    postId:'${data.id}'
+                }),
                 success: function (data) {
                     if (data.code !== undefined && data.code >= 200000013) {
                         toastr.error(data.message);
                     } else {
                         $("#content").val('');
-                        $(".comment-list").addCommentList({data: data, add: obj});
+                        $(".comment-list").addCommentList({data: data, add: data});
                     }
 
                     $("#replyCode").val('');
                     var replyCaptcha = document.getElementById("replyCaptcha");
-                    replyCaptcha.src = '/reply/image?m=' + Math.floor(Math.random() * 10000);
+                    replyCaptcha.src = '/comment/image?m=' + Math.floor(Math.random() * 10000);
 
                 },
                 error: function (data) {
                     toastr.error(data.message);
                 }
             });
-
-
-            //$(".comment-list").addCommentList({data: [], add: obj});
         });
-
-
     })
 
 
-    /**
-     *
-     * 回调删除子回复
-     **/
-    function deleteComments(options) {
-        var r = confirm("是否删除该评论")
-        if (r === true) {
-            $.ajax({
-                cache: false,
-                type: "POST",
-                contentType: 'application/json',
-                url: "/reply/${data.ename}/${data.shamId}/delete/" + options.did,
-                async: false,
-                data: JSON.stringify(obj),
-                success: function (data) {
-                    if (data.code !== undefined && data.code >= 200000013) {
-                        toastr.error(data.message);
-                    } else {
-                        $("#content").val('');
-                        $(".comment-list").addCommentList({data: data, add: obj});
-                    }
-                },
-                error: function (data) {
-                    toastr.error(data.message);
-                }
-            });
-        }
-    }
-
-
-    /**
-     * 回调子回复
-     * @param content
-     * @param fatherId
-     * @param beReplyNameId
-     */
-    function doFatherComment(content, fatherId, beReplyNameId) {
-
-        var obj = {
-            img: '${session.authContext.avatar!}',
-            postId: '${data.id}',
-            replyName: "${session.authContext.cname!}",
-            content: content,
-            fatherId: fatherId,
-            beReplyId: beReplyNameId
-        };
-
-        console.log(obj)
-
+    function queryComment(data) {
+        //获取评论列表
         $.ajax({
             cache: false,
             type: "POST",
             contentType: 'application/json',
-            url: "/reply/${data.ename}/${data.shamId}/resave",
+            url: "/comment/list",
             async: false,
-            data: JSON.stringify(obj),
+            data: JSON.stringify(data),
             success: function (data) {
-                if (data.code !== undefined && data.code >= 200000013) {
-                    toastr.error(data.message);
-                } else {
-                    $("#content").val('');
-                    $(".comment-list").addCommentList({data: data, add: obj});
-                }
-
+                $(".comment-list").addCommentList({data: data.reply, add: ""});
             },
             error: function (data) {
                 toastr.error(data.message);

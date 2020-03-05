@@ -87,6 +87,9 @@ public class BaseController {
     @Autowired
     protected ReplyService replyService;
 
+    @Autowired
+    protected CommentService commentService;
+
     @Value("${web.ctx}")
     protected String webCtx;
 

@@ -48,6 +48,9 @@ public class PostServiceImpl implements PostService {
     private ReplyDao replyDao;
 
     @Autowired
+    private CommentDao commentDao;
+
+    @Autowired
     private UserDao userDao;
 
     @Autowired
@@ -96,7 +99,7 @@ public class PostServiceImpl implements PostService {
         Set<String> ids = postEntityPageResult.getDataList().stream().map(PostEntity::getId).collect(Collectors.toSet());
         Map<String, Long> countByIds = countDao.findCountByIds(ids);
 
-        Map<String, Long> replyByIds = replyDao.findCountByIds(ids);
+        Map<String, Long> replyByIds =  commentDao.findCountByIds(ids);
 
         List<PostEntity> dataList = postEntityPageResult.getDataList();
 

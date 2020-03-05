@@ -91,6 +91,10 @@ public class DateUtils {
         return date == null ? "" : new SimpleDateFormat(pattern).format(date);
     }
 
+    public String format(Long date, String pattern) {
+        return date == null ? "" : new SimpleDateFormat(pattern).format(new Date(date));
+    }
+
 
     public Long format(String pattern, String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
