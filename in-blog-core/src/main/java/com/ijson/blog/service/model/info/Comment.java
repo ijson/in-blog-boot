@@ -1,6 +1,5 @@
 package com.ijson.blog.service.model.info;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.model.ReplyType;
@@ -45,6 +44,14 @@ public interface Comment {
         private String browse;//浏览器版本
         private List<Object> replyBody = Lists.newArrayList();//子评论
 
+        private String ename;
+        private String shamId;
+        private String postId;
+
+        private String fromAvatar;
+        private String fromCname;
+        private String fromUserId;
+
 
         public static CommentResult create(String id,
                                            String img,
@@ -53,7 +60,13 @@ public interface Comment {
                                            long time,
                                            String address,
                                            String osname,
-                                           String browse) {
+                                           String browse,
+                                           String ename,
+                                           String shamId,
+                                           String postId,
+                                           String fromAvatar,
+                                           String fromCname,
+                                           String fromUserId) {
             CommentResult result = new CommentResult();
             result.setId(id);
             result.setImg(img);
@@ -63,6 +76,12 @@ public interface Comment {
             result.setAddress(address);
             result.setOsname(osname);
             result.setBrowse(browse);
+            result.setEname(ename);
+            result.setShamId(shamId);
+            result.setPostId(postId);
+            result.setFromAvatar(fromAvatar);
+            result.setFromCname(fromCname);
+            result.setFromUserId(fromUserId);
             return result;
         }
 
@@ -86,7 +105,13 @@ public interface Comment {
                             k.getCreateTime(),
                             k.getHost(),
                             k.getOs(),
-                            k.getBrowse())
+                            k.getBrowse(),
+                            k.getEname(),
+                            k.getShamId(),
+                            k.getPostId(),
+                            k.getFromAvatar(),
+                            k.getFromCname(),
+                            k.getFromUserId())
             ).collect(Collectors.toList());
         }
     }
@@ -114,7 +139,133 @@ public interface Comment {
 
 
     /**
-     * 保存评=评论参数
+     * 保存回复的回复后返回
+     */
+    @Data
+    class ReplyResult {
+        private String id;
+        private String img;//评论人头像
+        private String replyName;//评论人中文名称
+        private String content;//回复内容
+        private String time;//评论时间
+        private String address;//评论人所在地,暂不用
+        private String osname;//评论操作系统
+        private String browse;//浏览器版本
+        private List<Object> replyBody = Lists.newArrayList();//子评论
+
+        private String ename;
+        private String shamId;
+        private String postId;
+
+        private String fromAvatar;
+        private String fromCname;
+        private String fromUserId;
+        private String beReplyName;
+
+
+        public static ReplyResult create(String id,
+                                           String img,
+                                           String replyName,
+                                           String content,
+                                           long time,
+                                           String address,
+                                           String osname,
+                                           String browse,
+                                           String ename,
+                                           String shamId,
+                                           String postId,
+                                           String fromAvatar,
+                                           String fromCname,
+                                           String fromUserId) {
+            ReplyResult result = new ReplyResult();
+            result.setId(id);
+            result.setImg(img);
+            result.setReplyName(replyName);
+            result.setContent(content);
+            result.setTime(DateUtils.getInstance().format(time, "yyyy-MM-dd HH:mm:ss"));
+            result.setAddress(address);
+            result.setOsname(osname);
+            result.setBrowse(browse);
+            result.setEname(ename);
+            result.setShamId(shamId);
+            result.setPostId(postId);
+            result.setFromAvatar(fromAvatar);
+            result.setFromCname(fromCname);
+            result.setFromUserId(fromUserId);
+            result.setBeReplyName(fromCname);
+            return result;
+        }
+    }
+
+    /**
+     * 保存 回复参数
+     */
+    @Data
+    class ReplyArg {
+        private String ename;
+        private String shamId;
+        private String fatherId;
+        private ReplyType replyType;
+        private String postId;
+        private String replyName;
+        private String content;
+
+        private String toAvatar;
+        private String toCname;
+        private String toUserId;
+
+        public CommentEntity getCreateEntity(AuthContext context,
+                                             PostService postService,
+                                             UserService userService,
+                                             HttpServletRequest request) {
+            CommentEntity entity = new CommentEntity();
+
+            //文章列表查询有多少评论时使用
+            entity.setPostId(getPostId());
+            //评论文章
+            entity.setEname(getEname());
+            entity.setShamId(getShamId());
+            entity.setContent(getContent());
+
+            //设置被评论人,评论回复时的时候设置,评论文章不需要
+            entity.setToAvatar(getToAvatar());
+            entity.setToCname(getToCname());
+            entity.setToUserId(getToUserId());
+
+            //设置评论人
+            entity.setFromAvatar(context.getAvatar());
+            entity.setFromCname(context.getCname());
+            entity.setFromUserId(context.getId());
+
+
+            entity.setReplyType(ReplyType.reply);
+            entity.setFatherId(getFatherId());
+
+
+            String ua = request.getHeader("User-Agent");
+            UserAgent userAgent = UserAgent.parseUserAgentString(ua);
+            OperatingSystem os = userAgent.getOperatingSystem();
+            Browser browser = userAgent.getBrowser();
+            entity.setUserAgent(ua);
+            entity.setOs(os.getName());
+            String browserName = browser.getName();
+            entity.setBrowse(browserName);
+            entity.setHost(request.getRemoteHost());
+
+            entity.setLastModifiedBy(context.getId());
+            entity.setLastModifiedTime(System.currentTimeMillis());
+            entity.setDeleted(false);
+            entity.setEnable(true);
+            entity.setCreatedBy(context.getId());
+            entity.setCreateTime(System.currentTimeMillis());
+
+            return entity;
+        }
+    }
+
+
+    /**
+     * 保存评论参数
      */
     @Data
     class Arg {
@@ -180,8 +331,8 @@ public interface Comment {
             entity.setFromUserId(context.getId());
 
 
-            entity.setReplyType(getReplyType());
-            entity.setFatherId(getFatherId());
+            entity.setReplyType(ReplyType.comment);
+            entity.setFatherId("0");
 
 
             String ua = request.getHeader("User-Agent");
@@ -192,11 +343,6 @@ public interface Comment {
             entity.setOs(os.getName());
             String browserName = browser.getName();
             entity.setBrowse(browserName);
-            if (Strings.isNullOrEmpty(getFatherId())) {
-                entity.setFatherId("0");
-            } else {
-                entity.setFatherId(getFatherId());
-            }
             entity.setHost(request.getRemoteHost());
 
             entity.setLastModifiedBy(context.getId());

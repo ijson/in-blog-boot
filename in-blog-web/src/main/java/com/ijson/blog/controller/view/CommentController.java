@@ -66,9 +66,51 @@ public class CommentController extends BaseController {
                 entity.getCreateTime(),
                 entity.getHost(),
                 entity.getOs(),
-                entity.getBrowse());
+                entity.getBrowse(),
+                entity.getEname(),
+                entity.getShamId(),
+                entity.getPostId(),
+                entity.getFromAvatar(),
+                entity.getFromCname(),
+                entity.getFromUserId());
     }
 
+
+    @RequestMapping("/child/save")
+    @ResponseBody
+    public Comment.ReplyResult childSave(@RequestBody Comment.ReplyArg arg,
+                                           HttpSession session,
+                                           HttpServletRequest request) {
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("创建评论时,未获取到用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        CommentEntity entity = arg.getCreateEntity(context, postService, userService, request);
+
+        if (entity.getToUserId().equals(entity.getFromUserId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.CAN_T_REPLY_TO_A_RESPONSE_YOU_SUBMITTED);
+        }
+
+
+        entity = commentService.create(context, entity);
+
+        return Comment.ReplyResult.create(entity.getId(),
+                entity.getToAvatar(),
+                entity.getToCname(),
+                entity.getContent(),
+                entity.getCreateTime(),
+                entity.getHost(),
+                entity.getOs(),
+                entity.getBrowse(),
+                entity.getEname(),
+                entity.getShamId(),
+                entity.getPostId(),
+                entity.getFromAvatar(),
+                entity.getFromCname(),
+                entity.getFromUserId());
+    }
 
     @PostMapping("/list")
     @ResponseBody
