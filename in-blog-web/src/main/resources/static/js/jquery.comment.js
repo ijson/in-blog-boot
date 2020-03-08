@@ -47,7 +47,7 @@
             var arr = obj.replyBody;
             for (var j = 0; j < arr.length; j++) {
                 var replyObj = arr[j];
-                el = el + createReplyComment(replyObj);
+                el = el + createReplyComment(replyObj, option);
             }
         }
         el = el + "</div></div></div>";
@@ -55,28 +55,36 @@
     }
 
     //返回每个回复体内容
-    function createReplyComment(reply) {
-        //return "";
-        debugger;
+    function createReplyComment(reply, option) {
+
+        var replyContent = getReplyTextContent(reply, option);
+
+
         return "<div class='reply'><div><a href='javascript:void(0)' class='replyname'>"
             + reply.replyName + "</a>:<a href='javascript:void(0)'>@"
             + reply.beReplyName + "</a><span>"
             + reply.content + "</span></div>"
             + "<p><span>"
-            + reply.time + "</span> <span class='reply-list-btn' " +
+            + reply.time + "</span> <span class='reply-list-btn' " + replyContent + "</p></div>";
+    }
 
+    function getReplyTextContent(reply, option) {
+        if (option.isReply) {
+            return "<span class='reply-list-btn' " +
+                "fatherId='" + reply.id + "'" +
+                "ename='" + reply.ename + "'" +
+                "shamId='" + reply.shamId + "'" +
+                "replyName='" + reply.replyName + "'" +
+                "img='" + reply.img + "'" +
+                "postId='" + reply.postId + "'" +
+                "fromAvatar='" + reply.fromAvatar + "'" +
+                "fromCname='" + reply.fromCname + "'" +
+                "fromUserId='" + reply.fromUserId + "'" +
 
-            "fatherId='" + reply.id + "'" +
-            "ename='" + reply.ename + "'" +
-            "shamId='" + reply.shamId + "'" +
-            "replyName='" + reply.replyName + "'" +
-            "img='" + reply.img + "'" +
-            "postId='" + reply.postId + "'" +
-            "fromAvatar='" + reply.fromAvatar + "'" +
-            "fromCname='" + reply.fromCname + "'" +
-            "fromUserId='" + reply.fromUserId + "'" +
+                ">回复</span>";
+        }
+        return "";
 
-            ">回复</span></p></div>";
     }
 
     function getNowDateFormat() {
@@ -98,7 +106,7 @@
         }
     }
 
-    function replyClick(el) {
+    function replyClick(el, option) {
         var obj = {
             ename: el.attr("ename"),
             shamId: el.attr("shamId"),
@@ -131,7 +139,7 @@
                             if (data.code !== undefined && data.code >= 200000013) {
                                 toastr.error(data.message);
                             } else {
-                                var replyString = createReplyComment(data);
+                                var replyString = createReplyComment(data, option);
                                 $(".replybox").remove();
                                 parentEl.find(".reply-list").append(replyString).find(".reply-list-btn:last").click(function () {
                                     toastrwarn("不能回复自己");
@@ -179,7 +187,7 @@
                     $(".replybox").remove();
                 } else {
                     $(".replybox").remove();
-                    replyClick($(this));
+                    replyClick($(this), option);
                 }
             });
             $(".reply-list-btn").click(function () {
@@ -187,7 +195,7 @@
                     $(".replybox").remove();
                 } else {
                     $(".replybox").remove();
-                    replyClick($(this));
+                    replyClick($(this), option);
                 }
             })
         }
@@ -197,7 +205,7 @@
             obj = option.add;
             var str = crateCommentInfo(obj, option);
             $(this).prepend(str).find(".reply-btn").click(function () {
-                replyClick($(this));
+                replyClick($(this), option);
             });
         }
     }
