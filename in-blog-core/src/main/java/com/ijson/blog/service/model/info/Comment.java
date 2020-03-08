@@ -204,7 +204,7 @@ public interface Comment {
         }
 
         public static List<ReplyResult> getChild(List<CommentEntity> dataList, String currentId, String fatherId) {
-            return getCommentChild(dataList, currentId, fatherId, Lists.newArrayList()).stream().filter(k->{return !"0".equals(k.getFatherId());}).map(ints -> {
+            return getCommentChild(dataList.stream().filter(k -> !k.getFatherId().equals("0")).collect(Collectors.toList()), currentId, fatherId, Lists.newArrayList()).stream().map(ints -> {
                 return ReplyResult.create(
                         ints.getId(),
                         ints.getFromAvatar(),
@@ -230,7 +230,7 @@ public interface Comment {
                     getCommentChild(dataList, k.getId(), k.getFatherId(), result);
                 }
             });
-            return dataList;
+            return result;
         }
 
 
