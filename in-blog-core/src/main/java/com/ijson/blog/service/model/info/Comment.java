@@ -42,7 +42,7 @@ public interface Comment {
         private String address;//评论人所在地,暂不用
         private String osname;//评论操作系统
         private String browse;//浏览器版本
-        private List<Object> replyBody = Lists.newArrayList();//子评论
+        private List<ReplyResult> replyBody = Lists.newArrayList();//子评论
 
         private String ename;
         private String shamId;
@@ -85,6 +85,28 @@ public interface Comment {
             return result;
         }
 
+
+        public static CommentResult create(String id,
+                                           String img,
+                                           String replyName,
+                                           String content,
+                                           long time,
+                                           String address,
+                                           String osname,
+                                           String browse,
+                                           String ename,
+                                           String shamId,
+                                           String postId,
+                                           String fromAvatar,
+                                           String fromCname,
+                                           String fromUserId,
+                                           List<ReplyResult> child) {
+            CommentResult result = CommentResult.create(
+                    id, img, replyName, content, time, address, osname, browse, ename, shamId, postId, fromAvatar, fromCname, fromUserId);
+            result.setReplyBody(child);
+            return result;
+        }
+
         /**
          * 列表查询时转换
          *
@@ -96,22 +118,45 @@ public interface Comment {
             if (CollectionUtils.isEmpty(dataList)) {
                 return Lists.newArrayList();
             }
-            return dataList.stream().map(k ->
-                    CommentResult.create(
-                            k.getId(),
-                            k.getFromAvatar(),
-                            k.getFromCname(),
-                            k.getContent(),
-                            k.getCreateTime(),
-                            k.getHost(),
-                            k.getOs(),
-                            k.getBrowse(),
-                            k.getEname(),
-                            k.getShamId(),
-                            k.getPostId(),
-                            k.getFromAvatar(),
-                            k.getFromCname(),
-                            k.getFromUserId())
+            return dataList.stream().filter(v -> v.getFatherId().equals("0")).map(k -> {
+
+                        List<ReplyResult> inner = dataList.stream().filter(inn -> {
+                            return inn.getFatherId().equals(k.getId());
+                        }).map(ints -> {
+                            return ReplyResult.create(
+                                    ints.getId(),
+                                    ints.getFromAvatar(),
+                                    ints.getFromCname(),
+                                    ints.getContent(),
+                                    ints.getCreateTime(),
+                                    ints.getHost(),
+                                    ints.getOs(),
+                                    ints.getBrowse(),
+                                    ints.getEname(),
+                                    ints.getShamId(),
+                                    ints.getPostId(),
+                                    ints.getToAvatar(),
+                                    ints.getToCname(),
+                                    ints.getToUserId());
+                        }).collect(Collectors.toList());
+
+
+                        return CommentResult.create(
+                                k.getId(),
+                                k.getFromAvatar(),
+                                k.getFromCname(),
+                                k.getContent(),
+                                k.getCreateTime(),
+                                k.getHost(),
+                                k.getOs(),
+                                k.getBrowse(),
+                                k.getEname(),
+                                k.getShamId(),
+                                k.getPostId(),
+                                k.getFromAvatar(),
+                                k.getFromCname(),
+                                k.getFromUserId(), inner);
+                    }
             ).collect(Collectors.toList());
         }
     }
@@ -164,19 +209,19 @@ public interface Comment {
 
 
         public static ReplyResult create(String id,
-                                           String img,
-                                           String replyName,
-                                           String content,
-                                           long time,
-                                           String address,
-                                           String osname,
-                                           String browse,
-                                           String ename,
-                                           String shamId,
-                                           String postId,
-                                           String fromAvatar,
-                                           String fromCname,
-                                           String fromUserId) {
+                                         String img,
+                                         String replyName,
+                                         String content,
+                                         long time,
+                                         String address,
+                                         String osname,
+                                         String browse,
+                                         String ename,
+                                         String shamId,
+                                         String postId,
+                                         String fromAvatar,
+                                         String fromCname,
+                                         String fromUserId) {
             ReplyResult result = new ReplyResult();
             result.setId(id);
             result.setImg(img);

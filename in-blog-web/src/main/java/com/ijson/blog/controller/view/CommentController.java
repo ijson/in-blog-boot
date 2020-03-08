@@ -121,6 +121,7 @@ public class CommentController extends BaseController {
         if (Objects.isNull(arg.getIndex())) {
             page.setPageNumber(1);
         }
+        page.setPageSize(200);
 
 
         CommentQuery commentQuery = new CommentQuery();
