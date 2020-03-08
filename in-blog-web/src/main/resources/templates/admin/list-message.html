@@ -33,8 +33,9 @@
     <div class="layui-card">
         <div class="layui-tab layui-tab-brief">
             <ul class="layui-tab-title">
-                <li class="layui-this">全部消息</li>
-                <li>回复<span class="layui-badge">6</span></li>
+                <li class="layui-this">全部消息<span class="layui-badge">7</span></li>
+                <li>文章回复<span class="layui-badge">6</span></li>
+                <li>评论回复<span class="layui-badge">1</span></li>
                 <!--<li>通知</li>-->
                 <!--<li>私信</li>-->
             </ul>
@@ -51,7 +52,7 @@
                     <table id="LAY-app-message-all" lay-filter="LAY-app-message-all"></table>
                 </div>
 
-                <!-- 回复-->
+                <!-- 文章回复-->
                 <div class="layui-tab-item">
 
                     <div class="LAY-app-message-btns" style="margin-bottom: 10px;">
@@ -60,7 +61,20 @@
                         <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="readyAll">全部已读</button>
                     </div>
 
-                    <table id="LAY-app-message-reply" lay-filter="LAY-app-message-notice"></table>
+                    <table id="LAY-app-message-post" lay-filter="LAY-app-message-post"></table>
+                </div>
+
+
+                <!-- 评论回复-->
+                <div class="layui-tab-item">
+
+                    <div class="LAY-app-message-btns" style="margin-bottom: 10px;">
+                        <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="del">删除</button>
+                        <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="ready">标记已读</button>
+                        <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="notice" data-events="readyAll">全部已读</button>
+                    </div>
+
+                    <table id="LAY-app-message-reply" lay-filter="LAY-app-message-reply"></table>
                 </div>
 
                 <!-- 通知-->

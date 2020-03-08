@@ -1,7 +1,7 @@
 {
   "code": 0,
   "msg": "",
-  "count": 60,
+  "count": 6,
   "data": [
     {
       "id": 123,
@@ -32,26 +32,6 @@
       "id": 111,
       "title": "你好新朋友，感谢使用 layuiAdmin",
       "time": 1510212370000
-    },
-    {
-      "id": 111,
-      "title": "你好新朋友，感谢使用 layuiAdmin",
-      "time": 1510212370000
-    },
-    {
-      "id": 111,
-      "title": "你好新朋友，感谢使用 layuiAdmin",
-      "time": 1510212370000
-    },
-    {
-      "id": 111,
-      "title": "你好新朋友，感谢使用 layuiAdmin",
-      "time": 1510212370000
-    },
-    {
-      "id": 111,
-      "title": "你好新朋友，感谢使用 layuiAdmin",
-      "time": 1507447570000
     }
   ]
 }

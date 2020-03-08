@@ -6,8 +6,12 @@ layui.define(["table", "util"], function (exports) {
                 text: "全部消息",
                 id: "LAY-app-message-all"
             },
+            post: {
+                text: "文章回复",
+                id: "LAY-app-message-post"
+            },
             reply: {
-                text: "回复",
+                text: "评论回复",
                 id: "LAY-app-message-reply"
             },
             // notice: {
@@ -46,10 +50,32 @@ layui.define(["table", "util"], function (exports) {
             skin: "line"
         });
 
-        //回复
+        //文章回复
+        i.render({
+            elem: "#LAY-app-message-post",
+            url: "/json/b.json",
+            page: !0,
+            cols: [[{
+                type: "checkbox",
+                fixed: "left"
+            }, {
+                field: "title",
+                title: "标题内容",
+                minWidth: 300,
+                templet: a
+            }, {
+                field: "time",
+                title: "时间",
+                width: 170,
+                templet: "<div>{{ layui.util.timeAgo(d.time) }}</div>"
+            }]],
+            skin: "line"
+        });
+
+        //评论回复
         i.render({
             elem: "#LAY-app-message-reply",
-            url: "/json/b.json",
+            url: "/json/d.json",
             page: !0,
             cols: [[{
                 type: "checkbox",
