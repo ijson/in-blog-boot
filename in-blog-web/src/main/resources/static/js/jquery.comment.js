@@ -5,7 +5,7 @@
      * @param obj
      * @returns {string}
      */
-    function crateCommentInfo(obj) {
+    function crateCommentInfo(obj, option) {
         if (typeof(obj.time) === "undefined" || obj.time === "") {
             obj.time = getNowDateFormat();
         }
@@ -28,18 +28,21 @@
 
         //第一个评论要不要显示回复
         //el = el + "</div><div class='col-md-2'><span class='reply-btn'>回复</span>";
-        el = el + "</div><div class='col-md-2'><span class='reply-btn' " +
-            "fatherId='" + obj.id + "'" +
-            "ename='" + obj.ename + "'" +
-            "shamId='" + obj.shamId + "'" +
-            "replyName='" + obj.replyName + "'" +
-            "img='" + obj.img + "'" +
-            "postId='" + obj.postId + "'" +
-            "fromAvatar='" + obj.fromAvatar + "'" +
-            "fromCname='" + obj.fromCname + "'" +
-            "fromUserId='" + obj.fromUserId + "'" +
-            ">回复</span></div></div></div><div class='reply-list'>";
-        //el = el + "</div></div></div><div class='reply-list'>";
+        if (option.isReply) {
+            el = el + "</div><div class='col-md-2'><span class='reply-btn' " +
+                "fatherId='" + obj.id + "'" +
+                "ename='" + obj.ename + "'" +
+                "shamId='" + obj.shamId + "'" +
+                "replyName='" + obj.replyName + "'" +
+                "img='" + obj.img + "'" +
+                "postId='" + obj.postId + "'" +
+                "fromAvatar='" + obj.fromAvatar + "'" +
+                "fromCname='" + obj.fromCname + "'" +
+                "fromUserId='" + obj.fromUserId + "'" +
+                ">回复</span></div></div></div><div class='reply-list'>";
+        } else {
+            el = el + "</div></div></div><div class='reply-list'>";
+        }
         if (obj.replyBody !== "" && obj.replyBody.length > 0) {
             var arr = obj.replyBody;
             for (var j = 0; j < arr.length; j++) {
@@ -158,7 +161,8 @@
     $.fn.addCommentList = function (options) {
         var defaults = {
             data: [],
-            add: ""
+            add: "",
+            isReply: false
         };
         var option = $.extend(defaults, options);
         //加载数据
@@ -167,7 +171,7 @@
             var totalString = "";
             for (var i = 0; i < dataList.length; i++) {
                 var obj = dataList[i];
-                var objString = crateCommentInfo(obj);
+                var objString = crateCommentInfo(obj, option);
                 totalString = totalString + objString;
             }
             $(this).append(totalString).find(".reply-btn").click(function () {
@@ -191,7 +195,7 @@
         //添加新数据
         if (option.add !== "") {
             obj = option.add;
-            var str = crateCommentInfo(obj);
+            var str = crateCommentInfo(obj, option);
             $(this).prepend(str).find(".reply-btn").click(function () {
                 replyClick($(this));
             });

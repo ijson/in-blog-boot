@@ -224,14 +224,18 @@
                     ename: '${data.ename}',
                     shamId: '${data.shamId}',
                     replyType: 'comment',
-                    postId:'${data.id}'
+                    postId: '${data.id}'
                 }),
                 success: function (data) {
                     if (data.code !== undefined && data.code >= 200000013) {
                         toastr.error(data.message);
                     } else {
                         $("#content").val('');
-                        $(".comment-list").addCommentList({data: data, add: data});
+                        $(".comment-list").addCommentList({
+                            data: data,
+                            add: data,
+                            isReply: ${!isEmpty(session.authContext)}
+                        });
                     }
 
                     $("#replyCode").val('');
@@ -244,7 +248,7 @@
                 }
             });
         });
-    })
+    });
 
 
     function queryComment(data) {
@@ -257,14 +261,18 @@
             async: false,
             data: JSON.stringify(data),
             success: function (data) {
-                $(".comment-list").addCommentList({data: data.reply, add: ""});
+                $(".comment-list").addCommentList({
+                    data: data.reply,
+                    add: "",
+                    isReply: ${!isEmpty(session.authContext)}
+                });
             },
             error: function (data) {
                 toastr.error(data.message);
             }
         });
     }
-    
+
     function toastrwarn(message) {
         toastr.warning(message)
     }
