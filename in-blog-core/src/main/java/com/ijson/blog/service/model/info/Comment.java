@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -118,6 +119,9 @@ public interface Comment {
             if (CollectionUtils.isEmpty(dataList)) {
                 return Lists.newArrayList();
             }
+
+            dataList.sort(Comparator.comparing(CommentEntity::getCreateTime));
+
             return levelFlatComment(dataList);
         }
 
@@ -194,16 +198,13 @@ public interface Comment {
                                 k.getPostId(),
                                 k.getFromAvatar(),
                                 k.getFromCname(),
-                                k.getFromUserId(), getChild(dataList, k.getId()));
+                                k.getFromUserId(), getChild(dataList, k.getId(), k.getFatherId()));
                     }
             ).collect(Collectors.toList());
         }
 
-
-        public static List<ReplyResult> getChild(List<CommentEntity> dataList, String fatherId) {
-            return dataList.stream().filter(inn -> {
-                return inn.getFatherId().equals(fatherId);
-            }).map(ints -> {
+        public static List<ReplyResult> getChild(List<CommentEntity> dataList, String currentId, String fatherId) {
+            return getCommentChild(dataList, currentId, fatherId, Lists.newArrayList()).stream().filter(k->{return !"0".equals(k.getFatherId());}).map(ints -> {
                 return ReplyResult.create(
                         ints.getId(),
                         ints.getFromAvatar(),
@@ -221,6 +222,18 @@ public interface Comment {
                         ints.getToUserId());
             }).collect(Collectors.toList());
         }
+
+        public static List<CommentEntity> getCommentChild(List<CommentEntity> dataList, String currentId, String fatherId, List<CommentEntity> result) {
+            dataList.forEach(k -> {
+                if (k.getFatherId().equals(currentId)) {
+                    result.add(k);
+                    getCommentChild(dataList, k.getId(), k.getFatherId(), result);
+                }
+            });
+            return dataList;
+        }
+
+
     }
 
 

@@ -89,9 +89,9 @@ public class CommentController extends BaseController {
         }
         CommentEntity entity = arg.getCreateEntity(context, postService, userService, request);
 
-        if (entity.getToUserId().equals(entity.getFromUserId())) {
-            throw new ReplyCreateException(BlogBusinessExceptionCode.CAN_T_REPLY_TO_A_RESPONSE_YOU_SUBMITTED);
-        }
+//        if (entity.getToUserId().equals(entity.getFromUserId())) {
+//            throw new ReplyCreateException(BlogBusinessExceptionCode.CAN_T_REPLY_TO_A_RESPONSE_YOU_SUBMITTED);
+//        }
 
 
         entity = commentService.create(context, entity);
@@ -122,6 +122,8 @@ public class CommentController extends BaseController {
             page.setPageNumber(1);
         }
         page.setPageSize(200);
+        //page.setAsc(false);
+        //page.setOrderBy(CommentEntity.Fields.createTime);
 
 
         CommentQuery commentQuery = new CommentQuery();
