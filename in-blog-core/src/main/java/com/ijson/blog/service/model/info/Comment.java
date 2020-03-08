@@ -118,6 +118,17 @@ public interface Comment {
             if (CollectionUtils.isEmpty(dataList)) {
                 return Lists.newArrayList();
             }
+            return levelFlatComment(dataList);
+        }
+
+
+        /**
+         * 只获取一级评论及1级评论下的评论
+         *
+         * @param dataList
+         * @return
+         */
+        public List<CommentResult> firstLevelComment(List<CommentEntity> dataList) {
             return dataList.stream().filter(v -> v.getFatherId().equals("0")).map(k -> {
 
                         List<ReplyResult> inner = dataList.stream().filter(inn -> {
@@ -159,7 +170,59 @@ public interface Comment {
                     }
             ).collect(Collectors.toList());
         }
+
+
+        /**
+         * 只获取一级评论及1级评论下的评论,且一级一下的评论都拍平,后期支持更多层级
+         *
+         * @param dataList
+         * @return
+         */
+        public static List<CommentResult> levelFlatComment(List<CommentEntity> dataList) {
+            return dataList.stream().filter(v -> v.getFatherId().equals("0")).map(k -> {
+                        return CommentResult.create(
+                                k.getId(),
+                                k.getFromAvatar(),
+                                k.getFromCname(),
+                                k.getContent(),
+                                k.getCreateTime(),
+                                k.getHost(),
+                                k.getOs(),
+                                k.getBrowse(),
+                                k.getEname(),
+                                k.getShamId(),
+                                k.getPostId(),
+                                k.getFromAvatar(),
+                                k.getFromCname(),
+                                k.getFromUserId(), getChild(dataList, k.getId()));
+                    }
+            ).collect(Collectors.toList());
+        }
+
+
+        public static List<ReplyResult> getChild(List<CommentEntity> dataList, String fatherId) {
+            return dataList.stream().filter(inn -> {
+                return inn.getFatherId().equals(fatherId);
+            }).map(ints -> {
+                return ReplyResult.create(
+                        ints.getId(),
+                        ints.getFromAvatar(),
+                        ints.getFromCname(),
+                        ints.getContent(),
+                        ints.getCreateTime(),
+                        ints.getHost(),
+                        ints.getOs(),
+                        ints.getBrowse(),
+                        ints.getEname(),
+                        ints.getShamId(),
+                        ints.getPostId(),
+                        ints.getToAvatar(),
+                        ints.getToCname(),
+                        ints.getToUserId());
+            }).collect(Collectors.toList());
+        }
     }
+
 
     /**
      * 评论查询

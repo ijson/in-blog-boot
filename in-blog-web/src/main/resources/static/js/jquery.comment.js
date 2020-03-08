@@ -60,7 +60,20 @@
             + reply.beReplyName + "</a><span>"
             + reply.content + "</span></div>"
             + "<p><span>"
-            + reply.time + "</span> <span class='reply-list-btn'>回复</span></p></div>";
+            + reply.time + "</span> <span class='reply-list-btn' " +
+
+
+            "fatherId='" + reply.id + "'" +
+            "ename='" + reply.ename + "'" +
+            "shamId='" + reply.shamId + "'" +
+            "replyName='" + reply.replyName + "'" +
+            "img='" + reply.img + "'" +
+            "postId='" + reply.postId + "'" +
+            "fromAvatar='" + reply.fromAvatar + "'" +
+            "fromCname='" + reply.fromCname + "'" +
+            "fromUserId='" + reply.fromUserId + "'" +
+
+            ">回复</span></p></div>";
     }
 
     function getNowDateFormat() {
