@@ -119,60 +119,7 @@ public interface Comment {
             if (CollectionUtils.isEmpty(dataList)) {
                 return Lists.newArrayList();
             }
-
-            dataList.sort(Comparator.comparing(CommentEntity::getCreateTime));
-
             return levelFlatComment(dataList);
-        }
-
-
-        /**
-         * 只获取一级评论及1级评论下的评论
-         *
-         * @param dataList
-         * @return
-         */
-        public List<CommentResult> firstLevelComment(List<CommentEntity> dataList) {
-            return dataList.stream().filter(v -> v.getFatherId().equals("0")).map(k -> {
-
-                        List<ReplyResult> inner = dataList.stream().filter(inn -> {
-                            return inn.getFatherId().equals(k.getId());
-                        }).map(ints -> {
-                            return ReplyResult.create(
-                                    ints.getId(),
-                                    ints.getFromAvatar(),
-                                    ints.getFromCname(),
-                                    ints.getContent(),
-                                    ints.getCreateTime(),
-                                    ints.getHost(),
-                                    ints.getOs(),
-                                    ints.getBrowse(),
-                                    ints.getEname(),
-                                    ints.getShamId(),
-                                    ints.getPostId(),
-                                    ints.getToAvatar(),
-                                    ints.getToCname(),
-                                    ints.getToUserId());
-                        }).collect(Collectors.toList());
-
-
-                        return CommentResult.create(
-                                k.getId(),
-                                k.getFromAvatar(),
-                                k.getFromCname(),
-                                k.getContent(),
-                                k.getCreateTime(),
-                                k.getHost(),
-                                k.getOs(),
-                                k.getBrowse(),
-                                k.getEname(),
-                                k.getShamId(),
-                                k.getPostId(),
-                                k.getFromAvatar(),
-                                k.getFromCname(),
-                                k.getFromUserId(), inner);
-                    }
-            ).collect(Collectors.toList());
         }
 
 
@@ -184,6 +131,11 @@ public interface Comment {
          */
         public static List<CommentResult> levelFlatComment(List<CommentEntity> dataList) {
             return dataList.stream().filter(v -> v.getFatherId().equals("0")).map(k -> {
+
+                        List<ReplyResult> child = getChild(dataList, k.getId(), k.getFatherId());
+
+                        child.sort(Comparator.comparing(ReplyResult::getCreateTime));
+
                         return CommentResult.create(
                                 k.getId(),
                                 k.getFromAvatar(),
@@ -198,7 +150,7 @@ public interface Comment {
                                 k.getPostId(),
                                 k.getFromAvatar(),
                                 k.getFromCname(),
-                                k.getFromUserId(), getChild(dataList, k.getId(), k.getFatherId()));
+                                k.getFromUserId(), child);
                     }
             ).collect(Collectors.toList());
         }
@@ -282,6 +234,7 @@ public interface Comment {
         private String fromCname;
         private String fromUserId;
         private String beReplyName;
+        private long createTime;
 
 
         public static ReplyResult create(String id,
@@ -314,6 +267,7 @@ public interface Comment {
             result.setFromCname(fromCname);
             result.setFromUserId(fromUserId);
             result.setBeReplyName(fromCname);
+            result.setCreateTime(time);
             return result;
         }
     }
