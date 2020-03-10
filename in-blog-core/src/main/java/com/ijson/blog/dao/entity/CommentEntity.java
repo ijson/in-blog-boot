@@ -92,6 +92,9 @@ public class CommentEntity extends BaseEntity {
     @Property(Fields.createTime)
     private long createTime;
 
+    @Property(Fields.author)
+    private String author;
+
 
     public interface Fields {
         String id = "_id";
@@ -119,6 +122,7 @@ public class CommentEntity extends BaseEntity {
         String fatherId = "fatherId";
         String lastModifiedTime = "lastModifiedTime";
         String postId = "postId";
+        String author = "author";
     }
 }
 

@@ -372,6 +372,9 @@ public interface Comment {
 
         private String postId;
 
+        //文章作者userId
+        private String author;
+
         /**
          * TODO 不推荐model中使用service
          *
@@ -409,6 +412,7 @@ public interface Comment {
             entity.setReplyType(ReplyType.comment);
             entity.setFatherId("0");
 
+            entity.setAuthor(getAuthor());
 
             String ua = request.getHeader("User-Agent");
             UserAgent userAgent = UserAgent.parseUserAgentString(ua);

@@ -224,7 +224,8 @@
                     ename: '${data.ename}',
                     shamId: '${data.shamId}',
                     replyType: 'comment',
-                    postId: '${data.id}'
+                    postId: '${data.id}',
+                    author: '${data.userId}'
                 }),
                 success: function (data) {
                     if (data.code !== undefined && data.code >= 200000013) {
