@@ -53,14 +53,14 @@ layui.define(["table", "util"], function (exports) {
         //文章回复
         i.render({
             elem: "#LAY-app-message-post",
-            url: "/json/b.json",
+            url: "/admin/comment/post/list",
             page: !0,
             cols: [[{
                 type: "checkbox",
                 fixed: "left"
             }, {
                 field: "title",
-                title: "标题内容",
+                title: "评论内容",
                 minWidth: 300,
                 templet: a
             }, {

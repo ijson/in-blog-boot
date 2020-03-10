@@ -125,6 +125,11 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
             query.field(CommentEntity.Fields.shamId).equal(iquery.getShamId());
         }
 
+
+        if (Objects.nonNull(iquery.getAuthor())) {
+            query.field(CommentEntity.Fields.author).equal(iquery.getAuthor());
+        }
+
         query.field(CommentEntity.Fields.enable).equal(true);
 
 

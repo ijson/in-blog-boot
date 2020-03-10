@@ -31,6 +31,32 @@ public interface Comment {
 
 
     /**
+     * 后端列表model
+     */
+    @Data
+    class Info {
+
+        private String id;//id
+        private String title;//内容
+        private long time;//创建时间
+
+
+        public static Info create(CommentEntity entity){
+            Info info = new Info();
+            info.setId(entity.getId());
+            info.setTitle(entity.getContent());
+            info.setTime(entity.getCreateTime());
+            return info;
+        }
+
+        public static List<Info> createList(List<CommentEntity> dataList) {
+            return dataList.stream().map(k->{
+                return create(k);
+            }).collect(Collectors.toList());
+        }
+    }
+
+    /**
      * 保存文章评论成功后返回结果
      */
     @Data
