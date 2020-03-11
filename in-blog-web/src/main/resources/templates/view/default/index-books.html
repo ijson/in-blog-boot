@@ -5,7 +5,105 @@
     <title>${site.siteName!}-书籍推荐</title>
 </head>
 
+<style>
+    #recommendation {
+        margin-top: 2%;
+    }
 
+    .irow .irow.icollapse {
+        width: auto;
+        margin: 0;
+        max-width: none;
+    }
+
+    .irow .irow {
+        width: auto;
+        margin-left: -0.9375rem;
+        margin-right: -0.9375rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        max-width: none;
+    }
+
+    .recommendation-caption {
+        font-size: 1.25em;
+        font-weight: bold;
+        border-bottom: 1px dashed #CCCCCC;
+        margin-bottom: 3%;
+        padding-bottom: 1%;
+    }
+
+    [class*="block-grid-"] {
+        display: block;
+        padding: 0;
+        margin: 0 -0.625rem;
+    }
+
+    ul, ol, dl {
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+        list-style-position: outside;
+        font-family: inherit;
+    }
+
+    @media only screen and (min-width: 64.063em)
+        .large-block-grid-4 > li:nth-of-type(4n+1) {
+            clear: both;
+        }
+
+        @media only screen and (min-width: 64.063em)
+            .large-block-grid-4 > li:nth-of-type(1n) {
+                clear: none;
+            }
+
+            @media only screen and (min-width: 40.063em)
+                .medium-block-grid-3 > li:nth-of-type(3n+1) {
+                    clear: both;
+                }
+
+                @media only screen and (min-width: 40.063em)
+                    .medium-block-grid-3 > li:nth-of-type(1n) {
+                        clear: none;
+                    }
+
+                    .small-block-grid-2 > li:nth-of-type(2n+1) {
+                        clear: both;
+                    }
+
+                    .small-block-grid-2 > li:nth-of-type(1n) {
+                        clear: none;
+                    }
+
+                    @media only screen and (min-width: 64.063em)
+                        .large-block-grid-4 > li {
+                            width: 25%;
+                            list-style: none;
+                        }
+
+                        @media only screen and (min-width: 40.063em)
+                            .medium-block-grid-3 > li {
+                                width: 33.33333%;
+                                list-style: none;
+                            }
+
+                            .small-block-grid-2 > li {
+                                width: 20%;
+                                list-style: none;
+                            }
+
+                            [class*="block-grid-"] > li {
+                                display: block;
+                                height: auto;
+                                float: left;
+                                padding: 0 0.625rem 1.25rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>
 <body>
 <% include("base/web-settings-top-nav.html"){} %>
 <% include("base/web-settings-reg-login.html"){} %>
@@ -20,7 +118,80 @@
         <div class="col-sm-9 blog-main">
 
 
+            <div class="small-12 large-8 columns">
+                <div id="recommendation" class="irow icollapse"><h2 class="recommendation-caption">博主推荐</h2>
+                    <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
 
+                        <li>
+                            <a href="https://u.jd.com/Ko8HLh" title="鬼谷子全集正版原著 纵横的智慧谋略全解全书详解 为人处世..."
+                               target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t1/98993/36/14398/100673/5e633a75Eabe4f7e5/ad0b772d2810c54a.jpg"
+                                    width="180px" height="180px"></a>
+                        </li>
+
+
+                        <li>
+                            <a href="https://u.jd.com/RAuJR7" title="余华作品：活着" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t10162/279/1390942739/246693/50c56f9d/59e02214N37418280.jpg"
+                                    width="180px" height="180px"></a>
+                        </li>
+
+                        <li>
+                            <a href="https://u.jd.com/giI6HW" title="中国科幻基石丛书：三体（套装1-3册）" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t1705/189/702227414/177982/cc8c12f0/55dab54dN5271c377.jpg"
+                                    width="180px" height="180px"></a>
+                        </li>
+
+
+                        <li>
+                            <a href="https://u.jd.com/eUVnWa" title="你不努力没人能给你想要的生活 没有伞的孩子必须努力" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t1/52381/11/14436/255898/5db6c59aE1cb909e7/17f939b1b8deea51.jpg"
+                                    width="160px" height="180px"></a>
+                        </li>
+
+
+                        <li>
+                            <a href="https://u.jd.com/NbbNQE" title="村上春树：挪威的森林（30周年纪念版）（2018版）" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t17053/332/396735878/282072/e9a3e971/5a73fad7N67f784ef.jpg"
+                                    width="180px" height="180px"></a>
+                        </li>
+                        <li>
+                            <a href="https://u.jd.com/2AnCph" title="马尔克斯：百年孤独（50周年纪念版）"
+                               target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t1/86551/16/4453/510848/5de74f49E62b4aae0/f0a4ea7981c08841.jpg"
+                                    width="180px" height="180px"></a></li>
+
+                        <li>
+                            <a href="https://u.jd.com/x5CB17" title="红岩" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t8044/203/1955340487/93895/1dd45327/59c1d9dfNd3774581.jpg"
+                                    width="180px" height="180px"></a>
+                        </li>
+
+
+                        <li>
+                            <a href="https://u.jd.com/y2W9B7" title="深入理解Java虚拟机：JVM高级特性与最佳实践（第3版）" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t1/88306/3/4620/259118/5de865cdE6678a233/6193b6435bb973d1.jpg"
+                                    width="150px" height="180px"></a>
+                        </li>
+
+                        <li>
+                            <a href="https://u.jd.com/833Mrf" title="Python编程 从入门到实践    "
+                               target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t17953/201/1450663539/451183/3262b8de/5acb3627N8191c867.jpg"
+                                    width="150px" height="180px"></a>
+                        </li>
+
+
+                        <li>
+                            <a href="https://u.jd.com/IWy8my" title="影响孩子一生的世界名著 全套8册 儿童文学小说小王子" target="_blank"><img
+                                    src="https://img14.360buyimg.com/n1/jfs/t1/56505/39/15717/352297/5dca53e5Ea311f6cd/7e8805fa112abb99.jpg"
+                                    width="150px" height="180px"></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
 
         </div>
 
