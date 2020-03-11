@@ -31,23 +31,31 @@ public class HomeController extends BaseController {
     public ModelAndView root(HttpServletRequest request) {
         String keyWord = request.getParameter("keyWord");
         String pageNumber = request.getParameter("index");
-        return index(request,getPageNumber(pageNumber), keyWord);
+        return index(request, getPageNumber(pageNumber), keyWord);
     }
 
     @RequestMapping("/index")
-    public ModelAndView index(HttpServletRequest request,Integer index, String keyWord) {
-        return getView(request,index, keyWord, null, "/");
+    public ModelAndView index(HttpServletRequest request, Integer index, String keyWord) {
+        return getView(request, index, keyWord, null, "/");
     }
 
 
     @RequestMapping("/activity")
-    public ModelAndView activity(HttpServletRequest request,Integer index, String keyWord) {
-        return getView(request,index, keyWord, "activity", "/activity");
+    public ModelAndView activity(HttpServletRequest request, Integer index, String keyWord) {
+        return getView(request, index, keyWord, "activity", "/activity");
     }
 
     @RequestMapping("/software/share")
-    public ModelAndView software(HttpServletRequest request,Integer index, String keyWord) {
-        return getView(request,index, keyWord, "software", "/software/share");
+    public ModelAndView software(HttpServletRequest request, Integer index, String keyWord) {
+        return getView(request, index, keyWord, "software", "/software/share");
+    }
+
+    @RequestMapping("/books")
+    public ModelAndView books(HttpServletRequest request, Integer index, String keyWord) {
+        ModelAndView view = new ModelAndView(getViewTheme() + "/index-books.html");
+        view.addObject("path", "/books");
+        addViewModelAndView(request, view);
+        return view;
     }
 
 
@@ -62,7 +70,7 @@ public class HomeController extends BaseController {
         return index;
     }
 
-    private ModelAndView getView(HttpServletRequest request,Integer index, String keyWord, String indexMenuEname, String path) {
+    private ModelAndView getView(HttpServletRequest request, Integer index, String keyWord, String indexMenuEname, String path) {
         ModelAndView view = new ModelAndView(getViewTheme() + "/index-list.html");
 
         Page page = new Page();
@@ -88,7 +96,7 @@ public class HomeController extends BaseController {
         view.addObject("dataList", PostInfo.indexPost(result, keyWord));
         view.addObject("path", path);
         view.addObject("keyWord", keyWord);
-        addViewModelAndView(request,view);
+        addViewModelAndView(request, view);
         return view;
     }
 
