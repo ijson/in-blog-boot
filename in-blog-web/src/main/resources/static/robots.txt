@@ -6,6 +6,7 @@
 User-agent: Baiduspider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -19,6 +20,7 @@ Disallow: /member/rest/reg
 User-agent: Baiduspider-image
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -32,6 +34,7 @@ Disallow: /member/rest/reg
 User-agent: Baiduspider-video
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -44,6 +47,7 @@ Disallow: /member/rest/reg
 User-agent: Baiduspider-news
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -63,6 +67,7 @@ Allow: /
 User-agent: YoudaoBot
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -76,6 +81,7 @@ Disallow: /member/rest/reg
 User-agent: Sogou web spider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -88,6 +94,7 @@ Disallow: /member/rest/reg
 User-agent: Sogou inst spider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -100,6 +107,7 @@ Disallow: /member/rest/reg
 User-agent: Sogou spider2
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -112,6 +120,7 @@ Disallow: /member/rest/reg
 User-agent: Sogou blog
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -124,6 +133,7 @@ Disallow: /member/rest/reg
 User-agent: Sogou News Spider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -136,6 +146,7 @@ Disallow: /member/rest/reg
 User-agent: Sogou Orion spider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -148,6 +159,7 @@ Disallow: /member/rest/reg
 User-agent: ChinasoSpider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -160,6 +172,7 @@ Disallow: /member/rest/reg
 User-agent: Sosospider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -173,6 +186,7 @@ Disallow: /member/rest/reg
 User-agent: yisouspider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -185,6 +199,7 @@ Disallow: /member/rest/reg
 User-agent: EasouSpider
 Allow: /article/*
 Allow: /tags/*
+Allow: /robots.txt
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
