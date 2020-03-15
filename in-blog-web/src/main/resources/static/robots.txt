@@ -210,6 +210,3 @@ Disallow: /member/rest/logout
 Disallow: /member/rest/login
 Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
-
-User-agent: *
-Disallow: /
