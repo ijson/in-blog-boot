@@ -4,12 +4,11 @@
 
 
 User-agent: Baiduspider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
-Disallow: /tags/index
 Disallow: /member/rest/logout
 Disallow: /member/rest/login
 Disallow: /member/rest/reg/image?
@@ -18,8 +17,8 @@ Disallow: /member/rest/reg
 
 
 User-agent: Baiduspider-image
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -31,8 +30,8 @@ Disallow: /member/rest/reg
 
 
 User-agent: Baiduspider-video
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -43,8 +42,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Baiduspider-news
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -53,34 +52,17 @@ Disallow: /member/rest/logout
 Disallow: /member/rest/login
 Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
+
 
 User-agent: Googlebot
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
-Disallow: /admin/*
-Disallow: /index?
-Disallow: /books
-Disallow: /tags/index
-Disallow: /member/rest/logout
-Disallow: /member/rest/login
-Disallow: /member/rest/reg/image?
-Disallow: /member/rest/reg
+Allow: /
 
 User-agent: MSNBot
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
-Disallow: /admin/*
-Disallow: /index?
-Disallow: /books
-Disallow: /tags/index
-Disallow: /member/rest/logout
-Disallow: /member/rest/login
-Disallow: /member/rest/reg/image?
-Disallow: /member/rest/reg
+Allow: /
 
 User-agent: YoudaoBot
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -90,9 +72,10 @@ Disallow: /member/rest/login
 Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
+
 User-agent: Sogou web spider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -103,8 +86,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Sogou inst spider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -115,8 +98,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Sogou spider2
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -127,8 +110,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Sogou blog
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -139,8 +122,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Sogou News Spider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -151,8 +134,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Sogou Orion spider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -163,8 +146,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: ChinasoSpider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -175,8 +158,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: Sosospider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -188,8 +171,8 @@ Disallow: /member/rest/reg
 
 
 User-agent: yisouspider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
@@ -200,8 +183,8 @@ Disallow: /member/rest/reg/image?
 Disallow: /member/rest/reg
 
 User-agent: EasouSpider
-Allow: /article/*/details/*.html
-Allow: /tags/*/tags/*.html
+Allow: /article/*
+Allow: /tags/*
 Disallow: /admin/*
 Disallow: /index?
 Disallow: /books
