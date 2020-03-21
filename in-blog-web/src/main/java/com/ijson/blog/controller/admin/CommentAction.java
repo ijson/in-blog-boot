@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.query.CommentQuery;
+import com.ijson.blog.dao.query.Condition;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.V2Result;
 import com.ijson.blog.service.model.info.Comment;
@@ -28,10 +29,9 @@ import java.util.Objects;
 @RequestMapping("/admin/comment")
 public class CommentAction extends BaseController {
 
-
-    @RequestMapping("/post/list")
+    @RequestMapping("/all/list")
     @ResponseBody
-    public V2Result<Comment.Info> list(Integer page, Integer limit, HttpServletRequest request) {
+    public V2Result<Comment.Info> allList(Integer page, Integer limit, HttpServletRequest request) {
 
         AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
         if (Objects.isNull(context)) {
@@ -56,6 +56,105 @@ public class CommentAction extends BaseController {
 
 
         query.setAuthor(context.getId());
+        query.setFromUserId(context.getId());
+        query.setCondition(Condition.or);
+
+        PageResult<CommentEntity> result = commentService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<CommentEntity> dataList = result.getDataList();
+        List<Comment.Info> commentInfo = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            commentInfo = Comment.Info.createList(dataList);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(commentInfo);
+        v2Result.setMsg("");
+        return v2Result;
+    }
+
+
+    @RequestMapping("/post/list")
+    @ResponseBody
+    public V2Result<Comment.Info> postList(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        CommentQuery query = new CommentQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setContent(keyWord);
+        }
+
+
+        query.setAuthor(context.getId());
+
+        PageResult<CommentEntity> result = commentService.find(query, pageEntity);
+
+        if (Objects.isNull(result) || CollectionUtils.isEmpty(result.getDataList())) {
+            return new V2Result<>();
+        }
+
+        List<CommentEntity> dataList = result.getDataList();
+        List<Comment.Info> commentInfo = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            commentInfo = Comment.Info.createList(dataList);
+        }
+
+        V2Result v2Result = new V2Result();
+        v2Result.setCode(0);
+        v2Result.setCount(result.getTotal());
+        v2Result.setData(commentInfo);
+        v2Result.setMsg("");
+        return v2Result;
+    }
+
+    @RequestMapping("/reply/list")
+    @ResponseBody
+    public V2Result<Comment.Info> replyList(Integer page, Integer limit, HttpServletRequest request) {
+
+        AuthContext context = regularCheck(request, Boolean.TRUE, Boolean.TRUE);
+        if (Objects.isNull(context)) {
+            return new V2Result<>();
+        }
+
+        String keyWord = request.getParameter("title");
+
+        Page pageEntity = new Page();
+        if (Objects.nonNull(page)) {
+            pageEntity.setPageNumber(page);
+        }
+        if (Objects.nonNull(limit)) {
+            pageEntity.setPageSize(limit);
+        }
+
+
+        CommentQuery query = new CommentQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setContent(keyWord);
+        }
+
+
+        query.setFromUserId(context.getId());
 
         PageResult<CommentEntity> result = commentService.find(query, pageEntity);
 

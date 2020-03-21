@@ -5,7 +5,9 @@ import com.google.common.collect.Maps;
 import com.ijson.blog.dao.CommentDao;
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.entity.IndexMenuEntity;
+import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.CommentQuery;
+import com.ijson.blog.dao.query.Condition;
 import com.ijson.mongo.support.AbstractDao;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -125,10 +127,20 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
             query.field(CommentEntity.Fields.shamId).equal(iquery.getShamId());
         }
 
+        if (Objects.nonNull(iquery.getCondition()) && Condition.or == iquery.getCondition()) {
+            query.or(query.criteria(CommentEntity.Fields.author).equal(iquery.getAuthor()),
+                    query.criteria(CommentEntity.Fields.fromUserId).equal(iquery.getFromUserId()));
 
-        if (Objects.nonNull(iquery.getAuthor())) {
-            query.field(CommentEntity.Fields.author).equal(iquery.getAuthor());
+        } else {
+            if (Objects.nonNull(iquery.getAuthor())) {
+                query.field(CommentEntity.Fields.author).equal(iquery.getAuthor());
+            }
+
+            if (Objects.nonNull(iquery.getFromUserId())) {
+                query.field(CommentEntity.Fields.fromUserId).equal(iquery.getFromUserId());
+            }
         }
+
 
         query.field(CommentEntity.Fields.enable).equal(true);
 

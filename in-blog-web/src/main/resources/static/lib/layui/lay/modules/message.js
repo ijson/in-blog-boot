@@ -31,7 +31,7 @@ layui.define(["table", "util"], function (exports) {
         //全部消息
         i.render({
             elem: "#LAY-app-message-all",
-            url: "/json/a.json",
+            url: "/admin/comment/all/list",
             page: !0,
             cols: [[{
                 type: "checkbox",
@@ -75,7 +75,7 @@ layui.define(["table", "util"], function (exports) {
         //评论回复
         i.render({
             elem: "#LAY-app-message-reply",
-            url: "/json/d.json",
+            url: "/admin/comment/reply/list",
             page: !0,
             cols: [[{
                 type: "checkbox",

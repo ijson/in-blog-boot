@@ -1,9 +1,7 @@
 package com.ijson.blog.dao.query;
 
-import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.model.ReplyType;
 import lombok.Data;
-import org.mongodb.morphia.annotations.Property;
 
 /**
  * desc:
@@ -41,4 +39,8 @@ public class CommentQuery {
 
     private String author;
 
+    private Condition condition;
+
 }
+
+
