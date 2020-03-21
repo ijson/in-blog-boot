@@ -3,6 +3,7 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.model.info.Comment;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -27,6 +28,5 @@ public interface CommentService {
 
     PageResult<CommentEntity> find(CommentQuery query, Page pageEntity);
 
-    List<CommentEntity> findAll();
-
+    Comment.CommentCount findCount(AuthContext context);
 }

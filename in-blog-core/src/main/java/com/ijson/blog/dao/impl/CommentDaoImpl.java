@@ -4,8 +4,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.ijson.blog.dao.CommentDao;
 import com.ijson.blog.dao.entity.CommentEntity;
-import com.ijson.blog.dao.entity.IndexMenuEntity;
-import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.dao.query.Condition;
 import com.ijson.mongo.support.AbstractDao;
@@ -165,12 +163,6 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
         return ret;
     }
 
-    @Override
-    public List<CommentEntity> findAll() {
-        Query<CommentEntity> query = datastore.createQuery(CommentEntity.class);
-        query.field(IndexMenuEntity.Fields.enable).equal(true);
-        return query.asList();
-    }
 
     @Override
     public Map<String, Long> findCountByIds(Set<String> ids) {
@@ -191,5 +183,19 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
 
         }
         return rst;
+    }
+
+    @Override
+    public long findPostCount(String userId) {
+        Query<CommentEntity> query = datastore.createQuery(CommentEntity.class);
+        query.field(CommentEntity.Fields.author).equal(userId);
+        return query.countAll();
+    }
+
+    @Override
+    public long findReplyCount(String userId) {
+        Query<CommentEntity> query = datastore.createQuery(CommentEntity.class);
+        query.field(CommentEntity.Fields.fromUserId).equal(userId);
+        return query.countAll();
     }
 }

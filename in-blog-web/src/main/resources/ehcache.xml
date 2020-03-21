@@ -73,7 +73,6 @@
             memoryStoreEvictionPolicy="LRU"/>
 
 
-
     <!-- 头信息  1分钟-->
     <cache
             name="header"
@@ -156,7 +155,16 @@
             timeToLiveSeconds="900"
             memoryStoreEvictionPolicy="LRU"/>
 
-
+    <!-- 查看票数 20s-->
+    <cache
+            name="commentCount"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="20"
+            memoryStoreEvictionPolicy="LRU"/>
 
 
 </ehcache>

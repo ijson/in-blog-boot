@@ -41,7 +41,7 @@ public interface Comment {
         private long time;//创建时间
 
 
-        public static Info create(CommentEntity entity){
+        public static Info create(CommentEntity entity) {
             Info info = new Info();
             info.setId(entity.getId());
             info.setTitle(entity.getContent());
@@ -50,7 +50,7 @@ public interface Comment {
         }
 
         public static List<Info> createList(List<CommentEntity> dataList) {
-            return dataList.stream().map(k->{
+            return dataList.stream().map(k -> {
                 return create(k);
             }).collect(Collectors.toList());
         }
@@ -458,6 +458,24 @@ public interface Comment {
             entity.setCreateTime(System.currentTimeMillis());
 
             return entity;
+        }
+    }
+
+    /**
+     * 页面全部  博文回复  评论回复 总数
+     */
+    @Data
+    class CommentCount {
+        private long count;
+        private long post;
+        private long reply;
+
+        public static CommentCount create(long postCount, long replyCount) {
+            CommentCount commentCount = new CommentCount();
+            commentCount.setPost(postCount);
+            commentCount.setReply(replyCount);
+            commentCount.setCount(commentCount.getPost() + commentCount.getReply());
+            return commentCount;
         }
     }
 }

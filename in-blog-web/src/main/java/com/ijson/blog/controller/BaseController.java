@@ -108,8 +108,22 @@ public class BaseController {
      *
      * @param view
      */
-    protected void addAdminModelAndView(ModelAndView view) {
+    protected void addAdminModelAndView(ModelAndView view, HttpServletRequest request) {
         view.addObject("site", getConfig());
+        view.addObject("cmtcount", getCommentCount(request));
+    }
+
+
+    /**
+     * 评论总数    缓存 15s
+     *
+     * @param request
+     * @return
+     */
+    private Comment.CommentCount getCommentCount(HttpServletRequest request) {
+        String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
+        AuthContext context = (AuthContext) EhcacheUtil.getInstance().get(Constant.loginUserCacheKey, cookieValue);
+        return commentService.findCount(context);
     }
 
 

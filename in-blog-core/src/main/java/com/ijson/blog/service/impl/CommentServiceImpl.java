@@ -5,13 +5,13 @@ import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.CommentService;
+import com.ijson.blog.service.model.info.Comment;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * desc:
@@ -22,18 +22,18 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    private CommentDao CommentDao;
+    private CommentDao commentDao;
 
     @Override
     public CommentEntity findInternalById(String id) {
-        return CommentDao.findInternalById(id);
+        return commentDao.findInternalById(id);
     }
 
     @Override
     public CommentEntity edit(AuthContext context, CommentEntity entity) {
         entity.setLastModifiedTime(System.currentTimeMillis());
         entity.setLastModifiedBy(context.getId());
-        return CommentDao.update(entity);
+        return commentDao.update(entity);
     }
 
     @Override
@@ -44,27 +44,34 @@ public class CommentServiceImpl implements CommentService {
         entity.setCreatedBy(context.getId());
         entity.setCreateTime(System.currentTimeMillis());
         entity.setLastModifiedBy(context.getId());
-        return CommentDao.create(entity);
+        return commentDao.create(entity);
     }
 
     @Override
     public void enable(String id, boolean enable, AuthContext context) {
-        CommentDao.enable(id, enable, context.getId());
+        commentDao.enable(id, enable, context.getId());
     }
 
     @Override
     public void delete(String id) {
-        CommentDao.delete(id);
+        commentDao.delete(id);
     }
 
     @Override
     public PageResult<CommentEntity> find(CommentQuery query, Page pageEntity) {
-        return CommentDao.find(query, pageEntity);
+        return commentDao.find(query, pageEntity);
     }
 
+
+    @CachePut(value = "commentCount", key = "#context.id")
     @Override
-    public List<CommentEntity> findAll() {
-        return CommentDao.findAll();
+    public Comment.CommentCount findCount(AuthContext context) {
+        // 博文评论数
+        long postCount = commentDao.findPostCount(context.getId());
+
+        // 回复评论数
+        long replyCount = commentDao.findReplyCount(context.getId());
+        return Comment.CommentCount.create(postCount, replyCount);
     }
 
 

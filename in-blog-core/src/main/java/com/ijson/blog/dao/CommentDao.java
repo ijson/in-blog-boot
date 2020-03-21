@@ -2,6 +2,8 @@ package com.ijson.blog.dao;
 
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.query.CommentQuery;
+import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.model.info.Comment;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -28,7 +30,9 @@ public interface CommentDao {
 
     PageResult<CommentEntity> find(CommentQuery iquery, Page page);
 
-    List<CommentEntity> findAll();
-
     Map<String,Long> findCountByIds(Set<String> ids);
+
+    long findPostCount(String userId);
+
+    long findReplyCount(String userId);
 }
