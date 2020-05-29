@@ -11,17 +11,16 @@ set IBO_HOME=%WEB_HOME%/../
 
 @echo off
 
-
 echo "IBO_HOME:" %IBO_HOME%
 cd %IBO_HOME%
 
 
-rem @echo build package
-rem call mvn package -Dmaven.test.skip=true
+@echo build package
+call mvn package -Dmaven.test.skip=true
 
 
-rem @echo build install
-rem call mvn install -Dmaven.test.skip=true
+@echo build install
+call mvn install -Dmaven.test.skip=true
 
 
 @echo build common
