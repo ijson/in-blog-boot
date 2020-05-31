@@ -36,15 +36,15 @@ fi
 DATE=$(date +%Y%m%d%H%M%S)
 cd $IBO_HOME/in-blog-web
 
-if [ ! -f "$IBO_HOME/in-blog-web/nohup.out" ]; then
+if [ ! -f "$IBO_HOME/in-blog-web/run.log" ]; then
     if [ ! -d "$IBO_HOME-log/" ]; then
         mkdir $IBO_HOME-log/
     fi
-    mv $IBO_HOME/in-blog-web/nohup.out $IBO_HOME-log/$DATE.log
+    mv $IBO_HOME/in-blog-web/run.log $IBO_HOME-log/$DATE.log
 fi
 
 cd $IBO_HOME/in-blog-web/
-nohup mvn spring-boot:run >> nohup.out 2>&1 &
+nohup mvn spring-boot:run >> run.log 2>&1 &
 
 pid=$(ps -ef | grep "in-blog-web" | grep -v grep | awk '{print $2}')
 echo "start in-blog-web success, pid:" $pid
