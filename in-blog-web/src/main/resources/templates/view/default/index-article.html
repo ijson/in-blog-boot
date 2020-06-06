@@ -3,7 +3,7 @@
 <head>
     <% include("base/web-settings-meta.html"){} %>
     <title>${site.siteName!}-${data.title!}</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark.min.css" rel="stylesheet">
+    <link href="/css/atom-one-dark.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
     <link rel="canonical" href="https://www.ijson.net/article/${data.ename!}/details/${data.shamId!}.html" />
 </head>
@@ -137,7 +137,7 @@
 <% include("base/web-settings-footer.html"){} %>
 
 <% include("base/web-settings-bottom.html"){} %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.12.1/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+<script src="/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 <script src="/js/jquery.comment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
