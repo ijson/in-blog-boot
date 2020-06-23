@@ -5,7 +5,6 @@ import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.exception.BlogNotFoundException;
-import com.ijson.blog.service.model.info.Comment;
 import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.blog.util.Pageable;
 import com.ijson.mongo.support.model.Page;
@@ -43,22 +42,12 @@ public class ArticleController extends BaseController {
             PostEntity entity = postService.findByShamId(ename, shamId);
             view.addObject("data", PostInfo.create(entity));
             view.addObject("path", "/");
-            view.addObject("replys", getReplyList(ename, shamId).getReply());
+            //TODO view.addObject("replys", getReplyList(ename, shamId).getReply());
             addViewModelAndView(request, view);
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");
             return view;
         }
-    }
-
-    public Comment.ListResult getReplyList(String ename, String shamId) {
-        Page page = new Page(500, 1, "", false);
-        CommentQuery commentQuery = new CommentQuery();
-        commentQuery.setEname(ename);
-        commentQuery.setShamId(shamId);
-        PageResult<CommentEntity> pageResult = commentService.find(commentQuery, page);
-        List<Comment.CommentResult> result = Comment.CommentResult.transform(pageResult);
-        return new Comment.ListResult(result, new Pageable(((Long) pageResult.getTotal()).intValue(), page.getPageNumber()));
     }
 }

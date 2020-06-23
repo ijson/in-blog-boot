@@ -2,12 +2,9 @@ package com.ijson.blog.dao;
 
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.query.CommentQuery;
-import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.service.model.info.Comment;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

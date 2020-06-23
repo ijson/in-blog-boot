@@ -17,30 +17,8 @@ public class CommentQuery {
 
     private String content;
 
-    //被评论人头像
-    private String toAvatar;
-    //被评论人名称
-    private String toCname;
-    //被评论人userId
-    private String toUserId;
-
-
-    //评论人头像
-    private String fromAvatar;
-    //评论人名称
-    private String fromCname;
-    //评论人userId
-    private String fromUserId;
-
     //评论还是回复
     private ReplyType replyType;
-
-    private String fatherId;
-
-    private String author;
-
-    private Condition condition;
-
 }
 
 

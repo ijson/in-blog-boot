@@ -22,46 +22,27 @@ public class CommentEntity extends BaseEntity {
     @Id
     private String id;
 
-
     @Property(Fields.ename)
     private String ename;
 
     @Property(Fields.shamId)
     private String shamId;
 
+
     @Property(Fields.postId)
     private String postId;
 
+
     @Property(Fields.content)
     private String content;
-
-    //被评论人头像
-    @Property(Fields.toAvatar)
-    private String toAvatar;
-    //被评论人名称
-    @Property(Fields.toCname)
-    private String toCname;
-    //被评论人userId
-    @Property(Fields.toUserId)
-    private String toUserId;
-
-
-    //评论人头像
-    @Property(Fields.fromAvatar)
-    private String fromAvatar;
-    //评论人名称
-    @Property(Fields.fromCname)
-    private String fromCname;
-    //评论人userId
-    @Property(Fields.fromUserId)
-    private String fromUserId;
 
     //评论还是回复
     @Property(Fields.replyType)
     private ReplyType replyType;
 
-    @Property(Fields.fatherId)
-    private String fatherId;
+    @Property(Fields.userId)
+    private String userId;
+
 
     //浏览器
     @Property(Fields.browse)
@@ -94,14 +75,11 @@ public class CommentEntity extends BaseEntity {
     @Property(Fields.createTime)
     private long createTime;
 
-    @Property(Fields.author)
-    private String author;
-
 
     public interface Fields {
         String id = "_id";
-        String topicId = "topicId";
         String userId = "userId";
+        String postId = "postId";
         String content = "content";
         String createdBy = "createdBy";
         String createTime = "createTime";
@@ -112,19 +90,10 @@ public class CommentEntity extends BaseEntity {
         String os = "os";
         String shamId = "shamId";
         String ename = "ename";
-        String toAvatar = "toAvatar";
-        String toCname = "toCname";
-        String toUserId = "toUserId";
-        String fromAvatar = "fromAvatar";
-        String fromCname = "fromCname";
-        String fromUserId = "fromUserId";
         String replyType = "replyType";
         String browse = "browse";
         String host = "host";
-        String fatherId = "fatherId";
         String lastModifiedTime = "lastModifiedTime";
-        String postId = "postId";
-        String author = "author";
     }
 }
 

@@ -4,8 +4,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.ijson.blog.dao.CommentDao;
 import com.ijson.blog.dao.entity.CommentEntity;
+import com.ijson.blog.dao.model.ReplyType;
 import com.ijson.blog.dao.query.CommentQuery;
-import com.ijson.blog.dao.query.Condition;
 import com.ijson.mongo.support.AbstractDao;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -43,38 +43,12 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
             operations.set(CommentEntity.Fields.content, entity.getContent());
         }
 
-        if (!Strings.isNullOrEmpty(entity.getToAvatar())) {
-            operations.set(CommentEntity.Fields.toAvatar, entity.getToAvatar());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getToCname())) {
-            operations.set(CommentEntity.Fields.toCname, entity.getToCname());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getToUserId())) {
-            operations.set(CommentEntity.Fields.toUserId, entity.getToUserId());
-        }
-
-
-        if (!Strings.isNullOrEmpty(entity.getFromAvatar())) {
-            operations.set(CommentEntity.Fields.fromAvatar, entity.getFromAvatar());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getFromCname())) {
-            operations.set(CommentEntity.Fields.fromCname, entity.getFromCname());
-        }
-
-        if (!Strings.isNullOrEmpty(entity.getFromUserId())) {
-            operations.set(CommentEntity.Fields.fromUserId, entity.getFromUserId());
-        }
-
-
         if (Objects.nonNull(entity.getReplyType())) {
             operations.set(CommentEntity.Fields.replyType, entity.getReplyType());
         }
 
-        if (!Strings.isNullOrEmpty(entity.getFatherId())) {
-            operations.set(CommentEntity.Fields.fatherId, entity.getFatherId());
+        if (!Strings.isNullOrEmpty(entity.getUserId())) {
+            operations.set(CommentEntity.Fields.userId, entity.getUserId());
         }
         operations.set(CommentEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, operations);
@@ -113,10 +87,6 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
             query.field(CommentEntity.Fields.id).equal(iquery.getId());
         }
 
-        if (!Strings.isNullOrEmpty(iquery.getFatherId())) {
-            query.field(CommentEntity.Fields.fatherId).equal(iquery.getFatherId());
-        }
-
         if (Objects.nonNull(iquery.getEname())) {
             query.field(CommentEntity.Fields.ename).equal(iquery.getEname());
         }
@@ -124,21 +94,6 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
         if (Objects.nonNull(iquery.getShamId())) {
             query.field(CommentEntity.Fields.shamId).equal(iquery.getShamId());
         }
-
-        if (Objects.nonNull(iquery.getCondition()) && Condition.or == iquery.getCondition()) {
-            query.or(query.criteria(CommentEntity.Fields.author).equal(iquery.getAuthor()),
-                    query.criteria(CommentEntity.Fields.fromUserId).equal(iquery.getFromUserId()));
-
-        } else {
-            if (Objects.nonNull(iquery.getAuthor())) {
-                query.field(CommentEntity.Fields.author).equal(iquery.getAuthor());
-            }
-
-            if (Objects.nonNull(iquery.getFromUserId())) {
-                query.field(CommentEntity.Fields.fromUserId).equal(iquery.getFromUserId());
-            }
-        }
-
 
         query.field(CommentEntity.Fields.enable).equal(true);
 
@@ -188,14 +143,16 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
     @Override
     public long findPostCount(String userId) {
         Query<CommentEntity> query = datastore.createQuery(CommentEntity.class);
-        query.field(CommentEntity.Fields.author).equal(userId);
+        query.field(CommentEntity.Fields.userId).equal(userId);
+        query.field(CommentEntity.Fields.replyType).equal(ReplyType.comment.name());
         return query.countAll();
     }
 
     @Override
     public long findReplyCount(String userId) {
         Query<CommentEntity> query = datastore.createQuery(CommentEntity.class);
-        query.field(CommentEntity.Fields.fromUserId).equal(userId);
+        query.field(CommentEntity.Fields.userId).equal(userId);
+        query.field(CommentEntity.Fields.replyType).equal(ReplyType.reply.name());
         return query.countAll();
     }
 }
