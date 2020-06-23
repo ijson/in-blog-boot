@@ -21,6 +21,8 @@ public class CommentEntity extends BaseEntity {
 
     @Id
     private String id;
+
+
     @Property(Fields.ename)
     private String ename;
 

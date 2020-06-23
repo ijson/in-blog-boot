@@ -143,7 +143,7 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
         query.field(CommentEntity.Fields.enable).equal(true);
 
 
-        if (page.getOrderBy() != null) {
+        if (!Strings.isNullOrEmpty(page.getOrderBy())) {
             query.order("-" + page.getOrderBy());//添加排序
         } else {
             query.order("-" + CommentEntity.Fields.createTime);
