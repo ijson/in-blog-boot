@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
     private PostDraftDao draftDao;
 
     @Override
-    public PostEntity createPost(AuthContext context, PostEntity entity) {
+    public PostEntity create(AuthContext context, PostEntity entity) {
         //调用此接口 要将草稿置空
         entity.setDraftId("");
         String draftId = entity.getId();
