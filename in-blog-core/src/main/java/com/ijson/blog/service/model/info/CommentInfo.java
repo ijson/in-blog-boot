@@ -7,6 +7,7 @@ import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +25,7 @@ public class CommentInfo {
     private String content;
     private ReplyType replyType;
     private String userId;
-    private String praise;
+    private Long praise = 0L;
     private String replyId;
 
     private String userCname;
@@ -44,9 +45,8 @@ public class CommentInfo {
         info.setReplyId(entity.getReplyId());
         info.setReplyType(entity.getReplyType());
         info.setUserId(entity.getUserId());
-        info.setPraise(entity.getPraise());
+        info.setPraise(Objects.isNull(entity.getPraise()) ? 0L : entity.getPraise());
         info.setCreateTime(entity.getCreateTime());
-
         return info;
     }
 
@@ -57,6 +57,4 @@ public class CommentInfo {
         }
         return entity.stream().map(CommentInfo::create).collect(Collectors.toList());
     }
-
-
 }

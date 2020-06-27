@@ -134,105 +134,40 @@
                                                             <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                                             <span class="pull-left date-dz-line">|</span>
                                                         <%}%>
-                                                        <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+                                                        <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">${data.praise}</i>)</a>
                                                     </div>
                                                 </div>
-                                                <div class="hf-list-con"></div>
+
+                                                <% for(child in replys){ %>
+
+                                                    <%if(child.replyId==data.id){%>
+
+                                                        <div class="hf-list-con" style="display: block;">
+                                                            <div class="all-pl-con">
+                                                                <div class="pl-text hfpl-text clearfix"><a href="#" class="comment-size-name">${child.userCname}
+                                                                    : </a><span class="my-pl-con">回复<a href="#" class="atName">@${data.userCname} </a> :  ${child.content}</span>
+                                                                </div>
+                                                                <div class="date-dz"><span class="date-dz-left pull-left comment-time">${child.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
+                                                                    <div class="date-dz-right pull-right comment-pl-block">
+                                                                        <% if(!isEmpty(session.authContext)){%>
+                                                                        <a href="javascript:;" class="removeBlock">删除</a>
+<!--                                                                        <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>-->
+<!--                                                                        <span class="pull-left date-dz-line">|</span>-->
+                                                                        <%}%>
+                                                                        <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">${child.praise}</i>)</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <%}else{%>
+                                                        <div class="hf-list-con"></div>
+                                                    <%}%>
+                                                <%}%>
                                             </div>
                                         </div>
                                     <%}%>
                                 <%}%>
                             <%}%>
-
-
-                            <div class="comment-show-con clearfix">
-                                <div class="comment-show-con-img pull-left"><img src="https://data.ijson.net/avatar/5.jpg" alt=""></div>
-                                <div class="comment-show-con-list pull-left clearfix">
-                                    <div class="pl-text clearfix">
-                                        <a href="#" class="comment-size-name">张三 : </a>
-                                        <span class="my-pl-con">&nbsp;啊哈哈</span>
-                                    </div>
-                                    <div class="date-dz">
-                                        <span class="date-dz-left pull-left comment-time">2020-02-33</span>
-                                        <div class="date-dz-right pull-right comment-pl-block">
-                                            <a href="javascript:;" class="removeBlock">删除</a>
-                                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                            <span class="pull-left date-dz-line">|</span>
-                                            <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                        </div>
-                                    </div>
-                                    <div class="hf-list-con"></div>
-                                </div>
-                            </div>
-
-
-                            <div class="comment-show-con clearfix">
-                                <div class="comment-show-con-img pull-left"><img src="https://data.ijson.net/avatar/5.jpg" alt=""></div>
-                                <div class="comment-show-con-list pull-left clearfix">
-                                    <div class="pl-text clearfix">
-                                        <a href="#" class="comment-size-name">张三 : </a>
-                                        <span class="my-pl-con">&nbsp;啊哈哈</span>
-                                    </div>
-                                    <div class="date-dz">
-                                        <span class="date-dz-left pull-left comment-time">2020-02-33</span>
-                                        <div class="date-dz-right pull-right comment-pl-block">
-                                            <a href="javascript:;" class="removeBlock">删除</a>
-                                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                            <span class="pull-left date-dz-line">|</span>
-                                            <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                        </div>
-                                    </div>
-                                    <div class="hf-list-con" style="display: block;">
-                                        <div class="all-pl-con">
-                                            <div class="pl-text hfpl-text clearfix"><a href="#"
-                                                                                       class="comment-size-name">我的名字
-                                                : </a><span class="my-pl-con">回复<a href="#" class="atName">@张三 </a> :  3233</span>
-                                            </div>
-                                            <div class="date-dz"><span class="date-dz-left pull-left comment-time">2020-6-24 0:52:45</span>
-                                                <div class="date-dz-right pull-right comment-pl-block"><a
-                                                        href="javascript:;" class="removeBlock">删除</a> <a
-                                                        href="javascript:;"
-                                                        class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span
-                                                        class="pull-left date-dz-line">|</span> <a
-                                                        href="javascript:;" class="date-dz-z pull-left"><i
-                                                        class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="comment-show-con clearfix">
-                                <div class="comment-show-con-img pull-left"><img src="https://data.ijson.net/avatar/5.jpg" alt=""></div>
-                                <div class="comment-show-con-list pull-left clearfix">
-                                    <div class="pl-text clearfix">
-                                        <a href="#" class="comment-size-name">张三 : </a>
-                                        <span class="my-pl-con">&nbsp;啊哈哈</span>
-                                    </div>
-                                    <div class="date-dz">
-                                        <span class="date-dz-left pull-left comment-time">2020-02-33</span>
-                                        <div class="date-dz-right pull-right comment-pl-block">
-                                            <a href="javascript:;" class="removeBlock">删除</a>
-                                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                            <span class="pull-left date-dz-line">|</span>
-                                            <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                        </div>
-                                    </div>
-                                    <div class="hf-list-con" style="display: block;"><div class="all-pl-con"><div class="pl-text hfpl-text clearfix"><a href="#" class="comment-size-name">我的名字 : </a><span class="my-pl-con">回复<a href="#" class="atName">@张三 </a> :  3333</span></div><div class="date-dz"> <span class="date-dz-left pull-left comment-time">2020-6-24 0:55:10</span> <div class="date-dz-right pull-right comment-pl-block"> <a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div></div>
-                                        <div class="all-pl-con">
-                                            <div class="pl-text hfpl-text clearfix"><a href="#" class="comment-size-name">我的名字
-                                                : </a><span class="my-pl-con">回复<a href="#" class="atName">@张三 </a> :  3233</span>
-                                            </div>
-                                            <div class="date-dz"><span class="date-dz-left pull-left comment-time">2020-6-24 0:52:45</span>
-                                                <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

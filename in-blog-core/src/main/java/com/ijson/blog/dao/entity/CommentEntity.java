@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.mongodb.morphia.annotations.*;
 
+import java.util.Objects;
+
 @Data
 @Entity(value = "Comment", noClassnameStored = true)
 @ToString(callSuper = true)
@@ -44,7 +46,7 @@ public class CommentEntity extends BaseEntity {
     private String userId;
 
     @Property(Fields.praise)
-    private String praise;
+    private Long praise;
 
     @Property(Fields.replyId)
     private String replyId;
@@ -81,6 +83,10 @@ public class CommentEntity extends BaseEntity {
     @Property(Fields.createTime)
     private long createTime;
 
+
+    public Long getPraise() {
+        return Objects.isNull(praise) ? 0 : praise;
+    }
 
     public interface Fields {
         String id = "_id";
