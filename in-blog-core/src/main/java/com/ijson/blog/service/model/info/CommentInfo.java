@@ -1,11 +1,18 @@
 package com.ijson.blog.service.model.info;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.CommentEntity;
+import com.ijson.blog.dao.entity.ReplyEntity;
 import com.ijson.blog.dao.model.ReplyType;
+import com.ijson.blog.model.AuthContext;
+import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,6 +42,8 @@ public class CommentInfo {
 
     private Long createTime;
 
+    private String replyCode;
+
     public static CommentInfo create(CommentEntity entity) {
         CommentInfo info = new CommentInfo();
         info.setId(entity.getId());
@@ -56,5 +65,31 @@ public class CommentInfo {
             return Lists.newArrayList();
         }
         return entity.stream().map(CommentInfo::create).collect(Collectors.toList());
+    }
+
+
+    public static CommentEntity formCommentEntity(CommentInfo reply, HttpServletRequest request, AuthContext context) {
+        CommentEntity entity = new CommentEntity();
+        entity.setUserId(context.getId());
+        entity.setPostId(reply.getPostId());
+        entity.setContent(reply.getContent());
+        entity.setEname(reply.getEname());
+        entity.setShamId(reply.getShamId());
+        entity.setReplyType(ReplyType.comment);
+        entity.setHost(request.getRemoteHost());
+        String ua = request.getHeader("User-Agent");
+        UserAgent userAgent = UserAgent.parseUserAgentString(ua);
+        OperatingSystem os = userAgent.getOperatingSystem();
+        Browser browser = userAgent.getBrowser();
+        entity.setUserAgent(ua);
+        entity.setOs(os.getName());
+        String browserName = browser.getName();
+        entity.setBrowse(browserName);
+        entity.setLastModifiedBy(context.getId());
+        entity.setDeleted(false);
+        entity.setEnable(true);
+        entity.setCreatedBy(context.getId());
+        entity.setCreateTime(System.currentTimeMillis());
+        return entity;
     }
 }

@@ -8,6 +8,7 @@ import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.CommentService;
 import com.ijson.blog.service.model.info.CommentInfo;
+import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentEntity create(AuthContext context, CommentEntity entity) {
 
+        entity.setId(ObjectId.getId());
         return commentDao.create(entity);
     }
 
