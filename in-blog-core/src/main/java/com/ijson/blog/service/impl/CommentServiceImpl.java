@@ -1,9 +1,9 @@
 package com.ijson.blog.service.impl;
 
-import com.google.common.collect.Lists;
 import com.ijson.blog.dao.CommentDao;
+import com.ijson.blog.dao.UserDao;
 import com.ijson.blog.dao.entity.CommentEntity;
-import com.ijson.blog.dao.model.ReplyType;
+import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.CommentService;
@@ -29,6 +29,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentDao commentDao;
 
+    @Autowired
+    private UserDao userDao;
+
     @Override
     public CommentEntity create(AuthContext context, CommentEntity entity) {
 
@@ -41,21 +44,28 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PageResult<CommentEntity> find(CommentQuery query, Page pageEntity) {
+    public PageResult<CommentInfo> find(CommentQuery query, Page pageEntity) {
         //获取所有的评论数据
         PageResult<CommentEntity> comments = commentDao.find(query, pageEntity);
         List<CommentInfo> commentInfos = CommentInfo.create(comments.getDataList());
+        List<UserEntity> userEntities = userDao.findCnameAndAvatarByIds(commentInfos.stream().map(CommentInfo::getUserId).collect(Collectors.toList()));
+        Map<String, UserEntity> userIdInfo = userEntities.stream().collect(Collectors.toMap(kvalue -> kvalue.getId(), vvalue -> vvalue));
 
+        for (CommentInfo commentInfo : commentInfos) {
+            UserEntity userEntity = userIdInfo.get(commentInfo.getUserId());
+            if(Objects.nonNull(userEntity)){
+                commentInfo.setUserCname(userEntity.getCname());
+                commentInfo.setUserAvatar(userEntity.getAvatar());
+            }else{
+                commentInfo.setUserCname("未知用户");
+                commentInfo.setUserAvatar("https://data.ijson.net/avatar.jpg");
+            }
 
-        //获取所有的评论
-        List<CommentInfo> allComment = commentInfos.stream().filter(k -> k.getReplyType().equals(ReplyType.comment)).collect(Collectors.toList());
-        //所有的回复
-        List<CommentInfo> allReply = commentInfos.stream().filter(k -> k.getReplyType().equals(ReplyType.reply)).collect(Collectors.toList());
-        //评论相关
-        Map<String, CommentInfo> comment = allComment.stream().collect(Collectors.toMap(CommentInfo::getId, v -> v));
-
-
-        return comments;
+        }
+        PageResult<CommentInfo> commentInfoPageResult = new PageResult<>();
+        commentInfoPageResult.setTotal(comments.getTotal());
+        commentInfoPageResult.setDataList(commentInfos);
+        return commentInfoPageResult;
     }
 
     @Override

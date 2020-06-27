@@ -27,7 +27,12 @@ public class CommentInfo {
     private String praise;
     private String replyId;
 
+    private String userCname;
+    private String userAvatar;
+
     private List<CommentInfo> childs;
+
+    private Long createTime;
 
     public static CommentInfo create(CommentEntity entity) {
         CommentInfo info = new CommentInfo();
@@ -40,6 +45,7 @@ public class CommentInfo {
         info.setReplyType(entity.getReplyType());
         info.setUserId(entity.getUserId());
         info.setPraise(entity.getPraise());
+        info.setCreateTime(entity.getCreateTime());
 
         return info;
     }

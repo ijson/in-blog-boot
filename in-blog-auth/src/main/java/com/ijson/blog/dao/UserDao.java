@@ -17,6 +17,8 @@ public interface UserDao {
 
     UserEntity findById(String id);
 
+    List<UserEntity> findCnameAndAvatarByIds(List<String> ids);
+
     UserEntity findInternalById(String id);
 
     UserEntity findByEname(String ename);
@@ -26,7 +28,7 @@ public interface UserDao {
 
     PageResult<UserEntity> find(UserQuery query, Page page);
 
-    Map<String,String> batchCnameByIds(Set<String> userIds);
+    Map<String, String> batchCnameByIds(Set<String> userIds);
 
     UserEntity enable(String id, boolean enable, String userId);
 

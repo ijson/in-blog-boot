@@ -7,6 +7,7 @@ import com.ijson.blog.dao.model.ReplyType;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.exception.BlogNotFoundException;
 import com.ijson.blog.service.CommentService;
+import com.ijson.blog.service.model.info.CommentInfo;
 import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -46,7 +47,7 @@ public class ArticleController extends BaseController {
             view.addObject("data", PostInfo.create(entity));
             view.addObject("path", "/");
             //获取所有的文章评论
-            PageResult<CommentEntity> comments = commentService.find(CommentQuery.builder().ename(ename).shamId(shamId).build(), new Page(1000, 1, null, false));
+            PageResult<CommentInfo> comments = commentService.find(CommentQuery.builder().ename(ename).shamId(shamId).build(), new Page(1000, 1, null, false));
 
             view.addObject("replys", comments.getDataList());
             addViewModelAndView(request, view);

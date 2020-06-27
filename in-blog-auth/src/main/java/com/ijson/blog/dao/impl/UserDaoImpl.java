@@ -15,10 +15,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -128,6 +125,15 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         query.field(UserEntity.Fields.deleted).equal(false);
         query.field(UserEntity.Fields.enable).equal(true);
         return query.get();
+    }
+
+    @Override
+    public List<UserEntity> findCnameAndAvatarByIds(List<String> ids) {
+        Query<UserEntity> query = datastore.createQuery(UserEntity.class);
+        query.field(UserEntity.Fields.enable).equal(true);
+        query.field(UserEntity.Fields.id).hasAnyOf(new HashSet<>(ids));
+        query.retrievedFields(true, UserEntity.Fields.cname,UserEntity.Fields.id, UserEntity.Fields.avatar);
+        return query.asList();
     }
 
     @Override

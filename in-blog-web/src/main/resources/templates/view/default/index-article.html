@@ -116,6 +116,35 @@
 
                         <div class="comment-show">
 
+                            <%if(isNotEmpty(hots)){%>
+                                <% for(data in replys){ %>
+                                    <%if(data.replyType=='comment'){%>
+                                        <div class="comment-show-con clearfix">
+                                            <div class="comment-show-con-img pull-left"><img src="${data.userAvatar}" alt=""></div>
+                                            <div class="comment-show-con-list pull-left clearfix">
+                                                <div class="pl-text clearfix">
+                                                    <a href="#" class="comment-size-name">${data.userCname} : </a>
+                                                    <span class="my-pl-con">&nbsp;${data.content}</span>
+                                                </div>
+                                                <div class="date-dz">
+                                                    <span class="date-dz-left pull-left comment-time">${data.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
+                                                    <div class="date-dz-right pull-right comment-pl-block">
+                                                        <% if(!isEmpty(session.authContext)){%>
+                                                            <a href="javascript:;" class="removeBlock">删除</a>
+                                                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
+                                                            <span class="pull-left date-dz-line">|</span>
+                                                        <%}%>
+                                                        <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+                                                    </div>
+                                                </div>
+                                                <div class="hf-list-con"></div>
+                                            </div>
+                                        </div>
+                                    <%}%>
+                                <%}%>
+                            <%}%>
+
+
                             <div class="comment-show-con clearfix">
                                 <div class="comment-show-con-img pull-left"><img src="https://data.ijson.net/avatar/5.jpg" alt=""></div>
                                 <div class="comment-show-con-list pull-left clearfix">

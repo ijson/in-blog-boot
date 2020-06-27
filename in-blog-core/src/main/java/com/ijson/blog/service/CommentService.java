@@ -3,6 +3,7 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.service.model.info.CommentInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -19,7 +20,7 @@ public interface CommentService {
 
     void delete(AuthContext context, String id);
 
-    PageResult<CommentEntity> find(CommentQuery query, Page pageEntity);
+    PageResult<CommentInfo> find(CommentQuery query, Page pageEntity);
 
     List<CommentEntity> findAll(AuthContext context);
 }
