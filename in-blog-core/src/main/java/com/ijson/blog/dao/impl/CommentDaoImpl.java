@@ -87,12 +87,16 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
             query.field(CommentEntity.Fields.id).equal(iquery.getId());
         }
 
-        if (Objects.nonNull(iquery.getEname())) {
+        if (!Strings.isNullOrEmpty(iquery.getEname())) {
             query.field(CommentEntity.Fields.ename).equal(iquery.getEname());
         }
 
-        if (Objects.nonNull(iquery.getShamId())) {
+        if (!Strings.isNullOrEmpty(iquery.getShamId())) {
             query.field(CommentEntity.Fields.shamId).equal(iquery.getShamId());
+        }
+
+        if (Objects.nonNull(iquery.getReplyType())) {
+            query.field(CommentEntity.Fields.replyType).equal(iquery.getReplyType());
         }
 
         query.field(CommentEntity.Fields.enable).equal(true);

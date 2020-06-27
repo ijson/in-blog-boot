@@ -43,6 +43,12 @@ public class CommentEntity extends BaseEntity {
     @Property(Fields.userId)
     private String userId;
 
+    @Property(Fields.praise)
+    private String praise;
+
+    @Property(Fields.replyId)
+    private String replyId;
+
 
     //浏览器
     @Property(Fields.browse)
@@ -93,6 +99,8 @@ public class CommentEntity extends BaseEntity {
         String replyType = "replyType";
         String browse = "browse";
         String host = "host";
+        String praise = "praise";
+        String replyId = "replyId";
         String lastModifiedTime = "lastModifiedTime";
     }
 }
