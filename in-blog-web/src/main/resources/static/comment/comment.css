@@ -189,7 +189,7 @@ body {
     height: 17px;
     display: block;
     float: left;
-    background-image: url(../images/icon-all_01.png);
+    background-image: url(/images/icon-all.png);
     background-repeat: no-repeat;
     background-position: -6px -198px;
     margin-right: 5px;
