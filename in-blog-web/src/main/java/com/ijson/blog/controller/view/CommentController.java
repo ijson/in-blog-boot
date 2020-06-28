@@ -115,6 +115,26 @@ public class CommentController extends BaseController {
     }
 
 
+    @RequestMapping("/save/reply")
+    @ResponseBody
+    public Result saveReply(@RequestBody CommentInfo commentInfo, HttpSession session, HttpServletRequest request) throws Exception {
+
+//        String verCode = (String) session.getAttribute(replyCodeKey);
+//        Result result = VerifyCodeUtils.validImage(commentInfo.getReplyCode(), verCode, request, session, replyCodeKey, replyCodeTime);
+//        if (result.getCode() != 0) {
+//            throw new ReplyCreateException(BlogBusinessExceptionCode.CAPTCHA_ERROR_OR_NOT_PRESENT, result.getMessage());
+//        }
+
+        AuthContext context = getContext(request);
+        if (Objects.isNull(context)) {
+            log.info("创建评论时,未获取到用户信息");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+        }
+        CommentEntity entity = commentService.create(context, CommentInfo.formReplyEntity(commentInfo, request, context));
+        return Result.ok("评论保存成功",entity.getId());
+    }
+
+
     @RequestMapping("/{ename}/{shamId}/delete/{id}")
     @ResponseBody
     public ReplyResult delete(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @PathVariable("id") String id, HttpSession session, HttpServletRequest request) throws Exception {

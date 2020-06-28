@@ -1,9 +1,7 @@
 package com.ijson.blog.service.model.info;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.entity.CommentEntity;
-import com.ijson.blog.dao.entity.ReplyEntity;
 import com.ijson.blog.dao.model.ReplyType;
 import com.ijson.blog.model.AuthContext;
 import eu.bitwalker.useragentutils.Browser;
@@ -76,6 +74,33 @@ public class CommentInfo {
         entity.setEname(reply.getEname());
         entity.setShamId(reply.getShamId());
         entity.setReplyType(ReplyType.comment);
+        entity.setHost(request.getRemoteHost());
+        String ua = request.getHeader("User-Agent");
+        UserAgent userAgent = UserAgent.parseUserAgentString(ua);
+        OperatingSystem os = userAgent.getOperatingSystem();
+        Browser browser = userAgent.getBrowser();
+        entity.setUserAgent(ua);
+        entity.setOs(os.getName());
+        String browserName = browser.getName();
+        entity.setBrowse(browserName);
+        entity.setLastModifiedBy(context.getId());
+        entity.setDeleted(false);
+        entity.setEnable(true);
+        entity.setCreatedBy(context.getId());
+        entity.setCreateTime(System.currentTimeMillis());
+        entity.setReplyId("0");
+        return entity;
+    }
+
+    public static CommentEntity formReplyEntity(CommentInfo reply, HttpServletRequest request, AuthContext context) {
+        CommentEntity entity = new CommentEntity();
+        entity.setUserId(context.getId());
+        entity.setPostId(reply.getPostId());
+        entity.setContent(reply.getContent());
+        entity.setEname(reply.getEname());
+        entity.setShamId(reply.getShamId());
+        entity.setReplyType(ReplyType.reply);
+        entity.setReplyId(reply.getReplyId());
         entity.setHost(request.getRemoteHost());
         String ua = request.getHeader("User-Agent");
         UserAgent userAgent = UserAgent.parseUserAgentString(ua);
