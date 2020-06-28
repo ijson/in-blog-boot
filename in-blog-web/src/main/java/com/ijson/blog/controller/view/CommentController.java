@@ -90,7 +90,7 @@ public class CommentController extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
         CommentEntity entity = commentService.create(context, CommentInfo.formReplyEntity(commentInfo, request, context));
-        return Result.ok("评论保存成功", entity.getId());
+        return Result.ok("回复保存成功", entity.getId());
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)
@@ -101,8 +101,8 @@ public class CommentController extends BaseController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(String id, HttpSession session, HttpServletRequest request) throws Exception {
-        if (Strings.isNullOrEmpty(id)) {
+    public Result delete(@RequestBody CommentInfo commentInfo, HttpSession session, HttpServletRequest request) throws Exception {
+        if (Strings.isNullOrEmpty(commentInfo.getId())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
         }
         AuthContext context = getContext(request);
@@ -110,7 +110,7 @@ public class CommentController extends BaseController {
             log.info("删除评论时,未获取到用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        CommentEntity entity = commentService.find(context, id);
+        CommentEntity entity = commentService.find(context, commentInfo.getId());
         if (Objects.isNull(entity)) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.REPLY_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
         }
@@ -121,14 +121,15 @@ public class CommentController extends BaseController {
         }
 
         //删除
-        commentService.delete(context, id);
+        commentService.delete(context, commentInfo.getId());
 
         //如果是文章评论  删除则需要将子评论一同删除
         if (entity.getReplyType().equals(ReplyType.comment)) {
-            commentService.deleteReplyByCommentId(context, id);
+            commentService.deleteReplyByCommentId(context, commentInfo.getId());
         }
 
-        return Result.ok();
+        String message = entity.getReplyType().equals(ReplyType.comment)?"删除文章评论和回复内容成功":"删除回复内容成功";
+        return Result.ok(message);
     }
 
 }
