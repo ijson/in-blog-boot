@@ -1,6 +1,7 @@
 package com.ijson.blog.controller.view;
 
 import com.ijson.blog.controller.BaseController;
+import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.entity.ReplyEntity;
 import com.ijson.blog.dao.query.ReplyQuery;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
@@ -109,8 +110,8 @@ public class CommentController extends BaseController {
             log.info("创建评论时,未获取到用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
-        commentService.create(context, CommentInfo.formCommentEntity(commentInfo, request, context));
-        return Result.ok("评论保存成功");
+        CommentEntity entity = commentService.create(context, CommentInfo.formCommentEntity(commentInfo, request, context));
+        return Result.ok("评论保存成功",entity.getId());
     }
 
 

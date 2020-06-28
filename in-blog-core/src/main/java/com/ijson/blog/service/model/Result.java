@@ -65,4 +65,8 @@ public class Result<T> {
     public static Result error(BlogBusinessExceptionCode requestWayError) {
         return new Result(requestWayError.getCode(), requestWayError.getMessage());
     }
+
+    public static Result ok(String message, String id) {
+        return new Result(0, message, id);
+    }
 }
