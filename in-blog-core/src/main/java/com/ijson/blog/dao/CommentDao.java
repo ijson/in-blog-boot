@@ -32,4 +32,6 @@ public interface CommentDao {
     long findPostCount(String userId);
 
     long findReplyCount(String userId);
+
+    void deleteReplyByCommentId(String id);
 }

@@ -20,7 +20,11 @@ public interface CommentService {
 
     void delete(AuthContext context, String id);
 
+    CommentEntity find(AuthContext context, String id);
+
     PageResult<CommentInfo> find(CommentQuery query, Page pageEntity);
 
     List<CommentEntity> findAll(AuthContext context);
+
+    void deleteReplyByCommentId(AuthContext context, String id);
 }

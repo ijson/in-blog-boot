@@ -46,6 +46,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public CommentEntity find(AuthContext context, String id) {
+        return commentDao.findInternalById(id);
+    }
+
+    @Override
     public PageResult<CommentInfo> find(CommentQuery query, Page pageEntity) {
         //获取所有的评论数据
         PageResult<CommentEntity> comments = commentDao.find(query, pageEntity);
@@ -55,10 +60,10 @@ public class CommentServiceImpl implements CommentService {
 
         for (CommentInfo commentInfo : commentInfos) {
             UserEntity userEntity = userIdInfo.get(commentInfo.getUserId());
-            if(Objects.nonNull(userEntity)){
+            if (Objects.nonNull(userEntity)) {
                 commentInfo.setUserCname(userEntity.getCname());
                 commentInfo.setUserAvatar(userEntity.getAvatar());
-            }else{
+            } else {
                 commentInfo.setUserCname("未知用户");
                 commentInfo.setUserAvatar("https://data.ijson.net/avatar.jpg");
             }
@@ -73,5 +78,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentEntity> findAll(AuthContext context) {
         return null;
+    }
+
+    @Override
+    public void deleteReplyByCommentId(AuthContext context, String id) {
+        commentDao.deleteReplyByCommentId(id);
     }
 }

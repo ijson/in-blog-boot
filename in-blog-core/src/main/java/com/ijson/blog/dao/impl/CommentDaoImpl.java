@@ -159,4 +159,13 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
         query.field(CommentEntity.Fields.replyType).equal(ReplyType.reply.name());
         return query.countAll();
     }
+
+    @Override
+    public void deleteReplyByCommentId(String id) {
+        datastore.delete(datastore.createQuery(CommentEntity.class).
+                        field(CommentEntity.Fields.replyId).equal(id).
+                        field(CommentEntity.Fields.replyType).equal(ReplyType.reply.name()),
+                WriteConcern.UNACKNOWLEDGED);
+
+    }
 }

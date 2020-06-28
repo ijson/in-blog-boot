@@ -424,13 +424,13 @@
                     .css('display', 'block')
                     .prepend(oHtml) && oThis.parents('.hf-con').siblings('.date-dz-right').find('.pl-hf').addClass('hf-con-block') && oThis.parents('.hf-con').remove();
 
-                console.log("replyId:"+replyId)
-                console.log("content:"+data.hfContent)
-                console.log("ename:${data.ename}")
-                console.log("shamId:${data.shamId}")
-                console.log("postId:${data.id}")
-                console.log("replyType:reply")
-                console.log("userId:${session.authContext.id}")
+                // console.log("replyId:"+replyId)
+                // console.log("content:"+data.hfContent)
+                // console.log("ename:${data.ename}")
+                // console.log("shamId:${data.shamId}")
+                // console.log("postId:${data.id}")
+                // console.log("replyType:reply")
+                // console.log("userId:${session.authContext.id}")
 
                 $.ajax({
                     cache: false,
@@ -467,6 +467,7 @@
 <script type="text/javascript">
     $('.commentAll').on('click','.removeBlock',function(){
         var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
+        debugger
         if(oT.siblings('.all-pl-con').length >= 1){
             oT.remove();
         }else {
@@ -474,6 +475,7 @@
             oT.remove();
         }
         $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
+
 
     })
 </script>
