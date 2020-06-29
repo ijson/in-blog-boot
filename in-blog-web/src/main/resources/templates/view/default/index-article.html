@@ -398,7 +398,7 @@
         console.log(oHfVal)
         var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
         var oAllVal = '回复@' + oHfName;
-        var replyId = $(this).parent().parent().parent().parent().children(".hidden_id").attr("id")
+        var replyId = $(this).parent().parent().parent().parent().children(".hidden_id").attr("value");
         if (oHfVal.replace(/^ +| +$/g, '') === '' || oHfVal === oAllVal) {
             toastr.warning("评论内容不能为空");
             return
