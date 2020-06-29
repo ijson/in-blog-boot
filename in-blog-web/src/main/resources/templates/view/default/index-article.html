@@ -552,6 +552,13 @@
         if (flag === 1) {
             id = $("#" + id).val()
         }
+
+        var crprais = getCookie('cr' + "_" + id + "_praise");
+        if (crprais) {
+            toastr.warning('您已经支持过了');
+            return;
+        }
+
         $.ajax({
             cache: false,
             type: "POST",
