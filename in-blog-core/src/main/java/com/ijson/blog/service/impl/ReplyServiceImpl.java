@@ -48,4 +48,14 @@ public class ReplyServiceImpl implements ReplyService {
         entity.setEname(ename);
         return replyDao.createOrUpdate(entity);
     }
+
+    @Override
+    public ReplyEntity find(String id) {
+        return replyDao.find(id);
+    }
+
+    @Override
+    public void delete(String id) {
+        replyDao.delete(id);
+    }
 }

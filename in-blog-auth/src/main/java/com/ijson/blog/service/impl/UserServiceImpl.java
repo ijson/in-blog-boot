@@ -154,6 +154,13 @@ public class UserServiceImpl implements UserService {
         if (Objects.nonNull(user)) {
             throw new BlogLoginException(BlogBusinessExceptionCode.USER_ALREADY_EXISTS);
         }
+
+        user = userDao.findByCname(entity.getCname());
+        if (Objects.nonNull(user)) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.USER_CNAME_ALREADY_EXISTS);
+        }
+
+
         RoleEntity role = roleService.findById(entity.getRoleId());
 
         entity.setRoleCname(role.getCname());
@@ -172,6 +179,11 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userDao.findByEname(ename);
         log.info("findUserByEname{}", ename);
         return user;
+    }
+
+    @Override
+    public UserEntity findUserByCname(String cname) {
+        return userDao.findByCname(cname);
     }
 
     @Override

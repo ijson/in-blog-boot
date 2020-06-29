@@ -52,6 +52,9 @@ public class ReplyEntity extends BaseEntity {
     @Property(Fields.beReplyName)
     private String beReplyName;
 
+    @Property(Fields.beReplyId)
+    private String beReplyId;
+
     @Property(Fields.address)
     private String address;
 
@@ -112,6 +115,7 @@ public class ReplyEntity extends BaseEntity {
         String avatar = "avatar";
         String shamId = "shamId";
         String ename = "ename";
+        String beReplyId = "beReplyId";
     }
 }
 

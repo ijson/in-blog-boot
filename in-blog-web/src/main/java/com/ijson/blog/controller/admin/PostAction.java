@@ -94,7 +94,7 @@ public class PostAction extends BaseController {
         entity.setCreate(true);
         entity.setIndexMenuEname(post.getIndexMenuEname());
         entity.setTrigger(Constant.AuditTrigger.create);
-        entity = postService.createPost(context, entity);
+        entity = postService.create(context, entity);
         log.info("文章创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
         return Result.ok("创建文章成功!");
     }
@@ -151,7 +151,7 @@ public class PostAction extends BaseController {
         PostEntity newEntity = PostEntity.update(context, post.getId(), post.getTitle(), post.getContent(), notDeleteTopic, null);
         newEntity.setTrigger(Constant.AuditTrigger.update);
         newEntity.setIndexMenuEname(post.getIndexMenuEname());
-        postService.createPost(context, newEntity);
+        postService.create(context, newEntity);
 
 
         return Result.ok("更新文章成功!");
