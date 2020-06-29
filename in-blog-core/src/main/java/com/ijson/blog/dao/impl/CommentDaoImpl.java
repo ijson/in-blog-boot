@@ -177,4 +177,17 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
         operations.inc(CommentEntity.Fields.praise);
         datastore.findAndModify(query, operations);
     }
+
+    @Override
+    public List<CommentEntity> findCountById(String id) {
+        Query<CommentEntity> query = createQuery();
+        query.field(CommentEntity.Fields.postId).equal(id);
+        return query.asList();
+    }
+
+    @Override
+    public Long countAll() {
+        Query<CommentEntity> query = createQuery();
+        return query.countAll();
+    }
 }
