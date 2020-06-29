@@ -134,12 +134,14 @@
                                         <span class="date-dz-left pull-left comment-time">${data.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
                                         <div class="date-dz-right pull-right comment-pl-block">
                                             <% if(!isEmpty(session.authContext)){%>
-                                            <a href="javascript:;" class="removeBlock" onclick="deleteCR('${data.id}',0)">删除</a>
+                                            <a href="javascript:;" class="removeBlock"
+                                               onclick="deleteCR('${data.id}',0)">删除</a>
                                             <a href="javascript:;"
                                                class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                             <span class="pull-left date-dz-line">|</span>
                                             <%}%>
-                                            <a href="javascript:;" class="date-dz-z pull-left"><i
+                                            <a href="javascript:;" class="date-dz-z pull-left"
+                                               onclick="praiseCR('${data.id}',0)"><i
                                                     class="date-dz-z-click-red"></i>赞 (<i
                                                     class="z-num">${data.praise}</i>)</a>
                                         </div>
@@ -161,11 +163,13 @@
                                             <div class="date-dz"><span class="date-dz-left pull-left comment-time">${child.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
                                                 <div class="date-dz-right pull-right comment-pl-block">
                                                     <% if(!isEmpty(session.authContext)){%>
-                                                    <a href="javascript:;" class="removeBlock" onclick="deleteCR('${child.id}',0)">删除</a>
+                                                    <a href="javascript:;" class="removeBlock"
+                                                       onclick="deleteCR('${child.id}',0)">删除</a>
                                                     <!--                                                                        <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>-->
                                                     <!--                                                                        <span class="pull-left date-dz-line">|</span>-->
                                                     <%}%>
-                                                    <a href="javascript:;" class="date-dz-z pull-left"><i
+                                                    <a href="javascript:;" class="date-dz-z pull-left"
+                                                       onclick="praiseCR('${data.id}',0)"><i
                                                             class="date-dz-z-click-red"></i>赞 (<i class="z-num">${child.praise}</i>)</a>
                                                 </div>
                                             </div>
@@ -309,9 +313,9 @@
             '<div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> ' +
             '<a href="#" class="comment-size-name">${user.cname!} : </a> <span class="my-pl-con">&nbsp;' + oSize + '</span> </div> ' +
             '<div class="date-dz"> <span class="date-dz-left pull-left comment-time">' + now + '</span> ' +
-            '<div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock" onclick="deleteCR('+commentId+',1)">删除</a> ' +
+            '<div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock" onclick="deleteCR(' + commentId + ',1)">删除</a> ' +
             '<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> ' +
-            '<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div>' +
+            '<a href="javascript:;" class="date-dz-z pull-left" onclick="praiseCR(' + commentId + ',1)"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div>' +
             '<div class="hf-list-con"></div></div> </div>';
         if (oSize.replace(/(^\s*)|(\s*$)/g, "") !== '') {
             $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
@@ -432,10 +436,10 @@
                     '<a href="#" class="comment-size-name">${user.cname} : </a><span class="my-pl-con">' + oAt + '</span></div><div class="date-dz"> ' +
                     '<span class="date-dz-left pull-left comment-time">' + now + '</span> ' +
                     '<div class="date-dz-right pull-right comment-pl-block"> ' +
-                    '<a href="javascript:;" class="removeBlock" onclick="deleteCR('+replyIdNumber+',1)">删除</a> ' +
+                    '<a href="javascript:;" class="removeBlock" onclick="deleteCR(' + replyIdNumber + ',1)">删除</a> ' +
                     //'<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> ' +
                     // '<span class="pull-left date-dz-line">|</span> ' +
-                    '<a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div></div>';
+                    '<a href="javascript:;" class="date-dz-z pull-left" onclick="praiseCR(' + replyIdNumber + ',1)"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div></div>';
                 oThis.parents('.hf-con')
                     .parents('.comment-show-con-list')
                     .find('.hf-list-con')
@@ -497,13 +501,12 @@
         $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
 
 
-    })
+    });
 
-    function deleteCR(id,flag){
-        if(flag===1){
-            id = $("#"+id).val()
+    function deleteCR(id, flag) {
+        if (flag === 1) {
+            id = $("#" + id).val()
         }
-        console.log(id)
         $.ajax({
             cache: false,
             type: "POST",
@@ -511,7 +514,7 @@
             url: "/comment/delete",
             async: true,
             data: JSON.stringify({
-                id: id,
+                id: id
             }),
             success: function (data) {
                 if (data.code === 0) {
@@ -543,7 +546,34 @@
             $(this).find('.z-num').html(zNum);
             $(this).find('.date-dz-z-click-red').addClass('red');
         }
-    })
+    });
+
+    function praiseCR(id, flag) {
+        if (flag === 1) {
+            id = $("#" + id).val()
+        }
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/comment/praise",
+            async: true,
+            data: JSON.stringify({
+                id: id
+            }),
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.warning(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
 </script>
 <%}%>
 

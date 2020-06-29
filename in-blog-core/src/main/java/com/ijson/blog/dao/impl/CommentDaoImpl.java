@@ -168,4 +168,13 @@ public class CommentDaoImpl extends AbstractDao<CommentEntity> implements Commen
                 WriteConcern.UNACKNOWLEDGED);
 
     }
+
+    @Override
+    public void praise(String id) {
+        Query<CommentEntity> query = createQuery();
+        query.field(CommentEntity.Fields.id).equal(id);
+        UpdateOperations operations = createUpdateOperations();
+        operations.inc(CommentEntity.Fields.praise);
+        datastore.findAndModify(query, operations);
+    }
 }

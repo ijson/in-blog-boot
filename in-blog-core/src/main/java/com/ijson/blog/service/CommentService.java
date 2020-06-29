@@ -27,4 +27,6 @@ public interface CommentService {
     List<CommentEntity> findAll(AuthContext context);
 
     void deleteReplyByCommentId(AuthContext context, String id);
+
+    void praise(AuthContext context, String id);
 }

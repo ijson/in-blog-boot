@@ -84,4 +84,9 @@ public class CommentServiceImpl implements CommentService {
     public void deleteReplyByCommentId(AuthContext context, String id) {
         commentDao.deleteReplyByCommentId(id);
     }
+
+    @Override
+    public void praise(AuthContext context, String id) {
+        commentDao.praise(id);
+    }
 }

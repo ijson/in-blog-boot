@@ -138,6 +138,27 @@ public class CommentController extends BaseController {
     }
 
 
+    @RequestMapping("/praise")
+    @ResponseBody
+    public Result praise(@RequestBody CommentInfo commentInfo, HttpSession session, HttpServletRequest request) throws Exception {
+        if (Strings.isNullOrEmpty(commentInfo.getId())) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
+        }
+//        AuthContext context = getContext(request);
+//        if (Objects.isNull(context)) {
+//            log.info("点赞未获取到用户信息");
+//            throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
+//        }
+        CommentEntity entity = commentService.find(null, commentInfo.getId());
+        if (Objects.isNull(entity)) {
+            throw new ReplyCreateException(BlogBusinessExceptionCode.REPLY_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
+        }
+
+        commentService.praise(null, commentInfo.getId());
+        return Result.ok("点赞成功");
+    }
+
+
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void authImage(HttpServletResponse response, HttpSession session) throws IOException {
         generateVerification(response, session, commentCodeKey, commentCodeTime);

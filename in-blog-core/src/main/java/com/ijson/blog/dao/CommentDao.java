@@ -34,4 +34,6 @@ public interface CommentDao {
     long findReplyCount(String userId);
 
     void deleteReplyByCommentId(String id);
+
+    void praise(String id);
 }
