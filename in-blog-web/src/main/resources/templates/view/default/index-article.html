@@ -158,7 +158,7 @@
                                                 <input type="hidden" id="${child.id}" class="hidden_reply_id"
                                                        value="${child.id}">
                                                 <a href="#" class="comment-size-name">${child.userCname}
-                                                    : </a><span class="my-pl-con">回复<a href="#" class="atName">@${data.userCname} </a> :  ${child.content}</span>
+                                                    : </a><span class="my-pl-con">回复<a href="#" class="atName">@${data.userCname} </a>:${child.content}</span>
                                             </div>
                                             <div class="date-dz"><span class="date-dz-left pull-left comment-time">${child.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
                                                 <div class="date-dz-right pull-right comment-pl-block">
@@ -424,7 +424,7 @@
                     if (data.atName === '') {
                         oAt = data.hfContent;
                     } else {
-                        oAt = '回复<a href="#" class="atName">@' + data.atName + '</a> : ' + data.hfContent;
+                        oAt = '回复<a href="#" class="atName">@' + data.atName + '</a>:' + data.hfContent;
                     }
                     oHf = data.hfName;
                 });
