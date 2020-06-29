@@ -72,7 +72,7 @@ public class CommentController extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
 
-        if (Strings.isNullOrEmpty(commentInfo.getContent())) {
+        if (Strings.isNullOrEmpty(commentInfo.getContent())||Strings.isNullOrEmpty(commentInfo.getContent().trim())) {
             log.info("评论内容为空");
             throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
         }
@@ -97,7 +97,7 @@ public class CommentController extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
 
-        if (Strings.isNullOrEmpty(commentInfo.getContent())) {
+        if (Strings.isNullOrEmpty(commentInfo.getContent())||Strings.isNullOrEmpty(commentInfo.getContent().trim())) {
             log.info("评论内容为空");
             throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
         }

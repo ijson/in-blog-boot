@@ -123,7 +123,7 @@
                             <% for(data in replys){ %>
                             <%if(data.replyType=='comment'){%>
                             <div class="comment-show-con clearfix">
-                                <input type="hidden" id="${data.id}" class="hidden_id">
+                                <input type="hidden" id="${data.id}" class="hidden_id" value="${data.id}">
                                 <div class="comment-show-con-img pull-left"><img src="${data.userAvatar}" alt=""></div>
                                 <div class="comment-show-con-list pull-left clearfix">
                                     <div class="pl-text clearfix">
