@@ -8,7 +8,6 @@ import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.exception.ReplyCreateException;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.CommentService;
-import com.ijson.blog.service.ReplyService;
 import com.ijson.blog.service.model.Result;
 import com.ijson.blog.service.model.info.CommentInfo;
 import com.ijson.blog.util.PassportHelper;
@@ -37,9 +36,6 @@ import java.util.Objects;
 @RequestMapping("/comment")
 public class CommentController extends BaseController {
 
-
-    @Autowired
-    private ReplyService replyService;
 
     @Autowired
     private CommentService commentService;

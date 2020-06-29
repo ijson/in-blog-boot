@@ -45,9 +45,6 @@ public class PostServiceImpl implements PostService {
     private TopicDao topicDao;
 
     @Autowired
-    private ReplyDao replyDao;
-
-    @Autowired
     private CommentDao commentDao;
 
     @Autowired
@@ -99,7 +96,7 @@ public class PostServiceImpl implements PostService {
         Set<String> ids = postEntityPageResult.getDataList().stream().map(PostEntity::getId).collect(Collectors.toSet());
         Map<String, Long> countByIds = countDao.findCountByIds(ids);
 
-        Map<String, Long> replyByIds =  commentDao.findCountByIds(ids);
+        Map<String, Long> replyByIds = commentDao.findCountByIds(ids);
 
         List<PostEntity> dataList = postEntityPageResult.getDataList();
 
@@ -156,7 +153,7 @@ public class PostServiceImpl implements PostService {
             entity.setViews(countById.getViews());
         }
 
-        List<ReplyEntity> replyEntitys = replyDao.findCountById(id);
+        List<CommentEntity> replyEntitys = commentDao.findCountById(id);
         if (CollectionUtils.isNotEmpty(replyEntitys)) {
             entity.setReply(replyEntitys.size());
         } else {
@@ -183,7 +180,7 @@ public class PostServiceImpl implements PostService {
             entity.setViews(countById.getViews());
         }
 
-        List<ReplyEntity> replyEntitys = replyDao.findCountById(id);
+        List<CommentEntity> replyEntitys = commentDao.findCountById(id);
         if (CollectionUtils.isNotEmpty(replyEntitys)) {
             entity.setReply(replyEntitys.size());
         } else {
@@ -210,7 +207,7 @@ public class PostServiceImpl implements PostService {
             entity.setViews(countById.getViews());
         }
 
-        List<ReplyEntity> replyEntitys = replyDao.findCountById(entity.getId());
+        List<CommentEntity> replyEntitys = commentDao.findCountById(entity.getId());
         if (CollectionUtils.isNotEmpty(replyEntitys)) {
             entity.setReply(replyEntitys.size());
         } else {
@@ -265,7 +262,7 @@ public class PostServiceImpl implements PostService {
     public WelcomeInfo getConsoleData() {
         Long publishTotal = postDao.findPublishTotal(null);
         Long readTotal = getWebSiteCount(null);
-        Long commentTotal = replyDao.count();
+        Long commentTotal = commentDao.countAll();
         Long todayPublishTotal = postDao.findTodayPublishTotal(null);
         Long userCount = userDao.count();
         return WelcomeInfo.create(publishTotal, readTotal, commentTotal, todayPublishTotal, userCount);
@@ -298,11 +295,11 @@ public class PostServiceImpl implements PostService {
         postDao.delete(postId);
         draftDao.removeDraft(postId);
         List<String> topicIds = entity.getTopicId();
-        if(CollectionUtils.isNotEmpty(topicIds)){
+        if (CollectionUtils.isNotEmpty(topicIds)) {
             //遍历所有tags,如果postCount-1 <=0,则需要将tag删除
             topicIds.forEach(topicId -> {
                 TopicEntity topic = topicDao.find(topicId);
-                if(Objects.nonNull(topic)){
+                if (Objects.nonNull(topic)) {
                     long lastCount = topic.getPostCount() - 1;
                     if (lastCount <= 0) {
                         topicDao.delete(topic.getId());
@@ -363,7 +360,7 @@ public class PostServiceImpl implements PostService {
                 entity.setViews(countById.getViews());
             }
 
-            List<ReplyEntity> replyEntitys = replyDao.findCountById(entity.getId());
+            List<CommentEntity> replyEntitys = commentDao.findCountById(entity.getId());
             if (CollectionUtils.isNotEmpty(replyEntitys)) {
                 entity.setReply(replyEntitys.size());
             } else {
