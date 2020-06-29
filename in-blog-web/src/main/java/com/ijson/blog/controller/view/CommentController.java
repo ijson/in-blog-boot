@@ -69,6 +69,11 @@ public class CommentController extends BaseController {
             log.info("创建评论时,未获取到用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
+
+        if (Strings.isNullOrEmpty(commentInfo.getContent())) {
+            log.info("评论内容为空");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
+        }
         CommentEntity entity = commentService.create(context, CommentInfo.formCommentEntity(commentInfo, request, context));
         return Result.ok("评论保存成功", entity.getId());
     }
@@ -89,13 +94,13 @@ public class CommentController extends BaseController {
             log.info("创建评论时,未获取到用户信息");
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_INFORMATION_ACQUISITION_FAILED);
         }
+
+        if (Strings.isNullOrEmpty(commentInfo.getContent())) {
+            log.info("评论内容为空");
+            throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
+        }
         CommentEntity entity = commentService.create(context, CommentInfo.formReplyEntity(commentInfo, request, context));
         return Result.ok("回复保存成功", entity.getId());
-    }
-
-    @RequestMapping(value = "/image", method = RequestMethod.GET)
-    public void authImage(HttpServletResponse response, HttpSession session) throws IOException {
-        generateVerification(response, session, commentCodeKey, commentCodeTime);
     }
 
 
@@ -128,8 +133,13 @@ public class CommentController extends BaseController {
             commentService.deleteReplyByCommentId(context, commentInfo.getId());
         }
 
-        String message = entity.getReplyType().equals(ReplyType.comment)?"删除文章评论和回复内容成功":"删除回复内容成功";
+        String message = entity.getReplyType().equals(ReplyType.comment) ? "删除文章评论和回复内容成功" : "删除回复内容成功";
         return Result.ok(message);
     }
 
+
+    @RequestMapping(value = "/image", method = RequestMethod.GET)
+    public void authImage(HttpServletResponse response, HttpSession session) throws IOException {
+        generateVerification(response, session, commentCodeKey, commentCodeTime);
+    }
 }

@@ -297,6 +297,10 @@
         //获取输入内容
         var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
         console.log(oSize);
+        if (oSize === undefined || oSize === '' || oSize === null) {
+            toastr.warning("评论内容不能为空");
+            return
+        }
         var commentId = new Date().getTime();
         //动态创建评论模块
         oHtml = '<div class="comment-show-con clearfix">' +
@@ -392,7 +396,8 @@
         var oAllVal = '回复@' + oHfName;
         var replyId = $(this).parent().parent().parent().parent().children(".hidden_id").attr("id")
         if (oHfVal.replace(/^ +| +$/g, '') === '' || oHfVal === oAllVal) {
-
+            toastr.warning("评论内容不能为空");
+            return
         } else {
             $.getJSON("/json/pl.json", function (data) {
                 var oAt = '';
@@ -419,6 +424,8 @@
                     }
                     oHf = data.hfName;
                 });
+
+
                 var replyIdNumber = new Date().getTime() + 33;
                 var oHtml = '<div class="all-pl-con"><div class="pl-text hfpl-text clearfix">' +
                     '<input type="hidden" id="' + replyIdNumber + '" class="hidden_reply_id">' +
