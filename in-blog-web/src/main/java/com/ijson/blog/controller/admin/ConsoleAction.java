@@ -35,16 +35,16 @@ public class ConsoleAction extends BaseController {
     public ModelAndView indexv2(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/index.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("menu", getMenu(request));
         return view;
     }
 
     @RequestMapping("/welcome/page")
-    public ModelAndView welcome() {
+    public ModelAndView welcome(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/welcome.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("systemInfo", SystemInfo.getSystemInfo());
         WelcomeInfo consoleData = postService.getConsoleData();
         view.addObject("consoleData", consoleData);
@@ -62,9 +62,9 @@ public class ConsoleAction extends BaseController {
 
 
     @RequestMapping("/save/article")
-    public ModelAndView articleAdd() {
+    public ModelAndView articleAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         List<IndexMenuEntity> indexMenu = indexMenuService.findAll();
         view.addObject("indexMenu", indexMenu);
         view.addObject("editData", null);
@@ -73,10 +73,10 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/save/user")
-    public ModelAndView skipUserAdd() {
+    public ModelAndView skipUserAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-user.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         List<RoleEntity> roleAll = roleService.findAll();
         if (CollectionUtils.isEmpty(roleAll)) {
             view.addObject("roles", Lists.newArrayList());
@@ -88,38 +88,38 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/save/blogroll")
-    public ModelAndView skipBlogrollAdd() {
+    public ModelAndView skipBlogrollAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-blogroll.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("editData", null);
         return view;
     }
 
 
     @RequestMapping("/save/header")
-    public ModelAndView skipHeaderAdd() {
+    public ModelAndView skipHeaderAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-header.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("editData", null);
         return view;
     }
 
     @RequestMapping("/save/index/menu")
-    public ModelAndView skipIndexMenuAdd() {
+    public ModelAndView skipIndexMenuAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-index-menu.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("editData", null);
         return view;
     }
 
     @RequestMapping("/save/theme")
-    public ModelAndView skipThemeAdd() {
+    public ModelAndView skipThemeAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-theme.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("editData", null);
         return view;
     }
@@ -148,16 +148,16 @@ public class ConsoleAction extends BaseController {
         view.addObject("adminTheme", ThemeInfo.createList(adminThemeList));
         List<ThemeEntity> viewThemeList = themeAll.stream().filter(k -> k.getType() == ViewOrAdminType.view).collect(Collectors.toList());
         view.addObject("viewTheme", ThemeInfo.createList(viewThemeList));
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
 
     @RequestMapping("/save/auth")
-    public ModelAndView skipAuthAdd() {
+    public ModelAndView skipAuthAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-auth.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         List<AuthEntity> fathers = authService.findFathers("0");
         view.addObject("editData", null);
         view.addObject("fathers", AuthInfo.createAuthList(fathers));
@@ -166,10 +166,10 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/save/role")
-    public ModelAndView skipRoleAdd() {
+    public ModelAndView skipRoleAdd(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-role.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         List<AuthEntity> allAuth = authService.findAll();
         if (CollectionUtils.isEmpty(allAuth)) {
             view.addObject("auths", Maps.newHashMap());
@@ -186,12 +186,12 @@ public class ConsoleAction extends BaseController {
      * @return
      */
     @RequestMapping("/edit/article/{ename}/{shamId}")
-    public ModelAndView skipV2Edit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+    public ModelAndView skipV2Edit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId,HttpServletRequest request) {
         PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
         List<IndexMenuEntity> indexMenu = indexMenuService.findAll();
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-article.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("indexMenu", indexMenu);
         view.addObject("editData", PostInfo.create(entity));
         view.addObject("topic", PostInfo.create(entity).getTopicName());
@@ -199,11 +199,11 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/edit/user/{id}")
-    public ModelAndView skipUserEdit(@PathVariable("id") String id) {
+    public ModelAndView skipUserEdit(@PathVariable("id") String id,HttpServletRequest request) {
         UserEntity internalById = userService.findInternalById(id);
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-user.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         List<RoleEntity> roleAll = roleService.findAll();
         if (CollectionUtils.isEmpty(roleAll)) {
             view.addObject("roles", Lists.newArrayList());
@@ -216,50 +216,50 @@ public class ConsoleAction extends BaseController {
 
 
     @RequestMapping("/edit/blogroll/{id}")
-    public ModelAndView skipBlogrollEdit(@PathVariable("id") String id) {
+    public ModelAndView skipBlogrollEdit(@PathVariable("id") String id,HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-blogroll.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         BlogrollEntity internalById = blogrollService.findInternalById(id);
         view.addObject("editData", BlogrollInfo.create(internalById));
         return view;
     }
 
     @RequestMapping("/edit/header/{id}")
-    public ModelAndView skipHeaderEdit(@PathVariable("id") String id) {
+    public ModelAndView skipHeaderEdit(@PathVariable("id") String id,HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-header.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         HeaderEntity internalById = headerService.findInternalById(id);
         view.addObject("editData", HeaderInfo.create(internalById));
         return view;
     }
 
     @RequestMapping("/edit/index/menu/{id}")
-    public ModelAndView skipIndexMenuEdit(@PathVariable("id") String id) {
+    public ModelAndView skipIndexMenuEdit(@PathVariable("id") String id,HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-index-menu.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         IndexMenuEntity internalById = indexMenuService.findInternalById(id);
         view.addObject("editData", IndexMenuInfo.create(internalById));
         return view;
     }
 
     @RequestMapping("/edit/theme/{id}")
-    public ModelAndView skipThemeEdit(@PathVariable("id") String id) {
+    public ModelAndView skipThemeEdit(@PathVariable("id") String id,HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-theme.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         ThemeEntity internalById = themeService.findInternalById(id);
         view.addObject("editData", ThemeInfo.create(internalById));
         return view;
     }
 
     @RequestMapping("/edit/auth/{id}")
-    public ModelAndView skipAuthEdit(@PathVariable("id") String id) {
+    public ModelAndView skipAuthEdit(@PathVariable("id") String id,HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-auth.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         AuthEntity internalById = authService.findInternalById(id);
         List<AuthEntity> fathers = authService.findFathers("0");
         fathers = fathers.stream().filter(k -> !k.getId().equals(id)).collect(Collectors.toList());
@@ -269,10 +269,10 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/edit/role/{id}")
-    public ModelAndView skipRoleEdit(@PathVariable("id") String id) {
+    public ModelAndView skipRoleEdit(@PathVariable("id") String id,HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-role.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         RoleEntity internalById = roleService.findInternalById(id);
         List<String> authIds = internalById.getAuthIds();
         boolean disabled = false;
@@ -289,11 +289,11 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/edit/draft/{ename}/{shamId}")
-    public ModelAndView skipV2PostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+    public ModelAndView skipV2PostDriftEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId,HttpServletRequest request) {
         PostDraftEntity entity = postDraftService.find(ename, shamId);
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-article.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         List<IndexMenuEntity> indexMenu = indexMenuService.findAll();
         view.addObject("indexMenu", indexMenu);
         if (Objects.nonNull(entity)) {
@@ -308,11 +308,11 @@ public class ConsoleAction extends BaseController {
 
 
     @RequestMapping("/edit/tag/{ename}/{shamId}")
-    public ModelAndView skipTagEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+    public ModelAndView skipTagEdit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId,HttpServletRequest request) {
         TopicEntity entity = topicService.findTopicByShamIdAndEname(ename, shamId);
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/save-tag.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         if (Objects.nonNull(entity)) {
             view.addObject("editData", TopicInfo.create(entity));
         }
@@ -320,11 +320,11 @@ public class ConsoleAction extends BaseController {
     }
 
     @RequestMapping("/view/tag/post/{ename}/{shamId}")
-    public ModelAndView viewTagPOst(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId) {
+    public ModelAndView viewTagPOst(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId,HttpServletRequest request) {
         TopicEntity entity = topicService.findTopicByShamIdAndEname(ename, shamId);
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-tag-article.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         if (Objects.nonNull(entity)) {
             view.addObject("viewData", TopicInfo.create(entity));
         }
@@ -341,7 +341,7 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("user", userService.findUserByEname(context.getEname(), null, null));
         return view;
     }
@@ -356,7 +356,7 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         if (context.getRegSourceType() == RegSourceType.qqReg) {
             view.addObject("user", userService.findByQQOpenId(context.getQqOpenId()));
         } else {
@@ -380,7 +380,7 @@ public class ConsoleAction extends BaseController {
         PostEntity entity = postService.findByShamIdInternal(ename, shamId, true);
         view.addObject("viewData", PostInfo.create(entity));
 
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         view.addObject("user", userService.findUserByEname(context.getEname(), null, null));
         return view;
     }
@@ -394,7 +394,7 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
@@ -407,7 +407,7 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
@@ -421,7 +421,7 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
@@ -434,7 +434,7 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
@@ -447,24 +447,24 @@ public class ConsoleAction extends BaseController {
         if (Objects.isNull(context)) {
             return new ModelAndView(new RedirectView(webCtx));
         }
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
     @RequestMapping("/list/post")
-    public ModelAndView postV2List() {
+    public ModelAndView postV2List(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-article.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
 
     @RequestMapping("/list/draft")
-    public ModelAndView postDriftList() {
+    public ModelAndView postDriftList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-article-draft.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
@@ -474,61 +474,69 @@ public class ConsoleAction extends BaseController {
      * @return
      */
     @RequestMapping("/list/user/draft")
-    public ModelAndView postUserDriftList() {
+    public ModelAndView postUserDriftList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-user-article-draft.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
 
     @RequestMapping("/list/user/post")
-    public ModelAndView postUserList() {
+    public ModelAndView postUserList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-user-article.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
     @RequestMapping("/list/audit/post")
-    public ModelAndView postAuditList() {
+    public ModelAndView postAuditList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-audit-article.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
 
     @RequestMapping("/list/tag")
-    public ModelAndView tagList() {
+    public ModelAndView tagList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-tags.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
     @RequestMapping("/list/header")
-    public ModelAndView headerList() {
+    public ModelAndView headerList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-header.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
     @RequestMapping("/list/index/menu")
-    public ModelAndView indexMenuList() {
+    public ModelAndView indexMenuList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-index-menu.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
         return view;
     }
 
 
     @RequestMapping("/list/theme")
-    public ModelAndView themeList() {
+    public ModelAndView themeList(HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/list-theme.html");
-        addAdminModelAndView(view);
+        addAdminModelAndView(view,request);
+        return view;
+    }
+
+    @RequestMapping("/list/message")
+    public ModelAndView messageList(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/list-message.html");
+        addAdminModelAndView(view,request);
         return view;
     }
 

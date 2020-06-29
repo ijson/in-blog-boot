@@ -84,6 +84,10 @@ public class BaseController {
     @Autowired
     protected ThemeService themeService;
 
+    @Autowired
+    protected ReplyService replyService;
+
+
     @Value("${web.ctx}")
     protected String webCtx;
 
@@ -102,8 +106,10 @@ public class BaseController {
      *
      * @param view
      */
-    protected void addAdminModelAndView(ModelAndView view) {
+    protected void addAdminModelAndView(ModelAndView view, HttpServletRequest request) {
         view.addObject("site", getConfig());
+        //TODO 0L
+        view.addObject("cmtcount", 0L);
     }
 
 

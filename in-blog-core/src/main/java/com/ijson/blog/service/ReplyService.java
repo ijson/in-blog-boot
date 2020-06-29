@@ -14,4 +14,8 @@ public interface ReplyService {
     PageResult<ReplyEntity> find(ReplyQuery replyQuery, Page page);
 
     ReplyEntity save(String content,String shamId,String ename,ReplyEntity entity);
+
+    ReplyEntity find(String id);
+
+    void delete(String id);
 }

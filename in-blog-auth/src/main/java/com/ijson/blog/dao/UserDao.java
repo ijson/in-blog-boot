@@ -17,13 +17,18 @@ public interface UserDao {
 
     UserEntity findById(String id);
 
+    List<UserEntity> findCnameAndAvatarByIds(List<String> ids);
+
     UserEntity findInternalById(String id);
 
     UserEntity findByEname(String ename);
 
+    UserEntity findByCname(String cname);
+
+
     PageResult<UserEntity> find(UserQuery query, Page page);
 
-    Map<String,String> batchCnameByIds(Set<String> userIds);
+    Map<String, String> batchCnameByIds(Set<String> userIds);
 
     UserEntity enable(String id, boolean enable, String userId);
 
@@ -36,5 +41,6 @@ public interface UserDao {
     UserEntity delete(String id, Boolean deleted, String userId);
 
     UserEntity findByQQOpenId(String openId);
+
 }
 

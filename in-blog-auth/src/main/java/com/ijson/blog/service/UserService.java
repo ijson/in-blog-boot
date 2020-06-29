@@ -25,6 +25,8 @@ public interface UserService {
 
     UserEntity findUserByEname(String ename, String email, String mobile);
 
+    UserEntity findUserByCname(String cname);
+
     UserEntity findUserById(String userId);
 
     UserEntity edit(UserEntity entity);

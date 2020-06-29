@@ -1,7 +1,10 @@
 package com.ijson.blog.exception;
 
 /**
- * desc:
+ * desc: 2020年03月06日02:43:06  有写同学不太理解此处为什么将异常都统计到这里,
+ * 后期做国际化的时候,你们会看到有多方便
+ * <p>
+ * <p>
  * version: 6.7
  * Created by cuiyongxu on 2019/7/28 9:17 PM
  */
@@ -79,7 +82,11 @@ public enum BlogBusinessExceptionCode {
     TYPE_CANNOT_BE_EMPTY(200_000_066, "类型不能为空"),
     DATA_IS_EMPTY_OR_DOES_NOT_EXIST(200_000_067, "数据为空或者不存在"),
     FRONTEND_THEME_CANNOT_BE_EMPTY(200_000_068, "前端主题不能为空"),
-    BACKEND_THEME_CANNOT_BE_EMPTY(200_000_069, "后端主题不能为空");
+    BACKEND_THEME_CANNOT_BE_EMPTY(200_000_069, "后端主题不能为空"),
+    USER_CNAME_ALREADY_EXISTS(200_000_070, "该昵称已存在,不允许重复,请修改"),
+    REPLY_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED(200_000_071, "回复不存在或者已删除"),
+    YOU_ARE_NOT_AUTHORIZED_TO_DELETE_THE_CURRENT_COMMENT(200_000_072, "当前评论您无权删除"),
+    CAN_T_REPLY_TO_A_RESPONSE_YOU_SUBMITTED(200_000_073, "不能回复自己提交的回复");
 
     private int code;
     private String message;

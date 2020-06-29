@@ -4,6 +4,8 @@
     <% include("base/web-settings-meta.html"){} %>
     <title>${site.siteName!}-${data.title!}</title>
     <link href="/css/atom-one-dark.min.css" rel="stylesheet">
+    <link href="/comment/style.css" rel="stylesheet">
+    <link href="/comment/comment.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
     <link rel="canonical" href="https://www.ijson.net/article/${data.ename!}/details/${data.shamId!}.html" />
 </head>
@@ -75,11 +77,11 @@
                     <div class="footer-tag clearfix">
                         <div class="pull-left">
                             <%if(data.topics!=null){%>
-                                <i class="fa fa-tags"></i>
+                            <i class="fa fa-tags"></i>
 
-                                <%for(topic in data.topics!){%>
-                                <a href="/tags/${topic.ename}/tags/${topic.shamId}.html" rel="tag">${topic.name}</a>
-                                <%}%>
+                            <%for(topic in data.topics!){%>
+                            <a href="/tags/${topic.ename}/tags/${topic.shamId}.html" rel="tag">${topic.name}</a>
+                            <%}%>
                             <%}%>
                         </div>
 
@@ -109,22 +111,95 @@
 
             <div class="comments" id="comments">
                 <div class="comm-main">
-                    <% if(isEmpty(session.authContext)){%>
-                    <div>您还没有登录，请先<a data-toggle="modal" data-target="#login" href="#"><i class="fa fa-sign-in"></i> 登录</a>或者<a
-                            data-toggle="modal" data-target="#register" href="#"><i class="fa fa-sign-in"></i> 注册</a>后,添加评论
-                    </div>
-                    <%}else{%>
-                    <textarea cols="80" rows="50" placeholder=" 在这里发表你对此文的观点,最多300个字哟~~" class="mytextarea" id="content"
-                              maxlength="300"></textarea>
+                    <div class="commentAll">
+                        <% if(isEmpty(session.authContext)){%>
+                        <div>您还没有登录，请先<a data-toggle="modal" data-target="#login" href="#"><i class="fa fa-sign-in"></i>
+                            登录</a>或者<a
+                                data-toggle="modal" data-target="#register" href="#"><i class="fa fa-sign-in"></i>
+                            注册</a>后,添加评论
+                        </div>
+                        <%}else{%>
+                        <!--评论区域 begin-->
+                        <div class="reviewArea clearfix">
+                            <textarea class="content comment-input" placeholder="请输入评论内容&hellip;"
+                                      onkeyup="keyUP(this)"></textarea>
+                            <a href="javascript:;" class="plBtn">评论</a>
+                        </div>
+                        <!--评论区域 end-->
+                        <!--回复区域 begin-->
+                        <%}%>
 
-                    <input type="text" class="form-control pull-right index-list-reply-code" name="replyCode" id="replyCode"
-                           placeholder="验证码">
-                    <img class="pull-right pull-right-verification" id="replyCaptcha"
-                         onclick="this.src = '/reply/image?m=' + Math.floor(Math.random() * 10000);"
-                         src="/reply/image?m=' + Math.floor(Math.random() * 10000);">
-                    <div class="btn btn-success pull-right" id="comment"><i class="fa fa-edit"></i> 发表评论</div>
-                    <%}%>
-                    <div class="comment-list"></div>
+                        <div class="comment-show">
+
+                            <%if(isNotEmpty(hots)){%>
+                            <% for(data in replys){ %>
+                            <%if(data.replyType=='comment'){%>
+                            <div class="comment-show-con clearfix">
+                                <input type="hidden" id="${data.id}" class="hidden_id" value="${data.id}">
+                                <div class="comment-show-con-img pull-left"><img src="${data.userAvatar}" alt=""></div>
+                                <div class="comment-show-con-list pull-left clearfix">
+                                    <div class="pl-text clearfix">
+                                        <a href="#" class="comment-size-name">${data.userCname} : </a>
+                                        <span class="my-pl-con">&nbsp;${data.content}</span>
+                                    </div>
+                                    <div class="date-dz">
+                                        <span class="date-dz-left pull-left comment-time">${data.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
+                                        <div class="date-dz-right pull-right comment-pl-block">
+                                            <% if(!isEmpty(session.authContext)){%>
+                                            <a href="javascript:;" class="removeBlock"
+                                               onclick="deleteCR('${data.id}',0)">删除</a>
+                                            <a href="javascript:;"
+                                               class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
+                                            <span class="pull-left date-dz-line">|</span>
+                                            <%}%>
+                                            <a href="javascript:;" class="date-dz-z pull-left"
+                                               onclick="praiseCR('${data.id}',0)"><i
+                                                    class="date-dz-z-click-red"></i>赞 (<i
+                                                    class="z-num">${data.praise}</i>)</a>
+                                        </div>
+                                    </div>
+
+                                    <%
+                                    var childCount = 0;
+                                    for(child in replys){ %>
+
+                                    <%if(child.replyId==data.id){ childCount++;%>
+                                    <div class="hf-list-con" style="display: block;">
+                                        <div class="all-pl-con">
+                                            <div class="pl-text hfpl-text clearfix">
+                                                <input type="hidden" id="${child.id}" class="hidden_reply_id"
+                                                       value="${child.id}">
+                                                <a href="#" class="comment-size-name">${child.userCname}
+                                                    : </a><span class="my-pl-con">回复<a href="#" class="atName">@${data.userCname} </a>:${child.content}</span>
+                                            </div>
+                                            <div class="date-dz"><span class="date-dz-left pull-left comment-time">${child.createTime!,dateFormat="yyyy-MM-dd HH:mm"}</span>
+                                                <div class="date-dz-right pull-right comment-pl-block">
+                                                    <% if(!isEmpty(session.authContext)){%>
+                                                    <a href="javascript:;" class="removeBlock"
+                                                       onclick="deleteCR('${child.id}',0)">删除</a>
+                                                    <!--                                                                        <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>-->
+                                                    <!--                                                                        <span class="pull-left date-dz-line">|</span>-->
+                                                    <%}%>
+                                                    <a href="javascript:;" class="date-dz-z pull-left"
+                                                       onclick="praiseCR('${child.id}',0)"><i
+                                                            class="date-dz-z-click-red"></i>赞 (<i class="z-num">${child.praise}</i>)</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+
+                                    <%}%>
+                                    <%if(childCount==0){%>
+                                    <div class="hf-list-con"></div>
+                                    <%}%>
+                                </div>
+                            </div>
+                            <%}%>
+                            <%}%>
+                            <%}%>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -150,8 +225,8 @@
 
 <% include("base/web-settings-bottom.html"){} %>
 <script src="/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
-<script src="/js/jquery.comment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+<script type="text/javascript" src="/js/jquery.flexText.js"></script>
 
 <script>
     hljs.initHighlightingOnLoad();
@@ -183,7 +258,7 @@
 
     function getCookie(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr = document.cookie.match(reg)) {
+        if (arr === document.cookie.match(reg)) {
             return unescape(arr[2]);
         } else {
             return null;
@@ -197,98 +272,327 @@
 
 <%if(site.openCmt){%>
 <script>
+    function toastrwarn(message) {
+        toastr.warning(message)
+    }
+</script>
 
-
-    var im = 'https://data.ijson.net/avatar.jpg';
-    //初始化数据
+<!--textarea高度自适应-->
+<script type="text/javascript">
     $(function () {
+        $('.content').flexText();
+    });
+</script>
+<!--textarea限制字数-->
+<script type="text/javascript">
+    function keyUP(t) {
+        var len = $(t).val().length;
+        if (len > 139) {
+            $(t).val($(t).val().substring(0, 140));
+        }
+    }
+</script>
 
-        var params = {
-            index: 1
-        };
+<% if(!isEmpty(session.authContext)){%>
+<!--点击评论创建评论条-->
+<script type="text/javascript">
+    $('.commentAll').on('click', '.plBtn', function () {
+        var myDate = new Date();
+        //获取当前年
+        var year = myDate.getFullYear();
+        //获取当前月
+        var month = myDate.getMonth() + 1;
+        //获取当前日
+        var date = myDate.getDate();
+        var h = myDate.getHours();       //获取当前小时数(0-23)
+        var m = myDate.getMinutes();     //获取当前分钟数(0-59)
+        if (m < 10) m = '0' + m;
+        var s = myDate.getSeconds();
+        if (s < 10) s = '0' + s;
+        var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s;
+        //获取输入内容
+        var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
+        console.log(oSize);
+        if (oSize === undefined || oSize === '' || oSize === null) {
+            toastr.warning("评论内容不能为空");
+            return
+        }
+        var commentId = new Date().getTime();
+        //动态创建评论模块
+        oHtml = '<div class="comment-show-con clearfix">' +
+            '<input type="hidden" id="' + commentId + '" class="hidden_id">' +
+            '<div class="comment-show-con-img pull-left"><img src="${user.avatar!}" alt=""></div> ' +
+            '<div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> ' +
+            '<a href="#" class="comment-size-name">${user.cname!} : </a> <span class="my-pl-con">&nbsp;' + oSize + '</span> </div> ' +
+            '<div class="date-dz"> <span class="date-dz-left pull-left comment-time">' + now + '</span> ' +
+            '<div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock" onclick="deleteCR(' + commentId + ',1)">删除</a> ' +
+            '<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> ' +
+            '<a href="javascript:;" class="date-dz-z pull-left" onclick="praiseCR(' + commentId + ',1)"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div>' +
+            '<div class="hf-list-con"></div></div> </div>';
+        if (oSize.replace(/(^\s*)|(\s*$)/g, "") !== '') {
+            $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
+            $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value', '').siblings('pre').find('span').text('');
+        }
 
         $.ajax({
             cache: false,
             type: "POST",
             contentType: 'application/json',
-            url: "/reply/${data.ename}/replys/${data.shamId}",
-            async: false,
-            data: params,
+            url: "/comment/save/",
+            async: true,
+            data: JSON.stringify({
+                content: oSize,
+                ename: '${data.ename}',
+                shamId: '${data.shamId}',
+                replyType: 'comment',
+                postId: '${data.id}',
+                userId: '${data.userId}'
+            }),
             success: function (data) {
-                $(".comment-list").addCommentList({data: data.reply, add: ""});
+                if (data.code === 0) {
+                    $("#" + commentId).val(data.result)
+                    toastr.success(data.message);
+                } else {
+                    toastr.warning(data.message);
+                }
             },
             error: function (data) {
                 toastr.error(data.message);
             }
         });
 
-        /*
-        {
-            id: 3,
-            img: im,
-            replyName: "帅大叔",
-            beReplyName: "匿名",
-            content: "同学聚会，看到当年追我的屌丝开着宝马车带着他老婆来了，他老婆是我隔壁宿舍的同班同学，心里后悔极了。",
-            time: "2017-10-17 11:42:53",
-            address: "深圳",
-            osname: "win10",
-            browse: "谷歌",
-            replyBody: []
+
+    });
+</script>
+<!--点击回复动态创建回复块-->
+<script type="text/javascript">
+    $('.comment-show').on('click', '.pl-hf', function () {
+        //获取回复人的名字
+        var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
+        //回复@
+        var fhN = '回复@' + fhName;
+        //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
+        var fhHtml = '<div class="hf-con pull-left"> <textarea class="content comment-input hf-input" placeholder="" onkeyup="keyUP(this)"></textarea> <a href="javascript:;" class="hf-pl">评论</a></div>';
+        //显示回复
+        if ($(this).is('.hf-con-block')) {
+            $(this).parents('.date-dz-right').parents('.date-dz').append(fhHtml);
+            $(this).removeClass('hf-con-block');
+            $('.content').flexText();
+            $(this).parents('.date-dz-right').siblings('.hf-con').find('.pre').css('padding', '6px 15px');
+            //console.log($(this).parents('.date-dz-right').siblings('.hf-con').find('.pre'))
+            //input框自动聚焦
+            $(this).parents('.date-dz-right').siblings('.hf-con').find('.hf-input').val('').focus().val(fhN);
+        } else {
+            $(this).addClass('hf-con-block');
+            $(this).parents('.date-dz-right').siblings('.hf-con').remove();
         }
-         */
-
-        $("#comment").click(function () {
-
-            var contentValue = $("#content").val();
-            var replyCode = $("#replyCode").val();
-            if (contentValue == null || contentValue === '' || contentValue === undefined) {
-                toastr.error("请输入评论内容");
-                return
-            }
-
-            if (replyCode == null || replyCode === '' || replyCode === undefined) {
-                toastr.error("请输入验证码");
-                return
-            }
-
-            var obj = {
-                img: '${session.authContext.avatar!}',
-                postId: '${data.id}',
-                replyName: "${session.authContext.cname!}",
-                content: contentValue,
-                replyBody: [],
-                replyCode: replyCode
-            };
-
-            $.ajax({
-                cache: false,
-                type: "POST",
-                contentType: 'application/json',
-                url: "/reply/${data.ename}/${data.shamId}/save",
-                async: false,
-                data: JSON.stringify(obj),
-                success: function (data) {
-                    if (data.code !== undefined && data.code >= 200000013) {
-                        toastr.error(data.message);
+    });
+</script>
+<!--评论回复块创建-->
+<script type="text/javascript">
+    $('.comment-show').on('click', '.hf-pl', function () {
+        var oThis = $(this);
+        var myDate = new Date();
+        //获取当前年
+        var year = myDate.getFullYear();
+        //获取当前月
+        var month = myDate.getMonth() + 1;
+        //获取当前日
+        var date = myDate.getDate();
+        var h = myDate.getHours();       //获取当前小时数(0-23)
+        var m = myDate.getMinutes();     //获取当前分钟数(0-59)
+        if (m < 10) m = '0' + m;
+        var s = myDate.getSeconds();
+        if (s < 10) s = '0' + s;
+        var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s;
+        //获取输入内容
+        var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
+        console.log(oHfVal)
+        var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
+        var oAllVal = '回复@' + oHfName;
+        var replyId = $(this).parent().parent().parent().parent().children(".hidden_id").attr("value");
+        if (oHfVal.replace(/^ +| +$/g, '') === '' || oHfVal === oAllVal) {
+            toastr.warning("评论内容不能为空");
+            return
+        } else {
+            $.getJSON("/json/pl.json", function (data) {
+                var oAt = '';
+                var oHf = '';
+                $.each(data, function (n, v) {
+                    delete v.hfContent;
+                    delete v.atName;
+                    var arr;
+                    var ohfNameArr;
+                    if (oHfVal.indexOf("@") === -1) {
+                        data['atName'] = '';
+                        data['hfContent'] = oHfVal;
                     } else {
-                        $("#content").val('');
-                        $(".comment-list").addCommentList({data: data, add: obj});
+                        arr = oHfVal.split(':');
+                        ohfNameArr = arr[0].split('@');
+                        data['hfContent'] = arr[1];
+                        data['atName'] = ohfNameArr[1];
                     }
 
-                    $("#replyCode").val('');
-                    var replyCaptcha = document.getElementById("replyCaptcha");
-                    replyCaptcha.src = '/reply/image?m=' + Math.floor(Math.random() * 10000);
+                    if (data.atName === '') {
+                        oAt = data.hfContent;
+                    } else {
+                        oAt = '回复<a href="#" class="atName">@' + data.atName + '</a>:' + data.hfContent;
+                    }
+                    oHf = data.hfName;
+                });
 
-                },
-                error: function (data) {
-                    toastr.error(data.message);
-                }
+
+                var replyIdNumber = new Date().getTime() + 33;
+                var oHtml = '<div class="all-pl-con"><div class="pl-text hfpl-text clearfix">' +
+                    '<input type="hidden" id="' + replyIdNumber + '" class="hidden_reply_id">' +
+                    '<a href="#" class="comment-size-name">${user.cname} : </a><span class="my-pl-con">' + oAt + '</span></div><div class="date-dz"> ' +
+                    '<span class="date-dz-left pull-left comment-time">' + now + '</span> ' +
+                    '<div class="date-dz-right pull-right comment-pl-block"> ' +
+                    '<a href="javascript:;" class="removeBlock" onclick="deleteCR(' + replyIdNumber + ',1)">删除</a> ' +
+                    //'<a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> ' +
+                    // '<span class="pull-left date-dz-line">|</span> ' +
+                    '<a href="javascript:;" class="date-dz-z pull-left" onclick="praiseCR(' + replyIdNumber + ',1)"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div></div>';
+                oThis.parents('.hf-con')
+                    .parents('.comment-show-con-list')
+                    .find('.hf-list-con')
+                    .css('display', 'block')
+                    .prepend(oHtml) && oThis.parents('.hf-con').siblings('.date-dz-right').find('.pl-hf').addClass('hf-con-block') && oThis.parents('.hf-con').remove();
+
+                // console.log("replyId:"+replyId)
+                // console.log("content:"+data.hfContent)
+                // console.log("ename:${data.ename}")
+                // console.log("shamId:${data.shamId}")
+                // console.log("postId:${data.id}")
+                // console.log("replyType:reply")
+                // console.log("userId:${session.authContext.id}")
+
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "/comment/save/reply",
+                    async: true,
+                    data: JSON.stringify({
+                        content: data.hfContent,
+                        ename: '${data.ename}',
+                        shamId: '${data.shamId}',
+                        replyType: 'reply',
+                        postId: '${data.id}',
+                        userId: '${data.userId}',
+                        replyId: replyId
+                    }),
+                    success: function (data) {
+                        if (data.code === 0) {
+                            $("#" + replyIdNumber).val(data.result)
+                            toastr.success(data.message);
+                        } else {
+                            toastr.warning(data.message);
+                        }
+                    },
+                    error: function (data) {
+                        toastr.error(data.message);
+                    }
+                });
+
             });
+        }
+    });
+</script>
+<!--删除评论块-->
+<script type="text/javascript">
+    $('.commentAll').on('click', '.removeBlock', function () {
+        //var childId = $(this).parent().parent().parent().children(".hfpl-text").children(".hidden_reply_id").attr("value")
+        var oT = $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con');
+        // debugger
+        if (oT.siblings('.all-pl-con').length >= 1) {
+            oT.remove();
+        } else {
+            $(this).parents('.date-dz-right').parents('.date-dz').parents('.all-pl-con').parents('.hf-list-con').css('display', 'none')
+            oT.remove();
+        }
+        $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').remove();
 
 
-            //$(".comment-list").addCommentList({data: [], add: obj});
+    });
+
+    function deleteCR(id, flag) {
+        if (flag === 1) {
+            id = $("#" + id).val()
+        }
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/comment/delete",
+            async: true,
+            data: JSON.stringify({
+                id: id
+            }),
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.warning(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
         });
-    })
+    }
+</script>
+<%}%>
+
+<!--点赞-->
+<script type="text/javascript">
+    $('.comment-show').on('click', '.date-dz-z', function () {
+        var zNum = $(this).find('.z-num').html();
+        if ($(this).is('.date-dz-z-click')) {
+            zNum--;
+            $(this).removeClass('date-dz-z-click red');
+            $(this).find('.z-num').html(zNum);
+            $(this).find('.date-dz-z-click-red').removeClass('red');
+        } else {
+            zNum++;
+            $(this).addClass('date-dz-z-click');
+            $(this).find('.z-num').html(zNum);
+            $(this).find('.date-dz-z-click-red').addClass('red');
+        }
+    });
+
+    function praiseCR(id, flag) {
+        if (flag === 1) {
+            id = $("#" + id).val()
+        }
+
+        var crprais = getCookie('cr' + "_" + id + "_praise");
+        if (crprais) {
+            toastr.warning('您已经支持过了');
+            return;
+        }
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            contentType: 'application/json',
+            url: "/comment/praise",
+            async: true,
+            data: JSON.stringify({
+                id: id
+            }),
+            success: function (data) {
+                if (data.code === 0) {
+                    toastr.success(data.message);
+                } else {
+                    toastr.warning(data.message);
+                }
+            },
+            error: function (data) {
+                toastr.error(data.message);
+            }
+        });
+    }
+
 </script>
 <%}%>
 

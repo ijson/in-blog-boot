@@ -18,5 +18,6 @@ public class ReplyQuery {
 	private String ename;
 	private String shamId;
 
+
 }
 

@@ -82,6 +82,23 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <!-- fonts file cannot use filter as the data structure of byte file will be changed via filter -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>static/font-awesome/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>static/font-awesome/**</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 

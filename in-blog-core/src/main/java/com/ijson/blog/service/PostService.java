@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface PostService {
 
-    PostEntity createPost(AuthContext context,PostEntity entity);
+    PostEntity create(AuthContext context, PostEntity entity);
 
     PageResult<PostEntity> find(AuthContext context,PostQuery iquery, Page page);
 

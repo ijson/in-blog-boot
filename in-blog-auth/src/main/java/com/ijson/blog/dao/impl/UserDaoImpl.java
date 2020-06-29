@@ -15,10 +15,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -131,6 +128,15 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     }
 
     @Override
+    public List<UserEntity> findCnameAndAvatarByIds(List<String> ids) {
+        Query<UserEntity> query = datastore.createQuery(UserEntity.class);
+        query.field(UserEntity.Fields.enable).equal(true);
+        query.field(UserEntity.Fields.id).hasAnyOf(new HashSet<>(ids));
+        query.retrievedFields(true, UserEntity.Fields.cname,UserEntity.Fields.id, UserEntity.Fields.avatar);
+        return query.asList();
+    }
+
+    @Override
     public UserEntity findInternalById(String id) {
         Query<UserEntity> query = datastore.createQuery(UserEntity.class);
         query.field(UserEntity.Fields.id).equal(id);
@@ -141,8 +147,17 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
     public UserEntity findByEname(String ename) {
         Query<UserEntity> query = datastore.createQuery(UserEntity.class);
         query.field(UserEntity.Fields.ename).equal(ename);
-        query.field(UserEntity.Fields.deleted).equal(false);
-        query.field(UserEntity.Fields.enable).equal(true);
+        //query.field(UserEntity.Fields.deleted).equal(false);
+        //query.field(UserEntity.Fields.enable).equal(true);
+        return query.get();
+    }
+
+    @Override
+    public UserEntity findByCname(String cname) {
+        Query<UserEntity> query = datastore.createQuery(UserEntity.class);
+        query.field(UserEntity.Fields.cname).equal(cname);
+        //query.field(UserEntity.Fields.deleted).equal(false);
+        //query.field(UserEntity.Fields.enable).equal(true);
         return query.get();
     }
 

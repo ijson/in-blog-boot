@@ -45,6 +45,7 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
         operations.set(ReplyEntity.Fields.userId, entity.getUserId());
         operations.set(ReplyEntity.Fields.postId, entity.getPostId());
         operations.set(ReplyEntity.Fields.content, entity.getContent());
+        operations.set(ReplyEntity.Fields.fatherId, entity.getFatherId());
 
         return datastore.findAndModify(query, operations);
     }
@@ -53,12 +54,7 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
     public ReplyEntity find(String id) {
         Query<ReplyEntity> query = datastore.createQuery(ReplyEntity.class);
         query.field(ReplyEntity.Fields.id).equal(id);
-        ReplyEntity entity = query.get();
-        if (!Objects.isNull(entity)) {
-            return entity;
-        } else {
-            throw new RuntimeException("数据不存在或已删除");
-        }
+        return query.get();
     }
 
     @Override
@@ -88,6 +84,14 @@ public class ReplyDaoImpl extends AbstractDao<ReplyEntity> implements ReplyDao {
 
         if (!Strings.isNullOrEmpty(iquery.getShamId())) {
             query.field(ReplyEntity.Fields.shamId).equal(iquery.getShamId());
+        }
+
+        if (!Strings.isNullOrEmpty(iquery.getContent())) {
+            query.field(ReplyEntity.Fields.content).containsIgnoreCase(iquery.getContent());
+        }
+
+        if (!Strings.isNullOrEmpty(iquery.getUserId())) {
+            query.field(ReplyEntity.Fields.createdBy).equal(iquery.getUserId());
         }
 
         query.field(ReplyEntity.Fields.deleted).equal(false);
