@@ -1,14 +1,11 @@
 package com.ijson.blog.service;
 
-import com.ijson.blog.dao.ReplyDao;
-import com.ijson.blog.dao.entity.ReplyEntity;
+import com.ijson.blog.dao.CommentDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 /**
  * desc:
@@ -20,13 +17,11 @@ import java.util.List;
 public class ReplyDaoTest {
 
     @Autowired
-    private ReplyDao replyDao;
+    private CommentDao commentDao;
 
     @Test
     public void updateShamId() {
-        List<ReplyEntity> allTest = replyDao.findAllTest();
-        for (ReplyEntity entity : allTest) {
-            replyDao.updateShamIdTest(entity);
-        }
+        long data = commentDao.countAll();
+        System.out.println("===>" + data);
     }
 }
