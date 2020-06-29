@@ -14,8 +14,8 @@ import java.util.Objects;
 @Indexes({
         @Index(name = "R_ENAME_SHAMID",
                 fields = {
-                        @Field(value = ReplyEntity.Fields.ename),
-                        @Field(value = ReplyEntity.Fields.shamId)
+                        @Field(value = CommentEntity.Fields.ename),
+                        @Field(value = CommentEntity.Fields.shamId)
                 })
 })
 public class CommentEntity extends BaseEntity {
