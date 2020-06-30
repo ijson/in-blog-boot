@@ -14,6 +14,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.14.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.ijson</groupId>
             <artifactId>in-blog-remote</artifactId>
             <version>1.0.1-SNAPSHOT</version>
