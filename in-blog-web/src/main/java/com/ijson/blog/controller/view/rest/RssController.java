@@ -1,5 +1,6 @@
 package com.ijson.blog.controller.view.rest;
 
+import com.google.common.base.Strings;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.service.model.info.PostInfo;
@@ -44,6 +45,11 @@ public class RssController extends BaseController {
 
     @RequestMapping("/article")
     public String article(@RequestParam("en") String en, @RequestParam("sid") String sid) {
+
+        if (Strings.isNullOrEmpty(en) || Strings.isNullOrEmpty(sid)) {
+            return "";
+        }
+
         PostEntity entity = postService.findByShamIdInternal(en, sid, false);
 
         if (Objects.nonNull(entity)) {
