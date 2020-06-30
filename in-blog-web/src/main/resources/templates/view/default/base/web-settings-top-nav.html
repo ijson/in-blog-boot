@@ -24,7 +24,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <%
                 if(isEmpty(session.authContext)){%>
-                    <li><a data-toggle="modal"  data-target="#login" href="#"><i class="fa fa-sign-in"></i> 登录</a></li>
+                    <li><a data-toggle="modal"  data-target="#login" href="#" onclick="loadQQJs('https://connect.qq.com/qc_jssdk.js','${site.appId!}','${site.qqCallBackUrl!}',function(){});"><i class="fa fa-sign-in"></i> 登录</a></li>
 
 
                     <%if(site.openReg){%>

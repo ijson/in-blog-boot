@@ -71,8 +71,8 @@ public class UserAction extends BaseController {
 
 
         UserEntity entity = userService.findInternalById(myUser.getId());
-        if (Objects.nonNull(entity)) {
-            throw new BlogLoginException(BlogBusinessExceptionCode.USER_CNAME_ALREADY_EXISTS);
+        if (Objects.isNull(entity)) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.USER_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
         }
 
         entity.setPassword(myUser.getPassword());

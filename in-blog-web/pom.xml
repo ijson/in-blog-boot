@@ -88,14 +88,14 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>static/font-awesome/**</exclude>
+                    <exclude>static/**</exclude>
                 </excludes>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>static/font-awesome/**</include>
+                    <include>static/**</include>
                 </includes>
             </resource>
         </resources>
