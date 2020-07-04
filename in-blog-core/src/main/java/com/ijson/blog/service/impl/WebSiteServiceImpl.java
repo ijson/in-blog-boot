@@ -37,6 +37,8 @@ public class WebSiteServiceImpl implements WebSiteService {
             entity.setType(Constant.ConfigType.site);
         }
         entity.setRegRoleId(post.getRegRoleId());
+        entity.setSiteCopyRight(post.getSiteCopyRight());
+        entity.setSiteDesc(post.getSiteDesc());
         entity.setSiteName(post.getSiteName());
         return configDao.updateWebSite(entity);
     }

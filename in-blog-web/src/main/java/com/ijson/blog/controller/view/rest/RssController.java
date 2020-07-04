@@ -39,9 +39,9 @@ public class RssController extends BaseController {
             feed.setTitle(getConfig().getSiteName());
             feed.setLink(webCtx);
             //TODO 设置描述,版权
-            feed.setDescription("IBO 开源博客");
+            feed.setDescription(getConfig().getSiteDesc());
             feed.setEncoding("UTF-8");
-            feed.setCopyright("IJSON");
+            feed.setCopyright(getConfig().getSiteCopyRight());
             feed.setWebMaster(getBlogAdminUser(request).getEmail());
             List<PostEntity> dataList = pageResult.getDataList();
             List<SyndEntry> entries = Lists.newArrayList();
