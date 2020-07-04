@@ -51,10 +51,27 @@ Official site: https://www.ijson.net
 * Home module customization
 * Multi-theme management in the background
 * QQ Login
+* Support article image zoom
+* Support article secondary comments (like, delete, reply)
 
 
 # Home Preview
 
+
+# 2.0.0 Comment system optimization
+ 
+> After login
+
+![Page display after login](https://oscimg.oschina.net/oscnet/up-b5a33806823dde5521c092504e5f141d25d.png)
+
+> No login interface
+
+![Unsigned page display](https://oscimg.oschina.net/oscnet/up-5025ace2d0d3bafc2ea648f1f982bc451f5.png)
+
+
+# 2.0.0 Support picture zoom
+
+![Image zoom](https://oscimg.oschina.net/oscnet/up-3d27d1563be50d381d8be3c196e5284fe26.png)  
 
 # 1.1.4 Add multiple background themes
 
