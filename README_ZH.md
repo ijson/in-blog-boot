@@ -51,11 +51,28 @@
 * 首页菜单自定义
 * 后台多主题管理
 * QQ 登录
-
+* 支持文章图片缩放
+* 支持文章二级评论(点赞,删除,回复)
 
 
 
 # 首页预览
+
+# 2.0.0 评论系统优化
+ 
+> 登录后界面
+
+![登录后页面展示](https://oscimg.oschina.net/oscnet/up-b5a33806823dde5521c092504e5f141d25d.png)
+
+> 未登录界面
+
+![未登录页面展示](https://oscimg.oschina.net/oscnet/up-5025ace2d0d3bafc2ea648f1f982bc451f5.png)
+
+
+# 2.0.0 支持图片缩放
+
+![图片缩放](https://oscimg.oschina.net/oscnet/up-3d27d1563be50d381d8be3c196e5284fe26.png)  
+
 
 
 # 1.1.4 添加多后台主题
