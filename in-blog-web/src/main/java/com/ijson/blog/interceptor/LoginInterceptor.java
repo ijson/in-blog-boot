@@ -44,6 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         stopWatch.lap("cookieValue");
         String remCurrCookie = PassportHelper.getInstance().getRemCurrCookie(request);
         if (Strings.isNullOrEmpty(cookieValue) && Strings.isNullOrEmpty(remCurrCookie)) {
+            request.getSession().removeAttribute("authContext");
             response.sendRedirect("/");
             return false;
         }
