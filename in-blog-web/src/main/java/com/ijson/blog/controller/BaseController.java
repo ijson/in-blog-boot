@@ -228,7 +228,7 @@ public class BaseController {
      * @return
      */
     protected ConfigEntity getConfig() {
-        return webSiteService.findAllConfig();
+        return webSiteService.findAllConfig("all");
     }
 
     /**

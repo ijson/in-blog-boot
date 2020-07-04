@@ -17,7 +17,7 @@ public interface WebSiteService {
 
     ConfigEntity updateShowField(String name);
 
-    ConfigEntity findAllConfig();
+    ConfigEntity findAllConfig(String type);
 
     ConfigEntity updateTencent(TencentInfo post);
 

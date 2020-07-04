@@ -17,4 +17,8 @@ public class WebSiteInfo {
     private String siteDesc;
 
     private String siteCopyRight;
+
+    private String siteBulletin;
+
+    private String type;
 }

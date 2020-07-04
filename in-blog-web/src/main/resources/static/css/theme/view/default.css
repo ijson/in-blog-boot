@@ -351,6 +351,11 @@ h6, .h6 {
     background-color: #fecd4c;
 }
 
+.bg-orang-tm {
+    color: #f5daa0;
+    background-color: #fecd4c;
+}
+
 .panel-heading {
     border-radius: 2px 2px 0 0;
 }
@@ -384,6 +389,10 @@ h6, .h6 {
 
 .m-b {
     margin-bottom: 15px;
+}
+
+.m-b-all {
+    margin: 15px;
 }
 
 .thumb-lg {

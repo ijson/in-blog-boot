@@ -11,6 +11,7 @@ import com.ijson.blog.service.model.info.ThemeInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class WebSiteServiceImpl implements WebSiteService {
     @Autowired
     private ConfigDao configDao;
 
+    @CachePut(value = "site",key = "#post.type")
     @Override
     public ConfigEntity updateWebSite(WebSiteInfo post) {
         ConfigEntity entity = configDao.findType(Constant.ConfigType.site);
@@ -40,7 +42,11 @@ public class WebSiteServiceImpl implements WebSiteService {
         entity.setSiteCopyRight(post.getSiteCopyRight());
         entity.setSiteDesc(post.getSiteDesc());
         entity.setSiteName(post.getSiteName());
-        return configDao.updateWebSite(entity);
+        entity.setSiteBulletin(post.getSiteBulletin());
+        configDao.updateWebSite(entity);
+
+        //不使用上面的返回结果 原因是只有site类型的数据  而view需要全部
+        return findAllConfig("all");
     }
 
     @Override
@@ -131,7 +137,7 @@ public class WebSiteServiceImpl implements WebSiteService {
 
     @Cacheable(value = "site")
     @Override
-    public ConfigEntity findAllConfig() {
+    public ConfigEntity findAllConfig(String type) {
         ConfigEntity entity = new ConfigEntity();
 
         List<ConfigEntity> allType = configDao.findAllType();
@@ -143,6 +149,7 @@ public class WebSiteServiceImpl implements WebSiteService {
                 entity.setRegRoleId(k.getRegRoleId());
                 entity.setSiteDesc(k.getSiteDesc());
                 entity.setSiteCopyRight(k.getSiteCopyRight());
+                entity.setSiteBulletin(k.getSiteBulletin());
             }
 
 
@@ -166,13 +173,13 @@ public class WebSiteServiceImpl implements WebSiteService {
                 entity.setQqCallBackUrl(k.getQqCallBackUrl());
             }
 
-            if(k.getType()==Constant.ConfigType.theme){
+            if (k.getType() == Constant.ConfigType.theme) {
                 entity.setAdminThemeEname(k.getAdminThemeEname());
                 entity.setViewThemeEname(k.getViewThemeEname());
             }
         });
 
-        if(Strings.isNullOrEmpty(entity.getViewThemeEname())){
+        if (Strings.isNullOrEmpty(entity.getViewThemeEname())) {
             entity.setViewThemeEname("default");
         }
 

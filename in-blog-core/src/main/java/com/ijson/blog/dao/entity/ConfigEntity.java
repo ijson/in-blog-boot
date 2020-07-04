@@ -77,6 +77,12 @@ public class ConfigEntity {
     @Property(Fields.siteDesc)
     private String siteDesc;
 
+    /**
+     * 公告
+     */
+    @Property(Fields.siteBulletin)
+    private String siteBulletin;
+
 //    @Property(Fields.ename)
 //    private String ename;
 //    @Property(Fields.cname)
@@ -134,6 +140,7 @@ public class ConfigEntity {
 
         String siteCopyRight = "siteCopyRight";
         String siteDesc = "siteDesc";
+        String siteBulletin = "siteBulletin";
 
 //        String ename = "ename";
 //        String cname = "cname";
