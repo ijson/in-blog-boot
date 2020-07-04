@@ -112,45 +112,51 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
     public PageResult<PostEntity> find(PostQuery iquery, Page page, String authorId) {
         Query<PostEntity> query = datastore.createQuery(PostEntity.class);
 
-        if (!Strings.isNullOrEmpty(iquery.getId())) {
-            query.field(PostEntity.Fields.id).equal(iquery.getId());
-        }
+        if (Objects.nonNull(iquery)) {
+            if (!Strings.isNullOrEmpty(iquery.getId())) {
+                query.field(PostEntity.Fields.id).equal(iquery.getId());
+            }
 
-        if (!Strings.isNullOrEmpty(iquery.getTitle())) {
-            if (iquery.isLikeTitle()) {
-                query.or(query.criteria(PostEntity.Fields.title).containsIgnoreCase(iquery.getTitle()),
-                        query.criteria(PostEntity.Fields.content).containsIgnoreCase(iquery.getTitle()));
-            } else {
-                query.field(PostEntity.Fields.title).equal(iquery.getTitle());
+            if (!Strings.isNullOrEmpty(iquery.getTitle())) {
+                if (iquery.isLikeTitle()) {
+                    query.or(query.criteria(PostEntity.Fields.title).containsIgnoreCase(iquery.getTitle()),
+                            query.criteria(PostEntity.Fields.content).containsIgnoreCase(iquery.getTitle()));
+                } else {
+                    query.field(PostEntity.Fields.title).equal(iquery.getTitle());
+                }
+            }
+            query.field(PostEntity.Fields.deleted).equal(false);
+            if (Objects.nonNull(iquery.getEnable())) {
+                query.field(PostEntity.Fields.enable).equal(iquery.getEnable());
+            }
+
+            if (!Strings.isNullOrEmpty(iquery.getIndexMenuEname())) {
+                query.field(PostEntity.Fields.indexMenuEname).equal(iquery.getIndexMenuEname());
+            }
+
+
+            if (iquery.isCurrentUser() && !Strings.isNullOrEmpty(authorId)) {
+                query.field(PostEntity.Fields.createdBy).equal(authorId);
+            }
+
+            if (Objects.nonNull(iquery.getStatus())) {
+                query.field(PostEntity.Fields.status).equal(iquery.getStatus());
+            }
+
+            if (!Strings.isNullOrEmpty(iquery.getTopicId())) {
+                query.field(PostEntity.Fields.topicId).hasThisOne(iquery.getTopicId());
             }
         }
-        query.field(PostEntity.Fields.deleted).equal(false);
-        if (Objects.nonNull(iquery.getEnable())) {
-            query.field(PostEntity.Fields.enable).equal(iquery.getEnable());
+
+        if (Objects.nonNull(page)) {
+            if (page.getOrderBy() == null) {
+                query.order("-" + PostEntity.Fields.lastModifiedTime);//添加排序
+            }
+            if (page.getPageNumber() > 0) {
+                query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
+            }
         }
 
-        if (!Strings.isNullOrEmpty(iquery.getIndexMenuEname())) {
-            query.field(PostEntity.Fields.indexMenuEname).equal(iquery.getIndexMenuEname());
-        }
-
-        if (page.getOrderBy() == null) {
-            query.order("-" + PostEntity.Fields.lastModifiedTime);//添加排序
-        }
-        if (page.getPageNumber() > 0) {
-            query.offset((page.getPageNumber() - 1) * page.getPageSize()).limit(page.getPageSize());
-        }
-
-        if (iquery.isCurrentUser() && !Strings.isNullOrEmpty(authorId)) {
-            query.field(PostEntity.Fields.createdBy).equal(authorId);
-        }
-
-        if (Objects.nonNull(iquery.getStatus())) {
-            query.field(PostEntity.Fields.status).equal(iquery.getStatus());
-        }
-
-        if (!Strings.isNullOrEmpty(iquery.getTopicId())) {
-            query.field(PostEntity.Fields.topicId).hasThisOne(iquery.getTopicId());
-        }
 
         long totalNum = query.countAll();
         List<PostEntity> entities = query.asList();

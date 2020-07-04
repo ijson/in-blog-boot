@@ -2,41 +2,40 @@ package com.ijson.blog.dao.query;
 
 import com.ijson.blog.model.Constant;
 import lombok.Data;
-import java.util.List;
 
 @Data
 public class PostQuery {
 
-	private String id;
+    private String id;
 
-	private String topicId;
+    private String topicId;
 
-	private String userId;
+    private String userId;
 
-	private String content;
+    private String content;
 
-	private long pros;
+    private long pros;
 
-	private long cons;
+    private long cons;
 
-	private String title;
+    private String title;
 
-	private Integer pageSize;
+    private Integer pageSize;
 
-	private Integer pageNumber;
+    private Integer pageNumber;
 
-	private Boolean enable;
+    private Boolean enable;
 
-	private String indexMenuEname;
+    private String indexMenuEname;
 
-	/**
-	 * title like 的查询
-	 */
-	private volatile boolean likeTitle;
+    /**
+     * title like 的查询
+     */
+    private volatile boolean likeTitle;
 
-	private boolean currentUser;
+    private boolean currentUser;
 
-	private Constant.PostStatus status;
+    private Constant.PostStatus status;
 
 }
 

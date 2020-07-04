@@ -1,17 +1,20 @@
 package com.ijson.blog.controller.view.rest;
 
-import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.service.model.info.PostInfo;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.feed.synd.SyndFeedImpl;
+import com.ijson.mongo.support.model.Page;
+import com.ijson.mongo.support.model.PageResult;
+import com.rometools.rome.feed.synd.*;
 import com.rometools.rome.io.SyndFeedOutput;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,44 +28,36 @@ import java.util.Objects;
 public class RssController extends BaseController {
     private static final String RSS_TYPE = "rss_2.0";
 
-    @RequestMapping("/hello")
-    public String hello() {
-        SyndFeed feed = new SyndFeedImpl();
-        feed.setFeedType(RSS_TYPE);
-        feed.setTitle("IBO 开源博客");
-        feed.setLink("https://www.ijson.net");
-        feed.setDescription("blog,ijson,json,springboot,IBO,博客,开源博客,in-blog-boot");
-        feed.setEncoding("UTF-8");
-        try {
-            SyndFeedOutput output = new SyndFeedOutput();
-            return output.outputString(feed);
-        } catch (Exception ex) {
-            log.error("", ex);
-        }
-        return "";
-    }
+    @RequestMapping("/feed")
+    public String feed() {
+        PageResult<PostEntity> pageResult = postService.find(null, null, new Page());
 
-
-    @RequestMapping("/article")
-    public String article(@RequestParam("en") String en, @RequestParam("sid") String sid) {
-
-        if (Strings.isNullOrEmpty(en) || Strings.isNullOrEmpty(sid)) {
-            return "";
-        }
-
-        PostEntity entity = postService.findByShamIdInternal(en, sid, false);
-
-        if (Objects.nonNull(entity)) {
-            PostInfo postInfo = PostInfo.create(entity);
+        if (Objects.nonNull(pageResult) && CollectionUtils.isNotEmpty(pageResult.getDataList())) {
             SyndFeed feed = new SyndFeedImpl();
             feed.setFeedType(RSS_TYPE);
-            feed.setTitle(postInfo.getTitle());
-            feed.setLink("https://www.ijson.net/article/" + en + "/details/" + sid + ".html");
-            feed.setDescription(postInfo.getIntro());
+            feed.setTitle("IBO 开源博客");
+            feed.setLink(webCtx);
+            feed.setDescription("IBO 开源博客");
             feed.setEncoding("UTF-8");
-            feed.setAuthor(en);
             feed.setCopyright("IJSON");
             feed.setWebMaster("414648691@qq.com");
+            List<PostEntity> dataList = pageResult.getDataList();
+            List<SyndEntry> entries = Lists.newArrayList();
+            dataList.forEach(entity -> {
+                PostInfo postInfo = PostInfo.create(entity);
+
+                SyndContent description = new SyndContentImpl();
+                description.setType("text/html");
+                description.setValue(postInfo.getIntro());
+
+                SyndEntry syndEntry = new SyndEntryImpl();
+                syndEntry.setTitle(postInfo.getTitle());
+                syndEntry.setLink(webCtx + "article/" + postInfo.getEname() + "/details/" + postInfo.getShamId() + ".html");
+                syndEntry.setPublishedDate(new Date(postInfo.getCreateTime()));
+                syndEntry.setDescription(description);
+                entries.add(syndEntry);
+            });
+            feed.setEntries(entries);
             try {
                 SyndFeedOutput output = new SyndFeedOutput();
                 return output.outputString(feed);
@@ -70,8 +65,6 @@ public class RssController extends BaseController {
                 log.error("", ex);
             }
         }
-
-
         return "";
     }
 
