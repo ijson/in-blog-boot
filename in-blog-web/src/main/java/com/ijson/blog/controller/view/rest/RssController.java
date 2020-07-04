@@ -13,6 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -29,18 +30,19 @@ public class RssController extends BaseController {
     private static final String RSS_TYPE = "rss_2.0";
 
     @RequestMapping("/feed")
-    public String feed() {
+    public String feed(HttpServletRequest request) {
         PageResult<PostEntity> pageResult = postService.find(null, null, new Page());
 
         if (Objects.nonNull(pageResult) && CollectionUtils.isNotEmpty(pageResult.getDataList())) {
             SyndFeed feed = new SyndFeedImpl();
             feed.setFeedType(RSS_TYPE);
-            feed.setTitle("IBO 开源博客");
+            feed.setTitle(getConfig().getSiteName());
             feed.setLink(webCtx);
+            //TODO 设置描述,版权
             feed.setDescription("IBO 开源博客");
             feed.setEncoding("UTF-8");
             feed.setCopyright("IJSON");
-            feed.setWebMaster("414648691@qq.com");
+            feed.setWebMaster(getBlogAdminUser(request).getEmail());
             List<PostEntity> dataList = pageResult.getDataList();
             List<SyndEntry> entries = Lists.newArrayList();
             dataList.forEach(entity -> {
