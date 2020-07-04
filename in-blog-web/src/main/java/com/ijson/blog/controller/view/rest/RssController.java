@@ -1,5 +1,6 @@
 package com.ijson.blog.controller.view.rest;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
@@ -36,10 +37,9 @@ public class RssController extends BaseController {
         if (Objects.nonNull(pageResult) && CollectionUtils.isNotEmpty(pageResult.getDataList())) {
             SyndFeed feed = new SyndFeedImpl();
             feed.setFeedType(RSS_TYPE);
-            feed.setTitle(getConfig().getSiteName());
+            feed.setTitle(Strings.isNullOrEmpty(getConfig().getSiteName()) ? "IBO" : getConfig().getSiteName());
             feed.setLink(webCtx);
-            //TODO 设置描述,版权
-            feed.setDescription(getConfig().getSiteDesc());
+            feed.setDescription(Strings.isNullOrEmpty(getConfig().getSiteDesc()) ? "IBO" : getConfig().getSiteDesc());
             feed.setEncoding("UTF-8");
             feed.setCopyright(getConfig().getSiteCopyRight());
             feed.setWebMaster(getBlogAdminUser(request).getEmail());

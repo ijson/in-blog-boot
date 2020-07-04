@@ -141,6 +141,8 @@ public class WebSiteServiceImpl implements WebSiteService {
             if (k.getType() == Constant.ConfigType.site) {
                 entity.setSiteName(k.getSiteName());
                 entity.setRegRoleId(k.getRegRoleId());
+                entity.setSiteDesc(k.getSiteDesc());
+                entity.setSiteCopyRight(k.getSiteCopyRight());
             }
 
 
