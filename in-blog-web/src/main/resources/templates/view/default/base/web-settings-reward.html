@@ -1,3 +1,4 @@
+<%if(isNotEmpty(site.sponsor)){%>
 <style>
     .widget {
         clear: both;
@@ -59,13 +60,12 @@
 <div class="widget d_textbanner">
     <div class="style03">
         <strong>赞助开发</strong>
-        <h2>支持一下作者</h2>
+        <h2>支持下作者</h2>
         <p>
-            请留下赞助人姓名和联系人方式，如需帮助，我会优先解决您的问题！
-            <br>
-            您的支持是我们最大的动力！
-            <br>
+            ${site.sponsor}
             <img src="https://data.ijson.net/images/zfb.png">
         </p>
     </div>
 </div>
+<%}%>
+

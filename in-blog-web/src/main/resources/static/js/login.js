@@ -34,7 +34,11 @@ function login() {
             }
         },
         error: function (data) {
-            toastr.error(data.message);
+            if (data.message != null) {
+                toastr.error(data.message);
+            } else {
+                toastr.error("服务发生未知异常,请稍后重试!");
+            }
         }
     });
 }
@@ -151,12 +155,16 @@ function reg() {
             }
         },
         error: function (data) {
-            toastr.error(data.message);
+            if (data.message != null) {
+                toastr.error(data.message);
+            } else {
+                toastr.error("服务发生未知异常,请稍后重试!");
+            }
         }
     });
 }
 
-function loadQQJs(url, appId,redirecturi,callback) {
+function loadQQJs(url, appId, redirecturi, callback) {
     var script = document.createElement('script'), fn = callback || function () {
     };
     script.type = 'text/javascript';
@@ -174,9 +182,9 @@ function loadQQJs(url, appId,redirecturi,callback) {
         };
     }
     script.src = url;
-    script.charset='UTF-8';
-    script.setAttribute("data-appid",appId);
-    script.setAttribute("redirecturi",redirecturi);
+    script.charset = 'UTF-8';
+    script.setAttribute("data-appid", appId);
+    script.setAttribute("redirecturi", redirecturi);
     document.getElementsByTagName('head')[0].appendChild(script);
 
 }

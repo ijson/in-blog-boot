@@ -21,4 +21,6 @@ public class WebSiteInfo {
     private String siteBulletin;
 
     private String type;
+
+    private String sponsor;
 }

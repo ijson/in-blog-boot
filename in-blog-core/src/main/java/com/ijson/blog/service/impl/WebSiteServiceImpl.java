@@ -43,6 +43,7 @@ public class WebSiteServiceImpl implements WebSiteService {
         entity.setSiteDesc(post.getSiteDesc());
         entity.setSiteName(post.getSiteName());
         entity.setSiteBulletin(post.getSiteBulletin());
+        entity.setSponsor(post.getSponsor());
         configDao.updateWebSite(entity);
 
         //不使用上面的返回结果 原因是只有site类型的数据  而view需要全部
@@ -150,6 +151,7 @@ public class WebSiteServiceImpl implements WebSiteService {
                 entity.setSiteDesc(k.getSiteDesc());
                 entity.setSiteCopyRight(k.getSiteCopyRight());
                 entity.setSiteBulletin(k.getSiteBulletin());
+                entity.setSponsor(k.getSponsor());
             }
 
 
