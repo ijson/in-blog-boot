@@ -179,7 +179,7 @@ public class UserAction extends BaseController {
         entity.setFacebook(myUser.getFacebook());
 
         if (Strings.isNullOrEmpty(myUser.getRoleId())) {
-            ConfigEntity allConfig = webSiteService.findAllConfig();
+            ConfigEntity allConfig = webSiteService.findAllConfig("all");
             entity.setRoleId(allConfig.getRegRoleId());
         } else {
             entity.setRoleId(myUser.getRoleId());

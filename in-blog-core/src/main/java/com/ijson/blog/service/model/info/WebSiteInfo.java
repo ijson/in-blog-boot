@@ -13,4 +13,14 @@ public class WebSiteInfo {
     private String siteName;
 
     private String regRoleId;
+
+    private String siteDesc;
+
+    private String siteCopyRight;
+
+    private String siteBulletin;
+
+    private String type;
+
+    private String sponsor;
 }

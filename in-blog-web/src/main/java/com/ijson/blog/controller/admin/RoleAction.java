@@ -91,7 +91,7 @@ public class RoleAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.PERMISSIONS_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
         }
 
-        ConfigEntity configEntity = webSiteService.findAllConfig();
+        ConfigEntity configEntity = webSiteService.findAllConfig("all");
         if (id.equals(configEntity.getRegRoleId())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.PLEASE_MODIFY_THE_WEBSITE_USER_REGISTRATION_ROLE_TO_DISABLE_OR_REMOVE);
         }
@@ -109,7 +109,7 @@ public class RoleAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.ROLE_DOES_NOT_EXIST_OR_HAS_BEEN_DELETED);
         }
 
-        ConfigEntity configEntity = webSiteService.findAllConfig();
+        ConfigEntity configEntity = webSiteService.findAllConfig("all");
         if (id.equals(configEntity.getRegRoleId())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.PLEASE_MODIFY_THE_WEBSITE_USER_REGISTRATION_ROLE_TO_DISABLE_OR_REMOVE);
         }

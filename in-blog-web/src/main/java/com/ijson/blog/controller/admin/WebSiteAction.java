@@ -37,6 +37,7 @@ public class WebSiteAction extends BaseController {
             return Result.error(BlogBusinessExceptionCode.REG_ROLE_CANNOT_BE_EMPTY);
         }
 
+        post.setType("all");
         ConfigEntity entity = webSiteService.updateWebSite(post);
         return Result.ok("保存网站信息成功!");
     }

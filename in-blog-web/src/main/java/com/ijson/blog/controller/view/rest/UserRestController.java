@@ -122,7 +122,7 @@ public class UserRestController extends BaseController {
             }
         }
 
-        ConfigEntity allConfig = webSiteService.findAllConfig();
+        ConfigEntity allConfig = webSiteService.findAllConfig("all");
 
         userService.reg(UserEntity.create(
                 entity.getEname(),

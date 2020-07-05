@@ -71,6 +71,24 @@ public class ConfigEntity {
     @Property(Fields.viewThemeEname)
     private String viewThemeEname;
 
+    @Property(Fields.siteCopyRight)
+    private String siteCopyRight;
+
+    @Property(Fields.siteDesc)
+    private String siteDesc;
+
+    /**
+     * 公告
+     */
+    @Property(Fields.siteBulletin)
+    private String siteBulletin;
+
+    /**
+     * 赞助公告
+     */
+    @Property(Fields.sponsor)
+    private String sponsor;
+
 //    @Property(Fields.ename)
 //    private String ename;
 //    @Property(Fields.cname)
@@ -125,6 +143,11 @@ public class ConfigEntity {
 
         String viewThemeEname = "viewThemeEname";
         String adminThemeEname = "adminThemeEname";
+
+        String siteCopyRight = "siteCopyRight";
+        String siteDesc = "siteDesc";
+        String siteBulletin = "siteBulletin";
+        String sponsor = "sponsor";
 
 //        String ename = "ename";
 //        String cname = "cname";
