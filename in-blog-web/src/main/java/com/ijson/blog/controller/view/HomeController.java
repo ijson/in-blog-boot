@@ -12,6 +12,7 @@ import com.ijson.mongo.support.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,6 +49,37 @@ public class HomeController extends BaseController {
     @RequestMapping("/software/share")
     public ModelAndView software(HttpServletRequest request,Integer index, String keyWord) {
         return getView(request,index, keyWord, "software", "/software/share");
+    }
+
+    @RequestMapping("/menu/{item}")
+    public ModelAndView software(HttpServletRequest request, @PathVariable("item") String item,Integer index, String keyWord) {
+        ModelAndView view = new ModelAndView(getViewTheme() + "/index-menu-item.html");
+
+        Page page = new Page();
+        if (Objects.isNull(index)) {
+            index = 1;
+        }
+        page.setPageNumber(index);
+
+        PostQuery query = new PostQuery();
+        if (!Strings.isNullOrEmpty(keyWord)) {
+            query.setLikeTitle(true);
+            query.setTitle(keyWord);
+        }
+        if (!Strings.isNullOrEmpty(item)) {
+            query.setIndexMenuEname(item);
+        }
+        query.setEnable(true);
+        query.setStatus(Constant.PostStatus.pass);
+        PageResult<PostEntity> result = postService.find(null, query, page);
+
+        view.addObject("total", result.getTotal());
+        view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
+        view.addObject("dataList", PostInfo.indexPost(result, keyWord));
+        view.addObject("path", item);
+        view.addObject("keyWord", keyWord);
+        addViewModelAndView(request,view);
+        return view;
     }
 
 

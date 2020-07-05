@@ -105,8 +105,12 @@ public class BaseController {
      */
     protected void addAdminModelAndView(ModelAndView view, HttpServletRequest request) {
         view.addObject("site", getConfig());
-        //TODO 0L
-        view.addObject("cmtcount", 0L);
+        //TODO 返回当前人 接收到的 评论  回复的总数
+        view.addObject("cmtcount", getCmtCount(request));
+    }
+
+    private Object getCmtCount(HttpServletRequest request) {
+        return null;
     }
 
 
