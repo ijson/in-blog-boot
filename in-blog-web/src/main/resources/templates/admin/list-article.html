@@ -55,8 +55,19 @@
         {{# } }}
 
         <button class="layui-btn layui-btn-danger" lay-event="delete">删除</button>
-        <button class="layui-btn layui-btn-primary" lay-event="top">置顶</button>
-        <button class="layui-btn layui-btn-checked" lay-event="fine">精帖</button>
+        {{# if(d.top){ }}
+            <button class="layui-btn layui-btn-primary" lay-event="top">取消置顶</button>
+        {{# }else{ }}
+            <button class="layui-btn layui-btn-primary" lay-event="top">置顶</button>
+        {{# } }}
+
+        {{# if(d.fine){ }}
+        <button class="layui-btn layui-btn-primary" lay-event="fine">取消精帖</button>
+        {{# }else{ }}
+        <button class="layui-btn layui-btn-primary" lay-event="fine">精帖</button>
+        {{# } }}
+
+
     </div>
 </script>
 
@@ -116,7 +127,7 @@
                 },
                 {field: 'userCname', width: 100, title: "创建人", sort: true},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
-                {field: '', title: "操作", templet: '#operation'}
+                {field: '',width: 300, title: "操作", templet: '#operation'}
 
             ]]
         });

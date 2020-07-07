@@ -288,7 +288,6 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         UpdateOperations<PostEntity> updateOperations = datastore.createUpdateOperations(PostEntity.class);
         updateOperations.set(PostEntity.Fields.top, enable);
         updateOperations.set(PostEntity.Fields.lastModifiedBy, userId);
-        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, updateOperations);
     }
 
@@ -300,7 +299,6 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         UpdateOperations<PostEntity> updateOperations = datastore.createUpdateOperations(PostEntity.class);
         updateOperations.set(PostEntity.Fields.fine, enable);
         updateOperations.set(PostEntity.Fields.lastModifiedBy, userId);
-        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
         return datastore.findAndModify(query, updateOperations);
     }
 
