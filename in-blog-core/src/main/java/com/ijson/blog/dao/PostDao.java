@@ -43,6 +43,10 @@ public interface PostDao {
 
     PostEntity enable(String ename, String shamId, boolean enable, String userId);
 
+    PostEntity top(String ename, String shamId, boolean enable, String userId);
+
+    PostEntity fine(String ename, String shamId, boolean enable, String userId);
+
     PostEntity findByShamIdInternal(String ename, String shamId);
 
     PostEntity findByDraftId(String id);

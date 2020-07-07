@@ -100,6 +100,12 @@ public class PostEntity extends BaseEntity {
     @Property(Fields.indexMenuEname)
     private String indexMenuEname;
 
+    @Property(Fields.top)
+    private boolean top;
+
+    @Property(Fields.fine)
+    private boolean fine;
+
     private long views;
 
     private long reply;
@@ -109,6 +115,7 @@ public class PostEntity extends BaseEntity {
     private volatile String cname;
 
     private volatile boolean isCreate;
+
 
     public interface Fields {
         String id = "_id";
@@ -131,6 +138,8 @@ public class PostEntity extends BaseEntity {
         String reason = "reason";
         String trigger = "trigger";
         String indexMenuEname = "indexMenuEname";
+        String fine = "fine";
+        String top = "top";
     }
 
 

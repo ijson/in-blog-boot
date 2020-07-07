@@ -351,6 +351,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public PostEntity top(AuthContext context, String ename, String shamId, boolean enable) {
+        return postDao.top(ename, shamId, enable, context.getId());
+    }
+
+    @Override
+    public PostEntity fine(AuthContext context, String ename, String shamId, boolean enable) {
+        return postDao.fine(ename, shamId, enable, context.getId());
+    }
+
+    @Override
     public PostEntity findByShamIdInternal(String ename, String shamId, boolean includeTopicAncCount) {
         PostEntity entity = postDao.findByShamIdInternal(ename, shamId);
 

@@ -166,6 +166,41 @@ public class PostAction extends BaseController {
         return Result.ok(reason + "成功");
     }
 
+
+    /**
+     * 置顶
+     *
+     * @param ename
+     * @param shamId
+     * @param post
+     * @param request
+     * @return
+     */
+    @PostMapping("/top/{ename}/{shamId}")
+    public Result top(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+        postService.top(context, ename, shamId, post.isTop());
+        String reason = post.isTop() ? "置顶" : "取消置顶";
+        return Result.ok(reason + "成功");
+    }
+
+    /**
+     * 加精
+     *
+     * @param ename
+     * @param shamId
+     * @param post
+     * @param request
+     * @return
+     */
+    @PostMapping("/fine/{ename}/{shamId}")
+    public Result fine(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
+        AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
+        postService.fine(context, ename, shamId, post.isFine());
+        String reason = post.isFine() ? "精华设置" : "精华取消";
+        return Result.ok(reason + "成功");
+    }
+
     @PostMapping("/audit/{ename}/{shamId}")
     public Result audit(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, @RequestBody PostInfo post, HttpServletRequest request) {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);

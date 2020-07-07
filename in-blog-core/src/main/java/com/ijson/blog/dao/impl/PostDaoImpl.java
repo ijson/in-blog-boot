@@ -281,6 +281,30 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
     }
 
     @Override
+    public PostEntity top(String ename, String shamId, boolean enable, String userId) {
+        Query<PostEntity> query = datastore.createQuery(PostEntity.class);
+        query.field(PostEntity.Fields.ename).equal(ename);
+        query.field(PostEntity.Fields.shamId).equal(shamId);
+        UpdateOperations<PostEntity> updateOperations = datastore.createUpdateOperations(PostEntity.class);
+        updateOperations.set(PostEntity.Fields.top, enable);
+        updateOperations.set(PostEntity.Fields.lastModifiedBy, userId);
+        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+        return datastore.findAndModify(query, updateOperations);
+    }
+
+    @Override
+    public PostEntity fine(String ename, String shamId, boolean enable, String userId) {
+        Query<PostEntity> query = datastore.createQuery(PostEntity.class);
+        query.field(PostEntity.Fields.ename).equal(ename);
+        query.field(PostEntity.Fields.shamId).equal(shamId);
+        UpdateOperations<PostEntity> updateOperations = datastore.createUpdateOperations(PostEntity.class);
+        updateOperations.set(PostEntity.Fields.fine, enable);
+        updateOperations.set(PostEntity.Fields.lastModifiedBy, userId);
+        updateOperations.set(PostEntity.Fields.lastModifiedTime, System.currentTimeMillis());
+        return datastore.findAndModify(query, updateOperations);
+    }
+
+    @Override
     public PostEntity findByShamIdInternal(String ename, String shamId) {
         Query<PostEntity> query = datastore.createQuery(PostEntity.class);
         query.field(PostEntity.Fields.shamId).equal(shamId);
