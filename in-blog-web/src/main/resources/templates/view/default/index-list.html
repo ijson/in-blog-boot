@@ -33,6 +33,20 @@
             %>
                 <div class="blog-post">
 
+                    <% if(data.top==true||data.fine==true){ %>
+                    <div class="post-pro">
+                        <% if(data.top==true){ %>
+                        <span class="post-pro-item pro-item-success">精选</span>
+                        <%}%>
+
+                        <% if(data.fine==true){ %>
+                        <span class="post-pro-item pro-item-warning">置顶</span>
+                        <%}%>
+                    </div>
+
+                    <%}%>
+
+
                     <h4 class="blog-post-title"><a class="blog-a" href="/article/${data.ename}/details/${data.shamId}.html">${data.title}</a>
                     </h4>
                     <p class="blog-post-context">
