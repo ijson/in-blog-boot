@@ -55,25 +55,41 @@
         {{# } }}
 
         <button class="layui-btn layui-btn-danger" lay-event="delete">删除</button>
+        {{# if(d.top){ }}
+            <button class="layui-btn layui-btn-primary" lay-event="top">取消置顶</button>
+        {{# }else{ }}
+            <button class="layui-btn layui-btn-primary" lay-event="top">置顶</button>
+        {{# } }}
+
+        {{# if(d.fine){ }}
+        <button class="layui-btn layui-btn-primary" lay-event="fine">取消精帖</button>
+        {{# }else{ }}
+        <button class="layui-btn layui-btn-primary" lay-event="fine">精帖</button>
+        {{# } }}
+
+
     </div>
 </script>
 
 <style>
-    pass{
+    pass {
         color: #46c571;
     }
-    reject{
+
+    reject {
         color: red;
     }
 </style>
 
 <script type="text/html" id="titleTpl">
     {{# if(d.status=='pass'){ }}
-    [<pass>通过</pass>] {{d.title}}
+    [
+    <pass>通过</pass>] {{d.title}}
     {{# } else if(d.status=='in_progress'){ }}
     [审核中] {{d.title}}
     {{# } else if(d.status=='reject'){ }}
-    [<reject>未通过</reject>] {{d.title}}
+    [
+    <reject>未通过</reject>] {{d.title}}
     {{# }else{ }}
     [未知] {{d.title}}
     {{# } }}
@@ -101,8 +117,8 @@
                 {field: 'shamId', width: 80, hide: true},
                 {field: 'draftId', width: 80, hide: true},
                 {field: 'title', width: 280, title: "[审核状态]标题", templet: '#titleTpl'},
-                {field: 'views', width: 90, title: "阅读数", sort: true},
-                {field: 'pros', width: 90, title: "点赞数", sort: true},
+                {field: 'views', width: 80, title: "阅读", sort: true},
+                {field: 'pros', width: 80, title: "点赞", sort: true},
                 {
                     field: 'lastModifiedTime',
                     width: 170,
@@ -111,7 +127,7 @@
                 },
                 {field: 'userCname', width: 100, title: "创建人", sort: true},
                 {field: 'enable', width: 100, title: "状态", templet: '#switchTpl'},
-                {field: '', title: "操作", templet: '#operation'}
+                {field: '',width: 300, title: "操作", templet: '#operation'}
 
             ]]
         });
@@ -121,7 +137,10 @@
             var item = data.data;
             var ename = item.ename;
             var shamId = item.shamId;
+            var top_v = item.top;
+            var fine_v = item.fine;
 
+            debugger
             switch (data.event) {
                 case 'edit':
                     layer.open({
@@ -170,7 +189,83 @@
                                 }
                             },
                             error: function (data) {
-                                layer.msg(data.message);
+                                if (data.message != null) {
+                                    layer.msg(data.message);
+                                } else {
+                                    layer.msg("未请求到服务端,请检查权限相关配置");
+                                }
+                            }
+                        });
+
+                    }, function () {
+
+                    });
+                    return;
+                case 'top':
+                    layer.confirm('您确定要置顶 ' + item.title + " 吗?", {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            contentType: 'application/json',
+                            url: "/post/top/" + ename + "/" + shamId,
+                            async: false,
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "top": !top_v
+                            }),
+                            success: function (data) {
+                                if (data.code === 0) {
+                                    layer.msg(data.message);
+                                    layui.table.reload('postList');
+                                } else {
+                                    layer.msg(data.message, function () {
+                                    });
+                                }
+                            },
+                            error: function (data) {
+                                if (data.message != null) {
+                                    layer.msg(data.message);
+                                } else {
+                                    layer.msg("未请求到服务端,请检查权限相关配置");
+                                }
+                            }
+                        });
+
+                    }, function () {
+
+                    });
+                    return;
+                case 'fine':
+                    layer.confirm('您确定要设置 ' + item.title + " 为精选吗?", {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            contentType: 'application/json',
+                            url: "/post/fine/" + ename + "/" + shamId,
+                            async: false,
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "fine": !fine_v
+                            }),
+                            success: function (data) {
+                                if (data.code === 0) {
+                                    layer.msg(data.message);
+                                    layui.table.reload('postList');
+                                } else {
+                                    layer.msg(data.message, function () {
+                                    });
+                                }
+                            },
+                            error: function (data) {
+                                if (data.message != null) {
+                                    layer.msg(data.message);
+                                } else {
+                                    layer.msg("未请求到服务端,请检查权限相关配置");
+                                }
                             }
                         });
 
@@ -211,7 +306,11 @@
                     }
                 },
                 error: function (data) {
-                    layer.msg(data.message);
+                    if (data.message != null) {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg("未请求到服务端,请检查权限相关配置");
+                    }
                 }
             });
         });

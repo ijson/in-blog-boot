@@ -19,7 +19,7 @@ public interface PostService {
 
     PostEntity create(AuthContext context, PostEntity entity);
 
-    PageResult<PostEntity> find(AuthContext context,PostQuery iquery, Page page);
+    PageResult<PostEntity> find(AuthContext context, PostQuery iquery, Page page);
 
     List<PostEntity> findHotPostBeforeTen();
 
@@ -45,7 +45,7 @@ public interface PostService {
 
     PostEntity enable(String id, boolean enable, AuthContext context);
 
-    PostEntity delete(String id,AuthContext context);
+    PostEntity delete(String id, AuthContext context);
 
     PostEntity delete(PostEntity entity, AuthContext context);
 
@@ -57,9 +57,14 @@ public interface PostService {
 
     PostEntity enable(String ename, String shamId, boolean enable, AuthContext context);
 
-    PostEntity findByShamIdInternal(String ename, String shamId,boolean includeTopicAncCount);
+    PostEntity top(AuthContext context, String ename, String shamId, boolean enable);
+
+    PostEntity fine(AuthContext context, String ename, String shamId, boolean enable);
+
+    PostEntity findByShamIdInternal(String ename, String shamId, boolean includeTopicAncCount);
 
     PostEntity findByDraftId(String id);
 
     PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, AuthContext context);
+
 }

@@ -53,6 +53,8 @@ public class PostInfo {
 
     private String indexMenuEname;
 
+    private boolean top;
+    private boolean fine;
 
     private void setIntro(String intro) {
         String info = StringEscapeUtils.unescapeHtml(intro).replace("\n", "");
@@ -147,11 +149,18 @@ public class PostInfo {
             post.setReason(key.getReason());
             post.setTrigger(key.getTrigger());
             post.setIndexMenuEname(key.getIndexMenuEname());
+            post.setTop(key.isTop());
+            post.setFine(key.isFine());
             return post;
         }).collect(Collectors.toList());
     }
 
 
+    /**
+     * web页面专用 直接是前端使用
+     * @param result
+     * @return
+     */
     public static List<PostInfo> postList(PageResult<PostEntity> result) {
 
         if (result == null) {
@@ -170,6 +179,8 @@ public class PostInfo {
             post.setReason(key.getReason());
             post.setTrigger(key.getTrigger());
             post.setIndexMenuEname(key.getIndexMenuEname());
+            post.setTop(key.isTop());
+            post.setFine(key.isFine());
             return post;
         }).collect(Collectors.toList());
     }
@@ -229,40 +240,42 @@ public class PostInfo {
         return post;
     }
 
-    public static PostInfo create(PostEntity entity) {
+    public static PostInfo create(PostEntity key) {
         PostInfo post = new PostInfo();
-        post.setId(entity.getId());
-        post.setTitle(entity.getTitle());
-        post.setUserCname(entity.getCname());
-        post.setContent(entity.getContent());
-        post.setCreateTime(entity.getCreateTime());
-        post.setUserId(entity.getUserId());
-        post.setLastModifiedTime(entity.getLastModifiedTime());
-        post.setViews(entity.getViews());
-        post.setPros(entity.getPros());
-        post.setReply(entity.getReply());
-        post.setEname(entity.getEname());
-        post.setIntro(entity.getContent());
-        post.setImageUrl(entity.getContent());
-        post.setEnable(entity.isEnable());
-        post.setShamId(entity.getShamId());
-        post.setDraftId(entity.getDraftId());
-        post.setStatus(entity.getStatus());
-        post.setReason(entity.getReason());
-        post.setTrigger(entity.getTrigger());
-        post.setLastModifiedBy(entity.getLastModifiedBy());
-        post.setIndexMenuEname(entity.getIndexMenuEname());
-        if (CollectionUtils.isNotEmpty(entity.getTopicName())) {
-            post.setTopicName(getTpoicNames(entity.getTopicName()));
-            post.setTopics(entity.getTopicName().stream().map(key -> {
+        post.setId(key.getId());
+        post.setTitle(key.getTitle());
+        post.setUserCname(key.getCname());
+        post.setContent(key.getContent());
+        post.setCreateTime(key.getCreateTime());
+        post.setUserId(key.getUserId());
+        post.setLastModifiedTime(key.getLastModifiedTime());
+        post.setViews(key.getViews());
+        post.setPros(key.getPros());
+        post.setReply(key.getReply());
+        post.setEname(key.getEname());
+        post.setIntro(key.getContent());
+        post.setImageUrl(key.getContent());
+        post.setEnable(key.isEnable());
+        post.setShamId(key.getShamId());
+        post.setDraftId(key.getDraftId());
+        post.setStatus(key.getStatus());
+        post.setReason(key.getReason());
+        post.setTrigger(key.getTrigger());
+        post.setLastModifiedBy(key.getLastModifiedBy());
+        post.setIndexMenuEname(key.getIndexMenuEname());
+        if (CollectionUtils.isNotEmpty(key.getTopicName())) {
+            post.setTopicName(getTpoicNames(key.getTopicName()));
+            post.setTopics(key.getTopicName().stream().map(topKey -> {
                 TopicInfo topic = new TopicInfo();
-                topic.setId(key.getId());
-                topic.setEname(key.getEname());
-                topic.setShamId(key.getShamId());
-                topic.setName(key.getTopicName());
+                topic.setId(topKey.getId());
+                topic.setEname(topKey.getEname());
+                topic.setShamId(topKey.getShamId());
+                topic.setName(topKey.getTopicName());
                 return topic;
             }).collect(Collectors.toList()));
         }
+        post.setTop(key.isTop());
+        post.setFine(key.isFine());
         return post;
     }
 
