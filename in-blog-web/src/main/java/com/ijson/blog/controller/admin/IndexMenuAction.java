@@ -60,7 +60,7 @@ public class IndexMenuAction extends BaseController {
         IndexMenuEntity entity = indexMenuService.findInternalById(myEntity.getId());
 
         entity.setCname(myEntity.getCname());
-        entity.setPath(myEntity.getPath());
+        entity.setPath("/menu/" + myEntity.getPath());
         entity.setOrder(myEntity.getOrder());
         entity.setEname(myEntity.getEname());
 
@@ -75,6 +75,7 @@ public class IndexMenuAction extends BaseController {
         if (all.size() > 6) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.HOME_MENU_SUPPORTS_MAX_OF_SIX_CUSTOM);
         }
+        myEntity.setPath("/menu/" + myEntity.getPath());
         indexMenuService.create(context, myEntity);
         return Result.ok("创建成功!");
     }
