@@ -84,7 +84,7 @@ public class HomeController extends BaseController {
         view.addObject("total", result.getTotal());
         view.addObject("page", new Pageable(((Long) result.getTotal()).intValue(), index));
         view.addObject("dataList", PostInfo.indexPost(result, keyWord));
-        view.addObject("path", item);
+        view.addObject("path", "/menu/"+item);
         view.addObject("keyWord", keyWord);
         addViewModelAndView(request,view);
         return view;
