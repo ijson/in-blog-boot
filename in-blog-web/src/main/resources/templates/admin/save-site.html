@@ -2,7 +2,8 @@
 <head>
     <title>网站设置</title>
     <% include("base/meta.html"){} %>
-
+    <% include("base/ckeditor.html"){} %>
+    <script src="/js/bootstrap3-wysihtml5.all.min.js"></script>
 </head>
 <body style="background-color: #fff">
 
@@ -65,11 +66,26 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">公告信息</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="siteBulletin" id="siteBulletin" autocomplete="off"
-                                                   value="${site.siteBulletin!}"
-                                                   placeholder="请输入公告信息" class="layui-input">
+                                            <textarea id="siteBulletin" name="siteBulletin" rows="10" cols="80"
+                                                      required="required"
+                                                      placeholder="请输入公告信息">${site.siteBulletin!}</textarea>
                                         </div>
                                     </div>
+
+                                    <script>
+                                        $(function () {
+                                            CKEDITOR.replace('siteBulletin', {
+                                                language: 'zh-cn',
+                                                height: 300,
+                                                pasteFromWordRemoveFontStyles: false,
+                                                pasteFromWordRemoveStyles: false,
+                                                forcePasteAsPlainText: false,
+                                                codeSnippet_theme: 'monokai_sublime',
+                                                rememberLastFolder: false
+                                            });
+                                            $('.textarea').wysihtml5();
+                                        })
+                                    </script>
 
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">赞助公告</label>
