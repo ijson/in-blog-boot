@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
+
+# 1. set in-blog-boot dir
 IBO_HOME=/Users/cuiyongxu/workspace/ijson/in-blog-boot
+
+# 2. set tomcat home path
 TOMCAT_HOME=/Users/cuiyongxu/software/tomcat-8.5.58
 cd $IBO_HOME || exit
 
