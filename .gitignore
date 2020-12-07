@@ -34,3 +34,4 @@ logs/
 
 ### in-blog-boot start ###
 *.out
+*.DS_Store
