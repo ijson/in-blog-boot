@@ -4,6 +4,7 @@ import com.ijson.blog.dao.ConfigDao;
 import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.model.Constant;
 import com.ijson.mongo.support.AbstractDao;
+import org.apache.logging.log4j.util.Strings;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class ConfigDaoImpl extends AbstractDao<ConfigEntity> implements ConfigDa
         operations.set(ConfigEntity.Fields.regRoleId, entity.getRegRoleId());
         operations.set(ConfigEntity.Fields.siteCopyRight, entity.getSiteCopyRight());
         operations.set(ConfigEntity.Fields.siteDesc, entity.getSiteDesc());
-        operations.set(ConfigEntity.Fields.siteBulletin, entity.getSiteBulletin());
+        operations.set(ConfigEntity.Fields.siteBulletin, Strings.isEmpty(entity.getSiteBulletin())?"":entity.getSiteBulletin());
         operations.set(ConfigEntity.Fields.sponsor, entity.getSponsor());
         return datastore.findAndModify(query, operations, false, true);
     }

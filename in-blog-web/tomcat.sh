@@ -5,6 +5,10 @@ IBO_HOME=/Users/cuiyongxu/workspace/ijson/in-blog-boot
 
 # 2. set tomcat home path
 TOMCAT_HOME=/Users/cuiyongxu/software/tomcat-8.5.58
+
+IBO_HOME=/home/liyaping/workspace/in-blog-boot
+TOMCAT_HOME=/home/liyaping/develop/blog-tomcat-8.5.60
+
 cd $IBO_HOME || exit
 
 #git pull
