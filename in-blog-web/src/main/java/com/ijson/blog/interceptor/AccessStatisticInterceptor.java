@@ -1,6 +1,7 @@
 package com.ijson.blog.interceptor;
 
 import com.ijson.blog.manager.ViewSyncManager;
+import com.ijson.blog.util.PassportHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
@@ -36,7 +37,7 @@ public class AccessStatisticInterceptor implements WebRequestInterceptor {
 
 
         String nowTime = simpleDateFormat.format(new Date());
-        String ip = httpSelectRequest.getRemoteAddr();
+        String ip = PassportHelper.getIP(httpSelectRequest);
         String method = request.getHttpMethod().name();
         String language = request.getLocale().getLanguage();
         String requestURI = httpSelectRequest.getRequestURI();
