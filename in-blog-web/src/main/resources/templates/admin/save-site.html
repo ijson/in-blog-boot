@@ -63,38 +63,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">公告信息</label>
-                                        <div class="layui-input-inline">
-                                            <textarea id="siteBulletin" name="siteBulletin" rows="10" cols="80"
-                                                      required="required"
-                                                      placeholder="请输入公告信息">${site.siteBulletin!}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <script>
-                                        $(function () {
-                                            CKEDITOR.replace('siteBulletin', {
-                                                language: 'zh-cn',
-                                                height: 300,
-                                                pasteFromWordRemoveFontStyles: false,
-                                                pasteFromWordRemoveStyles: false,
-                                                forcePasteAsPlainText: false,
-                                                codeSnippet_theme: 'monokai_sublime',
-                                                rememberLastFolder: false
-                                            });
-                                            $('.textarea').wysihtml5();
-                                        })
-                                    </script>
-
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">赞助公告</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="sponsor" id="sponsor" autocomplete="off"
-                                                   value="${site.sponsor!}"
-                                                   placeholder="请输入赞助公告" class="layui-input">
-                                        </div>
-                                    </div>
 
                                     <div class="layui-form-item">
                                         <label for="regRoleId" class="layui-form-label"
