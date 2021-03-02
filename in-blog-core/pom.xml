@@ -20,6 +20,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.ijson</groupId>
+            <artifactId>in-rest-proxy</artifactId>
+            <version>1.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-io</artifactId>
+                    <groupId>commons-io</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.20</version>
@@ -117,6 +132,12 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ijson</groupId>
+            <artifactId>in-blog-remote</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
