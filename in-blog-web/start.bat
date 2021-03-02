@@ -33,12 +33,6 @@ cd %IBO_HOME%/in-blog-remote
 call mvn install -Dmaven.test.skip=true
 
 
-@echo build auth
-cd %IBO_HOME%/in-blog-auth
-call mvn install -Dmaven.test.skip=true
-
-
-
 @echo build core
 cd %IBO_HOME%/in-blog-core
 call mvn install -Dmaven.test.skip=true

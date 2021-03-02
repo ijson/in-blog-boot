@@ -329,4 +329,13 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
         return datastore.findAndModify(query, updateOperations);
     }
 
+    @Override
+    public PostEntity updateTagIds(AuthContext context, String articleId, List<String> tagIds) {
+        Query<PostEntity> query = createQuery();
+        query.field(PostEntity.Fields.id).equal(articleId);
+        UpdateOperations operations = createUpdateOperations();
+        operations.set(PostEntity.Fields.topicId, tagIds);
+        return datastore.findAndModify(query, operations);
+    }
+
 }

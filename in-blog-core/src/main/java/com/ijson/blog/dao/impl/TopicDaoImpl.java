@@ -221,5 +221,30 @@ public class TopicDaoImpl extends AbstractDao<TopicEntity> implements TopicDao {
         return query.get();
     }
 
+    @Override
+    public TopicEntity findByTagname(String tagname) {
+        Query<TopicEntity> query = datastore.createQuery(TopicEntity.class);
+        query.field(TopicEntity.Fields.topicName).equalIgnoreCase(tagname);
+        return query.get();
+    }
+
+    @Override
+    public List<TopicEntity> findByIds(List<String> historyTagIds) {
+        Query<TopicEntity> query = datastore.createQuery(TopicEntity.class);
+        query.field(TopicEntity.Fields.id).in(historyTagIds);
+        query.field(TopicEntity.Fields.enable).equal(true);
+        query.field(TopicEntity.Fields.deleted).equal(false);
+        return query.asList();
+    }
+
+    @Override
+    public TopicEntity dec(String id) {
+        Query<TopicEntity> query = createQuery();
+        query.field(TopicEntity.Fields.id).equal(id);
+        UpdateOperations operations = createUpdateOperations();
+        operations.dec(TopicEntity.Fields.postCount);
+        return datastore.findAndModify(query, operations);
+    }
+
 
 }

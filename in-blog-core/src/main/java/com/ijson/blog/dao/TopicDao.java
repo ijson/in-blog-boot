@@ -44,5 +44,10 @@ public interface TopicDao {
     TopicEntity findByShamId(String ename, String shamId);
 
 
+    TopicEntity findByTagname(String tagname);
+
+    List<TopicEntity> findByIds(List<String> historyTagIds);
+
+    TopicEntity dec(String id);
 }
 

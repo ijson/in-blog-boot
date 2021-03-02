@@ -51,14 +51,6 @@ public class HomeController extends BaseController {
         return getView(request, index, keyWord, "software", "/software/share");
     }
 
-    @RequestMapping("/books")
-    public ModelAndView books(HttpServletRequest request, Integer index, String keyWord) {
-        ModelAndView view = new ModelAndView(getViewTheme() + "/index-books.html");
-        view.addObject("path", "/books");
-        addViewModelAndView(request, view);
-        return view;
-    }
-
     @RequestMapping("/menu/{item}")
     public ModelAndView software(HttpServletRequest request, @PathVariable("item") String item,Integer index, String keyWord) {
         ModelAndView view = new ModelAndView(getViewTheme() + "/index-menu-item.html");

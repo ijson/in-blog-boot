@@ -401,4 +401,9 @@ public class PostServiceImpl implements PostService {
         return postDao.audit(ename, shamId, status, reason, context.getId());
 
     }
+
+    @Override
+    public PostEntity updateTagIds(AuthContext context, String articleId, List<String> tagIds) {
+        return postDao.updateTagIds(context, articleId, tagIds);
+    }
 }

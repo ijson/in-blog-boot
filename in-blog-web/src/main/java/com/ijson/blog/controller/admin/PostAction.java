@@ -4,6 +4,10 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.annotation.DocDocument;
+import com.ijson.blog.bus.IEventBus;
+import com.ijson.blog.bus.event.CreateTagEvent;
+import com.ijson.blog.bus.event.DeleteArticleUpdateTagEvent;
+import com.ijson.blog.bus.event.UpdateTagEvent;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.FileUploadEntity;
 import com.ijson.blog.dao.entity.PostEntity;
@@ -75,85 +79,24 @@ public class PostAction extends BaseController {
                 return updatePost(context, post, postEntity);
             }
         }
-
-
-        // 使用默认单例（加载默认词典）
-//        SensitiveFilter filter = SensitiveFilter.DEFAULT;
-//        // 进行过滤
-//        boolean filted = filter.filter(post.getContent());
-//        if (filted) {
-//            throw new ReplyCreateException(BlogBusinessExceptionCode.SENSITIVE_TEXT_EXISTS_PLEASE_CHECK_AND_RESUBMIT);
-//        }
-
-        List<TopicEntity> topics = null;
-        //存在tag 先保存tag,然后保存文章
-        topics = topicService.findTopicByTopicNameAndIncCount(post.getTopicName().trim(), context);
-
         //topicEntitys有判空
-        PostEntity entity = PostEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), topics, context.getEname());
+        PostEntity entity = PostEntity.create(post.getId(), context.getId(), post.getTitle(), post.getContent(), context.getEname());
         entity.setCreate(true);
         entity.setIndexMenuEname(post.getIndexMenuEname());
         entity.setTrigger(Constant.AuditTrigger.create);
         entity = postService.create(context, entity);
         log.info("文章创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
+
+        IEventBus.post(CreateTagEvent.create(context, entity.getId(), post.getTopicName()));
         return Result.ok("创建文章成功!");
     }
 
     private Result updatePost(AuthContext context, PostInfo post, PostEntity entity) {
-
-
-        List<TopicEntity> oldTopicNames = entity.getTopicName();
-        if (CollectionUtils.isEmpty(oldTopicNames)) {
-            oldTopicNames = Lists.newArrayList();
-        }
-        List<String> newTopic = Lists.newArrayList(post.getTopicName().split(","));
-
-        //1. 对比本次提交的tag 和 库中的tag 的增量name
-        Map<String, String> oldTopics = oldTopicNames.stream().collect(Collectors.toMap(TopicEntity::getTopicName, TopicEntity::getId));
-
-        // 获取增量的name
-        List<String> increment = newTopic.stream().filter(k -> {
-            return !oldTopics.containsKey(k);
-        }).collect(Collectors.toList());
-
-        //2. 对比本次提交的tag 和 库中的tag 的减少的name
-        List<String> reduce = oldTopics.keySet().stream().filter(k -> {
-            return !newTopic.contains(k);
-        }).collect(Collectors.toList());
-
-
-        //3. 保存增量的tag到库中，并设置post
-        List<TopicEntity> incrementTopicEntity = null;
-        if (CollectionUtils.isNotEmpty(increment)) {
-            incrementTopicEntity = topicService.findTopicByTopicNameAndIncCount(Joiner.on(",").join(increment), context);
-        }
-
-        //4. 减少的name  tag-1
-        List<String> reduceId = Lists.newArrayList();
-        for (String name : reduce) {
-            String id = oldTopics.get(name);
-            if (!Strings.isNullOrEmpty(id)) {
-                reduceId.add(id);
-            }
-        }
-        //5.  并从post上删除 减少的name
-
-        // 获取没删除的tag
-        List<TopicEntity> notDeleteTopic = oldTopicNames.stream().filter(k -> {
-            return !reduce.contains(k.getTopicName());
-        }).collect(Collectors.toList());
-
-        if (CollectionUtils.isNotEmpty(incrementTopicEntity)) {
-            notDeleteTopic.addAll(incrementTopicEntity);
-        }
-
-        //6. 更新post
-        PostEntity newEntity = PostEntity.update(context, post.getId(), post.getTitle(), post.getContent(), notDeleteTopic, null);
+        PostEntity newEntity = PostEntity.update(context, post.getId(), post.getTitle(), post.getContent());
         newEntity.setTrigger(Constant.AuditTrigger.update);
         newEntity.setIndexMenuEname(post.getIndexMenuEname());
         postService.create(context, newEntity);
-
-
+        IEventBus.post(UpdateTagEvent.create(context, newEntity.getId(), post.getTopicName(), entity.getTopicId()));
         return Result.ok("更新文章成功!");
     }
 
@@ -223,6 +166,7 @@ public class PostAction extends BaseController {
         }
         PostEntity entity = postService.delete(postEntity, context);
         if (entity == null || entity.getDeleted()) {
+            IEventBus.post(DeleteArticleUpdateTagEvent.create(context, entity.getId(), postEntity.getTopicId()));
             return Result.ok("删除成功");
         }
 
