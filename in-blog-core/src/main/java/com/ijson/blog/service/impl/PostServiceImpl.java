@@ -223,7 +223,6 @@ public class PostServiceImpl implements PostService {
         if (Objects.nonNull(userEntity)) {
             entity.setCname(userEntity.getCname());
         }
-        viewSyncManager.syncViewBlog(entity);
 
         return entity;
     }

@@ -24,19 +24,6 @@ public class ViewSyncManager {
     @Autowired
     private CountDao countDao;
 
-    //异步保存查看次数
-    @Async
-    public void syncViewBlog(PostEntity entity) {
-        CountEntity countEntity = countDao.findCountById(entity.getId());
-        if (Objects.isNull(countEntity)) {
-            countEntity = CountEntity.create(entity);
-            countDao.create(countEntity);
-        } else {
-            countEntity = countDao.createOrUpdate(countEntity);
-        }
-        log.info("博文:[{}]查看次数", countEntity.getViews());
-    }
-
     @Async
     public void syncWebSite() {
 
@@ -49,13 +36,5 @@ public class ViewSyncManager {
         } else {
             countDao.inc(countByType);
         }
-    }
-
-
-    @Async
-    public void saveViewBlog(PostEntity entity) {
-        CountEntity countEntity = CountEntity.create(entity);
-        countEntity = countDao.create(countEntity);
-        log.info("博文:[{}]查看次数", countEntity.getViews());
     }
 }

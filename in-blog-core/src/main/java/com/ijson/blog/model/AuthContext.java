@@ -80,4 +80,8 @@ public class AuthContext {
         }
         return false;
     }
+
+    public static AuthContext systemAuthContext(){
+        return new AuthContext();
+    }
 }
