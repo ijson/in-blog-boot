@@ -4,7 +4,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.eventbus.Subscribe;
 import com.ijson.blog.bus.EventBusListener;
+import com.ijson.blog.bus.IEventBus;
 import com.ijson.blog.bus.OperationType;
+import com.ijson.blog.bus.event.DeleteTagEvent;
 import com.ijson.blog.bus.event.UpdateTagEvent;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.model.AuthContext;
@@ -69,6 +71,7 @@ public class UpdateTagListener implements EventBusListener {
                 //tag count -1
                 historyTagIds.remove(historyTagId);
                 topicService.dec(historyTagId);
+                IEventBus.post(DeleteTagEvent.create(event.getContext(), historyTagId));
             }
         }
 

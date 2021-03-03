@@ -2,10 +2,12 @@ package com.ijson.blog.bus.listener;
 
 import com.google.common.eventbus.Subscribe;
 import com.ijson.blog.bus.EventBusListener;
+import com.ijson.blog.bus.IEventBus;
 import com.ijson.blog.bus.OperationType;
 import com.ijson.blog.bus.event.DeleteArticleUpdateTagEvent;
 //import com.ijson.framework.bus.EventBusListener;
 //import com.ijson.framework.bus.OperationType;
+import com.ijson.blog.bus.event.DeleteTagEvent;
 import com.ijson.blog.service.TopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ public class DeleteArticleUpdateTagListener implements EventBusListener {
         List<String> tagIds = event.getTagIds();
         for (String tagId : tagIds) {
             topicService.dec(tagId);
+            IEventBus.post(DeleteTagEvent.create(event.getContext(), tagId));
         }
     }
 
