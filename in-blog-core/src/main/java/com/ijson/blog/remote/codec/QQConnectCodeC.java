@@ -1,9 +1,9 @@
-package com.ijson.blog.codec;
+package com.ijson.blog.remote.codec;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ijson.blog.model.BaseResult;
-import com.ijson.blog.model.GetQQOpenToken;
-import com.ijson.blog.model.GetQQTokenByCode;
+import com.ijson.blog.remote.model.BaseResult;
+import com.ijson.blog.remote.model.GetQQOpenToken;
+import com.ijson.blog.remote.model.GetQQTokenByCode;
 import com.ijson.rest.proxy.codec.AbstractRestCodeC;
 import com.ijson.rest.proxy.exception.RestProxyBusinessException;
 import com.ijson.rest.proxy.util.JsonUtil;

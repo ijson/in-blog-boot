@@ -1,8 +1,8 @@
-package com.ijson.blog.resource;
+package com.ijson.blog.remote.resource;
 
-import com.ijson.blog.model.GetQQOpenToken;
-import com.ijson.blog.model.GetQQTokenByCode;
-import com.ijson.blog.model.GetQQUserInfo;
+import com.ijson.blog.remote.model.GetQQOpenToken;
+import com.ijson.blog.remote.model.GetQQTokenByCode;
+import com.ijson.blog.remote.model.GetQQUserInfo;
 import com.ijson.rest.proxy.annotation.GET;
 import com.ijson.rest.proxy.annotation.PathParams;
 import com.ijson.rest.proxy.annotation.RestResource;

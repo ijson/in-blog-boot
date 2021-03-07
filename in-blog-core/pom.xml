@@ -20,6 +20,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.35</version>
+        </dependency>
+        <dependency>
             <groupId>com.ijson</groupId>
             <artifactId>in-rest-proxy</artifactId>
             <version>1.0.3</version>
@@ -132,12 +137,6 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ijson</groupId>
-            <artifactId>in-blog-remote</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

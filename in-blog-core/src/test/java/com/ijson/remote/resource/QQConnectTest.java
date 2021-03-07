@@ -1,9 +1,10 @@
-package com.ijson.blog.resource;
+package com.ijson.remote.resource;
 
 import com.google.common.collect.Maps;
-import com.ijson.blog.BaseTest;
-import com.ijson.blog.model.GetQQOpenToken;
-import com.ijson.blog.model.GetQQTokenByCode;
+import com.ijson.BaseTest;
+import com.ijson.blog.remote.model.GetQQOpenToken;
+import com.ijson.blog.remote.model.GetQQTokenByCode;
+import com.ijson.blog.remote.resource.QQConnectResource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

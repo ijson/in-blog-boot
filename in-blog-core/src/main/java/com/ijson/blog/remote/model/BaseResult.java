@@ -1,4 +1,4 @@
-package com.ijson.blog.model;
+package com.ijson.blog.remote.model;
 
 import lombok.Data;
 

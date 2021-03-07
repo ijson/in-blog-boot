@@ -1,4 +1,4 @@
-package com.ijson.blog.model;
+package com.ijson.blog.remote.model;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;

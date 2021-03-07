@@ -17,7 +17,6 @@
         <module>in-blog-common</module>
         <module>in-blog-core</module>
         <module>in-blog-web</module>
-        <module>in-blog-remote</module>
     </modules>
 
 

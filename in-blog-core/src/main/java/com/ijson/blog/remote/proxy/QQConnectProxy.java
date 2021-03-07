@@ -1,10 +1,10 @@
-package com.ijson.blog.proxy;
+package com.ijson.blog.remote.proxy;
 
 import com.google.common.collect.Maps;
-import com.ijson.blog.model.GetQQOpenToken;
-import com.ijson.blog.model.GetQQTokenByCode;
-import com.ijson.blog.model.GetQQUserInfo;
-import com.ijson.blog.resource.QQConnectResource;
+import com.ijson.blog.remote.model.GetQQOpenToken;
+import com.ijson.blog.remote.model.GetQQTokenByCode;
+import com.ijson.blog.remote.model.GetQQUserInfo;
+import com.ijson.blog.remote.resource.QQConnectResource;
 import lombok.Data;
 
 import java.util.Map;

@@ -3,7 +3,7 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.UserEntity;
 import com.ijson.blog.dao.query.UserQuery;
 import com.ijson.blog.model.AuthContext;
-import com.ijson.blog.model.GetQQUserInfo;
+import com.ijson.blog.remote.model.GetQQUserInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 

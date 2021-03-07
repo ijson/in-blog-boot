@@ -11,12 +11,12 @@
 
 
     <bean id="QQConnect" class="com.ijson.rest.proxy.RestServiceProxyFactoryBean"
-          p:type="com.ijson.blog.resource.QQConnectResource">
+          p:type="com.ijson.blog.remote.resource.QQConnectResource">
         <property name="factory" ref="restServiceProxyFactory"/>
     </bean>
 
 
-    <bean class="com.ijson.blog.proxy.QQConnectProxy">
+    <bean class="com.ijson.blog.remote.proxy.QQConnectProxy">
         <property name="qqConnectResource" ref="QQConnect"/>
     </bean>
 

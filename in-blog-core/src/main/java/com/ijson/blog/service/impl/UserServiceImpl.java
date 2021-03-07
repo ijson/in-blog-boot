@@ -11,7 +11,7 @@ import com.ijson.blog.exception.BlogLoginException;
 import com.ijson.blog.manager.AvatarManager;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
-import com.ijson.blog.model.GetQQUserInfo;
+import com.ijson.blog.remote.model.GetQQUserInfo;
 import com.ijson.blog.model.RegSourceType;
 import com.ijson.blog.service.AuthService;
 import com.ijson.blog.service.RoleService;
