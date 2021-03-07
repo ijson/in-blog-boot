@@ -3,6 +3,7 @@ package com.ijson.blog.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.dao.AuthDao;
+import com.ijson.blog.dao.RoleDao;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.blog.model.AuthContext;
@@ -27,6 +28,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private AuthDao authDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
     @Override
     public AuthEntity findInternalById(String id) {
@@ -65,6 +69,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void delete(String id) {
         authDao.delete(id);
+        roleDao.removeAuthUpdateRole(id);
     }
 
     @Override

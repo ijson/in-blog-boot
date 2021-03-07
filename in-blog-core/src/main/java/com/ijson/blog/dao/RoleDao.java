@@ -33,4 +33,6 @@ public interface RoleDao {
     List<RoleEntity> findAll();
 
     RoleEntity findByEname(String ename);
+
+    void removeAuthUpdateRole(String id);
 }

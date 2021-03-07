@@ -1,6 +1,7 @@
 package com.ijson.blog.dao.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.ijson.blog.dao.RoleDao;
 import com.ijson.blog.dao.entity.RoleEntity;
 import com.ijson.blog.dao.query.RoleQuery;
@@ -152,5 +153,28 @@ public class RoleDaoImpl extends AbstractDao<RoleEntity> implements RoleDao {
         query.field(RoleEntity.Fields.enable).equal(true);
         return query.get();
     }
+
+    /**
+     * 删除权限后  需要将其在角色中对应的authid删除
+     *
+     * @param authId
+     */
+    @Override
+    public void removeAuthUpdateRole(String authId) {
+        Query<RoleEntity> query = datastore.createQuery(RoleEntity.class);
+        query.field(RoleEntity.Fields.authIds).in(Lists.newArrayList(authId));
+        List<RoleEntity> roleEntities = query.asList();
+        if (CollectionUtils.isNotEmpty(roleEntities)) {
+            for (RoleEntity roleEntity : roleEntities) {
+                roleEntity.getAuthIds().remove(authId);
+                Query<RoleEntity> update = datastore.createQuery(RoleEntity.class);
+                update.field(RoleEntity.Fields.id).equal(roleEntity.getId());
+                UpdateOperations<RoleEntity> updateOperations = datastore.createUpdateOperations(RoleEntity.class);
+                updateOperations.set(RoleEntity.Fields.authIds, roleEntity.getAuthIds());
+                datastore.findAndModify(query, updateOperations);
+            }
+        }
+    }
+
 
 }
