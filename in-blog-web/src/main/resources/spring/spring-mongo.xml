@@ -5,6 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="mongoDatastore" class="com.ijson.mongo.support.MongoDataStoreFactoryBean" p:configName="in-blog-mongodb"/>
+    <bean autowire="byName" name="datastore" class="com.ijson.mongo.support.MongoDataStoreFactoryBean" p:configName="in-blog-mongodb"/>
 
 </beans>
