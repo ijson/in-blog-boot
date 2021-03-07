@@ -253,7 +253,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public long getWebSiteCount(AuthContext context) {
         CountEntity countById = countDao.findCountByWebType(AccessType.webSite.name());
-        return countById.getViews();
+        if(countById!=null){
+            return countById.getViews();
+        }
+        return 0L;
     }
 
     @Cacheable(value = "adminWelcome")
