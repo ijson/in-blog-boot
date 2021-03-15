@@ -12,6 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring/spring-test.xml")
+@ContextConfiguration(locations = "classpath:applicationContext-test.xml")
 public class BaseTest {
 }

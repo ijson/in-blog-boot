@@ -22,7 +22,7 @@
 
     <groupId>com.ijson</groupId>
     <artifactId>in-blog-boot</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>in-blog-boot</name>
     <description>基于springboot,mongo,es开发的博客系统</description>
 
