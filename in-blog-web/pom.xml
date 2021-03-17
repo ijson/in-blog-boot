@@ -13,6 +13,16 @@
     <packaging>war</packaging>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ijson</groupId>
+            <artifactId>in-rest-proxy</artifactId>
+            <version>${rest.proxy.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.ijson</groupId>
             <artifactId>in-blog-common</artifactId>

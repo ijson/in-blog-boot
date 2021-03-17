@@ -1,5 +1,6 @@
 package com.ijson.blog.service;
 
+import com.ijson.blog.InBlogApplicationTests;
 import com.ijson.blog.dao.CommentDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * version: 6.7
  * Created by cuiyongxu on 2019/7/22 2:04 PM
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-mongo-datastore.xml")
-public class ReplyDaoTest {
+public class ReplyDaoTest extends InBlogApplicationTests {
 
     @Autowired
     private CommentDao commentDao;

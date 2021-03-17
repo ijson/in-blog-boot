@@ -1,5 +1,6 @@
 package com.ijson.blog.service;
 
+import com.ijson.blog.InBlogApplicationTests;
 import com.ijson.blog.dao.TopicDao;
 import com.ijson.blog.dao.entity.TopicEntity;
 import org.junit.Test;
@@ -15,9 +16,7 @@ import java.util.List;
  * version: 6.7
  * Created by cuiyongxu on 2019/7/22 2:04 PM
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-mongo-datastore.xml")
-public class TopicDaoTest {
+public class TopicDaoTest extends InBlogApplicationTests {
 
     @Autowired
     private TopicDao topicDao;

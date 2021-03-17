@@ -14,7 +14,7 @@ import java.util.Map;
  * version: 7.0.0
  * Created by cuiyongxu on 2020/2/8 7:51 PM
  */
-@RestResource(value = "QQConnect", desc = "QQ互联", codec = "com.ijson.blog.codec.QQConnectCodeC", contentType = "application/json")
+@RestResource(value = "QQConnect", desc = "QQ互联", codec = "com.ijson.blog.remote.codec.QQConnectCodeC", contentType = "application/json")
 public interface QQConnectResource {
 
     @GET(value = "/oauth2.0/me?access_token={access_token}", contentType = "application/json")

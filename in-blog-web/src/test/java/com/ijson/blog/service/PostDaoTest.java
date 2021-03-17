@@ -1,5 +1,6 @@
 package com.ijson.blog.service;
 
+import com.ijson.blog.InBlogApplicationTests;
 import com.ijson.blog.dao.PostDao;
 import com.ijson.blog.dao.entity.PostEntity;
 import org.junit.Test;
@@ -15,16 +16,15 @@ import java.util.List;
  * version: 6.7
  * Created by cuiyongxu on 2019/7/22 2:04 PM
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-mongo-datastore.xml")
-public class PostDaoTest {
+
+public class PostDaoTest extends InBlogApplicationTests {
 
     @Autowired
     private PostDao postDao;
 
     @Test
     public void add() {
-        postDao.createOrUpdate(new PostEntity(),true);
+        postDao.createOrUpdate(new PostEntity(), true);
     }
 
 
