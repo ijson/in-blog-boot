@@ -13,7 +13,11 @@
     <packaging>war</packaging>
 
     <dependencies>
-
+        <dependency>
+            <artifactId>mongo-java-driver</artifactId>
+            <groupId>org.mongodb</groupId>
+            <version>3.8.2</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -32,6 +36,12 @@
             <groupId>com.ijson</groupId>
             <artifactId>in-blog-core</artifactId>
             <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mongo-java-driver</artifactId>
+                    <groupId>org.mongodb</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.ijson</groupId>
@@ -45,6 +55,10 @@
                 <exclusion>
                     <artifactId>commons-io</artifactId>
                     <groupId>commons-io</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mongo-java-driver</artifactId>
+                    <groupId>org.mongodb</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

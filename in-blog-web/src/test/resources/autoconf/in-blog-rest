@@ -1,8 +1,0 @@
-{
-    "QQConnect":{
-        "address":"https://graph.qq.com",
-        "serviceName":"QQ互联平台",
-        "socketTimeOut":10000,
-        "connectionTimeOut":5000
-    }
-}

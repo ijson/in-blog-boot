@@ -20,6 +20,11 @@
 
     <dependencies>
         <dependency>
+            <artifactId>mongo-java-driver</artifactId>
+            <groupId>org.mongodb</groupId>
+            <version>3.8.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.ijson</groupId>
             <artifactId>in-rest-proxy</artifactId>
             <version>${rest.proxy.version}</version>
@@ -41,6 +46,10 @@
                 <exclusion>
                     <artifactId>commons-io</artifactId>
                     <groupId>commons-io</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mongo-java-driver</artifactId>
+                    <groupId>org.mongodb</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

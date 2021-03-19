@@ -200,8 +200,10 @@ public class BaseController {
      * @return
      */
     private List<PostInfo> getHotPosts() {
-        List<PostEntity> serviceHotPost = postService.findHotPostBeforeTen();
-        return serviceHotPost.stream().map(PostInfo::createSimple).sorted((o1, o2) -> o1.getViews() > o2.getViews() ? -1 : 1).collect(Collectors.toList());
+//        List<PostEntity> serviceHotPost = postService.findHotPostBeforeTen();
+//        return serviceHotPost.stream().map(PostInfo::createSimple).sorted((o1, o2) -> o1.getViews() > o2.getViews() ? -1 : 1).collect(Collectors.toList());
+
+        return Lists.newArrayList();
     }
 
     /**

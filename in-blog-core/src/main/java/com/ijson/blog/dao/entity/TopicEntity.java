@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.mongodb.morphia.annotations.*;
 
+import java.io.Serializable;
+
 @Data
 @Entity(value = "Topic", noClassnameStored = true)
 @ToString(callSuper = true)
@@ -23,7 +25,7 @@ import org.mongodb.morphia.annotations.*;
                         @Field(value = TopicEntity.Fields.shamId)
                 })
 })
-public class TopicEntity extends BaseEntity {
+public class TopicEntity extends BaseEntity implements Serializable {
 
 
     @Id

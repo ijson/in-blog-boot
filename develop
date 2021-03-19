@@ -1,0 +1,330 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] in-blog-boot
+[INFO] in-blog-common
+[INFO] in-blog-core
+[INFO] in-blog-web
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building in-blog-boot 1.0.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ in-blog-boot ---
+[INFO] com.ijson:in-blog-boot:pom:1.0.2-SNAPSHOT
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building in-blog-common 1.0.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ in-blog-common ---
+[INFO] com.ijson:in-blog-common:jar:1.0.2-SNAPSHOT
+[INFO] +- net.sf.ehcache:ehcache:jar:2.10.6:compile
+[INFO] +- com.google.guava:guava:jar:25.1-jre:compile
+[INFO] |  +- com.google.code.findbugs:jsr305:jar:3.0.1:compile
+[INFO] |  +- org.checkerframework:checker-qual:jar:2.0.0:compile
+[INFO] |  +- com.google.errorprone:error_prone_annotations:jar:2.1.3:compile
+[INFO] |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.14:compile
+[INFO] +- org.projectlombok:lombok:jar:1.16.10:compile
+[INFO] +- org.slf4j:slf4j-api:jar:1.7.21:compile
+[INFO] +- ch.qos.logback:logback-core:jar:1.2.3:compile
+[INFO] +- ch.qos.logback:logback-classic:jar:1.2.3:compile
+[INFO] +- commons-io:commons-io:jar:2.4:compile
+[INFO] +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] +- junit:junit:jar:4.13.1:test
+[INFO] |  \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] \- com.github.oshi:oshi-core:jar:3.4.4:compile
+[INFO]    +- net.java.dev.jna:jna-platform:jar:4.5.0:compile
+[INFO]    |  \- net.java.dev.jna:jna:jar:5.5.0:compile
+[INFO]    \- org.threeten:threetenbp:jar:1.3.6:compile
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building in-blog-core 1.0.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ in-blog-core ---
+[INFO] com.ijson:in-blog-core:jar:1.0.2-SNAPSHOT
+[INFO] +- org.mongodb:mongo-java-driver:jar:3.8.2:compile
+[INFO] +- com.ijson:in-rest-proxy:jar:1.0.6:compile
+[INFO] |  +- org.projectlombok:lombok:jar:1.16.10:compile
+[INFO] |  +- ch.qos.logback:logback-classic:jar:1.2.3:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.21:compile
+[INFO] |  +- com.google.guava:guava:jar:25.1-jre:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.1:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.0.0:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.1.3:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.14:compile
+[INFO] |  +- com.google.code.gson:gson:jar:2.6.2:compile
+[INFO] |  +- commons-io:commons-io:jar:2.4:compile
+[INFO] |  +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  +- org.apache.httpcomponents:httpclient:jar:4.5.2:compile
+[INFO] |  |  +- org.apache.httpcomponents:httpcore:jar:4.4.4:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  +- org.springframework:spring-beans:jar:5.1.8.RELEASE:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.1.8.RELEASE:compile
+[INFO] |  +- com.thoughtworks.xstream:xstream:jar:1.4.15:compile
+[INFO] |  |  +- xmlpull:xmlpull:jar:1.1.3.1:compile
+[INFO] |  |  \- xpp3:xpp3_min:jar:1.1.4c:compile
+[INFO] |  \- com.ijson.common:in-auto-config-zkclient:jar:1.0.7:compile
+[INFO] |     \- org.apache.curator:curator-recipes:jar:2.9.0:compile
+[INFO] |        \- org.apache.curator:curator-framework:jar:2.9.0:compile
+[INFO] |           \- org.apache.curator:curator-client:jar:2.9.0:compile
+[INFO] |              \- org.apache.zookeeper:zookeeper:jar:3.4.14:compile
+[INFO] |                 +- com.github.spotbugs:spotbugs-annotations:jar:3.1.9:compile
+[INFO] |                 +- jline:jline:jar:0.9.94:compile
+[INFO] |                 +- org.apache.yetus:audience-annotations:jar:0.5.0:compile
+[INFO] |                 \- io.netty:netty:jar:3.10.6.Final:compile
+[INFO] +- com.ijson:in-blog-common:jar:1.0.2-SNAPSHOT:compile
+[INFO] |  +- ch.qos.logback:logback-core:jar:1.2.3:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |  \- com.github.oshi:oshi-core:jar:3.4.4:compile
+[INFO] |     +- net.java.dev.jna:jna-platform:jar:4.5.0:compile
+[INFO] |     |  \- net.java.dev.jna:jna:jar:5.5.0:compile
+[INFO] |     \- org.threeten:threetenbp:jar:1.3.6:compile
+[INFO] +- com.ijson:in-mongo-spring-support:jar:1.0.6:compile
+[INFO] |  +- commons-logging:commons-logging:jar:1.2:compile
+[INFO] |  \- org.mongodb.morphia:morphia:jar:1.1.1:compile
+[INFO] |     +- cglib:cglib-nodep:jar:3.1:compile
+[INFO] |     \- com.thoughtworks.proxytoys:proxytoys:jar:1.0:compile
+[INFO] +- com.alibaba:fastjson:jar:1.2.47:compile
+[INFO] +- eu.bitwalker:UserAgentUtils:jar:1.20:compile
+[INFO] +- org.owasp.esapi:esapi:jar:2.1.0:compile
+[INFO] |  +- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO] |  +- commons-beanutils:commons-beanutils-core:jar:1.7.0:compile
+[INFO] |  +- commons-fileupload:commons-fileupload:jar:1.3.3:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- xom:xom:jar:1.2.5:compile
+[INFO] |  |  \- xalan:xalan:jar:2.7.0:compile
+[INFO] |  +- org.beanshell:bsh-core:jar:2.0b4:compile
+[INFO] |  \- org.owasp.antisamy:antisamy:jar:1.4.3:compile
+[INFO] |     +- org.apache.xmlgraphics:batik-css:jar:1.7:compile
+[INFO] |     |  +- org.apache.xmlgraphics:batik-ext:jar:1.7:compile
+[INFO] |     |  +- org.apache.xmlgraphics:batik-util:jar:1.7:compile
+[INFO] |     |  \- xml-apis:xml-apis-ext:jar:1.3.04:compile
+[INFO] |     +- net.sourceforge.nekohtml:nekohtml:jar:1.9.12:compile
+[INFO] |     \- commons-httpclient:commons-httpclient:jar:3.1:compile
+[INFO] +- org.jsoup:jsoup:jar:1.12.1:compile
+[INFO] +- org.springframework:spring-webmvc:jar:5.1.14.RELEASE:compile
+[INFO] |  +- org.springframework:spring-aop:jar:5.1.8.RELEASE:compile
+[INFO] |  +- org.springframework:spring-core:jar:5.1.8.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.1.8.RELEASE:compile
+[INFO] |  +- org.springframework:spring-expression:jar:5.1.8.RELEASE:compile
+[INFO] |  \- org.springframework:spring-web:jar:5.1.8.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-web:jar:2.1.6.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.1.6.RELEASE:compile
+[INFO] |  |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.11.2:compile
+[INFO] |  |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.11.2:compile
+[INFO] |  |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.21:compile
+[INFO] |  |  +- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |  |  \- org.yaml:snakeyaml:jar:1.23:runtime
+[INFO] |  +- org.springframework.boot:spring-boot-starter-json:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.9.10.5:compile
+[INFO] |  |  |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.9.10:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.core:jackson-core:jar:2.9.10:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.9.10:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.9.10:compile
+[INFO] |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.9.10:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.21:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.21:compile
+[INFO] |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.21:compile
+[INFO] |  \- org.hibernate.validator:hibernate-validator:jar:6.0.17.Final:compile
+[INFO] |     +- javax.validation:validation-api:jar:2.0.1.Final:compile
+[INFO] |     +- org.jboss.logging:jboss-logging:jar:3.3.2.Final:compile
+[INFO] |     \- com.fasterxml:classmate:jar:1.3.4:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-aop:jar:2.1.6.RELEASE:compile
+[INFO] |  \- org.aspectj:aspectjweaver:jar:1.8.7:compile
+[INFO] +- org.springframework.boot:spring-boot-devtools:jar:2.1.6.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.1.6.RELEASE:compile
+[INFO] |  \- org.springframework.boot:spring-boot-autoconfigure:jar:2.1.6.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-actuator:jar:2.1.6.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot-actuator-autoconfigure:jar:2.1.6.RELEASE:compile
+[INFO] |  |  \- org.springframework.boot:spring-boot-actuator:jar:2.1.6.RELEASE:compile
+[INFO] |  \- io.micrometer:micrometer-core:jar:1.1.5:compile
+[INFO] |     +- org.hdrhistogram:HdrHistogram:jar:2.1.9:compile
+[INFO] |     \- org.latencyutils:LatencyUtils:jar:2.0.3:compile
+[INFO] +- com.ibeetl:beetl:jar:3.0.7.RELEASE:compile
+[INFO] |  +- org.ow2.asm:asm:jar:5.2:compile
+[INFO] |  \- org.ow2.asm:asm-commons:jar:5.2:compile
+[INFO] |     \- org.ow2.asm:asm-tree:jar:5.2:compile
+[INFO] +- net.sf.ehcache:ehcache:jar:2.10.6:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-cache:jar:2.1.6.RELEASE:compile
+[INFO] |  \- org.springframework:spring-context-support:jar:5.1.8.RELEASE:compile
+[INFO] \- org.springframework.boot:spring-boot-starter-test:jar:2.1.6.RELEASE:test
+[INFO]    +- org.springframework.boot:spring-boot-test:jar:2.1.6.RELEASE:test
+[INFO]    +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.1.6.RELEASE:test
+[INFO]    +- com.jayway.jsonpath:json-path:jar:2.4.0:test
+[INFO]    |  \- net.minidev:json-smart:jar:2.3:test
+[INFO]    |     \- net.minidev:accessors-smart:jar:1.2:test
+[INFO]    +- junit:junit:jar:4.13.1:test
+[INFO]    +- org.assertj:assertj-core:jar:3.4.0:test
+[INFO]    +- org.mockito:mockito-core:jar:2.23.4:test
+[INFO]    |  +- net.bytebuddy:byte-buddy:jar:1.9.3:test
+[INFO]    |  +- net.bytebuddy:byte-buddy-agent:jar:1.9.3:test
+[INFO]    |  \- org.objenesis:objenesis:jar:2.5.1:test
+[INFO]    +- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO]    +- org.hamcrest:hamcrest-library:jar:1.3:test
+[INFO]    +- org.skyscreamer:jsonassert:jar:1.5.0:test
+[INFO]    |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO]    +- org.springframework:spring-test:jar:5.1.8.RELEASE:test
+[INFO]    \- org.xmlunit:xmlunit-core:jar:2.6.2:test
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building in-blog-web 1.0.2-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ in-blog-web ---
+[INFO] com.ijson:in-blog-web:war:1.0.2-SNAPSHOT
+[INFO] +- org.mongodb:mongo-java-driver:jar:3.8.2:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-web:jar:2.1.6.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.1.6.RELEASE:compile
+[INFO] |  |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.11.2:compile
+[INFO] |  |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.11.2:compile
+[INFO] |  |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.21:compile
+[INFO] |  |  +- javax.annotation:javax.annotation-api:jar:1.3.2:compile
+[INFO] |  |  \- org.yaml:snakeyaml:jar:1.23:runtime
+[INFO] |  +- org.springframework.boot:spring-boot-starter-json:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.9.10.5:compile
+[INFO] |  |  |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.9.10:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.core:jackson-core:jar:2.9.10:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.9.10:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.9.10:compile
+[INFO] |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.9.10:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.21:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.21:compile
+[INFO] |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.21:compile
+[INFO] |  +- org.hibernate.validator:hibernate-validator:jar:6.0.17.Final:compile
+[INFO] |  |  +- javax.validation:validation-api:jar:2.0.1.Final:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.3.2.Final:compile
+[INFO] |  |  \- com.fasterxml:classmate:jar:1.3.4:compile
+[INFO] |  \- org.springframework:spring-web:jar:5.1.8.RELEASE:compile
+[INFO] +- com.ijson:in-rest-proxy:jar:1.0.6:compile
+[INFO] |  +- org.projectlombok:lombok:jar:1.16.10:compile
+[INFO] |  +- ch.qos.logback:logback-classic:jar:1.2.3:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.7.21:compile
+[INFO] |  +- com.google.guava:guava:jar:25.1-jre:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.1:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:2.0.0:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.1.3:compile
+[INFO] |  |  +- com.google.j2objc:j2objc-annotations:jar:1.1:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.14:compile
+[INFO] |  +- com.google.code.gson:gson:jar:2.6.2:compile
+[INFO] |  +- commons-io:commons-io:jar:2.4:compile
+[INFO] |  +- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] |  +- org.apache.httpcomponents:httpclient:jar:4.5.2:compile
+[INFO] |  |  +- org.apache.httpcomponents:httpcore:jar:4.4.4:compile
+[INFO] |  |  \- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  +- org.springframework:spring-beans:jar:5.1.8.RELEASE:compile
+[INFO] |  +- org.springframework:spring-context:jar:5.1.8.RELEASE:compile
+[INFO] |  +- com.thoughtworks.xstream:xstream:jar:1.4.15:compile
+[INFO] |  |  +- xmlpull:xmlpull:jar:1.1.3.1:compile
+[INFO] |  |  \- xpp3:xpp3_min:jar:1.1.4c:compile
+[INFO] |  \- com.ijson.common:in-auto-config-zkclient:jar:1.0.7:compile
+[INFO] |     \- org.apache.curator:curator-recipes:jar:2.9.0:compile
+[INFO] |        \- org.apache.curator:curator-framework:jar:2.9.0:compile
+[INFO] |           \- org.apache.curator:curator-client:jar:2.9.0:compile
+[INFO] |              \- org.apache.zookeeper:zookeeper:jar:3.4.14:compile
+[INFO] |                 +- com.github.spotbugs:spotbugs-annotations:jar:3.1.9:compile
+[INFO] |                 +- jline:jline:jar:0.9.94:compile
+[INFO] |                 +- org.apache.yetus:audience-annotations:jar:0.5.0:compile
+[INFO] |                 \- io.netty:netty:jar:3.10.6.Final:compile
+[INFO] +- com.ijson:in-blog-common:jar:1.0.2-SNAPSHOT:compile
+[INFO] |  +- net.sf.ehcache:ehcache:jar:2.10.6:compile
+[INFO] |  +- ch.qos.logback:logback-core:jar:1.2.3:compile
+[INFO] |  \- com.github.oshi:oshi-core:jar:3.4.4:compile
+[INFO] |     +- net.java.dev.jna:jna-platform:jar:4.5.0:compile
+[INFO] |     |  \- net.java.dev.jna:jna:jar:5.5.0:compile
+[INFO] |     \- org.threeten:threetenbp:jar:1.3.6:compile
+[INFO] +- com.ijson:in-blog-core:jar:1.0.2-SNAPSHOT:compile
+[INFO] |  +- com.alibaba:fastjson:jar:1.2.47:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-actuator:jar:2.1.6.RELEASE:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-actuator-autoconfigure:jar:2.1.6.RELEASE:compile
+[INFO] |  |  \- io.micrometer:micrometer-core:jar:1.1.5:compile
+[INFO] |  |     +- org.hdrhistogram:HdrHistogram:jar:2.1.9:compile
+[INFO] |  |     \- org.latencyutils:LatencyUtils:jar:2.0.3:compile
+[INFO] |  \- org.springframework.boot:spring-boot-starter-cache:jar:2.1.6.RELEASE:compile
+[INFO] +- com.ijson:in-mongo-spring-support:jar:1.0.6:compile
+[INFO] |  +- commons-logging:commons-logging:jar:1.2:compile
+[INFO] |  \- org.mongodb.morphia:morphia:jar:1.1.1:compile
+[INFO] |     +- cglib:cglib-nodep:jar:3.1:compile
+[INFO] |     \- com.thoughtworks.proxytoys:proxytoys:jar:1.0:compile
+[INFO] +- org.springframework.boot:spring-boot-devtools:jar:2.1.6.RELEASE:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:2.1.6.RELEASE:compile
+[INFO] |  \- org.springframework.boot:spring-boot-autoconfigure:jar:2.1.6.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-actuator:jar:2.1.6.RELEASE:compile
+[INFO] +- org.springframework:spring-context-support:jar:5.1.8.RELEASE:compile
+[INFO] |  \- org.springframework:spring-core:jar:5.1.8.RELEASE:compile
+[INFO] |     \- org.springframework:spring-jcl:jar:5.1.8.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-aop:jar:2.1.6.RELEASE:compile
+[INFO] |  +- org.springframework:spring-aop:jar:5.1.8.RELEASE:compile
+[INFO] |  \- org.aspectj:aspectjweaver:jar:1.8.7:compile
+[INFO] +- org.springframework:spring-webmvc:jar:5.1.14.RELEASE:compile
+[INFO] |  \- org.springframework:spring-expression:jar:5.1.8.RELEASE:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.1.6.RELEASE:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.1.6.RELEASE:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.1.6.RELEASE:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.4.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.3:test
+[INFO] |  |     \- net.minidev:accessors-smart:jar:1.2:test
+[INFO] |  +- junit:junit:jar:4.13.1:test
+[INFO] |  +- org.assertj:assertj-core:jar:3.4.0:test
+[INFO] |  +- org.mockito:mockito-core:jar:2.23.4:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.9.3:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.9.3:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:2.5.1:test
+[INFO] |  +- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] |  +- org.hamcrest:hamcrest-library:jar:1.3:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.0:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-test:jar:5.1.8.RELEASE:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.6.2:test
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.1.0:provided
+[INFO] +- com.rometools:rome:jar:1.14.1:compile
+[INFO] |  +- com.rometools:rome-utils:jar:1.14.1:compile
+[INFO] |  \- org.jdom:jdom2:jar:2.0.6:compile
+[INFO] +- com.ibeetl:beetl:jar:3.0.7.RELEASE:compile
+[INFO] |  +- org.ow2.asm:asm:jar:5.2:compile
+[INFO] |  \- org.ow2.asm:asm-commons:jar:5.2:compile
+[INFO] |     \- org.ow2.asm:asm-tree:jar:5.2:compile
+[INFO] +- com.ibeetl:beetl-framework-starter:jar:1.2.6.RELEASE:compile
+[INFO] +- org.antlr:antlr4-runtime:jar:4.7.2:compile
+[INFO] +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] +- org.jsoup:jsoup:jar:1.12.1:compile
+[INFO] +- eu.bitwalker:UserAgentUtils:jar:1.20:compile
+[INFO] +- org.owasp.esapi:esapi:jar:2.1.0:compile
+[INFO] |  +- commons-configuration:commons-configuration:jar:1.10:compile
+[INFO] |  +- commons-beanutils:commons-beanutils-core:jar:1.7.0:compile
+[INFO] |  +- commons-fileupload:commons-fileupload:jar:1.3.3:compile
+[INFO] |  +- log4j:log4j:jar:1.2.16:compile
+[INFO] |  +- xom:xom:jar:1.2.5:compile
+[INFO] |  |  \- xalan:xalan:jar:2.7.0:compile
+[INFO] |  +- org.beanshell:bsh-core:jar:2.0b4:compile
+[INFO] |  \- org.owasp.antisamy:antisamy:jar:1.4.3:compile
+[INFO] |     +- org.apache.xmlgraphics:batik-css:jar:1.7:compile
+[INFO] |     |  +- org.apache.xmlgraphics:batik-ext:jar:1.7:compile
+[INFO] |     |  +- org.apache.xmlgraphics:batik-util:jar:1.7:compile
+[INFO] |     |  \- xml-apis:xml-apis-ext:jar:1.3.04:compile
+[INFO] |     +- net.sourceforge.nekohtml:nekohtml:jar:1.9.12:compile
+[INFO] |     \- commons-httpclient:commons-httpclient:jar:3.1:compile
+[INFO] \- org.tuckey:urlrewritefilter:jar:4.0.4:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] in-blog-boot ....................................... SUCCESS [  0.423 s]
+[INFO] in-blog-common ..................................... SUCCESS [  0.074 s]
+[INFO] in-blog-core ....................................... SUCCESS [  0.246 s]
+[INFO] in-blog-web ........................................ SUCCESS [  0.093 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.075 s
+[INFO] Finished at: 2021-03-19T16:22:55+08:00
+[INFO] Final Memory: 24M/309M
+[INFO] ------------------------------------------------------------------------

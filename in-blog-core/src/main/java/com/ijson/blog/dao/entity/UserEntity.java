@@ -140,7 +140,7 @@ public class UserEntity extends BaseEntity {
     private String qqOpenId;
 
     @Embedded
-    private Map qqExtData;
+    private Map<String,Object> qqExtData;
 
 
 
