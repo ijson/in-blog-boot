@@ -98,7 +98,7 @@
         <dependency>
             <groupId>com.ijson</groupId>
             <artifactId>in-mongo-spring-support</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.6</version>
             <exclusions>
                 <exclusion>
                     <artifactId>guava</artifactId>
@@ -110,7 +110,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
 
         <!--开启 cache 缓存-->
         <dependency>
