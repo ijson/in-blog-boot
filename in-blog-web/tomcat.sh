@@ -18,12 +18,6 @@ mvn clean package install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dgpg
 cd $IBO_HOME/in-blog-common || exit
 mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dgpg.skip
 
-cd $IBO_HOME/in-blog-remote || exit
-mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dgpg.skip
-
-cd $IBO_HOME/in-blog-auth || exit
-mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dgpg.skip
-
 cd $IBO_HOME/in-blog-core || exit
 mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dgpg.skip
 

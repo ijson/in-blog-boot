@@ -10,13 +10,6 @@ mvn install -Dmaven.test.skip=true
 cd $IBO_HOME/in-blog-common
 mvn clean install -Dmaven.test.skip=true
 
-
-cd $IBO_HOME/in-blog-remote
-mvn clean install -Dmaven.test.skip=true
-
-cd $IBO_HOME/in-blog-auth
-mvn clean install -Dmaven.test.skip=true
-
 cd $IBO_HOME/in-blog-core
 mvn clean install -Dmaven.test.skip=true
 

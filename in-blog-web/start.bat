@@ -1,6 +1,4 @@
 ::common
-::remote
-::auth
 ::core
 ::web
 ::start
@@ -26,17 +24,6 @@ call mvn install -Dmaven.test.skip=true
 @echo build common
 cd %IBO_HOME%/in-blog-common
 call mvn install -Dmaven.test.skip=true
-
-
-@echo build remote
-cd %IBO_HOME%/in-blog-remote
-call mvn install -Dmaven.test.skip=true
-
-
-@echo build auth
-cd %IBO_HOME%/in-blog-auth
-call mvn install -Dmaven.test.skip=true
-
 
 
 @echo build core
