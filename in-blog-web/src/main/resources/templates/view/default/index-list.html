@@ -79,14 +79,39 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
 
-                    <% for(var i=1;i<page.totalPage+1;i++){
+                    <%
+                    var currentPage = page.currentPage;
+                    var totalPage = page.totalPage;
+                    var start = 1;
 
-                        if(page.currentPage==i){
-                            print("<li class='active'><a>"+i+"</a></li>");
-                        }else{
-                            print("<li><a href='/index?index="+i+"'>"+i+"</a></li>");
-                        }
-                    } %>
+                    if(currentPage>8){
+                    start = currentPage-5;
+                    end = currentPage+ 4;
+                    if(end>=totalPage){
+                    start = totalPage-9;
+                    end = totalPage;
+                    }
+                    }else{
+                    start = 1;
+                    if(totalPage<10){
+                    end = totalPage;
+                    }else{
+                    end = 10;
+                    }
+                    }
+
+                    if(start<=0){
+                    start= 1;
+                    }
+                    %>
+
+                    <% for(var i=start;i<end+1;i++){
+                    if(currentPage==i){
+                    print("<li class='active'><a>"+i+"</a></li>");
+                    }else{
+                    print("<li><a href='/index?index="+i+"'>"+i+"</a></li>");
+                    }
+                    }%>
                 </ul>
             </nav>
 
