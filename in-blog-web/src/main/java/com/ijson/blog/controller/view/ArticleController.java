@@ -10,6 +10,7 @@ import com.ijson.blog.dao.model.ReplyType;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.exception.BlogNotFoundException;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.CommentService;
 import com.ijson.blog.service.model.info.CommentInfo;
 import com.ijson.blog.service.model.info.PostInfo;
@@ -48,6 +49,10 @@ public class ArticleController extends BaseController {
         ModelAndView view = new ModelAndView(getViewTheme() + "/index-article.html");
         try {
             PostEntity entity = postService.findByShamId(ename, shamId);
+            if (entity == null || entity.getStatus() != Constant.PostStatus.pass) {
+                view.setViewName("error/404.html");
+                return view;
+            }
             view.addObject("data", PostInfo.create(entity));
             view.addObject("path", "/");
             //获取所有的文章评论
