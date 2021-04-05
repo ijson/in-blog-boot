@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
-IBO_HOME=/Users/cuiyongxu/workspace/ijson/in-blog-boot
 
-cd $IBO_HOME
+# shellcheck disable=SC2046
+IBO_HOME=$(dirname $(pwd))
+
+cd "$IBO_HOME"
 
 git pull
 
 mvn install -Dmaven.test.skip=true
 
+# shellcheck disable=SC2164
 cd $IBO_HOME/in-blog-common
 mvn clean install -Dmaven.test.skip=true
 
+# shellcheck disable=SC2164
 cd $IBO_HOME/in-blog-core
 mvn clean install -Dmaven.test.skip=true
 
+# shellcheck disable=SC2164
 cd $IBO_HOME/in-blog-web
 
 pid=$(ps -ef | grep "in-blog-web" | grep -v grep | awk '{print $2}')
@@ -27,6 +32,7 @@ fi
 
 
 DATE=$(date +%Y%m%d%H%M%S)
+# shellcheck disable=SC2164
 cd $IBO_HOME/in-blog-web
 
 if [ ! -f "$IBO_HOME/in-blog-web/run.log" ]; then
@@ -36,6 +42,7 @@ if [ ! -f "$IBO_HOME/in-blog-web/run.log" ]; then
     mv $IBO_HOME/in-blog-web/run.log $IBO_HOME-log/$DATE.log
 fi
 
+# shellcheck disable=SC2164
 cd $IBO_HOME/in-blog-web/
 nohup mvn spring-boot:run >> run.log 2>&1 &
 
