@@ -3,6 +3,7 @@
 # shellcheck disable=SC2046
 IBO_HOME=$(dirname $(pwd))
 
+# shellcheck disable=SC2164
 cd "$IBO_HOME"
 
 git pull

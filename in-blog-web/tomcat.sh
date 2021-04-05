@@ -5,10 +5,8 @@
 IBO_HOME=$(dirname $(pwd))
 
 # 2. set tomcat home path
-TOMCAT_HOME=/Users/cuiyongxu/software/tomcat-8.5.58
-
-IBO_HOME=/home/liyaping/workspace/in-blog-boot
-TOMCAT_HOME=/home/liyaping/develop/blog-tomcat-8.5.60
+#TOMCAT_HOME=~/software/tomcat-8.5.58
+TOMCAT_HOME=~/develop/blog_web
 
 cd $IBO_HOME || exit
 
