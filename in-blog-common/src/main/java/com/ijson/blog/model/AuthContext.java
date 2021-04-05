@@ -1,8 +1,6 @@
 package com.ijson.blog.model;
 
 import com.google.common.base.Strings;
-import com.ijson.blog.dao.entity.AuthEntity;
-import com.ijson.blog.dao.entity.UserEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -30,7 +28,7 @@ public class AuthContext {
     private List<Permission> permission;
     private List<String> permissionPath;
     private List<String> permissionEname;
-    private List<AuthEntity> auths;
+    private List<AuthInfo> auths;
     private RegSourceType regSourceType;
     private String qqOpenId;
     /**
@@ -58,26 +56,10 @@ public class AuthContext {
     }
 
 
-    public AuthContext(UserEntity entity) {
-        this.id = entity.getId();
-        this.ename = entity.getEname();
-        this.cname = entity.getCname();
-        this.email = entity.getEmail();
-        this.mobile = entity.getMobile();
-        this.avatar = entity.getAvatar();
-        this.regSourceType = entity.getRegSourceType();
-        this.qqOpenId = entity.getQqOpenId();
-        this.weibo = entity.getWeibo();
-
-    }
-
     public AuthContext() {
     }
 
     public boolean isRemember() {
-        if (!Strings.isNullOrEmpty(remember) && "on".equals(remember)) {
-            return true;
-        }
-        return false;
+        return !Strings.isNullOrEmpty(remember) && "on".equals(remember);
     }
 }

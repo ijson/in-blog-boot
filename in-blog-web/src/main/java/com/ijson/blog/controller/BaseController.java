@@ -305,11 +305,17 @@ public class BaseController {
      */
     protected Map<AuthArg, List<AuthInfo>> getMenu(HttpServletRequest request) {
         AuthContext context = getContext(request);
-        List<AuthEntity> menuAuth = context.getAuths().stream().filter(k -> {
+        List<AuthInfo> menuAuth = context.getAuths().stream().filter(k -> {
             return k.getMenuType() == Constant.MenuType.menu && k.getShowMenu();
         }).collect(Collectors.toList());
-        return AuthInfo.getAuthMap(menuAuth, Lists.newArrayList(), false);
+        return AuthEntity.getAuthMap(menuAuth, Lists.newArrayList(), false);
     }
+
+//    protected Map<AuthArg, List<AuthInfo>> getMenu(HttpServletRequest request) {
+//        AuthContext context = getContext(request);
+//        List<AuthInfo> menuAuth = context.getAuths().stream().filter(k -> k.getMenuType() == Constant.MenuType.menu && k.getShowMenu()).collect(Collectors.toList());
+//        return AuthEntity.getAuthMap(menuAuth, Lists.newArrayList(), false);
+//    }
 
     /**
      * @param request

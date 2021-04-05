@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.entity;
 
+import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.RegSourceType;
 import com.ijson.mongo.support.model.BaseEntity;
@@ -206,5 +207,19 @@ public class UserEntity extends BaseEntity {
         String regSourceType = "regSourceType";
     }
 
+
+    public static AuthContext createAuthContextByUser(UserEntity entity) {
+        AuthContext authContext = new AuthContext();
+        authContext.setId(entity.getId());
+        authContext.setEname(entity.getEname());
+        authContext.setCname(entity.getCname());
+        authContext.setEmail(entity.getEmail());
+        authContext.setMobile(entity.getMobile());
+        authContext.setAvatar(entity.getAvatar());
+        authContext.setRegSourceType(entity.getRegSourceType());
+        authContext.setQqOpenId(entity.getQqOpenId());
+        authContext.setWeibo(entity.getWeibo());
+        return authContext;
+    }
 }
 

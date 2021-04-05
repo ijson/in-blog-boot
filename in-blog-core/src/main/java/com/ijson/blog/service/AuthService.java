@@ -3,6 +3,7 @@ package com.ijson.blog.service;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.AuthInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 
@@ -32,6 +33,8 @@ public interface AuthService {
     List<AuthEntity> findFathers(String fatherId);
 
     List<AuthEntity> findAll();
+
+    List<AuthInfo> findAll2Info();
 
     AuthEntity findByEname(String ename);
 

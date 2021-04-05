@@ -16,6 +16,8 @@ public class AuthArg {
     private String path;
     private boolean checked;
     private boolean disabled;
+    private String icon;
+
 
     public AuthArg() {
     }
@@ -27,5 +29,14 @@ public class AuthArg {
         this.path = path;
         this.checked = checked;
         this.disabled = disabled;
+    }
+    public AuthArg(String authId, String authEname, String authCname, String path, boolean checked, boolean disabled,String icon) {
+        this.authId = authId;
+        this.authEname = authEname;
+        this.authCname = authCname;
+        this.path = path;
+        this.checked = checked;
+        this.disabled = disabled;
+        this.icon = icon;
     }
 }

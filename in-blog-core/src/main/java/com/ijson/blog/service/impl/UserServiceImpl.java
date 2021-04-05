@@ -21,6 +21,7 @@ import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
 import com.ijson.rest.proxy.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
             avatar = (String) entity.getQqExtData().get("figureurl_qq_2");
         }
 
-        AuthContext context = new AuthContext(entity);
+        AuthContext context = UserEntity.createAuthContextByUser(entity);
 
 
         if (!Strings.isNullOrEmpty(entity.getRoleId())) {
@@ -95,10 +96,11 @@ public class UserServiceImpl implements UserService {
                 List<String> authIds = role.getAuthIds();
                 List<AuthEntity> auths = authService.findByIds(authIds);
 
-                context.setPermissionPath(auths.stream().filter(k -> !"#".equals(k.getPath())).map(AuthEntity::getPath).collect(Collectors.toList()));
-                context.setPermissionEname(auths.stream().map(AuthEntity::getEname).collect(Collectors.toList()));
-
-                context.setAuths(auths);
+                if (CollectionUtils.isNotEmpty(auths)) {
+                    context.setPermissionPath(auths.stream().map(AuthEntity::getPath).filter(path -> !"#".equals(path)).collect(Collectors.toList()));
+                    context.setPermissionEname(auths.stream().map(AuthEntity::getEname).collect(Collectors.toList()));
+                    context.setAuths(AuthEntity.createAuthList(auths));
+                }
 
                 context.setVerify(Objects.isNull(role.getVerify()) ? Boolean.TRUE : role.getVerify());
             }

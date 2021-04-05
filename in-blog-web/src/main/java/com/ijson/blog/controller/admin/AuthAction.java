@@ -183,7 +183,7 @@ public class AuthAction extends BaseController {
         List<AuthEntity> dataList = result.getDataList();
         List<AuthInfo> authInfos = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(dataList)) {
-            authInfos = AuthInfo.createAuthList(dataList);
+            authInfos = AuthEntity.createAuthList(dataList);
         }
 
         V2Result v2Result = new V2Result();

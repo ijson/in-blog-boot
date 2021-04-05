@@ -6,6 +6,7 @@ import com.ijson.blog.dao.AuthDao;
 import com.ijson.blog.dao.entity.AuthEntity;
 import com.ijson.blog.dao.query.AuthQuery;
 import com.ijson.blog.model.AuthContext;
+import com.ijson.blog.model.AuthInfo;
 import com.ijson.blog.service.AuthService;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -88,6 +90,15 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<AuthEntity> findAll() {
         return authDao.findAll();
+    }
+
+    @Override
+    public List<AuthInfo> findAll2Info() {
+        List<AuthEntity> all = findAll();
+        if(CollectionUtils.isEmpty(all)){
+            return Lists.newArrayList();
+        }
+        return all.stream().map(AuthEntity::createAuthInfo).collect(Collectors.toList());
     }
 
     @Override
