@@ -30,8 +30,9 @@ public class Md5Util {
                     // 与上一行效果等同
                     // i += 256;
                 }
-                if (d < 16)
+                if (d < 16) {
                     sb.append("0");
+                }
                 sb.append(Integer.toHexString(d));
             }
         } catch (NoSuchAlgorithmException | IOException e) {

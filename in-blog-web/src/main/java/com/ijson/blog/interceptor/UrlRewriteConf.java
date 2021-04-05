@@ -19,6 +19,7 @@ public class UrlRewriteConf extends UrlRewriteFilter {
     private Resource resource;
 
     //重写配置文件加载方式
+    @Override
     protected void loadUrlRewriter(FilterConfig filterConfig) throws ServletException {
         try {
             //将Resource对象转换成Conf对象

@@ -127,7 +127,7 @@ public class PassportHelper {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if (ip.equals("0:0:0:0:0:0:0:1")) {
+        if ("0:0:0:0:0:0:0:1".equals(ip)) {
             ip = "本地";
         }
         return ip;
@@ -143,13 +143,14 @@ public class PassportHelper {
     public String getCurrCookie(HttpServletRequest request) {
         Cookie tokenCook = null;
         Cookie[] cookies = request.getCookies();
-        if (null != cookies)
+        if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(getCookieName())) {
                     tokenCook = cookie;
                     break;
                 }
             }
+        }
         if (tokenCook == null) {
             return "";
         }
@@ -159,13 +160,14 @@ public class PassportHelper {
     public String getRemCurrCookie(HttpServletRequest request) {
         Cookie tokenCook = null;
         Cookie[] cookies = request.getCookies();
-        if (null != cookies)
+        if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(getRemCookieName())) {
                     tokenCook = cookie;
                     break;
                 }
             }
+        }
         if (tokenCook == null) {
             return "";
         }
@@ -176,13 +178,14 @@ public class PassportHelper {
     public String getCookie(HttpServletRequest request, String cookieName) {
         Cookie tokenCook = null;
         Cookie[] cookies = request.getCookies();
-        if (null != cookies)
+        if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
                     tokenCook = cookie;
                     break;
                 }
             }
+        }
         if (tokenCook == null) {
             return "";
         }
@@ -198,13 +201,14 @@ public class PassportHelper {
     public String getCurrCookie(HttpServletRequest request, String key) {
         Cookie tokenCook = null;
         Cookie[] cookies = request.getCookies();
-        if (null != cookies)
+        if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(key)) {
                     tokenCook = cookie;
                     break;
                 }
             }
+        }
         if (tokenCook == null) {
             return "";
         }
@@ -359,6 +363,8 @@ public class PassportHelper {
         return "";
     }
 
+    private Pattern pemail = Pattern
+            .compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
     /**
      * description:  验证邮箱格式
      *
@@ -366,12 +372,11 @@ public class PassportHelper {
      * @update 2015-1-16
      */
     public boolean emailFormat(String email) {
-        Pattern p = Pattern
-                .compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
-        Matcher m = p.matcher(email);
+        Matcher m = pemail.matcher(email);
         return m.matches();
     }
 
+    Pattern pMobile = Pattern.compile("^13\\d{9}||18\\d{9}||15[1,2,3,5,8,9]\\d{8}$");
     /***
      * description:  验证手机号格式
      * @param mobile
@@ -380,8 +385,7 @@ public class PassportHelper {
      * @update 2015-1-16
      */
     public boolean mobileFormat(String mobile) {
-        Pattern p = Pattern.compile("^13\\d{9}||18\\d{9}||15[1,2,3,5,8,9]\\d{8}$");
-        Matcher m = p.matcher(mobile);
+        Matcher m = pMobile.matcher(mobile);
         return m.matches();
     }
 

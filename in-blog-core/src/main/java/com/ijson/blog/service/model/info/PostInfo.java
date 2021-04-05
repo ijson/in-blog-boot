@@ -92,20 +92,20 @@ public class PostInfo {
         this.imageUrl = getImgStr(info);
     }
 
+    private static Pattern imgPathA = Pattern.compile("<img.*src\\s*=\\s*(.*?)[^>]*?>", Pattern.CASE_INSENSITIVE);
+    private static Pattern imgPath = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)");
+
     public static String getImgStr(String htmlStr) {
         List<String> list = Lists.newArrayList();
         String img = "";
-        Pattern p_image;
         Matcher m_image;
         // String regEx_img = "<img.*src=(.*?)[^>]*?>"; //图片链接地址
-        String regEx_img = "<img.*src\\s*=\\s*(.*?)[^>]*?>";
-        p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
-        m_image = p_image.matcher(htmlStr);
+        m_image = imgPath.matcher(htmlStr);
         while (m_image.find()) {
             // 得到<img />数据
             img = m_image.group();
             // 匹配<img>中的src数据
-            Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
+            Matcher m = imgPath.matcher(img);
             while (m.find()) {
                 list.add(m.group(1));
             }
@@ -158,6 +158,7 @@ public class PostInfo {
 
     /**
      * web页面专用 直接是前端使用
+     *
      * @param result
      * @return
      */
@@ -187,6 +188,7 @@ public class PostInfo {
 
     /**
      * 后台列表页使用
+     *
      * @param result
      * @return
      */
@@ -281,6 +283,7 @@ public class PostInfo {
 
     /**
      * 热门文章,最近发表使用,不需要太多参数
+     *
      * @param entity
      * @return
      */

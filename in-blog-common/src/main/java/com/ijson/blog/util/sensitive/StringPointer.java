@@ -88,10 +88,12 @@ public class StringPointer implements Serializable, CharSequence, Comparable<Str
         }
     }
 
+    @Override
     public int length() {
         return length;
     }
 
+    @Override
     public char charAt(int i) {
         return value[offset + i];
     }
@@ -109,10 +111,12 @@ public class StringPointer implements Serializable, CharSequence, Comparable<Str
         return substring(start, end);
     }
 
+    @Override
     public String toString() {
         return new String(value, offset, length);
     }
 
+    @Override
     public int hashCode() {
         int h = hash;
         if (h == 0 && length > 0) {
@@ -124,6 +128,7 @@ public class StringPointer implements Serializable, CharSequence, Comparable<Str
         return h;
     }
 
+    @Override
     public boolean equals(Object anObject) {
         if (this == anObject) {
             return true;

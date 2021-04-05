@@ -44,10 +44,10 @@ public class Pageable {
         this.currentPageStartPosition = (currentWebPage - 1) * PAGESIZE;
         // 计算总页数
         this.countRecord = countWebRecord;
-        if (this.countRecord % this.PAGESIZE == 0) {
-            this.totalPage = this.countRecord / this.PAGESIZE;
+        if (this.countRecord % PAGESIZE == 0) {
+            this.totalPage = this.countRecord / PAGESIZE;
         } else {
-            this.totalPage = this.countRecord / this.PAGESIZE + 1;
+            this.totalPage = this.countRecord / PAGESIZE + 1;
         }
 
         //计算开始和结束的索引值

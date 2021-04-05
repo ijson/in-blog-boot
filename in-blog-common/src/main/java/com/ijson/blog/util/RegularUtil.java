@@ -9,30 +9,35 @@ public class RegularUtil {
 
 
     public static boolean isEmail(String email) {
-        if (email == null || "".equals(email)) return false;
+        if (email == null || "".equals(email)) {
+            return false;
+        }
         String regex = "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
         return email.matches(regex);
     }
 
 
     public static boolean isMobile(String phoneNumber) {
-        if (phoneNumber == null || "".equals(phoneNumber))
+        if (phoneNumber == null || "".equals(phoneNumber)) {
             return false;
+        }
         String regex = "^1[3|4|5|8][0-9]\\d{8}$";
         return phoneNumber.matches(regex);
     }
 
     public static boolean isEname(String ename) {
-        if (ename == null || "".equals(ename))
+        if (ename == null || "".equals(ename)) {
             return false;
+        }
         String regex = "^[a-zA-Z][a-zA-Z0-9_]{4,15}$";
         return ename.matches(regex);
     }
 
 
     public static boolean isCname(String cname) {
-        if (cname == null || "".equals(cname))
+        if (cname == null || "".equals(cname)) {
             return false;
+        }
         String regex = "^[a-zA-Z0-9\\[\u4e00-\u9fa5.·\u36c3\u4DAE]{0,}$";
         return cname.matches(regex);
     }
