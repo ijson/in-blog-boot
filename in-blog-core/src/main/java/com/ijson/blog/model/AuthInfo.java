@@ -73,7 +73,7 @@ public class AuthInfo {
 
     public static Map<AuthArg, List<AuthInfo>> getAuthMap(List<AuthEntity> allAuth, List<String> authIds, boolean disabled) {
         List<AuthEntity> fatherEntity = allAuth.stream().filter(k -> {
-            return k.getFatherId().equals("0");
+            return "0".equals(k.getFatherId());
         }).sorted(Comparator.comparing(AuthEntity::getOrder)).collect(Collectors.toList());
 
         return fatherEntity.stream().collect(Collectors.toMap(key -> {
