@@ -204,6 +204,7 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
     public List<PostEntity> getRecentlyPublished() {
         Query<PostEntity> query = createQuery();
         query.field(PostEntity.Fields.enable).equal(true);
+        query.field(PostEntity.Fields.status).equal(Constant.PostStatus.in_progress);
         query.order("-" + PostEntity.Fields.id);
         return query.limit(10).asList();
     }
