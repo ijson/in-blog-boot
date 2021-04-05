@@ -1,6 +1,7 @@
 package com.ijson.blog.model;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
 import oshi.util.FormatUtil;
@@ -27,6 +28,7 @@ import java.util.Arrays;
  * System.out.println("物理CPU计数: " + hal.getProcessor().getPhysicalProcessorCount() + " physical CPU(s)");
  * System.out.println("逻辑CPU计数: " + hal.getProcessor().getLogicalProcessorCount() + " logical CPU(s)");
  */
+@Slf4j
 @Data
 public class SystemInfo {
     private String operatingSystem;
@@ -45,16 +47,20 @@ public class SystemInfo {
         HardwareAbstractionLayer hal = si.getHardware();
         OperatingSystem os = si.getOperatingSystem();
         SystemInfo systemInfo = new SystemInfo();
-        systemInfo.setOperatingSystem(os.toString());
-        systemInfo.setCpuVoltage(hal.getSensors().getCpuVoltage());
-        systemInfo.setMemoryUsed(FormatUtil.formatBytes(hal.getMemory().getAvailable()));
-        systemInfo.setMemoryTotal(FormatUtil.formatBytes(hal.getMemory().getTotal()));
-        systemInfo.setSwapUsed(FormatUtil.formatBytes(hal.getMemory().getSwapUsed()));
-        systemInfo.setSwapTotal(FormatUtil.formatBytes(hal.getMemory().getSwapTotal()));
-        systemInfo.setCpuName(hal.getProcessor().getName());
-        systemInfo.setPhysicalCount(hal.getProcessor().getPhysicalProcessorCount());
-        systemInfo.setLogicalProcessorCount(hal.getProcessor().getLogicalProcessorCount());
-        systemInfo.setJdkVersion(System.getProperty("java.version"));
+        try {
+            systemInfo.setOperatingSystem(os.toString());
+            systemInfo.setCpuVoltage(hal.getSensors().getCpuVoltage());
+            systemInfo.setMemoryUsed(FormatUtil.formatBytes(hal.getMemory().getAvailable()));
+            systemInfo.setMemoryTotal(FormatUtil.formatBytes(hal.getMemory().getTotal()));
+            systemInfo.setSwapUsed(FormatUtil.formatBytes(hal.getMemory().getSwapUsed()));
+            systemInfo.setSwapTotal(FormatUtil.formatBytes(hal.getMemory().getSwapTotal()));
+            systemInfo.setCpuName(hal.getProcessor().getName());
+            systemInfo.setPhysicalCount(hal.getProcessor().getPhysicalProcessorCount());
+            systemInfo.setLogicalProcessorCount(hal.getProcessor().getLogicalProcessorCount());
+            systemInfo.setJdkVersion(System.getProperty("java.version"));
+        } catch (Throwable e) {
+            log.warn("", e);
+        }
         return systemInfo;
     }
 
