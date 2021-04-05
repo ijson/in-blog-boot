@@ -84,6 +84,27 @@ public class TopicServicesImpl implements TopicService {
     }
 
     @Override
+    public TopicEntity findByTagName(String tagname) {
+        return topicDao.findByTagname(tagname);
+    }
+
+    @Override
+    public void inc(String id) {
+        topicDao.inc(id);
+    }
+
+    @Override
+    public List<TopicEntity> findByIds(List<String> historyTagIds) {
+        return topicDao.findByIds(historyTagIds);
+    }
+
+
+    @Override
+    public TopicEntity dec(String id) {
+        return topicDao.dec(id);
+    }
+
+    @Override
     public TopicEntity edit(AuthContext context, TopicEntity entity) {
         entity.setLastModifiedTime(System.currentTimeMillis());
         entity.setLastModifiedBy(context.getId());

@@ -52,5 +52,7 @@ public interface PostDao {
     PostEntity findByDraftId(String id);
 
     PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, String processorId);
+
+    PostEntity updateTagIds(AuthContext context, String articleId, List<String> tagIds);
 }
 

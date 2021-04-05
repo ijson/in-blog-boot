@@ -8,6 +8,7 @@ import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.model.AccessType;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.AbstractDao;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * version: 6.7
  * Created by cuiyongxu on 2019/8/9 4:37 PM
  */
+@Slf4j
 @Component
 public class CountDaoImpl extends AbstractDao<CountEntity> implements CountDao {
 
@@ -85,9 +87,14 @@ public class CountDaoImpl extends AbstractDao<CountEntity> implements CountDao {
 
     @Override
     public CountEntity findCountByWebType(String type) {
-        Query<CountEntity> query = createQuery();
-        query.field(CountEntity.Fields.accessType).equal(AccessType.webSite.name());
-        return query.get();
+      try {
+          Query<CountEntity> query = createQuery();
+          query.field(CountEntity.Fields.accessType).equal(AccessType.webSite.name());
+          return query.get();
+      }catch (Throwable e){
+          log.warn("",e);
+          return null;
+      }
     }
 
     @Override

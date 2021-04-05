@@ -25,6 +25,7 @@ public interface CountDao {
 
     CountEntity inc(CountEntity entity);
 
+    @Deprecated
     List<CountEntity> findHot();
 
 }

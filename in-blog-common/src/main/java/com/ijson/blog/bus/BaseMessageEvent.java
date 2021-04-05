@@ -1,5 +1,6 @@
 package com.ijson.blog.bus;
 
+import com.ijson.blog.model.AuthContext;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
 @Data
 public abstract class BaseMessageEvent {
 
-//    private AuthContext context;
+    private AuthContext context;
 
     /**
      * 获取操作类型

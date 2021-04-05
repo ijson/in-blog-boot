@@ -223,7 +223,6 @@ public class PostServiceImpl implements PostService {
         if (Objects.nonNull(userEntity)) {
             entity.setCname(userEntity.getCname());
         }
-        viewSyncManager.syncViewBlog(entity);
 
         return entity;
     }
@@ -254,7 +253,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public long getWebSiteCount(AuthContext context) {
         CountEntity countById = countDao.findCountByWebType(AccessType.webSite.name());
-        return countById.getViews();
+        if(countById!=null){
+            return countById.getViews();
+        }
+        return 0L;
     }
 
     @Cacheable(value = "adminWelcome")
@@ -400,5 +402,10 @@ public class PostServiceImpl implements PostService {
     public PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, AuthContext context) {
         return postDao.audit(ename, shamId, status, reason, context.getId());
 
+    }
+
+    @Override
+    public PostEntity updateTagIds(AuthContext context, String articleId, List<String> tagIds) {
+        return postDao.updateTagIds(context, articleId, tagIds);
     }
 }

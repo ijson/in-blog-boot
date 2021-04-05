@@ -67,4 +67,5 @@ public interface PostService {
 
     PostEntity audit(String ename, String shamId, Constant.PostStatus status, String reason, AuthContext context);
 
+    PostEntity updateTagIds(AuthContext context, String articleId, List<String> tagIds);
 }

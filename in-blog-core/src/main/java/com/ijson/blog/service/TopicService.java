@@ -35,5 +35,11 @@ public interface TopicService {
 
     PageResult<TopicEntity> find(TopicQuery query, Page pageEntity);
 
+    TopicEntity findByTagName(String tagname);
 
+    void inc(String id);
+
+    List<TopicEntity> findByIds(List<String> historyTagIds);
+
+    TopicEntity dec(String historyTagId);
 }
