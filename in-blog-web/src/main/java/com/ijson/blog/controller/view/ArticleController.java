@@ -1,11 +1,15 @@
 package com.ijson.blog.controller.view;
 
+import com.ijson.blog.bus.IEventBus;
+import com.ijson.blog.bus.event.CreateTagEvent;
+import com.ijson.blog.bus.event.ViewArticleEvent;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.CommentEntity;
 import com.ijson.blog.dao.entity.PostEntity;
 import com.ijson.blog.dao.model.ReplyType;
 import com.ijson.blog.dao.query.CommentQuery;
 import com.ijson.blog.exception.BlogNotFoundException;
+import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.CommentService;
 import com.ijson.blog.service.model.info.CommentInfo;
 import com.ijson.blog.service.model.info.PostInfo;
@@ -51,6 +55,8 @@ public class ArticleController extends BaseController {
 
             view.addObject("replys", comments.getDataList());
             addViewModelAndView(request, view);
+
+            IEventBus.post(ViewArticleEvent.view(AuthContext.systemAuthContext(), entity.getId()));
             return view;
         } catch (BlogNotFoundException e) {
             view.setViewName("error/404.html");

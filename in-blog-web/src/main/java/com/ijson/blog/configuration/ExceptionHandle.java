@@ -27,7 +27,7 @@ public class ExceptionHandle {
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             return Result.error(BlogBusinessExceptionCode.REQUEST_WAY_ERROR);
         } else {
-            log.error("【系统异常】{}", e);
+            log.error("【系统异常】:", e);
             return Result.error(BlogBusinessExceptionCode.SYSTEM_ERROR);
         }
     }

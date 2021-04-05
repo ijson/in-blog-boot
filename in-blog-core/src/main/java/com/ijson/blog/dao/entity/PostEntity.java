@@ -143,7 +143,7 @@ public class PostEntity extends BaseEntity {
     }
 
 
-    public static PostEntity create(String id, String userId, String title, String content, List<TopicEntity> topicEntity,String ename) {
+    public static PostEntity create(String id, String userId, String title, String content, String ename) {
         PostEntity entity = new PostEntity();
         entity.setEname(ename);
         entity.setId(id);
@@ -156,28 +156,16 @@ public class PostEntity extends BaseEntity {
         entity.setLastModifiedTime(System.currentTimeMillis());
         entity.setDeleted(false);
         entity.setEnable(true);
-        if (CollectionUtils.isNotEmpty(topicEntity)) {
-            entity.setTopicId(topicEntity.stream().map(TopicEntity::getId).collect(Collectors.toList()));
-        } else {
-            entity.setTopicId(Lists.newArrayList(Constant.defaultTopicId));
-        }
-
         return entity;
     }
 
 
-    public static PostEntity update(AuthContext context, String id, String title, String content, List<TopicEntity> topicEntity, List<String> existIds) {
+    public static PostEntity update(AuthContext context, String id, String title, String content) {
         PostEntity entity = new PostEntity();
         entity.setTitle(title);
         entity.setContent(content);
         entity.setId(id);
         entity.setLastModifiedBy(context.getId());
-        if (CollectionUtils.isNotEmpty(topicEntity)) {
-            List<String> topicIds = topicEntity.stream().map(TopicEntity::getId).collect(Collectors.toList());
-            entity.setTopicId(topicIds);
-        } else {
-            entity.setTopicId(Lists.newArrayList(Constant.defaultTopicId));
-        }
         return entity;
     }
 }

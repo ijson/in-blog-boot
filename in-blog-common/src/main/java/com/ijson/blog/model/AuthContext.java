@@ -62,4 +62,9 @@ public class AuthContext {
     public boolean isRemember() {
         return !Strings.isNullOrEmpty(remember) && "on".equals(remember);
     }
+
+
+    public static AuthContext systemAuthContext(){
+        return new AuthContext();
+    }
 }
