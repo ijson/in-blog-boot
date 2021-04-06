@@ -19,8 +19,6 @@ public interface TopicService {
 
     TopicEntity create(AuthContext context, TopicEntity myEntity);
 
-    List<TopicEntity> findTopicByTopicNameAndIncCount(String topicName, AuthContext context);
-
     List<TopicEntity> findHotTag();
 
     List<TopicEntity> findAll();

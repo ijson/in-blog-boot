@@ -231,15 +231,6 @@ public class PostDaoImpl extends AbstractDao<PostEntity> implements PostDao {
     }
 
     @Override
-    public PostEntity incPros(String id) {
-        Query<PostEntity> query = createQuery();
-        query.field(PostEntity.Fields.id).equal(id);
-        UpdateOperations operations = createUpdateOperations();
-        operations.inc(PostEntity.Fields.pros);
-        return datastore.findAndModify(query, operations);
-    }
-
-    @Override
     public Long findPublishTotal(AuthContext context) {
         Query<PostEntity> query = createQuery();
         if (Objects.nonNull(context)) {

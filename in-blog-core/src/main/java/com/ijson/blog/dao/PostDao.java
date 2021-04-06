@@ -33,8 +33,6 @@ public interface PostDao {
 
     PageResult<PostEntity> findPostByTagId(String id,Page page);
 
-    PostEntity incPros(String id);
-
     Long findPublishTotal(AuthContext context);
 
     Long findTodayPublishTotal(AuthContext context);

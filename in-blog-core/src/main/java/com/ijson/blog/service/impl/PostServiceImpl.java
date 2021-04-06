@@ -246,11 +246,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostEntity incPros(String id) {
-        return postDao.incPros(id);
-    }
-
-    @Override
     public long getWebSiteCount(AuthContext context) {
         CountEntity countById = countDao.findCountByWebType(AccessType.webSite.name());
         if(countById!=null){

@@ -1,5 +1,6 @@
 package com.ijson.blog.dao.entity;
 
+import com.ijson.blog.model.ArticleTag;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.model.Constant;
 import com.ijson.blog.model.SystemInfo;
@@ -7,6 +8,8 @@ import com.ijson.mongo.support.model.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
 import org.mongodb.morphia.annotations.*;
+
+import java.util.Map;
 
 @Data
 @Entity(value = "Topic", noClassnameStored = true)
@@ -41,6 +44,8 @@ public class TopicEntity extends BaseEntity {
     @Property(Fields.postCount)
     private long postCount;
 
+    @Embedded
+    private Map<String, ArticleTag> articls;
 
     @Property(Fields.lastModifiedBy)
     private String lastModifiedBy;

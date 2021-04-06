@@ -1,6 +1,5 @@
 package com.ijson.blog.service.impl;
 
-import com.google.common.collect.Lists;
 import com.ijson.blog.dao.TopicDao;
 import com.ijson.blog.dao.entity.TopicEntity;
 import com.ijson.blog.dao.query.TopicQuery;
@@ -26,26 +25,6 @@ public class TopicServicesImpl implements TopicService {
 
     @Autowired
     private TopicDao topicDao;
-
-
-    @Override
-    public List<TopicEntity> findTopicByTopicNameAndIncCount(String topicNames, AuthContext context) {
-        String[] topics = topicNames.split(",");
-        TopicEntity topicEntity;
-        List<TopicEntity> topicEntities = Lists.newArrayList();
-        for (String topic : topics) {
-            topicEntity = topicDao.findByTopicName(topic);
-            if (Objects.isNull(topicEntity)) {
-                topicEntity = topicDao.createOrUpdate(TopicEntity.create(topic, context));
-            } else {
-                topicEntity = topicDao.inc(topicEntity.getId());
-            }
-            if (Objects.nonNull(topicEntity)) {
-                topicEntities.add(topicEntity);
-            }
-        }
-        return topicEntities;
-    }
 
     @Cacheable(value = "hotTopic")
     @Override

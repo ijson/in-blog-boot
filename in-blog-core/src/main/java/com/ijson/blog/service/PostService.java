@@ -35,8 +35,6 @@ public interface PostService {
 
     PageResult<PostEntity> findPostByTagId(String id, Page page);
 
-    PostEntity incPros(String id);
-
     long getWebSiteCount(AuthContext context);
 
     WelcomeInfo getConsoleData();
