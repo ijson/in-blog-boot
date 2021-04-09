@@ -116,6 +116,7 @@ public class PostEntity extends BaseEntity {
 
     private volatile boolean isCreate;
 
+    private String  tagnames;
 
     public interface Fields {
         String id = "_id";

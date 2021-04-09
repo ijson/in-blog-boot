@@ -83,10 +83,13 @@ public class PostAction extends BaseController {
         entity.setCreate(true);
         entity.setIndexMenuEname(post.getIndexMenuEname());
         entity.setTrigger(Constant.AuditTrigger.create);
+        entity.setTagnames(post.getTopicName());
         entity = postService.create(context, entity);
         log.info("文章创建成功,id:{},title:{}", entity.getId(), entity.getTitle());
-
-        IEventBus.post(CreateTagEvent.create(context, entity.getId(), post.getTopicName()));
+        //只有不需要校验时  才会直接创建tag
+        if(!context.isVerify()){
+            IEventBus.post(CreateTagEvent.create(context, entity.getId(), post.getTopicName()));
+        }
         return Result.ok("创建文章成功!");
     }
 
@@ -148,6 +151,8 @@ public class PostAction extends BaseController {
         AuthContext context = regularCheck(request, Boolean.FALSE, Boolean.FALSE);
 
         PostEntity postEntity = postService.audit(ename, shamId, post.getStatus(), post.getReason(), context);
+        IEventBus.post(CreateTagEvent.create(context, postEntity.getId(), postEntity.getTagnames()));
+
         return Result.ok();
     }
 

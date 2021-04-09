@@ -56,6 +56,8 @@ public class PostInfo {
     private boolean top;
     private boolean fine;
 
+    private String  tagnames;
+
     private void setIntro(String intro) {
         String info = StringEscapeUtils.unescapeHtml(intro).replace("\n", "");
         Document document = Jsoup.parse(info);
@@ -265,6 +267,7 @@ public class PostInfo {
         post.setTrigger(key.getTrigger());
         post.setLastModifiedBy(key.getLastModifiedBy());
         post.setIndexMenuEname(key.getIndexMenuEname());
+        post.setTagnames(key.getTagnames());
         if (CollectionUtils.isNotEmpty(key.getTopicName())) {
             post.setTopicName(getTpoicNames(key.getTopicName()));
             post.setTopics(key.getTopicName().stream().map(topKey -> {

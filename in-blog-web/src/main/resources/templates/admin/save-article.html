@@ -68,9 +68,19 @@
 
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">标签</label>
+
+                            <%
+                              if(isNotEmpty(editData)){
+                                var topicName = editData.topicName;
+                                if(isEmpty(topicName)){
+                                    topicName = editData.tagnames;
+                                }
+                              }
+
+                            %>
                             <input type="text" class="form-control tags" lay-verify="topicName" id="topicName"
                                    name="topicName"
-                                   value="${editData.topicName!}" required="required" placeholder="请填写或选择标签,目前只支持单标签">
+                                   value="${topicName!}" required="required" placeholder="请填写或选择标签,目前只支持单标签">
                         </div>
 
                         <div class="layui-form-item">

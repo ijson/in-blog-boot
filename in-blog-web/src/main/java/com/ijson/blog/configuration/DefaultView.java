@@ -22,8 +22,16 @@ public class DefaultView implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         registry.addInterceptor(new RememberLoginCacheInterceptor()).addPathPatterns(
                 "/**"
+        ).excludePathPatterns(
+                "/**/*.css",
+                "/**/*.js",
+                "/**/*.png",
+                "/**/*.jpg",
+                "/**/*.woff2",
+                "/member/rest/reg/image"
         );
 
         // 可添加多个
