@@ -6,6 +6,7 @@ import com.ijson.blog.dao.entity.ConfigEntity;
 import com.ijson.blog.exception.BlogBusinessExceptionCode;
 import com.ijson.blog.model.AuthContext;
 import com.ijson.blog.service.model.Result;
+import com.ijson.blog.service.model.info.IndexInstall;
 import com.ijson.blog.service.model.info.TencentInfo;
 import com.ijson.blog.service.model.info.ThemeInfo;
 import com.ijson.blog.service.model.info.WebSiteInfo;
