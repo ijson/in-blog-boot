@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -143,7 +142,7 @@ public class CommentController extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.INFORMATION_IS_INCOMPLETE);
         }
         String cookieName = "cr_" + commentInfo.getId() + "_praise";
-        String praise = PassportHelper.getInstance().getCookie(request, cookieName);
+        String praise = PassportHelper.getInstance().getPraiseCookie(request, cookieName);
         if (!Strings.isNullOrEmpty(praise)) {
             return Result.error(BlogBusinessExceptionCode.YOU_ALREADY_SUPPORTED_IT);
         }
@@ -159,7 +158,7 @@ public class CommentController extends BaseController {
 
         commentService.praise(null, commentInfo.getId());
 
-        response.addCookie(PassportHelper.createCookie(cookieName,"/",60 * 60 * 24 * 30));
+        response.addCookie(PassportHelper.createPraiseCookie(cookieName,"/",60 * 60 * 24 * 30));
         return Result.ok("点赞成功");
     }
 

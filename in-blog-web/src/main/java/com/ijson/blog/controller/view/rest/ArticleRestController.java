@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -32,14 +30,14 @@ public class ArticleRestController extends BaseController {
     @PostMapping(value = "/{ename}/praise/{shamId}")
     public Result praise(@PathVariable("ename") String ename, @PathVariable("shamId") String shamId, HttpServletRequest request, HttpServletResponse response) {
         String cookieName = ename + "_" + shamId + "_praise";
-        String praise = PassportHelper.getInstance().getCookie(request, cookieName);
+        String praise = PassportHelper.getInstance().getPraiseCookie(request, cookieName);
         if (!Strings.isNullOrEmpty(praise)) {
             return Result.error(BlogBusinessExceptionCode.YOU_ALREADY_SUPPORTED_IT);
         }
 
         PostEntity entity = postService.incPros(ename, shamId);
         if (Objects.nonNull(entity)) {
-            response.addCookie(PassportHelper.createCookie(cookieName,"/",60 * 60 * 24 * 30));
+            response.addCookie(PassportHelper.createPraiseCookie(cookieName,"/",60 * 60 * 24 * 30));
         }
         return Result.ok("感谢您的支持!");
     }

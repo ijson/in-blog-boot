@@ -175,7 +175,14 @@ public class PassportHelper {
     }
 
 
-    public String getCookie(HttpServletRequest request, String cookieName) {
+    public String getPraiseCookie(HttpServletRequest request, String cookieName) {
+
+        if (Strings.isNullOrEmpty(cookieName)) {
+            return "";
+        }
+        cookieName = cookieName.trim().replace(" ", "");
+        cookieName = DesUtil.encrypt(cookieName);
+
         Cookie tokenCook = null;
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
@@ -463,12 +470,13 @@ public class PassportHelper {
         return ip;
     }
 
-    public static Cookie createCookie(String cookieName, String path, int maxAge) {
+    public static Cookie createPraiseCookie(String cookieName, String path, int maxAge) {
         if (Strings.isNullOrEmpty(cookieName)) {
             return new Cookie("unknown", String.valueOf(System.currentTimeMillis()));
         }
         cookieName = cookieName.trim().replace(" ", "");
-        Cookie cookie = new Cookie(cookieName, String.valueOf(System.currentTimeMillis()));
+
+        Cookie cookie = new Cookie(DesUtil.encrypt(cookieName), String.valueOf(System.currentTimeMillis()));
         cookie.setPath(path);
         cookie.setMaxAge(maxAge);
         return cookie;
