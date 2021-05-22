@@ -27,8 +27,7 @@ public class AccessStatisticInterceptor implements WebRequestInterceptor {
         this.viewSyncManager = viewSyncManager;
     }
 
-
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 
     @Override
@@ -37,7 +36,7 @@ public class AccessStatisticInterceptor implements WebRequestInterceptor {
         HttpServletRequest httpSelectRequest = request.getRequest();
 
 
-        String nowTime = simpleDateFormat.format(new Date());
+        String nowTime = new SimpleDateFormat(FORMAT).format(new Date());
         String ip = PassportHelper.getIP(httpSelectRequest);
         String method = request.getHttpMethod().name();
         String language = request.getLocale().getLanguage();
