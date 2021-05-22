@@ -41,6 +41,7 @@ public class RssController extends BaseController {
 
         PostQuery postQuery = new PostQuery();
         postQuery.setStatus(Constant.PostStatus.pass);
+        postQuery.setEnable(true);
         PageResult<PostEntity> pageResult = postService.find(null, postQuery, new Page());
 
         if (Objects.nonNull(pageResult) && CollectionUtils.isNotEmpty(pageResult.getDataList())) {
