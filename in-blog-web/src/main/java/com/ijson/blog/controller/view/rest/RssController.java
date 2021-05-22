@@ -1,5 +1,6 @@
 package com.ijson.blog.controller.view.rest;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -41,27 +44,65 @@ public class RssController extends BaseController {
 
         if (Objects.nonNull(pageResult) && CollectionUtils.isNotEmpty(pageResult.getDataList())) {
             SyndFeed feed = new SyndFeedImpl();
+
+            SyndImage syndImage = new SyndImageImpl();
+            syndImage.setTitle(toCDATA(Strings.isNullOrEmpty(getConfig().getSiteName()) ? "IBO" : getConfig().getSiteName()));
+            syndImage.setLink(webCtx);
+            syndImage.setUrl("https://www.ijson.net/images/logo.png");
+            feed.setImage(syndImage);
+
+
+            feed.setGenerator("RSS for Node");
+
+
             feed.setFeedType(RSS_TYPE);
-            feed.setTitle(Strings.isNullOrEmpty(getConfig().getSiteName()) ? "IBO" : getConfig().getSiteName());
+
+            feed.setTitle(toCDATA(Strings.isNullOrEmpty(getConfig().getSiteName()) ? "IBO" : getConfig().getSiteName()));
+
             feed.setLink(webCtx);
-            feed.setDescription(Strings.isNullOrEmpty(getConfig().getSiteDesc()) ? "IBO" : getConfig().getSiteDesc());
+
+            feed.setDescription(toCDATA(Strings.isNullOrEmpty(getConfig().getSiteDesc()) ? "IBO" : getConfig().getSiteDesc()));
+
             feed.setEncoding("UTF-8");
-            feed.setCopyright(getConfig().getSiteCopyRight());
-            feed.setWebMaster(getBlogAdminUser(request).getEmail());
+
+            feed.setCopyright(toCDATA(getConfig().getSiteCopyRight()));
+
+            feed.setWebMaster(toCDATA(getBlogAdminUser(request).getEmail()));
+
             List<PostEntity> dataList = pageResult.getDataList();
             List<SyndEntry> entries = Lists.newArrayList();
+
             dataList.forEach(entity -> {
                 PostInfo postInfo = PostInfo.create(entity);
 
+                SyndEntry syndEntry = new SyndEntryImpl();
+
                 SyndContent description = new SyndContentImpl();
                 description.setType("text/html");
-                description.setValue(postInfo.getIntro());
-
-                SyndEntry syndEntry = new SyndEntryImpl();
-                syndEntry.setTitle(postInfo.getTitle());
-                syndEntry.setLink(webCtx + "article/" + postInfo.getEname() + "/details/" + postInfo.getShamId() + ".html");
-                syndEntry.setPublishedDate(new Date(postInfo.getCreateTime()));
+                description.setValue(toCDATA(postInfo.getIntro()));
                 syndEntry.setDescription(description);
+
+
+                syndEntry.setTitle(toCDATA(postInfo.getTitle()));
+                syndEntry.setLink(webCtx + "article/" + postInfo.getEname() + "/details/" + postInfo.getShamId() + ".html");
+
+                syndEntry.setAuthor(toCDATA(entity.getCname()));
+
+                syndEntry.setPublishedDate(new Date(postInfo.getCreateTime()));
+                syndEntry.setUpdatedDate(new Date(postInfo.getLastModifiedTime()));
+
+                if (!Strings.isNullOrEmpty(entity.getTagnames())) {
+                    List<String> tags = Splitter.on(",").trimResults().omitEmptyStrings().splitToList(entity.getTagnames());
+                    List<SyndCategory> syndCategories = Lists.newArrayList();
+                    for (String tag : tags) {
+                        SyndCategory syndCategory = new SyndCategoryImpl();
+                        syndCategory.setName(toCDATA(tag));
+                        syndCategories.add(syndCategory);
+                    }
+                    syndEntry.setCategories(syndCategories);
+                }
+
+
                 entries.add(syndEntry);
             });
             feed.setEntries(entries);
@@ -76,4 +117,7 @@ public class RssController extends BaseController {
     }
 
 
+    public String toCDATA(String message) {
+        return "<![CDATA[" + message + "]]>";
+    }
 }
