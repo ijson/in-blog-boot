@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.ijson.blog.controller.BaseController;
 import com.ijson.blog.dao.entity.PostEntity;
+import com.ijson.blog.dao.query.PostQuery;
+import com.ijson.blog.model.Constant;
 import com.ijson.blog.service.model.info.PostInfo;
 import com.ijson.mongo.support.model.Page;
 import com.ijson.mongo.support.model.PageResult;
@@ -32,7 +34,10 @@ public class RssController extends BaseController {
 
     @RequestMapping("/feed")
     public String feed(HttpServletRequest request) {
-        PageResult<PostEntity> pageResult = postService.find(null, null, new Page());
+
+        PostQuery postQuery = new PostQuery();
+        postQuery.setStatus(Constant.PostStatus.pass);
+        PageResult<PostEntity> pageResult = postService.find(null, postQuery, new Page());
 
         if (Objects.nonNull(pageResult) && CollectionUtils.isNotEmpty(pageResult.getDataList())) {
             SyndFeed feed = new SyndFeedImpl();
