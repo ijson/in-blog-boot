@@ -17,6 +17,7 @@ import com.ijson.blog.service.model.info.UpdPasswordInfo;
 import com.ijson.blog.service.model.info.UserInfo;
 import com.ijson.blog.util.EhcacheUtil;
 import com.ijson.blog.util.PassportHelper;
+import com.ijson.blog.util.RegularUtil;
 import com.ijson.blog.util.VerifyCodeUtils;
 import com.ijson.mongo.generator.util.ObjectId;
 import com.ijson.mongo.support.model.Page;
@@ -105,12 +106,31 @@ public class UserAction extends BaseController {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_ENAME_CANNOT_BE_EMPTY);
         }
 
+        if (myUser.getEname().length() > 30) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.USER_NAMES_MUST_NOT_EXCEED_30_DIGITS);
+        }
+
+        if (!RegularUtil.isEname(myUser.getEname())) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.INCORRECT_ACCOUNT_FORMAT);
+        }
+
         if (Strings.isNullOrEmpty(myUser.getCname())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_CNAME_CANNOT_BE_EMPTY);
         }
 
+        if (myUser.getCname().length() > 20) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.NICKNAME_MUST_NOT_EXCEED_20_DIGITS);
+        }
+        if (!RegularUtil.isCname(myUser.getCname())) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.NICKNAME_FORMAT_INCORRECT);
+        }
+
         if (Strings.isNullOrEmpty(myUser.getEmail())) {
             throw new ReplyCreateException(BlogBusinessExceptionCode.USER_EMAIL_CANNOT_BE_EMPTY);
+        }
+
+        if (!RegularUtil.isEmail(myUser.getEmail())) {
+            throw new BlogLoginException(BlogBusinessExceptionCode.INCORRECT_MAILBOX_FORMAT);
         }
 
         if (Strings.isNullOrEmpty(myUser.getRoleId())) {
@@ -148,7 +168,6 @@ public class UserAction extends BaseController {
         context.setEname(entity.getEname());
         context.setEmail(entity.getEmail());
 
-        String tokenId = ObjectId.getId();
 
         String cookieValue = PassportHelper.getInstance().getCurrCookie(request);
         EhcacheUtil.getInstance().remove(Constant.loginUserCacheKey, cookieValue);
