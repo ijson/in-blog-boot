@@ -14,6 +14,7 @@ import com.rometools.rome.feed.synd.*;
 import com.rometools.rome.io.SyndFeedOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.jdom2.CDATA;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,7 +66,8 @@ public class RssController extends BaseController {
 
             feed.setEncoding("UTF-8");
 
-            feed.setCopyright(toCDATA(getConfig().getSiteCopyRight()));
+            String siteCopyRight = getConfig().getSiteCopyRight();
+            feed.setCopyright(toCDATA(Strings.isNullOrEmpty(siteCopyRight)?"西数云科":siteCopyRight));
 
             feed.setWebMaster(toCDATA(getBlogAdminUser(request).getEmail()));
 
@@ -116,8 +118,7 @@ public class RssController extends BaseController {
         return "";
     }
 
-
     public String toCDATA(String message) {
-        return "<![CDATA[" + message + "]]>";
+        return new CDATA(message).getText();
     }
 }
