@@ -32,7 +32,7 @@ import java.util.Objects;
 public class RssController extends BaseController {
     private static final String RSS_TYPE = "rss_2.0";
 
-    @RequestMapping("/feed")
+    @RequestMapping(value = "/feed", produces = "application/xml")
     public String feed(HttpServletRequest request) {
 
         PostQuery postQuery = new PostQuery();
