@@ -39,11 +39,7 @@ public class ArticleRestController extends BaseController {
 
         PostEntity entity = postService.incPros(ename, shamId);
         if (Objects.nonNull(entity)) {
-            String time = System.currentTimeMillis() + "";
-            Cookie cookie = new Cookie(cookieName, time);
-            cookie.setPath("/");
-            cookie.setMaxAge(60 * 60 * 24 * 30);
-            response.addCookie(cookie);
+            response.addCookie(PassportHelper.createCookie(cookieName,"/",60 * 60 * 24 * 30));
         }
         return Result.ok("感谢您的支持!");
     }

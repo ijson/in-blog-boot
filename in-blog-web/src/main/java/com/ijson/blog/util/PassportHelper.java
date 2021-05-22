@@ -365,6 +365,7 @@ public class PassportHelper {
 
     private Pattern pemail = Pattern
             .compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
+
     /**
      * description:  验证邮箱格式
      *
@@ -377,6 +378,7 @@ public class PassportHelper {
     }
 
     Pattern pMobile = Pattern.compile("^13\\d{9}||18\\d{9}||15[1,2,3,5,8,9]\\d{8}$");
+
     /***
      * description:  验证手机号格式
      * @param mobile
@@ -424,12 +426,12 @@ public class PassportHelper {
         }
     }
 
-    public static String getIP(HttpServletRequest request){
+    public static String getIP(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         System.out.println("x-forwarded-for ip: " + ip);
         if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
             // 多次反向代理后会有多个ip值，第一个ip才是真实ip
-            if(ip.contains(",")){
+            if (ip.contains(",")) {
                 ip = ip.split(",")[0];
             }
         }
@@ -459,5 +461,16 @@ public class PassportHelper {
         }
         System.out.println("获取客户端ip: " + ip);
         return ip;
+    }
+
+    public static Cookie createCookie(String cookieName, String path, int maxAge) {
+        if (Strings.isNullOrEmpty(cookieName)) {
+            return new Cookie("unknown", String.valueOf(System.currentTimeMillis()));
+        }
+        cookieName = cookieName.trim().replace(" ", "");
+        Cookie cookie = new Cookie(cookieName, String.valueOf(System.currentTimeMillis()));
+        cookie.setPath(path);
+        cookie.setMaxAge(maxAge);
+        return cookie;
     }
 }

@@ -159,13 +159,7 @@ public class CommentController extends BaseController {
 
         commentService.praise(null, commentInfo.getId());
 
-
-
-        Cookie cookie = new Cookie(cookieName, String.valueOf(System.currentTimeMillis()));
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24 * 30);
-        response.addCookie(cookie);
-
+        response.addCookie(PassportHelper.createCookie(cookieName,"/",60 * 60 * 24 * 30));
         return Result.ok("点赞成功");
     }
 
