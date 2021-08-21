@@ -1,3 +1,5 @@
+因github国内无法正常使用 本项目废弃,该项目被迁移至:https://gitee.com/ijson/in-blog-boot, 感谢各位支持
+
 # IBO 博客系统
 
 > IBO (imprint Blog) 印记博客.想必大家都希望自己的博客记录自己所想,留有所念,留下胜过的印记
